@@ -86,40 +86,40 @@ void _leer_consola_haciendo(void(*accion)(char*)) {
 op_code ingresoCodigoOperacion(){ //Agregado
 
 	op_code cod_op;
-	int cod_ingresado;
+	int cod_ingresado = 0;
 
-	printf("\n0.PAQUETE\n1.CREATE\n2.DROP\n3.DESCRIBE\n4.SELECT\n5.INSERT\n6.JOURNAL\n7.RUN\n8.ADD\n");
+	printf("\n0.CREATE\n1.DROP\n2.DESCRIBE\n3.SELECT\n4.INSERT\n5.JOURNAL\n6.RUN\n7.ADD\n8.PAQUETE");
 
-	printf("Ingrese el Codigo de operacion correspondiente\n");
+	printf("\nIngrese el Codigo de operacion correspondiente");
     scanf("%d", &cod_ingresado);
 
 	switch(cod_ingresado){
 			case 0:
-				cod_op = PAQUETE;
-				break;
-			case 1:
 				cod_op = CREATE;
 				break;
-			case 2:
+			case 1:
 				cod_op = DROP;
 				break;
-			case 3:
+			case 2:
 				cod_op = DESCRIBE;
 				break;
-			case 4:
+			case 3:
 				cod_op = SELECT;
 				break;
-			case 5:
+			case 4:
 				cod_op = INSERT;
 				break;
-			case 6:
+			case 5:
 				cod_op = JOURNAL;
 				break;
-			case 7:
+			case 6:
 				cod_op = RUN;
 				break;
-			case 8:
+			case 7:
 				cod_op = ADD;
+				break;
+			case 8:
+				cod_op = PAQUETE;
 				break;
 			default:
 				printf("Operacion desconocida.");
