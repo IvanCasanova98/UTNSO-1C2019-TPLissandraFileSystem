@@ -1,0 +1,2 @@
+#Ignoramos la carpeta en la que se crean los binarios.
+bin/
