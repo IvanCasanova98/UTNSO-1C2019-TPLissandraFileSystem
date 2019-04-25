@@ -21,6 +21,6 @@ void _leer_consola_haciendo(void(*accion)(char*));
 
 void iniciarCliente(void); //Agregado
 t_paquete* construirDatos();
-void mostrarPaquete(t_paquete* paquete);
+
 
 #endif /* KERNELCLIENTE_H_ */
