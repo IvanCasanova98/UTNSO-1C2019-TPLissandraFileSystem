@@ -7,7 +7,9 @@
 #include<unistd.h>
 #include<sys/socket.h>
 #include<netdb.h>
-#include<string.h>
+#include <string.h>
+
+
 
 typedef enum
 {
@@ -18,7 +20,8 @@ typedef enum
 	INSERT, //Agregado
 	JOURNAL, //Agregado
 	RUN, //Agregado
-	ADD //Agregado
+	ADD, //Agregado
+	PAQUETE
 }op_code;
 
 typedef struct
@@ -28,18 +31,12 @@ typedef struct
 } t_buffer;
 
 typedef struct
-{	op_code codigo_operacion;
-	char nombreTabla[20];
-	int key;
-//	char value[20];
-//	int timestamp;
-//	char TC[20];
-//	int numeroParticiones;
-//	int compactionTime;
-//	int flagJournal;
-//	int memoria; //cambiar
-//	int numero;
-
+//(op_code cod_op, char nombre_tabla[], int valor_key, char value[], int timesamp,
+//char TC[], int nro_particiones, int compaction_time, int flag, int memoria, int numero)
+{
+	op_code codigo_operacion;
+	char nombre_tabla[20];
+	int valor_key;
 	t_buffer* buffer;
 } t_paquete;
 
@@ -47,7 +44,7 @@ typedef struct
 
 int crear_conexion(char* ip, char* puerto);
 void enviar_mensaje(char* mensaje, int socket_cliente);
-t_paquete* crear_paquete(op_code, char[], int); //Parametro agregado
+t_paquete* crear_paquete(op_code cod_op,char* nombretabla,int valor_key); //Parametro agregado
 t_paquete* crear_super_paquete(void);
 void agregar_a_paquete(t_paquete* paquete, void* valor, int tamanio);
 void enviar_paquete(t_paquete* paquete, int socket_cliente);
