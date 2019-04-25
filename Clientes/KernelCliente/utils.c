@@ -67,14 +67,14 @@ void crear_buffer(t_paquete* paquete)
 	paquete->buffer->stream = NULL;
 }
 
-t_paquete* crear_super_paquete(void)
-{
-	t_paquete* paquete = malloc(sizeof(t_paquete));
-
-	paquete->codigo_operacion = PAQUETE;
-	crear_buffer(paquete);
-	return paquete;
-}
+//t_paquete* crear_super_paquete(void)
+//{
+//	t_paquete* paquete = malloc(sizeof(t_paquete));
+//
+//	paquete->codigo_operacion = PAQUETE;
+//	crear_buffer(paquete);
+//	return paquete;
+//}
 
 //t_paquete* crear_paquete(void)
 //{
@@ -84,11 +84,27 @@ t_paquete* crear_super_paquete(void)
 //	return paquete;
 //}
 
-t_paquete* crear_paquete(op_code cod_op) //Agregado
+t_paquete* crear_paquete(op_code cod_op, char nombreTabla[], int key)  //Parametros agregados
 {
+	printf("por aca paso1");
 	t_paquete* paquete = malloc(sizeof(t_paquete));
 	paquete->codigo_operacion = cod_op;
+	for(int i=0;i<=20;i++){
+		printf("por aca paso3");
+	paquete->nombreTabla[i] = nombreTabla[i];
+	}
+	printf("por aca paso4");
+	paquete->key = key;
+//	paquete->value = value;
+//	paquete->timestamp= timestamp;
+//	paquete->TC= TC;
+//	paquete->numeroParticiones = numeroParticiones;
+//	paquete->compactionTime = compactionTime;
+//	paquete->flagJournal = flagJournal;
+//	paquete->memoria = memoria;
+//	paquete->numero = numero;
 	crear_buffer(paquete);
+	printf("por aca paso");
 	return paquete;
 }
 
