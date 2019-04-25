@@ -15,7 +15,6 @@
 
 typedef enum
 {
-	PAQUETE,
 	CREATE, //Agregado
 	DROP, //Agregado
 	DESCRIBE, //Agregado
@@ -23,7 +22,8 @@ typedef enum
 	INSERT, //Agregado
 	JOURNAL, //Agregado
 	RUN, //Agregado
-	ADD //Agregado
+	ADD, //Agregado
+	PAQUETE
 }op_code;
 
 t_log* logger;

@@ -84,10 +84,14 @@ t_paquete* crear_super_paquete(void)
 //	return paquete;
 //}
 
-t_paquete* crear_paquete(op_code cod_op) //Agregado
+t_paquete* crear_paquete(op_code cod_op, char nombreTabla[], int valorKey) //Agregado
 {
 	t_paquete* paquete = malloc(sizeof(t_paquete));
 	paquete->codigo_operacion = cod_op;
+	for (int i = 0; i<=20; i++){
+		paquete->nombreTabla[i] = nombreTabla[i];
+	}
+	paquete->valorKey = valorKey;
 	crear_buffer(paquete);
 	return paquete;
 }

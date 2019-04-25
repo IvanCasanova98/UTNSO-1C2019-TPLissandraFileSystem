@@ -20,4 +20,6 @@ void _leer_consola_haciendo(void(*accion)(char*));
 void iniciarCliente(void); //Agregado
 op_code ingresoCodigoOperacion(void); //Agregado
 
+void armarPaquete(void);
+
 #endif /* KERNELCLIENTE_H_ */

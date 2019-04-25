@@ -11,7 +11,6 @@
 
 typedef enum
 {
-	PAQUETE,
 	CREATE, //Agregado
 	DROP, //Agregado
 	DESCRIBE, //Agregado
@@ -19,7 +18,8 @@ typedef enum
 	INSERT, //Agregado
 	JOURNAL, //Agregado
 	RUN, //Agregado
-	ADD //Agregado
+	ADD, //Agregado
+	PAQUETE
 }op_code;
 
 typedef struct
@@ -31,6 +31,8 @@ typedef struct
 typedef struct
 {
 	op_code codigo_operacion;
+	char nombreTabla[20];
+	int valorKey;
 	t_buffer* buffer;
 } t_paquete;
 
@@ -38,7 +40,7 @@ typedef struct
 
 int crear_conexion(char* ip, char* puerto);
 void enviar_mensaje(char* mensaje, int socket_cliente);
-t_paquete* crear_paquete(op_code); //Parametro agregado
+t_paquete* crear_paquete(op_code, char[], int); //Parametro agregado
 t_paquete* crear_super_paquete(void);
 void agregar_a_paquete(t_paquete* paquete, void* valor, int tamanio);
 void enviar_paquete(t_paquete* paquete, int socket_cliente);

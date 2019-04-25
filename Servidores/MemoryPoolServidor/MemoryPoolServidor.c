@@ -3,7 +3,6 @@
 int main(void)
 {
 	void iterator(char* value){
-		printf("%s\n", value);
 		log_info(logger, value);
 	}
 
@@ -26,9 +25,6 @@ int main(void)
 		int cod_op = recibir_operacion(cliente_fd);
 		switch(cod_op)
 		{
-		case PAQUETE:
-			tipoPaquete(lista,cliente_fd,cod_op);
-			break;
 		case CREATE:
 			tipoPaquete(lista,cliente_fd,cod_op);
 			break;
@@ -53,6 +49,9 @@ int main(void)
 		case ADD:
 			tipoPaquete(lista,cliente_fd,cod_op);
 			break;
+		case PAQUETE:
+			tipoPaquete(lista,cliente_fd,cod_op);
+			break;
 		case -1:
 			log_error(logger, "FIN CONEXION. Kernel desconectado. Terminando Servidor Memory Pool.");
 			return EXIT_FAILURE;
@@ -66,35 +65,35 @@ int main(void)
 
 void imprimirTipoPaquete(op_code cod_op){
 	switch(cod_op){
-	case PAQUETE:
-		printf("Paquete tipo PAQUETE:\n");
-		break;
 	case CREATE:
-		printf("Paquete tipo CREATE:\n");
+		log_info(logger, "Se recibio paquete tipo: CREATE");
 		break;
 	case DROP:
-		printf("Paquete tipo DROP:\n");
+		log_info(logger, "Se recibio paquete tipo: DROP");
 		break;
 	case DESCRIBE:
-		printf("Paquete tipo DESCRIBE:\n");
+		log_info(logger, "Se recibio paquete tipo: DESCRIBE");
 		break;
 	case SELECT:
-		printf("Paquete tipo SELECT:\n");
+		log_info(logger, "Se recibio paquete tipo: SELECT");
 		break;
 	case INSERT:
-		printf("Paquete tipo INSERT:\n");
+		log_info(logger, "Se recibio paquete tipo: INSERT");
 		break;
 	case JOURNAL:
-		printf("Paquete tipo JOURNAL:\n");
+		log_info(logger, "Se recibio paquete tipo: JOURNAL");
 		break;
 	case RUN:
-		printf("Paquete tipo RUN:\n");
+		log_info(logger, "Se recibio paquete tipo: RUN");
 		break;
 	case ADD:
-		printf("Paquete tipo ADD:\n");
+		log_info(logger, "Se recibio paquete tipo: ADD");
+		break;
+	case PAQUETE:
+		log_info(logger, "Se recibio paquete tipo: PAQUETE");
 		break;
 	default:
-		printf("Tipo desconocido.");
+		log_info(logger, "Se recibio paquete tipo: DESCONOCIDO");
 		break;
 	}
 
