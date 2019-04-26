@@ -20,8 +20,12 @@ t_paquete* armar_paquete(op_code cod_op,char *nombretabla, int valor_key);
 void _leer_consola_haciendo(void(*accion)(char*));
 
 void iniciarCliente(void); //Agregado
-t_paquete* construirDatos();
+t_paquete* construir_paquete();
 
-mostrarPaquete(t_paquete*);
+
+void mostrarPaquete(t_paquete*);
+void loggear_paquete(t_paquete* paquete, char tipo_paquete[10]);
+char enteroACaracter(int numero);
+
 
 #endif /* KERNELCLIENTE_H_ */
