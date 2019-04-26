@@ -49,9 +49,6 @@ int main(void)
 		case ADD:
 			tipoPaquete(lista,cliente_fd,cod_op);
 			break;
-		case PAQUETE:
-			tipoPaquete(lista,cliente_fd,cod_op);
-			break;
 		case -1:
 			log_error(logger, "FIN CONEXION. Kernel desconectado. Terminando Servidor Memory Pool.");
 			return EXIT_FAILURE;
@@ -88,9 +85,6 @@ void imprimirTipoPaquete(op_code cod_op){
 		break;
 	case ADD:
 		log_info(logger, "Se recibio paquete tipo: ADD");
-		break;
-	case PAQUETE:
-		log_info(logger, "Se recibio paquete tipo: PAQUETE");
 		break;
 	default:
 		log_info(logger, "Se recibio paquete tipo: DESCONOCIDO");

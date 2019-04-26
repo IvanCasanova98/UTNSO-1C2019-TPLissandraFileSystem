@@ -22,9 +22,8 @@ typedef enum
 	INSERT, //Agregado
 	JOURNAL, //Agregado
 	RUN, //Agregado
-	ADD, //Agregado
-	PAQUETE
-}op_code;
+	ADD //Agregado
+}op_code; //TIPO DE PAQUETE
 
 t_log* logger;
 
