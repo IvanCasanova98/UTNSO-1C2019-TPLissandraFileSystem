@@ -1,4 +1,4 @@
-#include "MemoryPoolServidor.h"
+#include "MemoryPool.h"
 
 int main(void)
 {
@@ -12,8 +12,7 @@ int main(void)
 		list_iterate(lista, (void*) iterator);
 	}
 
-
-	logger = log_create("MemoryPoolServidor.log", "MemoryPoolServidor", 1, LOG_LEVEL_DEBUG);
+	logger = log_create("MemoryPool.log", "MemoryPool", 1, LOG_LEVEL_DEBUG);
 
 	int server_fd = iniciar_servidor();
 	log_info(logger, "INICIO CONEXION. Servidor listo para recibir al Kernel");
@@ -36,6 +35,9 @@ int main(void)
 			break;
 		case SELECT:
 			tipoPaquete(lista,cliente_fd,cod_op);
+
+			int valorkey = valor_key(cliente_fd);
+			printf("%d", valorkey);
 			break;
 		case INSERT:
 			tipoPaquete(lista,cliente_fd,cod_op);
@@ -58,6 +60,7 @@ int main(void)
 		}
 	}
 	return EXIT_SUCCESS;
+
 }
 
 void imprimirTipoPaquete(op_code cod_op){

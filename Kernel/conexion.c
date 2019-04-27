@@ -33,15 +33,10 @@ int crear_conexion(char *ip, char* puerto){
 	return socket_cliente;
 }
 
-//void liberar_conexion(int socket_cliente){
-//	close(socket_cliente);
-//}
-//
-//void terminar_conexion(t_log* logger, t_config* config, int conexion){
-//	//eliminar_paquete(paquete);
-//	log_destroy(logger);
-//	config_destroy(config);
-//	close(conexion);
-//}
+void terminar_conexion(t_log* logger, t_config* config, int conexion){
+	log_destroy(logger);
+	config_destroy(config);
+	close(conexion);
+}
 
 

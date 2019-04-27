@@ -18,7 +18,7 @@
 t_log* iniciar_logger(void);
 t_config* leer_config(void);
 
-void enviar_paqueteSELECT(t_paqueteSELECT* paquete, int socket_cliente);
-void enviar_paqueteINSERT(t_paqueteINSERT* paquete, int socket_cliente);
+void enviar_paquete_select(t_paquete_select* paquete, int socket_cliente);
+void enviar_paquete_insert(t_paquete_insert* paquete, int socket_cliente);
 
 #endif /* ENVIO_H_ */

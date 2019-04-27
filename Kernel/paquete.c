@@ -2,14 +2,14 @@
 
 //------------------------CREAR BUFFER
 
-void crear_bufferSELECT(t_paqueteSELECT* paquete)
+void crear_buffer_select(t_paquete_select* paquete)
 {
 	paquete->buffer = malloc(sizeof(t_buffer));
 	paquete->buffer->size = 0;
 	paquete->buffer->stream = NULL;
 }
 
-void crear_bufferINSERT(t_paqueteINSERT* paquete)
+void crear_buffer_insert(t_paquete_insert* paquete)
 {
 	paquete->buffer = malloc(sizeof(t_buffer));
 	paquete->buffer->size = 0;
@@ -18,102 +18,104 @@ void crear_bufferINSERT(t_paqueteINSERT* paquete)
 
 //----------------------------------------------------CREACION DE PAQUETES
 
-t_paqueteSELECT* crear_paqueteSELECT(char *nombretabla,char * valor_key) //Agregado
+t_paquete_select* crear_paquete_select(char *nombretabla,int valor_key) //Agregado
 {
-	t_paqueteSELECT* paquete = malloc(sizeof(t_paqueteSELECT));
+	t_paquete_select* paquete = malloc(sizeof(t_paquete_select));
 
 	paquete->codigo_operacion = SELECT;
 	for(int i=0;i<20;i++){
 		paquete->nombre_tabla[i] = nombretabla[i];
 	}
-	for(int i=0;i<20;i++){
-		paquete->valor_key[i] = valor_key[i];
-	}
-	crear_bufferSELECT(paquete);
+	paquete->valor_key = valor_key;
+	crear_buffer_select(paquete);
 
 	return paquete;
 }
 
-t_paqueteINSERT* crear_paqueteINSERT(char *nombretabla,char * valor_key, char * value, char * timestamp) //Agregado
+t_paquete_insert* crear_paquete_insert(char *nombretabla,int valor_key, char *value, int timestamp) //Agregado
 {
-	t_paqueteINSERT* paquete = malloc(sizeof(t_paqueteINSERT));
+	t_paquete_insert* paquete = malloc(sizeof(t_paquete_insert));
 
 	paquete->codigo_operacion = INSERT;
 	for(int i=0;i<20;i++){
 		paquete->nombre_tabla[i] = nombretabla[i];
-	}
-	for(int i=0;i<20;i++){
-		paquete->valor_key[i] = valor_key[i];
-	}
-	for(int i=0;i<20;i++){
 		paquete->value[i] = value[i];
 	}
-	for(int i=0;i<20;i++){
-		paquete->timestamp[i] = timestamp[i];
-	}
-	crear_bufferINSERT(paquete);
+		paquete->valor_key = valor_key;
+		paquete->timestamp = timestamp;
+		crear_buffer_insert(paquete);
 
 	return paquete;
 }
 
 //---------------------ARMAR PAQUETES
 
-t_paqueteSELECT* selectf(){
+t_paquete_select* selectf(){
 
-	char valor_key[20];
+	int valor_key;
 	char nombre_tabla[20];
 
 	printf("\nIngrese nombre de la tabla: ");
 	scanf("%s", &nombre_tabla);
 	printf("\nIngrese el valor de la key: ");
-	scanf("%s", &valor_key);
+	scanf("%d", &valor_key);
 
-	t_paqueteSELECT* paquete = crear_paqueteSELECT(nombre_tabla, valor_key);
-	loggear_paqueteSELECT(paquete);
+	t_paquete_select* paquete = crear_paquete_select(nombre_tabla, valor_key);
+	loggear_paquete_select(paquete);
 
 	return paquete;
 }
 
-t_paqueteINSERT* insert(){
+t_paquete_insert* insert(){
 
-	char valor_key[20];
+	int valor_key;
 	char nombre_tabla[20];
 	char value[100];
-	char timestamp[10];
+	int timestamp;
 
 	printf("\nIngrese nombre de la tabla: ");
 	scanf("%s", &nombre_tabla);
 	printf("\nIngrese el valor de la key: ");
-	scanf("%s", &valor_key);
+	scanf("%d", &valor_key);
 	printf("\nIngrese el value: ");
 	scanf("%s", &value);
 	printf("\nIngrese el timestamp: ");
-	scanf("%s", &timestamp);
+	scanf("%d", &timestamp);
 
-	t_paqueteINSERT* paquete = crear_paqueteINSERT(nombre_tabla, valor_key, value, timestamp);
-	loggear_paqueteINSERT(paquete);
+	t_paquete_insert* paquete = crear_paquete_insert(nombre_tabla, valor_key, value, timestamp);
+	loggear_paquete_insert(paquete);
 
 	return paquete;
 }
 
 //----------------------------------------------------LOGGEO DE PAQUETES
 
-void loggear_paqueteSELECT(t_paqueteSELECT* paquete){
+void loggear_paquete_select(t_paquete_select* paquete){
 
 	t_log* logger = iniciar_logger();
-	log_info(logger, "Nuevo paquete creado");
-	log_info(logger, "SELECT");
-	log_info(logger, paquete->nombre_tabla);
-	log_info(logger, paquete->valor_key);
+	log_info(logger, "\nNuevo paquete creado\nTipo paquete: SELECT\nNombre tabla: %s\nValor KEY: %d", paquete->nombre_tabla,paquete->valor_key);
+    log_destroy(logger);
 }
 
-void loggear_paqueteINSERT(t_paqueteINSERT* paquete){
+void loggear_paquete_insert(t_paquete_insert* paquete){
 
 	t_log* logger = iniciar_logger();
-	log_info(logger, "Nuevo paquete creado");
-	log_info(logger, "INSERT");
-	log_info(logger, paquete->nombre_tabla);
-	log_info(logger, paquete->valor_key);
-	log_info(logger, paquete->value);
-	log_info(logger, paquete->timestamp);
+	log_info(logger, "\nNuevo paquete creado\nTipo paquete: INSERT\nNombre tabla: %s\nValor KEY: %d\nValue del paquete: %s\nTimestamp: %d", paquete->nombre_tabla, paquete->valor_key, paquete->value, paquete->timestamp);
+    log_destroy(logger);
+}
+
+//----------------------------------------------------ELIMINAR PAQUETE
+
+void eliminar_paquete_select(t_paquete_select* paquete)
+{
+    free(paquete->buffer->stream);
+    free(paquete->buffer);
+    free(paquete);
+}
+
+void eliminar_paquete_insert(t_paquete_insert* paquete)
+{
+    free(paquete->buffer->stream);
+    free(paquete->buffer);
+    free(paquete);
 }

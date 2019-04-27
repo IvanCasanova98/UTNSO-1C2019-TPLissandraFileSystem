@@ -32,37 +32,41 @@ typedef struct
 {
 	op_code codigo_operacion;
 	char nombre_tabla[20];
-	char valor_key[20];
+	int valor_key;
 	t_buffer* buffer;
-} t_paqueteSELECT;
+} t_paquete_select;
 
 typedef struct
 {
 	op_code codigo_operacion;
 	char nombre_tabla[20];
-	char valor_key[20];
+	int valor_key;
 	char value[20];
-	char timestamp[20];
+	int timestamp;
 	t_buffer* buffer;
-} t_paqueteINSERT;
+} t_paquete_insert;
 
 t_log* iniciar_logger(void);
 t_config* leer_config(void);
 
 //---------------------CREAR PAQUETE
 
-t_paqueteSELECT* crear_paqueteSELECT();
-t_paqueteINSERT* crear_paqueteINSERT();
+t_paquete_select* crear_paquete_select(char *nombretabla,int valor_key);
+t_paquete_insert* crear_paquete_insert(char *nombretabla,int valor_key, char *value, int timestamp);
 
 //---------------------ARMAR PAQUETE
 
-t_paqueteSELECT* selectf();
-t_paqueteINSERT* insert();
+t_paquete_select* selectf();
+t_paquete_insert* insert();
 
 //---------------------LOGGEAR PAQUETE
 
-void loggear_paqueteSELECT(t_paqueteSELECT* paquete);
-void loggear_paqueteINSERT(t_paqueteINSERT* paquete);
+void loggear_paquete_select(t_paquete_select* paquete);
+void loggear_paquete_insert(t_paquete_insert* paquete);
 
+//----------------------------------------------------ELIMINAR PAQUETE
+
+void eliminar_paquete_select(t_paquete_select* paquete);
+void eliminar_paquete_insert(t_paquete_insert* paquete);
 
 #endif /* PAQUETE_H_ */

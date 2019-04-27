@@ -1,12 +1,14 @@
-#ifndef MEMORYPOOLSERVIDOR_H_
-#define MEMORYPOOLSERVIDOR_H_
+#ifndef MEMORYPOOL_H_
+#define MEMORYPOOL_H_
 
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
 #include<commons/log.h>
-#include "utils.h"
+
+#include "conexion.h"
+#include "paquete.h"
 
 void imprimirTipoPaquete(op_code);
 
-#endif /* MEMORYPOOLSERVIDOR_H_ */
+#endif /* MEMORYPOOL_H_ */

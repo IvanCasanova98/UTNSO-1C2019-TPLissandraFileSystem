@@ -1,2 +1,2 @@
-server: MemoryPoolServidor.c utils.c
-	gcc MemoryPoolServidor.c utils.c -o MemoryPoolServidor -lcommons
+server: MemoryPool.c conexion.c paquete.c
+	gcc MemoryPool.c conexion.c paquete.c -o MemoryPool -lcommons

@@ -10,12 +10,16 @@ t_config* leer_config() {
 
 //----------------------------SERIALIZAR PAQUETES
 
-void* serializar_paquete_select(t_paqueteSELECT* paquete, int bytes)
+void* serializar_paquete_select(t_paquete_select* paquete, int bytes)
 {
 	void * magic = malloc(bytes);
 	int desplazamiento = 0;
 
 	memcpy(magic + desplazamiento, &(paquete->codigo_operacion), sizeof(int));
+	desplazamiento+= sizeof(int);
+	memcpy(magic + desplazamiento, &(paquete->nombre_tabla), sizeof(int));
+	desplazamiento+= sizeof(int);
+	memcpy(magic + desplazamiento, &(paquete->valor_key), sizeof(int));
 	desplazamiento+= sizeof(int);
 	memcpy(magic + desplazamiento, &(paquete->buffer->size), sizeof(int));
 	desplazamiento+= sizeof(int);
@@ -25,7 +29,7 @@ void* serializar_paquete_select(t_paqueteSELECT* paquete, int bytes)
 	return magic;
 }
 
-void* serializar_paquete_insert(t_paqueteINSERT* paquete, int bytes)
+void* serializar_paquete_insert(t_paquete_insert* paquete, int bytes)
 {
 	void * magic = malloc(bytes);
 	int desplazamiento = 0;
@@ -42,23 +46,35 @@ void* serializar_paquete_insert(t_paqueteINSERT* paquete, int bytes)
 
 //----------------------------ENVIAR PAQUETES
 
-void enviar_paqueteSELECT(t_paqueteSELECT* paquete, int socket_cliente)
+void enviar_paquete_select(t_paquete_select* paquete, int socket_cliente)
 {
 	int bytes = paquete->buffer->size + 2*sizeof(int);
 	void* a_enviar = serializar_paquete_select(paquete, bytes);
 
 	send(socket_cliente, a_enviar, bytes, 0);
 
+	t_log* logger = iniciar_logger();
+	log_info(logger, "PAQUETE SELECT ENVIADO");
+    log_destroy(logger);
+
 	free(a_enviar);
+
+    eliminar_paquete_select(paquete);
 }
 
-void enviar_paqueteINSERT(t_paqueteINSERT* paquete, int socket_cliente)
+void enviar_paquete_insert(t_paquete_insert* paquete, int socket_cliente)
 {
 	int bytes = paquete->buffer->size + 2*sizeof(int);
 	void* a_enviar = serializar_paquete_insert(paquete, bytes);
 
 	send(socket_cliente, a_enviar, bytes, 0);
 
+	t_log* logger = iniciar_logger();
+	log_info(logger, "PAQUETE INSERT ENVIADO");
+    log_destroy(logger);
+
 	free(a_enviar);
+
+    eliminar_paquete_insert(paquete);
 }
 
