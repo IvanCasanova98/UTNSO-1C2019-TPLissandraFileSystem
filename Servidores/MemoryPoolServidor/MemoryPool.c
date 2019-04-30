@@ -2,14 +2,14 @@
 
 int main(void)
 {
-	void iterator(char* value){
-		log_info(logger, value);
-	}
+//	void iterator(char* value){
+//		log_info(logger, value);
+//	}
 
 	void tipoPaquete(t_list* lista, int cliente_fd, op_code cod_op){
-		lista = recibir_paquete(cliente_fd);
+		//lista = recibir_paquete(cliente_fd);
 		imprimirTipoPaquete(cod_op);
-		list_iterate(lista, (void*) iterator);
+		//list_iterate(lista, (void*) iterator);
 	}
 
 	logger = log_create("MemoryPool.log", "MemoryPool", 1, LOG_LEVEL_DEBUG);
@@ -36,8 +36,9 @@ int main(void)
 		case SELECT:
 			tipoPaquete(lista,cliente_fd,cod_op);
 
-			//int valorkey = valor_key(cliente_fd);
-			//printf("%d", valorkey);
+			nombre_tabla(cliente_fd);
+			int valorkey = valor_key(cliente_fd);
+			printf("%d", valorkey);
 			break;
 		case INSERT:
 			tipoPaquete(lista,cliente_fd,cod_op);

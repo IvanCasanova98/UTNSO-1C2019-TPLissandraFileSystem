@@ -48,11 +48,29 @@ t_list* recibir_paquete(int socket_cliente)
 
 //-------------------func prueba
 
-//int valor_key(int socket_cliente){
+//char* nombre_tabla(int socket_cliente){
 //
-//	int valor_key;
-//	recv(socket_cliente, &valor_key, sizeof(int), MSG_WAITALL);
+//	char* nombre_tabla[20];
+//	recv(socket_cliente, &nombre_tabla, sizeof(int), MSG_WAITALL);
 //
-//	return valor_key;
+//	return *nombre_tabla;
 //
 //}
+
+void nombre_tabla(int socket_cliente){
+
+	char nombre_tabla[20];
+	recv(socket_cliente, &nombre_tabla, sizeof(int), MSG_WAITALL);
+
+	printf("%s", nombre_tabla);
+
+}
+
+int valor_key(int socket_cliente){
+
+	int valor_key;
+	recv(socket_cliente, &valor_key, sizeof(int), MSG_WAITALL);
+
+	return valor_key;
+
+}

@@ -13742,3 +13742,110 @@
 [INFO] 14:16:58:972 MemoryPool/(4103:4103): Kernel conectado!
 [INFO] 14:17:38:385 MemoryPool/(4103:4103): Se recibio paquete tipo: SELECT
 [ERROR] 14:17:38:385 MemoryPool/(4103:4103): FIN CONEXION. Kernel desconectado. Terminando Servidor Memory Pool.
+[INFO] 14:58:30:38 MemoryPool/(4483:4483): INICIO CONEXION. Servidor listo para recibir al Kernel
+[INFO] 14:59:26:99 MemoryPool/(4483:4483): Kernel conectado!
+[INFO] 14:59:30:606 MemoryPool/(4483:4483): Se recibio paquete tipo: SELECT
+[ERROR] 14:59:30:606 MemoryPool/(4483:4483): FIN CONEXION. Kernel desconectado. Terminando Servidor Memory Pool.
+[INFO] 14:59:41:839 MemoryPool/(4498:4498): INICIO CONEXION. Servidor listo para recibir al Kernel
+[INFO] 15:00:01:197 MemoryPool/(4511:4511): INICIO CONEXION. Servidor listo para recibir al Kernel
+[INFO] 15:00:08:284 MemoryPool/(4511:4511): Kernel conectado!
+[INFO] 15:00:17:414 MemoryPool/(4511:4511): Se recibio paquete tipo: INSERT
+[ERROR] 15:00:17:414 MemoryPool/(4511:4511): FIN CONEXION. Kernel desconectado. Terminando Servidor Memory Pool.
+[INFO] 15:15:02:214 MemoryPool/(4675:4675): INICIO CONEXION. Servidor listo para recibir al Kernel
+[INFO] 15:15:07:634 MemoryPool/(4675:4675): Kernel conectado!
+[INFO] 15:21:27:236 MemoryPool/(4790:4790): INICIO CONEXION. Servidor listo para recibir al Kernel
+[INFO] 15:21:33:75 MemoryPool/(4790:4790): Kernel conectado!
+[INFO] 15:21:39:558 MemoryPool/(4790:4790): Se recibio paquete tipo: SELECT
+[ERROR] 15:21:39:558 MemoryPool/(4790:4790): FIN CONEXION. Kernel desconectado. Terminando Servidor Memory Pool.
+[INFO] 15:26:24:747 MemoryPool/(5018:5018): INICIO CONEXION. Servidor listo para recibir al Kernel
+[INFO] 15:26:38:289 MemoryPool/(5018:5018): Kernel conectado!
+[INFO] 15:26:45:203 MemoryPool/(5018:5018): Se recibio paquete tipo: SELECT
+[ERROR] 15:26:45:203 MemoryPool/(5018:5018): FIN CONEXION. Kernel desconectado. Terminando Servidor Memory Pool.
+[INFO] 15:31:40:727 MemoryPool/(5181:5181): INICIO CONEXION. Servidor listo para recibir al Kernel
+[INFO] 15:31:52:243 MemoryPool/(5181:5181): Kernel conectado!
+[INFO] 15:31:59:999 MemoryPool/(5181:5181): Se recibio paquete tipo: SELECT
+[ERROR] 15:32:02:461 MemoryPool/(5181:5181): FIN CONEXION. Kernel desconectado. Terminando Servidor Memory Pool.
+[INFO] 15:32:40:12 MemoryPool/(5225:5225): INICIO CONEXION. Servidor listo para recibir al Kernel
+[INFO] 15:33:09:7 MemoryPool/(5243:5243): INICIO CONEXION. Servidor listo para recibir al Kernel
+[INFO] 15:33:15:99 MemoryPool/(5243:5243): Kernel conectado!
+[INFO] 15:33:20:454 MemoryPool/(5243:5243): Se recibio paquete tipo: SELECT
+[ERROR] 15:33:20:967 MemoryPool/(5243:5243): FIN CONEXION. Kernel desconectado. Terminando Servidor Memory Pool.
+[INFO] 15:34:22:318 MemoryPool/(5302:5302): INICIO CONEXION. Servidor listo para recibir al Kernel
+[INFO] 15:34:27:109 MemoryPool/(5302:5302): Kernel conectado!
+[INFO] 15:34:35:398 MemoryPool/(5302:5302): Se recibio paquete tipo: SELECT
+[ERROR] 15:34:35:398 MemoryPool/(5302:5302): FIN CONEXION. Kernel desconectado. Terminando Servidor Memory Pool.
+[INFO] 15:34:45:902 MemoryPool/(5318:5318): INICIO CONEXION. Servidor listo para recibir al Kernel
+[INFO] 15:34:49:398 MemoryPool/(5318:5318): Kernel conectado!
+[INFO] 15:34:53:110 MemoryPool/(5318:5318): Se recibio paquete tipo: SELECT
+[ERROR] 15:34:53:110 MemoryPool/(5318:5318): FIN CONEXION. Kernel desconectado. Terminando Servidor Memory Pool.
+[INFO] 15:35:18:574 MemoryPool/(5343:5343): INICIO CONEXION. Servidor listo para recibir al Kernel
+[INFO] 15:35:22:579 MemoryPool/(5343:5343): Kernel conectado!
+[INFO] 15:35:31:630 MemoryPool/(5343:5343): Se recibio paquete tipo: SELECT
+[ERROR] 15:35:32:147 MemoryPool/(5343:5343): FIN CONEXION. Kernel desconectado. Terminando Servidor Memory Pool.
+[INFO] 15:36:21:884 MemoryPool/(5388:5388): INICIO CONEXION. Servidor listo para recibir al Kernel
+[INFO] 15:36:27:604 MemoryPool/(5388:5388): Kernel conectado!
+[INFO] 15:36:32:793 MemoryPool/(5388:5388): Se recibio paquete tipo: SELECT
+[ERROR] 15:36:33:676 MemoryPool/(5388:5388): FIN CONEXION. Kernel desconectado. Terminando Servidor Memory Pool.
+[INFO] 15:43:11:546 MemoryPool/(5586:5586): INICIO CONEXION. Servidor listo para recibir al Kernel
+[INFO] 15:43:23:318 MemoryPool/(5586:5586): Kernel conectado!
+[INFO] 15:43:29:2 MemoryPool/(5586:5586): Se recibio paquete tipo: SELECT
+[ERROR] 15:43:29:3 MemoryPool/(5586:5586): FIN CONEXION. Kernel desconectado. Terminando Servidor Memory Pool.
+[INFO] 15:57:12:388 MemoryPool/(5767:5767): INICIO CONEXION. Servidor listo para recibir al Kernel
+[INFO] 15:57:22:228 MemoryPool/(5767:5767): Kernel conectado!
+[INFO] 15:57:34:239 MemoryPool/(5767:5767): Se recibio paquete tipo: SELECT
+[INFO] 15:58:16:674 MemoryPool/(5805:5805): INICIO CONEXION. Servidor listo para recibir al Kernel
+[INFO] 15:58:21:568 MemoryPool/(5805:5805): Kernel conectado!
+[INFO] 15:58:30:205 MemoryPool/(5805:5805): Se recibio paquete tipo: SELECT
+[INFO] 16:00:16:893 MemoryPool/(5862:5862): INICIO CONEXION. Servidor listo para recibir al Kernel
+[INFO] 16:00:26:471 MemoryPool/(5862:5862): Kernel conectado!
+[INFO] 16:00:31:317 MemoryPool/(5862:5862): Se recibio paquete tipo: SELECT
+[INFO] 16:27:33:715 MemoryPool/(6144:6144): INICIO CONEXION. Servidor listo para recibir al Kernel
+[INFO] 16:28:17:10 MemoryPool/(6144:6144): Kernel conectado!
+[INFO] 16:28:30:322 MemoryPool/(6144:6144): Se recibio paquete tipo: SELECT
+[ERROR] 16:28:30:323 MemoryPool/(6144:6144): FIN CONEXION. Kernel desconectado. Terminando Servidor Memory Pool.
+[INFO] 16:30:50:404 MemoryPool/(6196:6196): INICIO CONEXION. Servidor listo para recibir al Kernel
+[INFO] 16:31:01:756 MemoryPool/(6196:6196): Kernel conectado!
+[INFO] 16:31:13:884 MemoryPool/(6196:6196): Se recibio paquete tipo: SELECT
+[ERROR] 16:31:16:325 MemoryPool/(6196:6196): FIN CONEXION. Kernel desconectado. Terminando Servidor Memory Pool.
+[INFO] 16:32:30:312 MemoryPool/(6242:6242): INICIO CONEXION. Servidor listo para recibir al Kernel
+[INFO] 16:32:39:930 MemoryPool/(6242:6242): Kernel conectado!
+[INFO] 16:32:45:500 MemoryPool/(6242:6242): Se recibio paquete tipo: SELECT
+[ERROR] 16:32:49:100 MemoryPool/(6242:6242): FIN CONEXION. Kernel desconectado. Terminando Servidor Memory Pool.
+[INFO] 16:38:09:315 MemoryPool/(6328:6328): INICIO CONEXION. Servidor listo para recibir al Kernel
+[INFO] 16:38:20:638 MemoryPool/(6328:6328): Kernel conectado!
+[INFO] 16:38:30:479 MemoryPool/(6328:6328): Se recibio paquete tipo: SELECT
+[ERROR] 16:38:30:479 MemoryPool/(6328:6328): FIN CONEXION. Kernel desconectado. Terminando Servidor Memory Pool.
+[INFO] 16:43:07:534 MemoryPool/(6454:6454): INICIO CONEXION. Servidor listo para recibir al Kernel
+[INFO] 16:43:12:147 MemoryPool/(6454:6454): Kernel conectado!
+[INFO] 16:43:18:783 MemoryPool/(6454:6454): Se recibio paquete tipo: SELECT
+[ERROR] 16:43:18:784 MemoryPool/(6454:6454): FIN CONEXION. Kernel desconectado. Terminando Servidor Memory Pool.
+[INFO] 18:11:51:903 MemoryPool/(3399:3399): INICIO CONEXION. Servidor listo para recibir al Kernel
+[INFO] 18:12:02:813 MemoryPool/(3399:3399): Kernel conectado!
+[INFO] 18:12:12:631 MemoryPool/(3399:3399): Se recibio paquete tipo: SELECT
+[ERROR] 18:12:12:632 MemoryPool/(3399:3399): FIN CONEXION. Kernel desconectado. Terminando Servidor Memory Pool.
+[INFO] 18:13:19:276 MemoryPool/(3458:3458): INICIO CONEXION. Servidor listo para recibir al Kernel
+[INFO] 18:13:24:958 MemoryPool/(3458:3458): Kernel conectado!
+[INFO] 18:13:31:136 MemoryPool/(3458:3458): Se recibio paquete tipo: SELECT
+[ERROR] 18:13:33:637 MemoryPool/(3458:3458): FIN CONEXION. Kernel desconectado. Terminando Servidor Memory Pool.
+[INFO] 18:19:15:658 MemoryPool/(3680:3680): INICIO CONEXION. Servidor listo para recibir al Kernel
+[INFO] 18:19:32:607 MemoryPool/(3691:3691): INICIO CONEXION. Servidor listo para recibir al Kernel
+[INFO] 18:19:42:955 MemoryPool/(3713:3713): INICIO CONEXION. Servidor listo para recibir al Kernel
+[INFO] 18:19:52:459 MemoryPool/(3713:3713): Kernel conectado!
+[INFO] 18:19:58:449 MemoryPool/(3713:3713): Se recibio paquete tipo: SELECT
+[WARNING] 18:19:58:449 MemoryPool/(3713:3713): Operacion desconocida.
+[ERROR] 18:19:58:450 MemoryPool/(3713:3713): FIN CONEXION. Kernel desconectado. Terminando Servidor Memory Pool.
+[INFO] 18:20:55:215 MemoryPool/(3774:3774): INICIO CONEXION. Servidor listo para recibir al Kernel
+[INFO] 18:21:00:152 MemoryPool/(3774:3774): Kernel conectado!
+[INFO] 18:21:06:331 MemoryPool/(3774:3774): Se recibio paquete tipo: SELECT
+[INFO] 18:21:06:331 MemoryPool/(3774:3774): Se recibio paquete tipo: CREATE
+[WARNING] 18:21:06:331 MemoryPool/(3774:3774): Operacion desconocida.
+[ERROR] 18:21:06:331 MemoryPool/(3774:3774): FIN CONEXION. Kernel desconectado. Terminando Servidor Memory Pool.
+[INFO] 18:22:38:143 MemoryPool/(3851:3851): INICIO CONEXION. Servidor listo para recibir al Kernel
+[INFO] 18:22:43:358 MemoryPool/(3851:3851): Kernel conectado!
+[INFO] 18:22:47:645 MemoryPool/(3851:3851): Se recibio paquete tipo: SELECT
+[ERROR] 18:22:47:645 MemoryPool/(3851:3851): FIN CONEXION. Kernel desconectado. Terminando Servidor Memory Pool.
+[INFO] 18:23:04:185 MemoryPool/(3879:3879): INICIO CONEXION. Servidor listo para recibir al Kernel
+[INFO] 18:23:36:755 MemoryPool/(3879:3879): Kernel conectado!
+[INFO] 18:23:42:55 MemoryPool/(3879:3879): Se recibio paquete tipo: SELECT
+[INFO] 18:23:42:55 MemoryPool/(3879:3879): Se recibio paquete tipo: CREATE
+[ERROR] 18:23:42:55 MemoryPool/(3879:3879): FIN CONEXION. Kernel desconectado. Terminando Servidor Memory Pool.

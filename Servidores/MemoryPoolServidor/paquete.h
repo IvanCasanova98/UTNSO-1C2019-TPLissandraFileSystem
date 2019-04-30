@@ -15,6 +15,7 @@ void recibir_mensaje(int);
 int recibir_operacion(int);
 
 //---func prueba
+void nombre_tabla(int socket_cliente);
 int valor_key(int socket_cliente);
 
 #endif /* PAQUETE_H_ */

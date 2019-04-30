@@ -17,12 +17,10 @@ void* serializar_paquete_select(t_paquete_select* paquete, int bytes)
 
 	memcpy(magic + desplazamiento, &(paquete->codigo_operacion), sizeof(int));
 	desplazamiento+= sizeof(int);
-//	memcpy(magic + desplazamiento, &(paquete->nombre_tabla), sizeof(bytes));
-//	desplazamiento+= sizeof(int);
-//	memcpy(magic + desplazamiento, sizeof(&(paquete->valor_key)), sizeof(int));
-//	desplazamiento+= sizeof(int);
-//	memcpy(magic + desplazamiento, &(paquete->valor_key), sizeof(int));
-//	desplazamiento+= sizeof(int);
+	memcpy(magic + desplazamiento, &(paquete->nombre_tabla), strlen(paquete->nombre_tabla));
+	desplazamiento+= strlen(paquete->nombre_tabla);
+	memcpy(magic + desplazamiento, &(paquete->valor_key), sizeof(&(paquete->valor_key)));
+	desplazamiento+= sizeof(&(paquete->valor_key));
 	memcpy(magic + desplazamiento, &(paquete->buffer->size), sizeof(int));
 	desplazamiento+= sizeof(int);
 	memcpy(magic + desplazamiento, paquete->buffer->stream, paquete->buffer->size);
@@ -50,7 +48,9 @@ void* serializar_paquete_insert(t_paquete_insert* paquete, int bytes)
 
 void enviar_paquete_select(t_paquete_select* paquete, int socket_cliente)
 {
-	int bytes = paquete->buffer->size + 2*sizeof(int);
+	int bytes = paquete->buffer->size + sizeof(paquete->codigo_operacion) + strlen(paquete->nombre_tabla) + sizeof(paquete->valor_key);// +2*sizeof(int);
+	//int bytes = paquete->buffer->size + 2*sizeof(int);
+
 	void* a_enviar = serializar_paquete_select(paquete, bytes);
 
 	send(socket_cliente, a_enviar, bytes, 0);
