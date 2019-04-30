@@ -60,9 +60,9 @@ t_list* recibir_paquete(int socket_cliente)
 void nombre_tabla(int socket_cliente){
 
 	char nombre_tabla[20];
-	recv(socket_cliente, &nombre_tabla, sizeof(int), MSG_WAITALL);
+	recv(socket_cliente, &nombre_tabla, sizeof(char[20]), MSG_WAITALL);
 
-	printf("%s", nombre_tabla);
+	printf("EL nombre de la tabla recibida es: %s\n", nombre_tabla);
 
 }
 
@@ -71,6 +71,7 @@ int valor_key(int socket_cliente){
 	int valor_key;
 	recv(socket_cliente, &valor_key, sizeof(int), MSG_WAITALL);
 
+	printf("EL KEY VALUE recibido es: %d\n", valor_key);
 	return valor_key;
 
 }

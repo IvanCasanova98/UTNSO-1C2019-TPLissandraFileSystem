@@ -38,7 +38,7 @@ int main(void)
 
 			nombre_tabla(cliente_fd);
 			int valorkey = valor_key(cliente_fd);
-			printf("%d", valorkey);
+			//printf("%d", valorkey);
 			break;
 		case INSERT:
 			tipoPaquete(lista,cliente_fd,cod_op);
