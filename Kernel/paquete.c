@@ -41,9 +41,9 @@ t_paquete_insert* crear_paquete_insert(char *nombretabla,int valor_key, char *va
 		paquete->nombre_tabla[i] = nombretabla[i];
 		paquete->value[i] = value[i];
 	}
-		paquete->valor_key = valor_key;
-		paquete->timestamp = timestamp;
-		crear_buffer_insert(paquete);
+	paquete->valor_key = valor_key;
+	paquete->timestamp = timestamp;
+	crear_buffer_insert(paquete);
 
 	return paquete;
 }

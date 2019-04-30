@@ -12,7 +12,7 @@ int main(void){
 
 	armar_paquete(conexion);//Primero pide tipo de paquete, luego lo arma desde "KernelAPI, despues lo envia
 
-	terminar_conexion(conexion);
+	terminar_conexion(logger,config,conexion);
 
 
 }

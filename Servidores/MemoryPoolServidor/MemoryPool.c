@@ -36,8 +36,8 @@ int main(void)
 		case SELECT:
 			tipoPaquete(lista,cliente_fd,cod_op);
 
-			int valorkey = valor_key(cliente_fd);
-			printf("%d", valorkey);
+			//int valorkey = valor_key(cliente_fd);
+			//printf("%d", valorkey);
 			break;
 		case INSERT:
 			tipoPaquete(lista,cliente_fd,cod_op);

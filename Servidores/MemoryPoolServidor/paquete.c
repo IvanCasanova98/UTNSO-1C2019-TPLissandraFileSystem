@@ -48,11 +48,11 @@ t_list* recibir_paquete(int socket_cliente)
 
 //-------------------func prueba
 
-int valor_key(int socket_cliente){
-
-	int valor_key;
-	recv(socket_cliente, &valor_key, sizeof(int), MSG_WAITALL);
-
-	return valor_key;
-
-}
+//int valor_key(int socket_cliente){
+//
+//	int valor_key;
+//	recv(socket_cliente, &valor_key, sizeof(int), MSG_WAITALL);
+//
+//	return valor_key;
+//
+//}
