@@ -10,6 +10,7 @@ int main(void){
 
 	int conexion = iniciar_conexion(logger, config);//Iniciar conexion
 
+
 	armar_paquete(conexion);//Primero pide tipo de paquete, luego lo arma desde "KernelAPI, despues lo envia
 
 	terminar_conexion(logger,config,conexion);
@@ -29,20 +30,34 @@ void armar_paquete(int conexion){
 	printf("\nIngrese el Codigo de operacion correspondiente: ");
 	scanf("\n%d", &cod_ingresado);
 
-	switch(cod_ingresado){
-			case 3:
-				paquete_select = selectf(); //EN paquete.c LO ARMA
-				enviar_paquete_select(paquete_select, conexion); //EN encio.c LO ENVIA
-				break;
-//			case 4:
-//				paquete_insert = insert();
-//				enviar_paquete_insert(paquete_insert, conexion);
-//				break;
-			default:
-				printf("Operacion desconocida.");
-				break;
-	}
-}
+	//Decidi que enviaremos suelto el cod_op.
+
+
+		switch(cod_ingresado){
+					case 3:
+						paquete_select = selectf();
+						if ( send(conexion, &cod_ingresado, sizeof(int), 0) <= 0) puts("Error en envio de CODIGO DE OPERACION.");
+								else {
+									t_log* logger = iniciar_logger();
+									log_info(logger, "Se envio codigo de operacion: %d",cod_ingresado);
+									log_destroy(logger);
+								}
+						enviar_paquete_select(paquete_select, conexion); //EN encio.c LO ENVIA
+						free(paquete_select); //Va este free???
+						break;
+		//			case 4:
+		//				paquete_insert = insert();
+		//				enviar_paquete_insert(paquete_insert, conexion);
+		//				break;
+					default:
+						printf("Operacion desconocida.");
+						break;
+			}
+		printf("\nIngrese el Codigo de operacion correspondiente: ");
+		scanf("\n%d", &cod_ingresado);
+
+
+  }
 
 
 

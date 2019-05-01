@@ -16,21 +16,12 @@ void* serializar_paquete_select(t_paquete_select* paquete, int bytes)
 	void * buffer = malloc(bytes);
 	int desplazamiento = 0;
 
-	memcpy(buffer + desplazamiento, &(paquete->codigo_operacion), sizeof(paquete->codigo_operacion));
-//	desplazamiento+= sizeof(&(paquete->codigo_operacion));
-	desplazamiento+= sizeof(paquete->codigo_operacion);
 	memcpy(buffer + desplazamiento, &(paquete->nombre_tabla), sizeof(char[TAMANIO_NOMBRE_TABLA]));
 	desplazamiento+= sizeof(char[TAMANIO_NOMBRE_TABLA]);
 	memcpy(buffer + desplazamiento, &(paquete->valor_key), sizeof(paquete->valor_key));
-//	desplazamiento+= sizeof(&(paquete->valor_key));
 	desplazamiento+= sizeof(paquete->valor_key);
 
-
-//	memcpy(magic + desplazamiento, &(paquete->buffer->size), sizeof(int));
-//	desplazamiento+= sizeof(int);
-//	memcpy(magic + desplazamiento, paquete->buffer->stream, paquete->buffer->size);
-//	desplazamiento+= paquete->buffer->size;
-
+	printf("Se envio de tamaño: %d\n",sizeof(buffer));
 	return buffer; //es void y esta retornando mmm
 	free(buffer);
 }
@@ -54,9 +45,6 @@ void* serializar_paquete_select(t_paquete_select* paquete, int bytes)
 
 void enviar_paquete_select(t_paquete_select* paquete, int socket_cliente)
 {
-//	int bytes = paquete->buffer->size + sizeof(paquete->codigo_operacion) + strlen(paquete->nombre_tabla) + sizeof(paquete->valor_key);// +2*sizeof(int);
-//	int bytes = paquete->buffer->size + 2*sizeof(int);
-//	int bytes = sizeof(t_paquete_select) + paquete->buffer->size + sizeof(paquete->valor_key);
 
 	int bytes = sizeof(t_paquete_select);
 

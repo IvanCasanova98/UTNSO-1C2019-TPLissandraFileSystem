@@ -8,6 +8,7 @@ int recibir_operacion(int socket_cliente)
 	else
 	{
 		close(socket_cliente);
+		puts(" *** No se recibio correctamente el COD OP ***");
 		return -1;
 	}
 }
@@ -34,6 +35,12 @@ t_list* recibir_paquete(int socket_cliente)
 	buffer = recibir_buffer(&size, socket_cliente);
 	while(desplazamiento < size)
 	{
+		//EN la variable tamanio, mete el primer int del buffer.
+		//SE desplaza hacia el fin de ese primer int.
+		//reserva un *char de ese tamanio que indica el primer int.
+		//copia en valor todo el mensaje que sigue luego del header.
+		//El desplazamiento pasa a ser del tamanio indicado en el header.
+
 		memcpy(&tamanio, buffer + desplazamiento, sizeof(int));
 		desplazamiento+=sizeof(int);
 		char* valor = malloc(tamanio);
@@ -56,6 +63,38 @@ t_list* recibir_paquete(int socket_cliente)
 //	return *nombre_tabla;
 //
 //}
+
+
+void deserializar_paquete_select(int socket_cliente, t_paquete_select *paquete ){
+
+
+	void *buffer = malloc(sizeof(t_paquete_select));
+	int desplazamiento = 0;
+	/*
+	 * Queria recibir el paquete entero.
+	 * EL peso del paquete entero seria 11 (char[7] + 4 del int).
+	 * Esto se podria hacer simplemente con un:
+	 * recv(socket_cliente, buffer, sizeof(t_paquete_select),MSG_WAITALL);
+	 * pero no recibe todo. en los printfs de abajo se ve como solo por alguna razon
+	 * solo recibe 4.
+	 */
+	recv(socket_cliente, buffer, sizeof(t_paquete_select),MSG_WAITALL);
+
+		printf("El tamanio de un t_paquete_select es: %d\n",sizeof(t_paquete_select));
+		printf("Se recibio en el buffer: %d\n", sizeof(buffer));
+
+		memcpy(&(paquete->nombre_tabla),buffer + desplazamiento,sizeof(char[TAMANIO_NOMBRE_TABLA]));
+		desplazamiento+= sizeof(char[TAMANIO_NOMBRE_TABLA]);
+
+		memcpy(&(paquete->valor_key),buffer + desplazamiento, sizeof(paquete->valor_key));
+		desplazamiento+= sizeof(paquete->valor_key);
+
+
+
+	free(buffer);
+
+}
+
 
 void nombre_tabla(int socket_cliente){
 

@@ -438,3 +438,154 @@ Tipo paquete: SELECT
 Nombre tabla: Tabla02
 Valor KEY: 3
 [INFO] 01:33:51:861 Kernel/(9520:9520): PAQUETE SELECT ENVIADO
+[INFO] 03:08:11:693 Kernel/(14375:14375): CONECTANDO CON MEMORY POOL
+[INFO] 03:08:17:876 Kernel/(14375:14375): 
+Nuevo paquete creado
+Tipo paquete: SELECT
+Nombre tabla: Tabla02
+Valor KEY: 2
+[INFO] 03:08:17:881 Kernel/(14375:14375): PAQUETE SELECT ENVIADO
+[INFO] 03:10:00:198 Kernel/(14447:14447): CONECTANDO CON MEMORY POOL
+[INFO] 03:10:04:514 Kernel/(14447:14447): 
+Nuevo paquete creado
+Tipo paquete: SELECT
+Nombre tabla: Tabla02
+Valor KEY: 2
+[INFO] 03:10:04:523 Kernel/(14447:14447): PAQUETE SELECT ENVIADO
+[INFO] 03:14:08:177 Kernel/(14781:14781): CONECTANDO CON MEMORY POOL
+[INFO] 03:14:11:799 Kernel/(14781:14781): 
+Nuevo paquete creado
+Tipo paquete: SELECT
+Nombre tabla: Tabla02
+Valor KEY: 2
+[INFO] 03:14:11:800 Kernel/(14781:14781): PAQUETE SELECT ENVIADO
+[INFO] 03:17:06:524 Kernel/(14983:14983): CONECTANDO CON MEMORY POOL
+[INFO] 03:17:09:685 Kernel/(14983:14983): 
+Nuevo paquete creado
+Tipo paquete: SELECT
+Nombre tabla: Tabla02
+Valor KEY: 2
+[INFO] 03:17:09:694 Kernel/(14983:14983): PAQUETE SELECT ENVIADO
+[INFO] 03:20:38:868 Kernel/(15304:15304): CONECTANDO CON MEMORY POOL
+[INFO] 03:20:41:655 Kernel/(15304:15304): 
+Nuevo paquete creado
+Tipo paquete: SELECT
+Nombre tabla: Tabla02
+Valor KEY: 2
+[INFO] 03:20:41:661 Kernel/(15304:15304): PAQUETE SELECT ENVIADO
+[INFO] 03:22:14:71 Kernel/(15383:15383): CONECTANDO CON MEMORY POOL
+[INFO] 03:22:17:335 Kernel/(15383:15383): 
+Nuevo paquete creado
+Tipo paquete: SELECT
+Nombre tabla: Tabla02
+Valor KEY: 2
+[INFO] 03:22:17:344 Kernel/(15383:15383): PAQUETE SELECT ENVIADO
+[INFO] 03:39:05:753 Kernel/(16236:16236): CONECTANDO CON MEMORY POOL
+[INFO] 03:39:11:9 Kernel/(16236:16236): 
+Nuevo paquete creado
+Tipo paquete: SELECT
+Nombre tabla: Tabla02
+Valor KEY: 2
+[INFO] 03:39:11:17 Kernel/(16236:16236): PAQUETE SELECT ENVIADO
+[INFO] 03:44:48:481 Kernel/(16714:16714): CONECTANDO CON MEMORY POOL
+[INFO] 03:44:54:675 Kernel/(16714:16714): 
+Nuevo paquete creado
+Tipo paquete: SELECT
+Nombre tabla: Tabla02
+Valor KEY: 2
+[INFO] 03:44:54:680 Kernel/(16714:16714): PAQUETE SELECT ENVIADO
+[INFO] 03:46:42:953 Kernel/(16819:16819): CONECTANDO CON MEMORY POOL
+[INFO] 03:46:45:926 Kernel/(16819:16819): 
+Nuevo paquete creado
+Tipo paquete: SELECT
+Nombre tabla: tabla02
+Valor KEY: 2
+[INFO] 03:46:45:935 Kernel/(16819:16819): PAQUETE SELECT ENVIADO
+[INFO] 04:30:20:790 Kernel/(18417:18417): CONECTANDO CON MEMORY POOL
+[INFO] 04:30:26:922 Kernel/(18417:18417): 
+Nuevo paquete creado
+Tipo paquete: SELECT
+Nombre tabla: tabla02
+Valor KEY: 2
+[INFO] 04:30:26:923 Kernel/(18417:18417): PAQUETE SELECT ENVIADO
+[INFO] 04:36:21:376 Kernel/(18913:18913): CONECTANDO CON MEMORY POOL
+[INFO] 04:36:35:907 Kernel/(18913:18913): 
+Nuevo paquete creado
+Tipo paquete: SELECT
+Nombre tabla: asd
+Valor KEY: 2
+[INFO] 04:36:35:915 Kernel/(18913:18913): PAQUETE SELECT ENVIADO
+[INFO] 04:41:31:477 Kernel/(19066:19066): CONECTANDO CON MEMORY POOL
+[INFO] 04:41:36:712 Kernel/(19066:19066): Se envio codigo de operacion: 3
+[INFO] 04:41:56:558 Kernel/(19066:19066): 
+Nuevo paquete creado
+Tipo paquete: SELECT
+Nombre tabla: tabla'2
+Valor KEY: 2
+[INFO] 04:41:56:559 Kernel/(19066:19066): PAQUETE SELECT ENVIADO
+[INFO] 04:44:52:5 Kernel/(19428:19428): CONECTANDO CON MEMORY POOL
+[INFO] 04:44:54:637 Kernel/(19428:19428): Se envio codigo de operacion: 3
+[INFO] 04:44:58:636 Kernel/(19428:19428): 
+Nuevo paquete creado
+Tipo paquete: SELECT
+Nombre tabla: tabla02
+Valor KEY: 2
+[INFO] 04:44:58:640 Kernel/(19428:19428): PAQUETE SELECT ENVIADO
+[INFO] 04:46:35:876 Kernel/(19496:19496): CONECTANDO CON MEMORY POOL
+[INFO] 04:46:55:484 Kernel/(19505:19505): CONECTANDO CON MEMORY POOL
+[INFO] 04:46:57:102 Kernel/(19505:19505): Se envio codigo de operacion: 3
+[INFO] 04:47:15:202 Kernel/(19505:19505): 
+Nuevo paquete creado
+Tipo paquete: SELECT
+Nombre tabla: tabla02
+Valor KEY: 2
+[INFO] 04:47:15:203 Kernel/(19505:19505): PAQUETE SELECT ENVIADO
+[INFO] 04:52:28:871 Kernel/(19646:19646): CONECTANDO CON MEMORY POOL
+[INFO] 04:52:40:899 Kernel/(19649:19649): CONECTANDO CON MEMORY POOL
+[INFO] 04:52:49:24 Kernel/(19649:19649): 
+Nuevo paquete creado
+Tipo paquete: SELECT
+Nombre tabla: tabla02
+Valor KEY: 2
+[INFO] 04:52:49:31 Kernel/(19649:19649): Se envio codigo de operacion: 3
+[INFO] 04:52:49:32 Kernel/(19649:19649): PAQUETE SELECT ENVIADO
+[INFO] 04:56:23:304 Kernel/(19742:19742): CONECTANDO CON MEMORY POOL
+[INFO] 04:56:29:243 Kernel/(19742:19742): 
+Nuevo paquete creado
+Tipo paquete: SELECT
+Nombre tabla: tabla02
+Valor KEY: 4
+[INFO] 04:56:29:254 Kernel/(19742:19742): Se envio codigo de operacion: 3
+[INFO] 04:56:29:259 Kernel/(19742:19742): PAQUETE SELECT ENVIADO
+[INFO] 04:58:48:788 Kernel/(19839:19839): CONECTANDO CON MEMORY POOL
+[INFO] 04:58:58:429 Kernel/(19839:19839): 
+Nuevo paquete creado
+Tipo paquete: SELECT
+Nombre tabla: tabla02
+Valor KEY: 2
+[INFO] 04:58:58:438 Kernel/(19839:19839): Se envio codigo de operacion: 3
+[INFO] 04:58:58:439 Kernel/(19839:19839): PAQUETE SELECT ENVIADO
+[INFO] 05:00:30:352 Kernel/(20028:20028): CONECTANDO CON MEMORY POOL
+[INFO] 05:00:33:942 Kernel/(20028:20028): 
+Nuevo paquete creado
+Tipo paquete: SELECT
+Nombre tabla: tabla02
+Valor KEY: 2
+[INFO] 05:00:33:950 Kernel/(20028:20028): Se envio codigo de operacion: 3
+[INFO] 05:00:33:951 Kernel/(20028:20028): PAQUETE SELECT ENVIADO
+[INFO] 05:06:40:994 Kernel/(20158:20158): CONECTANDO CON MEMORY POOL
+[INFO] 05:06:44:427 Kernel/(20158:20158): 
+Nuevo paquete creado
+Tipo paquete: SELECT
+Nombre tabla: tabla02
+Valor KEY: 3
+[INFO] 05:06:44:430 Kernel/(20158:20158): Se envio codigo de operacion: 3
+[INFO] 05:06:44:432 Kernel/(20158:20158): PAQUETE SELECT ENVIADO
+[INFO] 05:13:32:269 Kernel/(20373:20373): CONECTANDO CON MEMORY POOL
+[INFO] 05:13:37:540 Kernel/(20373:20373): 
+Nuevo paquete creado
+Tipo paquete: SELECT
+Nombre tabla: tabla02
+Valor KEY: 2
+[INFO] 05:13:37:544 Kernel/(20373:20373): Se envio codigo de operacion: 3
+[INFO] 05:13:37:551 Kernel/(20373:20373): PAQUETE SELECT ENVIADO

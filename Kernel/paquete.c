@@ -23,9 +23,7 @@ t_paquete_select* crear_paquete_select(char nombretabla[],int valor_key) //Agreg
 {
 	t_paquete_select* paquete = malloc(sizeof(t_paquete_select));
 
-//	crear_buffer_select(paquete); //POR QUE quisiese ponerle el buffer vacio cuando creo el paquete?
-	paquete->codigo_operacion = SELECT;
-	for(int i=0;i<=6;i++){
+	for(int i=0;i<TAMANIO_NOMBRE_TABLA;i++){
 		paquete->nombre_tabla[i] = nombretabla[i];
 	}
 	paquete->valor_key = valor_key;

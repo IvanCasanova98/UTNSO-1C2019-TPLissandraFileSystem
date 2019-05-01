@@ -31,7 +31,7 @@ typedef enum
 
 typedef struct
 {
-	op_code codigo_operacion;
+//	op_code codigo_operacion;
 	char nombre_tabla[TAMANIO_NOMBRE_TABLA];
 	int valor_key;
 //	t_buffer* buffer;

@@ -2,15 +2,6 @@
 
 int main(void)
 {
-//	void iterator(char* value){
-//		log_info(logger, value);
-//	}
-
-	void tipoPaquete(t_list* lista, int cliente_fd, op_code cod_op){
-		//lista = recibir_paquete(cliente_fd);
-		imprimirTipoPaquete(cod_op);
-		//list_iterate(lista, (void*) iterator);
-	}
 
 	logger = log_create("MemoryPool.log", "MemoryPool", 1, LOG_LEVEL_DEBUG);
 
@@ -18,39 +9,44 @@ int main(void)
 	log_info(logger, "INICIO CONEXION. Servidor listo para recibir al Kernel");
 	int cliente_fd = esperar_cliente(server_fd);
 
-//	t_list* lista;
+	t_paquete_select* paquete_select;
+
 	while(1)
 	{
+
 		int cod_op = recibir_operacion(cliente_fd);
-		switch(cod_op)
-		{
+		imprimirTipoPaquete(cod_op);
+
+
+		switch(cod_op){
 		case CREATE:
-			tipoPaquete(lista,cliente_fd,cod_op);
+
 			break;
 		case DROP:
-			tipoPaquete(lista,cliente_fd,cod_op);
+
 			break;
 		case DESCRIBE:
-			tipoPaquete(lista,cliente_fd,cod_op);
+
 			break;
 		case SELECT:
-			tipoPaquete(lista,cliente_fd,cod_op);
-
-			nombre_tabla(cliente_fd);
-			int valorkey = valor_key(cliente_fd);
-			//printf("%d", valorkey);
+			printf("Entro a select.\n");
+			deserializar_paquete_select(cliente_fd,&paquete_select);
+			printf("Salio de serializar.\n");
+			printf("Nombre de tabla recibido: %s\n",paquete_select->nombre_tabla);
+			printf("Key Value recibido: %d\n",paquete_select->valor_key);
+			free(paquete_select);//va este free???
 			break;
 		case INSERT:
-			tipoPaquete(lista,cliente_fd,cod_op);
+
 			break;
 		case JOURNAL:
-			tipoPaquete(lista,cliente_fd,cod_op);
+
 			break;
 		case RUN:
-			tipoPaquete(lista,cliente_fd,cod_op);
+
 			break;
 		case ADD:
-			tipoPaquete(lista,cliente_fd,cod_op);
+
 			break;
 		case -1:
 			log_error(logger, "FIN CONEXION. Kernel desconectado. Terminando Servidor Memory Pool.");
@@ -63,6 +59,8 @@ int main(void)
 	return EXIT_SUCCESS;
 
 }
+
+
 
 void imprimirTipoPaquete(op_code cod_op){
 	switch(cod_op){
