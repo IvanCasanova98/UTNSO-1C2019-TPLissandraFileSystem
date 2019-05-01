@@ -18,7 +18,7 @@ int main(void)
 	log_info(logger, "INICIO CONEXION. Servidor listo para recibir al Kernel");
 	int cliente_fd = esperar_cliente(server_fd);
 
-	t_list* lista;
+//	t_list* lista;
 	while(1)
 	{
 		int cod_op = recibir_operacion(cliente_fd);

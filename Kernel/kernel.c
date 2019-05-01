@@ -34,10 +34,10 @@ void armar_paquete(int conexion){
 				paquete_select = selectf(); //EN paquete.c LO ARMA
 				enviar_paquete_select(paquete_select, conexion); //EN encio.c LO ENVIA
 				break;
-			case 4:
-				paquete_insert = insert();
-				enviar_paquete_insert(paquete_insert, conexion);
-				break;
+//			case 4:
+//				paquete_insert = insert();
+//				enviar_paquete_insert(paquete_insert, conexion);
+//				break;
 			default:
 				printf("Operacion desconocida.");
 				break;

@@ -397,3 +397,44 @@ Tipo paquete: SELECT
 Nombre tabla: tablaaa
 Valor KEY: 2
 [INFO] 20:26:51:223 Kernel/(4746:4746): PAQUETE SELECT ENVIADO
+[INFO] 00:26:54:101 Kernel/(6225:6225): CONECTANDO CON MEMORY POOL
+[INFO] 00:27:00:542 Kernel/(6225:6225): 
+Nuevo paquete creado
+Tipo paquete: SELECT
+Nombre tabla: tablajajaja
+Valor KEY: 2
+[INFO] 00:27:00:551 Kernel/(6225:6225): PAQUETE SELECT ENVIADO
+[INFO] 01:26:43:17 Kernel/(9090:9090): CONECTANDO CON MEMORY POOL
+[INFO] 01:26:51:294 Kernel/(9090:9090): 
+Nuevo paquete creado
+Tipo paquete: SELECT
+Nombre tabla: Tabla0
+Valor KEY: 2
+[INFO] 01:27:22:51 Kernel/(9100:9100): CONECTANDO CON MEMORY POOL
+[INFO] 01:27:26:101 Kernel/(9100:9100): 
+Nuevo paquete creado
+Tipo paquete: SELECT
+Nombre tabla: Tabla0
+Valor KEY: 2
+[INFO] 01:27:26:108 Kernel/(9100:9100): PAQUETE SELECT ENVIADO
+[INFO] 01:29:45:944 Kernel/(9377:9377): CONECTANDO CON MEMORY POOL
+[INFO] 01:29:53:586 Kernel/(9377:9377): 
+Nuevo paquete creado
+Tipo paquete: SELECT
+Nombre tabla: Tabla2
+Valor KEY: 2
+[INFO] 01:29:53:593 Kernel/(9377:9377): PAQUETE SELECT ENVIADO
+[INFO] 01:32:46:313 Kernel/(9462:9462): CONECTANDO CON MEMORY POOL
+[INFO] 01:32:49:197 Kernel/(9462:9462): 
+Nuevo paquete creado
+Tipo paquete: SELECT
+Nombre tabla: 
+Valor KEY: 0
+[INFO] 01:32:49:204 Kernel/(9462:9462): PAQUETE SELECT ENVIADO
+[INFO] 01:33:45:807 Kernel/(9520:9520): CONECTANDO CON MEMORY POOL
+[INFO] 01:33:51:857 Kernel/(9520:9520): 
+Nuevo paquete creado
+Tipo paquete: SELECT
+Nombre tabla: Tabla02
+Valor KEY: 3
+[INFO] 01:33:51:861 Kernel/(9520:9520): PAQUETE SELECT ENVIADO

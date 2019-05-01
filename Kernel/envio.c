@@ -12,74 +12,82 @@ t_config* leer_config() {
 
 void* serializar_paquete_select(t_paquete_select* paquete, int bytes)
 {
-	void * magic = malloc(bytes);
+	//PARA MI MAGIC ES EL BUFFER !
+	void * buffer = malloc(bytes);
 	int desplazamiento = 0;
 
-	memcpy(magic + desplazamiento, &(paquete->codigo_operacion), sizeof(&(paquete->codigo_operacion)));
+	memcpy(buffer + desplazamiento, &(paquete->codigo_operacion), sizeof(paquete->codigo_operacion));
 //	desplazamiento+= sizeof(&(paquete->codigo_operacion));
 	desplazamiento+= sizeof(paquete->codigo_operacion);
-	memcpy(magic + desplazamiento, &(paquete->nombre_tabla), strlen(paquete->nombre_tabla));
-	desplazamiento+= strlen(paquete->nombre_tabla);
-	memcpy(magic + desplazamiento, &(paquete->valor_key), sizeof(&(paquete->valor_key)));
+	memcpy(buffer + desplazamiento, &(paquete->nombre_tabla), sizeof(char[TAMANIO_NOMBRE_TABLA]));
+	desplazamiento+= sizeof(char[TAMANIO_NOMBRE_TABLA]);
+	memcpy(buffer + desplazamiento, &(paquete->valor_key), sizeof(paquete->valor_key));
 //	desplazamiento+= sizeof(&(paquete->valor_key));
 	desplazamiento+= sizeof(paquete->valor_key);
 
-	memcpy(magic + desplazamiento, &(paquete->buffer->size), sizeof(int));
-	desplazamiento+= sizeof(int);
-	memcpy(magic + desplazamiento, paquete->buffer->stream, paquete->buffer->size);
-	desplazamiento+= paquete->buffer->size;
 
-	return magic;
+//	memcpy(magic + desplazamiento, &(paquete->buffer->size), sizeof(int));
+//	desplazamiento+= sizeof(int);
+//	memcpy(magic + desplazamiento, paquete->buffer->stream, paquete->buffer->size);
+//	desplazamiento+= paquete->buffer->size;
+
+	return buffer; //es void y esta retornando mmm
+	free(buffer);
 }
 
-void* serializar_paquete_insert(t_paquete_insert* paquete, int bytes)
-{
-	void * magic = malloc(bytes);
-	int desplazamiento = 0;
-
-	memcpy(magic + desplazamiento, &(paquete->codigo_operacion), sizeof(int));
-	desplazamiento+= sizeof(int);
-	memcpy(magic + desplazamiento, &(paquete->buffer->size), sizeof(int));
-	desplazamiento+= sizeof(int);
-	memcpy(magic + desplazamiento, paquete->buffer->stream, paquete->buffer->size);
-	desplazamiento+= paquete->buffer->size;
-
-	return magic;
-}
+//void* serializar_paquete_insert(t_paquete_insert* paquete, int bytes)
+//{
+//	void * magic = malloc(bytes);
+//	int desplazamiento = 0;
+//
+//	memcpy(magic + desplazamiento, &(paquete->codigo_operacion), sizeof(int));
+//	desplazamiento+= sizeof(int);
+//	memcpy(magic + desplazamiento, &(paquete->buffer->size), sizeof(int));
+//	desplazamiento+= sizeof(int);
+//	memcpy(magic + desplazamiento, paquete->buffer->stream, paquete->buffer->size);
+//	desplazamiento+= paquete->buffer->size;
+//
+//	return magic;
+//}
 
 //----------------------------ENVIAR PAQUETES
 
 void enviar_paquete_select(t_paquete_select* paquete, int socket_cliente)
 {
 //	int bytes = paquete->buffer->size + sizeof(paquete->codigo_operacion) + strlen(paquete->nombre_tabla) + sizeof(paquete->valor_key);// +2*sizeof(int);
-	//int bytes = paquete->buffer->size + 2*sizeof(int);
-	int bytes = sizeof(t_paquete_select) + paquete->buffer->size + sizeof(paquete->valor_key);
+//	int bytes = paquete->buffer->size + 2*sizeof(int);
+//	int bytes = sizeof(t_paquete_select) + paquete->buffer->size + sizeof(paquete->valor_key);
+
+	int bytes = sizeof(t_paquete_select);
+
 	void* a_enviar = serializar_paquete_select(paquete, bytes);
 
-	send(socket_cliente, a_enviar, bytes, 0);
+	if ( send(socket_cliente, a_enviar, bytes, 0) <= 0) puts("Error en envio de PAQUETE SELECT.");
+	else {
+			t_log* logger = iniciar_logger();
+			log_info(logger, "PAQUETE SELECT ENVIADO");
+		    log_destroy(logger);
 
-	t_log* logger = iniciar_logger();
-	log_info(logger, "PAQUETE SELECT ENVIADO");
-    log_destroy(logger);
-
-	free(a_enviar);
-
-    eliminar_paquete_select(paquete);
-}
-
-void enviar_paquete_insert(t_paquete_insert* paquete, int socket_cliente)
-{
-	int bytes = paquete->buffer->size + 2*sizeof(int);
-	void* a_enviar = serializar_paquete_insert(paquete, bytes);
-
-	send(socket_cliente, a_enviar, bytes, 0);
-
-	t_log* logger = iniciar_logger();
-	log_info(logger, "PAQUETE INSERT ENVIADO");
-    log_destroy(logger);
+	}
 
 	free(a_enviar);
 
-    eliminar_paquete_insert(paquete);
+//    eliminar_paquete_select(paquete);
 }
+
+//void enviar_paquete_insert(t_paquete_insert* paquete, int socket_cliente)
+//{
+//	int bytes = paquete->buffer->size + 2*sizeof(int);
+//	void* a_enviar = serializar_paquete_insert(paquete, bytes);
+//
+//	send(socket_cliente, a_enviar, bytes, 0);
+//
+//	t_log* logger = iniciar_logger();
+//	log_info(logger, "PAQUETE INSERT ENVIADO");
+//    log_destroy(logger);
+//
+//	free(a_enviar);
+//
+//    eliminar_paquete_insert(paquete);
+//}
 
