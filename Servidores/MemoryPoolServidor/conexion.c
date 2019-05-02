@@ -36,6 +36,7 @@ int iniciar_servidor(void)
 
 int esperar_cliente(int socket_servidor)
 {
+	printf("ola");
 	struct sockaddr_in dir_cliente;
 	int tam_direccion = sizeof(struct sockaddr_in);
 
@@ -45,5 +46,6 @@ int esperar_cliente(int socket_servidor)
 
 	return socket_cliente;
 }
+
 
 

@@ -10,19 +10,17 @@ t_config* leer_config() {
 
 //----------------------------SERIALIZAR PAQUETES
 
-void* serializar_paquete_select(t_paquete_select* paquete, int bytes)
+void* serializar_paquete_select(t_paquete_select* paquete)
 {
 	//PARA MI MAGIC ES EL BUFFER !
-	void * buffer = malloc(bytes);
+	size_t longitudNombreTabla = strlen(paquete->nombre_tabla);
+	void * buffer = malloc(11);
 	int desplazamiento = 0;
-
-	memcpy(buffer + desplazamiento, &(paquete->nombre_tabla), sizeof(char[TAMANIO_NOMBRE_TABLA]));
-	desplazamiento+= sizeof(char[TAMANIO_NOMBRE_TABLA]);
-	memcpy(buffer + desplazamiento, &(paquete->valor_key), sizeof(paquete->valor_key));
-	desplazamiento+= sizeof(paquete->valor_key);
-
-	printf("Se envio de tamaño: %d\n",sizeof(buffer));
-	return buffer; //es void y esta retornando mmm
+	memcpy(buffer + desplazamiento, &(paquete->nombre_tabla), 7);
+	desplazamiento+= 7;
+	memcpy(buffer + desplazamiento, &(paquete->valor_key), 4);
+	desplazamiento+= 4;
+	return buffer; //es void y se esta tornando mmm
 	free(buffer);
 }
 
@@ -45,10 +43,13 @@ void* serializar_paquete_select(t_paquete_select* paquete, int bytes)
 
 void enviar_paquete_select(t_paquete_select* paquete, int socket_cliente)
 {
+	printf("ola");
+	size_t longitudNombreTabla = strlen(paquete->nombre_tabla);
+	printf("ola");
+	int bytes = 11;
 
-	int bytes = sizeof(t_paquete_select);
-
-	void* a_enviar = serializar_paquete_select(paquete, bytes);
+	printf("ola");
+	void* a_enviar = serializar_paquete_select(paquete);
 
 	if ( send(socket_cliente, a_enviar, bytes, 0) <= 0) puts("Error en envio de PAQUETE SELECT.");
 	else {

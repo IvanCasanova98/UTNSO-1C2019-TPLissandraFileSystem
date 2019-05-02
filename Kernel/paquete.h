@@ -6,7 +6,7 @@
 #include<commons/log.h>
 #include<commons/string.h>
 #include<commons/config.h>
-
+#include<string.h>
 
 
 //---------------------ESTRUCTURA PAQUETES
@@ -29,15 +29,15 @@ typedef enum
 	ADD //Agregado
 }op_code; //TIPO DE PAQUETE
 
-typedef struct
+typedef struct t_paquete_select
 {
 //	op_code codigo_operacion;
-	char nombre_tabla[TAMANIO_NOMBRE_TABLA];
+	char nombre_tabla[7];
 	int valor_key;
 //	t_buffer* buffer;
 }__attribute__((packed)) t_paquete_select;
 
-typedef struct
+typedef struct t_paquete_insert
 {
 	op_code codigo_operacion;
 	char nombre_tabla[TAMANIO_NOMBRE_TABLA];

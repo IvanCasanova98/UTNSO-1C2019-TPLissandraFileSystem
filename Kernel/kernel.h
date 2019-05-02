@@ -5,7 +5,8 @@
 #include<stdlib.h>
 #include<readline/readline.h>
 #include<string.h>
-
+#include<curses.h>
+#include<commons/temporal.h>
 #include "conexion.h"
 #include "paquete.h"
 #include "envio.h"

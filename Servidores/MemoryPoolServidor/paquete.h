@@ -5,6 +5,7 @@
 
 #include<stdio.h>
 #include<stdlib.h>
+#include<string.h>
 #include<sys/socket.h>
 #include<unistd.h>
 #include<netdb.h>
@@ -13,33 +14,23 @@
 #include<string.h>
 
 
+typedef struct t_paquete_select
+{
+	char nombre_tabla[7];
+	int valor_key;
+}__attribute__((packed)) t_paquete_select;
+
+
 t_list* recibir_paquete(int);
 void recibir_mensaje(int);
 int recibir_operacion(int);
-
-//BEHRI
-
-/*
- * ME tira que no reconoce op_code
- * voy a redefinirlo llamandolo int en el struct: t_paquete_select
- */
+t_paquete_select* deserializar_paquete_select(int socket_cliente);
 
 
-typedef struct
-{
-//	op_code codigo_operacion;
-//	int codigo_operacion;
-	char nombre_tabla[TAMANIO_NOMBRE_TABLA];
-	int valor_key;
-//	t_buffer* buffer;
-}__attribute__((packed)) t_paquete_select;
 
-void deserializar_paquete_select(int,t_paquete_select*);
 
-//BEHRI
 
-//---func prueba
-void nombre_tabla(int socket_cliente);
-int valor_key(int socket_cliente);
+
+
 
 #endif /* PAQUETE_H_ */
