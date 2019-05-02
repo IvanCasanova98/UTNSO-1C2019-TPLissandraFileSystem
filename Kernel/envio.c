@@ -12,8 +12,6 @@ t_config* leer_config() {
 
 void* serializar_paquete_select(t_paquete_select* paquete)
 {
-	//PARA MI MAGIC ES EL BUFFER !
-	size_t longitudNombreTabla = strlen(paquete->nombre_tabla);
 	void * buffer = malloc(11);
 	int desplazamiento = 0;
 	memcpy(buffer + desplazamiento, &(paquete->nombre_tabla), 7);
@@ -24,33 +22,29 @@ void* serializar_paquete_select(t_paquete_select* paquete)
 	free(buffer);
 }
 
-//void* serializar_paquete_insert(t_paquete_insert* paquete, int bytes)
-//{
-//	void * magic = malloc(bytes);
-//	int desplazamiento = 0;
-//
-//	memcpy(magic + desplazamiento, &(paquete->codigo_operacion), sizeof(int));
-//	desplazamiento+= sizeof(int);
-//	memcpy(magic + desplazamiento, &(paquete->buffer->size), sizeof(int));
-//	desplazamiento+= sizeof(int);
-//	memcpy(magic + desplazamiento, paquete->buffer->stream, paquete->buffer->size);
-//	desplazamiento+= paquete->buffer->size;
-//
-//	return magic;
-//}
+void* serializar_paquete_insert(t_paquete_insert* paquete)
+{
+	void * buffer = malloc(35);
+	int desplazamiento = 0;
+	memcpy(buffer + desplazamiento, &(paquete->nombre_tabla), 7);
+	desplazamiento+= 7;
+	memcpy(buffer + desplazamiento, &(paquete->valor_key), 4);
+	desplazamiento+= 4;
+	memcpy(buffer + desplazamiento, &(paquete->value), 20);
+	desplazamiento+= 20;
+	memcpy(buffer + desplazamiento, &(paquete->timestamp), 4);
+	desplazamiento+= 4;
+	return buffer; //es void y se esta tornando mmm
+	free(buffer);
+
+}
 
 //----------------------------ENVIAR PAQUETES
 
 void enviar_paquete_select(t_paquete_select* paquete, int socket_cliente)
 {
-	printf("ola");
-	size_t longitudNombreTabla = strlen(paquete->nombre_tabla);
-	printf("ola");
 	int bytes = 11;
-
-	printf("ola");
 	void* a_enviar = serializar_paquete_select(paquete);
-
 	if ( send(socket_cliente, a_enviar, bytes, 0) <= 0) puts("Error en envio de PAQUETE SELECT.");
 	else {
 			t_log* logger = iniciar_logger();
@@ -60,23 +54,18 @@ void enviar_paquete_select(t_paquete_select* paquete, int socket_cliente)
 	}
 
 	free(a_enviar);
-
-//    eliminar_paquete_select(paquete);
 }
 
-//void enviar_paquete_insert(t_paquete_insert* paquete, int socket_cliente)
-//{
-//	int bytes = paquete->buffer->size + 2*sizeof(int);
-//	void* a_enviar = serializar_paquete_insert(paquete, bytes);
-//
-//	send(socket_cliente, a_enviar, bytes, 0);
-//
-//	t_log* logger = iniciar_logger();
-//	log_info(logger, "PAQUETE INSERT ENVIADO");
-//    log_destroy(logger);
-//
-//	free(a_enviar);
-//
-//    eliminar_paquete_insert(paquete);
-//}
+void enviar_paquete_insert(t_paquete_insert* paquete, int socket_cliente)
+{
+	int bytes = 35;
+	void* a_enviar = serializar_paquete_insert(paquete);
+	if ( send(socket_cliente, a_enviar, bytes, 0) <= 0) puts("Error en envio de PAQUETE INSERT.");
+	else {
+			t_log* logger = iniciar_logger();
+			log_info(logger, "PAQUETE INSERT ENVIADO");
+		    log_destroy(logger);
+	}
 
+	free(a_enviar);
+}

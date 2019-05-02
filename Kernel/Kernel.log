@@ -857,3 +857,105 @@ Nombre tabla: SAD
 Valor KEY: 123
 [INFO] 01:14:58:574 Kernel/(24261:24261): Se envio codigo de operacion: 3
 [INFO] 01:14:58:575 Kernel/(24261:24261): PAQUETE SELECT ENVIADO
+[INFO] 03:27:12:814 Kernel/(28643:28643): CONECTANDO CON MEMORY POOL
+[INFO] 03:27:26:987 Kernel/(28643:28643): 
+Nuevo paquete creado
+Tipo paquete: INSERT
+Nombre tabla: asd
+Valor KEY: 123
+Value del paquete: 8454
+Timestamp: 4564654
+[INFO] 03:27:26:987 Kernel/(28643:28643): Se envio codigo de operacion: 4
+[INFO] 03:27:26:988 Kernel/(28643:28643): PAQUETE INSERT ENVIADO
+[INFO] 03:30:13:979 Kernel/(28797:28797): CONECTANDO CON MEMORY POOL
+[INFO] 03:30:53:956 Kernel/(28797:28797): 
+Nuevo paquete creado
+Tipo paquete: INSERT
+Nombre tabla: asd
+Valor KEY: 12
+Value del paquete: 78
+Timestamp: 7454
+[INFO] 03:30:53:956 Kernel/(28797:28797): Se envio codigo de operacion: 4
+[INFO] 03:30:53:956 Kernel/(28797:28797): PAQUETE INSERT ENVIADO
+[INFO] 15:06:07:918 Kernel/(29650:29650): CONECTANDO CON MEMORY POOL
+[INFO] 15:06:24:827 Kernel/(29650:29650): 
+Nuevo paquete creado
+Tipo paquete: INSERT
+Nombre tabla: asd
+Valor KEY: 123
+Value del paquete: 123
+Timestamp: 123
+[INFO] 15:06:24:827 Kernel/(29650:29650): Se envio codigo de operacion: 4
+[INFO] 15:06:24:827 Kernel/(29650:29650): PAQUETE INSERT ENVIADO
+[INFO] 15:06:40:383 Kernel/(29650:29650): 
+Nuevo paquete creado
+Tipo paquete: SELECT
+Nombre tabla: ASD
+Valor KEY: 123
+[INFO] 15:06:40:383 Kernel/(29650:29650): Se envio codigo de operacion: 3
+[INFO] 15:06:40:384 Kernel/(29650:29650): PAQUETE SELECT ENVIADO
+[INFO] 15:06:48:269 Kernel/(29650:29650): 
+Nuevo paquete creado
+Tipo paquete: SELECT
+Nombre tabla: SAD
+Valor KEY: 12344
+[INFO] 15:06:48:269 Kernel/(29650:29650): Se envio codigo de operacion: 3
+[INFO] 15:06:48:269 Kernel/(29650:29650): PAQUETE SELECT ENVIADO
+[INFO] 15:07:25:858 Kernel/(29764:29764): CONECTANDO CON MEMORY POOL
+[INFO] 15:07:32:475 Kernel/(29764:29764): 
+Nuevo paquete creado
+Tipo paquete: SELECT
+Nombre tabla: ASD
+Valor KEY: 123
+[INFO] 15:07:32:475 Kernel/(29764:29764): Se envio codigo de operacion: 3
+[INFO] 15:07:32:475 Kernel/(29764:29764): PAQUETE SELECT ENVIADO
+[INFO] 15:07:40:870 Kernel/(29764:29764): 
+Nuevo paquete creado
+Tipo paquete: SELECT
+Nombre tabla: SADDD
+Valor KEY: 3333
+[INFO] 15:07:40:870 Kernel/(29764:29764): Se envio codigo de operacion: 3
+[INFO] 15:07:40:870 Kernel/(29764:29764): PAQUETE SELECT ENVIADO
+[INFO] 15:13:47:777 Kernel/(30036:30036): CONECTANDO CON MEMORY POOL
+[INFO] 15:13:53:747 Kernel/(30036:30036): 
+Nuevo paquete creado
+Tipo paquete: SELECT
+Nombre tabla: asd
+Valor KEY: 123
+[INFO] 15:13:53:747 Kernel/(30036:30036): Se envio codigo de operacion: 3
+[INFO] 15:13:53:748 Kernel/(30036:30036): PAQUETE SELECT ENVIADO
+[INFO] 15:14:00:792 Kernel/(30036:30036): 
+Nuevo paquete creado
+Tipo paquete: SELECT
+Nombre tabla: sfasa
+Valor KEY: 412412
+[INFO] 15:14:00:793 Kernel/(30036:30036): Se envio codigo de operacion: 3
+[INFO] 15:14:00:793 Kernel/(30036:30036): PAQUETE SELECT ENVIADO
+[INFO] 15:14:25:535 Kernel/(30036:30036): 
+Nuevo paquete creado
+Tipo paquete: INSERT
+Nombre tabla: fffff
+Valor KEY: 123
+Value del paquete: safasf
+Timestamp: 123124
+[INFO] 15:14:25:535 Kernel/(30036:30036): Se envio codigo de operacion: 4
+[INFO] 15:14:25:536 Kernel/(30036:30036): PAQUETE INSERT ENVIADO
+[INFO] 15:20:09:287 Kernel/(30558:30558): CONECTANDO CON MEMORY POOL
+[INFO] 15:20:12:463 Kernel/(30558:30558): Kernel Desconectado
+[INFO] 15:20:26:891 Kernel/(30582:30582): CONECTANDO CON MEMORY POOL
+[INFO] 15:20:37:222 Kernel/(30582:30582): 
+Nuevo paquete creado
+Tipo paquete: SELECT
+Nombre tabla: Tabla1
+Valor KEY: 123
+[INFO] 15:20:37:222 Kernel/(30582:30582): Se envio codigo de operacion: 3
+[INFO] 15:20:37:222 Kernel/(30582:30582): PAQUETE SELECT ENVIADO
+[INFO] 15:20:53:569 Kernel/(30582:30582): 
+Nuevo paquete creado
+Tipo paquete: INSERT
+Nombre tabla: Tabloid{
+Valor KEY: 123
+Value del paquete: HOla
+Timestamp: 1
+[INFO] 15:20:53:569 Kernel/(30582:30582): Se envio codigo de operacion: 4
+[INFO] 15:20:53:570 Kernel/(30582:30582): PAQUETE INSERT ENVIADO

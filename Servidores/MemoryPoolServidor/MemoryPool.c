@@ -12,7 +12,8 @@ int main(void)
 
 
 	while(TRUE){ //lo dejo en true porque el Kernel se da cuenta si mandan un cod_op erroneo. En caso de mandar un cod op mal, kernel se cierra
-		printf("Esperando Request del Kernel....");
+
+
 		int cod_op = recibir_operacion(cliente_fd);
 		switch(cod_op){
 		case CREATE:
@@ -24,14 +25,17 @@ int main(void)
 		case DESCRIBE:
 			log_info(logger, "Se recibio paquete tipo: DESCRIBE");
 			break;
-		case SELECT:
-			system("clear");
+		case SELECT: ;
+			//system("clear");
 			t_paquete_select* paquete_select = deserializar_paquete_select(cliente_fd);
-			log_info(logger, "Se recibio SELECT %s %d\n",paquete_select->nombre_tabla, paquete_select->valor_key);
+			log_info(logger, "Se recibio SELECT %s %d \n",paquete_select->nombre_tabla, paquete_select->valor_key);
 			free(paquete_select);
 			break;
-		case INSERT:
-			log_info(logger, "Se recibio paquete tipo: INSERT");
+		case INSERT: ;
+			//system("clear");
+			t_paquete_insert* paquete_insert = deserializar_paquete_insert(cliente_fd);
+			log_info(logger, "Se recibio paquete tipo: INSERT %s %d %s %d \n",paquete_insert->nombre_tabla, paquete_insert->valor_key,paquete_insert->value, paquete_insert->timestamp);
+			free(paquete_insert);
 			break;
 		case JOURNAL:
 			log_info(logger, "Se recibio paquete tipo: JOURNAL");
@@ -49,6 +53,7 @@ int main(void)
 			log_warning(logger, "Operacion desconocida.");
 			break;
 		}
+
 	}
 	return EXIT_SUCCESS;
 
@@ -56,35 +61,4 @@ int main(void)
 
 
 
-void imprimirTipoPaquete(op_code cod_op){
-	switch(cod_op){
-	case CREATE:
 
-		break;
-	case DROP:
-
-		break;
-	case DESCRIBE:
-
-		break;
-	case SELECT:
-
-		break;
-	case INSERT:
-
-		break;
-	case JOURNAL:
-
-		break;
-	case RUN:
-
-		break;
-	case ADD:
-
-		break;
-	default:
-		log_info(logger, "Se recibio paquete tipo: DESCONOCIDO");
-		break;
-	}
-
-}

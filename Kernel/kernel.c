@@ -43,14 +43,22 @@ void armar_paquete(int conexion){
 									log_destroy(logger);
 
 								}
-						printf("ola");
+
 						enviar_paquete_select(paquete_select, conexion); //EN envio.c LO ENVIA
 						free(paquete_select); //Va este free???s si PAPANATAS
 						break;
-		//			case 4:
-		//				paquete_insert = insert();
-		//				enviar_paquete_insert(paquete_insert, conexion);
-		//				break;
+					case 4:
+						paquete_insert = insert();
+						if (send(conexion, &cod_ingresado, sizeof(int), 0) <= 0) puts("Error en envio de CODIGO DE OPERACION.");
+								else {
+									t_log* logger = iniciar_logger();
+									log_info(logger, "Se envio codigo de operacion: %d",cod_ingresado);
+									log_destroy(logger);
+
+								}
+						enviar_paquete_insert(paquete_insert, conexion);
+						free(paquete_insert);
+						break;
 					default:
 						printf("Operacion desconocida.");
 						break;

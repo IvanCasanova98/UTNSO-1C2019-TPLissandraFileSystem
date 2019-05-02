@@ -20,14 +20,30 @@ typedef struct t_paquete_select
 	int valor_key;
 }__attribute__((packed)) t_paquete_select;
 
+typedef struct t_paquete_insert
+{
+	char nombre_tabla[7];
+	int valor_key;
+	char value[20];
+	int timestamp;
+}__attribute__((packed)) t_paquete_insert;
 
 t_list* recibir_paquete(int);
 void recibir_mensaje(int);
 int recibir_operacion(int);
 t_paquete_select* deserializar_paquete_select(int socket_cliente);
+t_paquete_insert* deserializar_paquete_insert(int socket_cliente);
+
+//---------------------CREAR PAQUETE
+
+t_paquete_select* crear_paquete_select(char *nombretabla,int valor_key);
+t_paquete_insert* crear_paquete_insert(char *nombretabla,int valor_key, char *value, int timestamp);
 
 
+//---------------------LOGGEAR PAQUETE
 
+void loggear_paquete_select(t_paquete_select* paquete);
+void loggear_paquete_insert(t_paquete_insert* paquete);
 
 
 
