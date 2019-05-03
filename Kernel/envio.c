@@ -30,16 +30,27 @@ void* serializar_paquete_select(t_paquete_select* paquete)
 
 void* serializar_paquete_insert(t_paquete_insert* paquete)
 {
-	void * buffer = malloc(35);
+	void * buffer = malloc(sizeof(uint32_t)*2 + sizeof(int)*2 +paquete->nombre_tabla_long +paquete->value_long);
 	int desplazamiento = 0;
-	memcpy(buffer + desplazamiento, &(paquete->nombre_tabla), 7);
-	desplazamiento+= 7;
+
+	memcpy(buffer + desplazamiento, &paquete->nombre_tabla_long, sizeof(uint32_t));
+	desplazamiento+= sizeof(uint32_t);
+
+	memcpy(buffer + desplazamiento, &paquete->value_long, sizeof(uint32_t));
+	desplazamiento+= sizeof(uint32_t);
+
+	memcpy(buffer + desplazamiento, paquete->nombre_tabla, paquete->nombre_tabla_long);
+	desplazamiento+= paquete->nombre_tabla_long;
+
+	memcpy(buffer + desplazamiento, paquete->value, paquete->value_long);
+	desplazamiento+= paquete->value_long;
+
 	memcpy(buffer + desplazamiento, &(paquete->valor_key), 4);
-	desplazamiento+= 4;
-	memcpy(buffer + desplazamiento, &(paquete->value), 20);
-	desplazamiento+= 20;
+	desplazamiento+=  sizeof(int);
+
 	memcpy(buffer + desplazamiento, &(paquete->timestamp), 4);
-	desplazamiento+= 4;
+	desplazamiento+=  sizeof(int);
+
 	return buffer; //es void y se esta tornando mmm
 	free(buffer);
 
@@ -65,7 +76,7 @@ void enviar_paquete_select(t_paquete_select* paquete, int socket_cliente)
 
 void enviar_paquete_insert(t_paquete_insert* paquete, int socket_cliente)
 {
-	int bytes = 35;
+	int bytes = sizeof(int)*4 +paquete->nombre_tabla_long + paquete->value_long;
 	void* a_enviar = serializar_paquete_insert(paquete);
 	if ( send(socket_cliente, a_enviar, bytes, 0) <= 0) puts("Error en envio de PAQUETE INSERT.");
 	else {

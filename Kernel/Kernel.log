@@ -1617,3 +1617,46 @@ Valor KEY: 124
 [INFO] 05:33:04:287 Kernel/(19841:19841): Se envio codigo de operacion: 3
 [INFO] 05:33:04:287 Kernel/(19841:19841): PAQUETE SELECT ENVIADO
 [INFO] 05:34:02:282 Kernel/(19841:19841): Kernel Desconectado
+[INFO] 06:11:27:532 Kernel/(22176:22176): CONECTANDO CON MEMORY POOL
+[INFO] 06:11:30:591 Kernel/(22176:22176): Kernel Desconectado
+[INFO] 06:28:22:806 Kernel/(22855:22855): CONECTANDO CON MEMORY POOL
+[INFO] 06:28:41:196 Kernel/(22855:22855): 
+Nuevo paquete creado
+Tipo paquete: INSERT
+Nombre tabla: fsdfsdf
+Valor KEY: 123
+Value del paquete: fsdfsdf
+Timestamp: 1
+[INFO] 06:28:41:196 Kernel/(22855:22855): Se envio codigo de operacion: 4
+[INFO] 06:28:41:197 Kernel/(22855:22855): PAQUETE INSERT ENVIADO
+[INFO] 06:29:53:293 Kernel/(22855:22855): Kernel Desconectado
+[INFO] 06:29:54:352 Kernel/(22899:22899): CONECTANDO CON MEMORY POOL
+[INFO] 06:30:01:124 Kernel/(22899:22899): 
+Nuevo paquete creado
+Tipo paquete: INSERT
+Nombre tabla: sad
+Valor KEY: 123
+Value del paquete: sad
+Timestamp: 3
+[INFO] 06:30:01:124 Kernel/(22899:22899): Se envio codigo de operacion: 4
+[INFO] 06:30:01:124 Kernel/(22899:22899): PAQUETE INSERT ENVIADO
+[INFO] 06:35:54:981 Kernel/(22899:22899): Kernel Desconectado
+[INFO] 06:35:57:947 Kernel/(23076:23076): CONECTANDO CON MEMORY POOL
+[INFO] 06:36:04:803 Kernel/(23076:23076): 
+Nuevo paquete creado
+Tipo paquete: INSERT
+Nombre tabla: asd
+Valor KEY: 333
+Value del paquete: asd
+Timestamp: 1
+[INFO] 06:36:04:803 Kernel/(23076:23076): Se envio codigo de operacion: 4
+[INFO] 06:36:04:803 Kernel/(23076:23076): PAQUETE INSERT ENVIADO
+[INFO] 06:36:23:261 Kernel/(23076:23076): 
+Nuevo paquete creado
+Tipo paquete: INSERT
+Nombre tabla: fuihqwekufhlq
+Valor KEY: 123
+Value del paquete: fuihqwekufhlq
+Timestamp: 3
+[INFO] 06:36:23:261 Kernel/(23076:23076): Se envio codigo de operacion: 4
+[INFO] 06:36:23:261 Kernel/(23076:23076): PAQUETE INSERT ENVIADO

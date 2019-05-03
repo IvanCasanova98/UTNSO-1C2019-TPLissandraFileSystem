@@ -5,26 +5,29 @@ t_paquete_select* crear_paquete_select(char* nombretabla,int valor_key) //Agrega
 {
 	uint32_t tamaniotabla = strlen(nombretabla)+1;
 	t_paquete_select* paquete = malloc(8+tamaniotabla);
+
 	paquete->nombre_tabla= nombretabla;
 	paquete->valor_key = valor_key;
 	paquete->nombre_tabla_long= tamaniotabla;
+
 	return paquete;
 
 }
 
-t_paquete_insert* crear_paquete_insert(char *nombretabla,int valor_key, char *value, int timestamp) //Agregado
+t_paquete_insert* crear_paquete_insert(char *nombre_tabla,int valor_key, char *value, int timestamp) //Agregado
 {
-	t_paquete_insert* paquete = malloc(35);
 
-	for(int i=0;i<7;i++){
-		paquete->nombre_tabla[i]= nombretabla[i];
-	}
-	for(int i=0;i<20;i++){
-		paquete->value[i] = value[i];
-	}
+
+	uint32_t tamanio_tabla = strlen(nombre_tabla)+1;
+	uint32_t tamanio_value = strlen(value)+1;
+	t_paquete_insert* paquete = malloc(16 + tamanio_tabla + tamanio_value );
+
+	paquete->nombre_tabla= nombre_tabla;
+	paquete->value = value;
 	paquete->valor_key = valor_key;
 	paquete->timestamp = timestamp;
-
+	paquete->nombre_tabla_long= tamanio_tabla;
+	paquete->value_long= tamanio_value;
 
 	return paquete;
 }
@@ -51,16 +54,16 @@ t_paquete_select* selectf(){
 t_paquete_insert* insert(){
 
 	int valor_key;
-	char nombre_tabla[7];
-	char value[20];
+	char* nombre_tabla;
+	char* value;
 	int timestamp;
 
 	printf("\nIngrese nombre de la tabla: ");
-	scanf("%s", &nombre_tabla);
+	scanf("%s", nombre_tabla);
 	printf("\nIngrese el valor de la key: ");
 	scanf("%d", &valor_key);
 	printf("\nIngrese el value: ");
-	scanf("%s", &value);
+	scanf("%s", value);
 	printf("\nIngrese el timestamp: ");
 	scanf("%d", &timestamp);
 

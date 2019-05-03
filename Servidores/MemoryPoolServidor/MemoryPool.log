@@ -1,0 +1,10 @@
+[INFO] 06:28:18:125 MemoryPool/(22853:22853): INICIO CONEXION. Servidor listo para recibir al Kernel 
+[INFO] 06:28:22:807 MemoryPool/(22853:22853): Kernel conectado!
+[INFO] 06:29:49:917 MemoryPool/(22896:22896): INICIO CONEXION. Servidor listo para recibir al Kernel 
+[INFO] 06:29:54:352 MemoryPool/(22896:22896): Kernel conectado!
+[INFO] 06:35:51:590 MemoryPool/(23072:23072): INICIO CONEXION. Servidor listo para recibir al Kernel 
+[INFO] 06:35:57:947 MemoryPool/(23072:23072): Kernel conectado!
+[INFO] 06:36:04:803 MemoryPool/(23072:23072): Se recibio paquete tipo: INSERT asd 333 asd 1 
+
+[INFO] 06:36:23:261 MemoryPool/(23072:23072): Se recibio paquete tipo: INSERT fuihqwekufhlq 123 fuihqwekufhlq 3 
+
