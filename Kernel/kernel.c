@@ -22,8 +22,8 @@ int main(void){
 void armar_paquete(int conexion){
 
 	int cod_ingresado;
-	t_paquete_select* paquete_select;
-	t_paquete_insert* paquete_insert;
+//	t_paquete_select* paquete_select;
+//	t_paquete_insert* paquete_insert;
 	system("clear");
 	printf("\n0.CREATE\n1.DROP\n2.DESCRIBE\n3.SELECT\n4.INSERT\n5.JOURNAL\n6.RUN\n7.ADD\n");
 	printf("\nIngrese el Codigo de operacion correspondiente: ");
@@ -32,10 +32,9 @@ void armar_paquete(int conexion){
 	//Decidi que enviaremos suelto el cod_op.
 
 	while(cod_ingresado!=8){
-		system("clear");
 		switch(cod_ingresado){
-					case 3:
-						paquete_select = selectf();
+					case 3:;
+						t_paquete_select* paquete_select = selectf();
 						if (send(conexion, &cod_ingresado, sizeof(int), 0) <= 0) puts("Error en envio de CODIGO DE OPERACION.");
 								else {
 									t_log* logger = iniciar_logger();
@@ -47,8 +46,8 @@ void armar_paquete(int conexion){
 						enviar_paquete_select(paquete_select, conexion); //EN envio.c LO ENVIA
 						free(paquete_select); //Va este free???s si PAPANATAS
 						break;
-					case 4:
-						paquete_insert = insert();
+					case 4:;
+						t_paquete_insert* paquete_insert = insert();
 						if (send(conexion, &cod_ingresado, sizeof(int), 0) <= 0) puts("Error en envio de CODIGO DE OPERACION.");
 								else {
 									t_log* logger = iniciar_logger();
@@ -64,7 +63,7 @@ void armar_paquete(int conexion){
 						break;
 			}
 
-		system("clear");
+//		system("clear");
 		printf("\n0.CREATE\n1.DROP\n2.DESCRIBE\n3.SELECT\n4.INSERT\n5.JOURNAL\n6.RUN\n7.ADD\n");
 		printf("\nIngrese el Codigo de operacion correspondiente: ");
 		scanf("\n%d", &cod_ingresado);

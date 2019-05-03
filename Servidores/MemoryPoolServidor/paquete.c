@@ -13,47 +13,20 @@ int recibir_operacion(int socket_cliente)
 	}
 }
 
-t_paquete_select* crear_paquete_select(char* nombretabla,int valor_key) //Agregado
-{
-	t_paquete_select* paquete = malloc(11);
-	for(int i=0;i<7;i++){
-		paquete->nombre_tabla[i]= nombretabla[i];
-	}
-	paquete->valor_key = valor_key;
-
-	return paquete;
-
-}
-
-t_paquete_insert* crear_paquete_insert(char *nombretabla,int valor_key, char *value, int timestamp) //Agregado
-{
-	t_paquete_insert* paquete = malloc(35);
-
-	for(int i=0;i<7;i++){
-		paquete->nombre_tabla[i]= nombretabla[i];
-	}
-	for(int i=0;i<20;i++){
-		paquete->value[i] = value[i];
-	}
-	paquete->valor_key = valor_key;
-	paquete->timestamp = timestamp;
-
-
-	return paquete;
-}
-
-
 t_paquete_select* deserializar_paquete_select(int socket_cliente){
 
 
 	int desplazamiento = 0;
-	void *buffer = malloc(11);
-	struct t_paquete_select *paqueteSelect = malloc(11);
-	recv(socket_cliente, buffer, 11 ,MSG_WAITALL);
-	memcpy(&(paqueteSelect->nombre_tabla),buffer + desplazamiento,7);
-	desplazamiento+= 7;
+	uint32_t tamanioTabla;
+	recv(socket_cliente, &tamanioTabla, 4 ,MSG_WAITALL);
+	struct t_paquete_select *paqueteSelect = malloc(8+tamanioTabla);
+	void *buffer = malloc(4+tamanioTabla);
+	recv(socket_cliente, buffer, 4+tamanioTabla ,MSG_WAITALL);
+	memcpy(&(paqueteSelect->nombre_tabla),buffer + desplazamiento,tamanioTabla);
+	desplazamiento+= tamanioTabla;
 	memcpy(&(paqueteSelect->valor_key),buffer + desplazamiento, 4);
 	desplazamiento+= 4;
+	paqueteSelect->nombre_tabla_long=tamanioTabla;
 	free(buffer);
 	return paqueteSelect;
 }

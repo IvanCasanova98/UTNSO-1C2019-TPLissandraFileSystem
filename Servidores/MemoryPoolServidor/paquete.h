@@ -16,9 +16,10 @@
 
 typedef struct t_paquete_select
 {
-	char nombre_tabla[7];
+	char* nombre_tabla;
+	uint32_t nombre_tabla_long;
 	int valor_key;
-}__attribute__((packed)) t_paquete_select;
+} t_paquete_select;
 
 typedef struct t_paquete_insert
 {

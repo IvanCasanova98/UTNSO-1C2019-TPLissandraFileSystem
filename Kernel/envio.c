@@ -12,13 +12,15 @@ t_config* leer_config() {
 
 void* serializar_paquete_select(t_paquete_select* paquete)
 {
-	void * buffer = malloc(11);
+	void * buffer = malloc(8 + paquete->nombre_tabla_long);
 	int desplazamiento = 0;
-	memcpy(buffer + desplazamiento, &(paquete->nombre_tabla), 7);
-	desplazamiento+= 7;
+	memcpy(buffer + desplazamiento, &(paquete->nombre_tabla_long), 4);
+	desplazamiento+= 4;
+	memcpy(buffer + desplazamiento, &(paquete->nombre_tabla), paquete->nombre_tabla_long);
+	desplazamiento+= paquete->nombre_tabla_long;
 	memcpy(buffer + desplazamiento, &(paquete->valor_key), 4);
 	desplazamiento+= 4;
-	return buffer; //es void y se esta tornando mmm
+	return buffer;
 	free(buffer);
 }
 
@@ -43,8 +45,9 @@ void* serializar_paquete_insert(t_paquete_insert* paquete)
 
 void enviar_paquete_select(t_paquete_select* paquete, int socket_cliente)
 {
-	int bytes = 11;
+	int bytes = 8 + paquete->nombre_tabla_long;
 	void* a_enviar = serializar_paquete_select(paquete);
+	printf("%s %d",paquete->nombre_tabla,paquete->valor_key);
 	if ( send(socket_cliente, a_enviar, bytes, 0) <= 0) puts("Error en envio de PAQUETE SELECT.");
 	else {
 			t_log* logger = iniciar_logger();

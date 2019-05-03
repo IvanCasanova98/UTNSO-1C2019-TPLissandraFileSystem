@@ -7,7 +7,7 @@
 #include<commons/string.h>
 #include<commons/config.h>
 #include<string.h>
-
+#include<stdint.h>
 
 //---------------------ESTRUCTURA PAQUETES
 
@@ -31,11 +31,11 @@ typedef enum
 
 typedef struct t_paquete_select
 {
-//	op_code codigo_operacion;
-	char nombre_tabla[7];
+	char* nombre_tabla;
+	uint32_t nombre_tabla_long;
 	int valor_key;
 //	t_buffer* buffer;
-}__attribute__((packed)) t_paquete_select;
+}t_paquete_select;
 
 typedef struct t_paquete_insert
 {

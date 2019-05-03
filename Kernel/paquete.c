@@ -3,12 +3,11 @@
 
 t_paquete_select* crear_paquete_select(char* nombretabla,int valor_key) //Agregado
 {
-	t_paquete_select* paquete = malloc(11);
-	for(int i=0;i<7;i++){
-		paquete->nombre_tabla[i]= nombretabla[i];
-	}
+	uint32_t tamaniotabla = strlen(nombretabla)+1;
+	t_paquete_select* paquete = malloc(8+tamaniotabla);
+	paquete->nombre_tabla= nombretabla;
 	paquete->valor_key = valor_key;
-
+	paquete->nombre_tabla_long= tamaniotabla;
 	return paquete;
 
 }
@@ -36,10 +35,10 @@ t_paquete_select* selectf(){
 
 
 	int valor_key;
-	char nombre_tabla[TAMANIO_NOMBRE_TABLA];
+	char* nombre_tabla;
 
 	printf("\nIngrese nombre de la tabla: ");
-	scanf("%s", &nombre_tabla);
+	scanf("%s", nombre_tabla);
 
 	printf("\nIngrese el valor de la key: ");
 	scanf("%d", &valor_key);
