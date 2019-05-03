@@ -17,12 +17,19 @@ t_paquete_select* deserializar_paquete_select(int socket_cliente){
 
 
 	int desplazamiento = 0;
-	uint32_t tamanioTabla;
+	size_t tamanioTabla;
 	recv(socket_cliente, &tamanioTabla, 4 ,MSG_WAITALL);
-	struct t_paquete_select *paqueteSelect = malloc(8+tamanioTabla);
-	void *buffer = malloc(4+tamanioTabla);
-	recv(socket_cliente, buffer, 4+tamanioTabla ,MSG_WAITALL);
-	memcpy(&(paqueteSelect->nombre_tabla),buffer + desplazamiento,tamanioTabla);
+	printf("%d",tamanioTabla);
+	t_paquete_select *paqueteSelect= malloc(tamanioTabla+8);
+	paqueteSelect->nombre_tabla = malloc(tamanioTabla);
+	paqueteSelect->nombre_tabla_long = malloc(4);
+	paqueteSelect->valor_key = malloc(4);
+
+	void *buffer = malloc(tamanioTabla+4);
+
+	recv(socket_cliente, buffer, tamanioTabla+4 ,MSG_WAITALL);
+	memcpy(paqueteSelect->nombre_tabla,buffer + desplazamiento, tamanioTabla);
+	printf("%s",paqueteSelect->nombre_tabla);
 	desplazamiento+= tamanioTabla;
 	memcpy(&(paqueteSelect->valor_key),buffer + desplazamiento, 4);
 	desplazamiento+= 4;
@@ -37,7 +44,7 @@ t_paquete_insert* deserializar_paquete_insert(int socket_cliente){
 
 	int desplazamiento = 0;
 	void *buffer = malloc(35);
-	struct t_paquete_insert *paqueteinsert = malloc(35);
+	t_paquete_insert *paqueteinsert = malloc(35);
 	recv(socket_cliente, buffer, 35 ,MSG_WAITALL);
 	memcpy(&(paqueteinsert->nombre_tabla),buffer + desplazamiento,7);
 	desplazamiento+= 7;

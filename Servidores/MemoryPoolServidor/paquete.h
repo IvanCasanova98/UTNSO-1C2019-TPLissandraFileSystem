@@ -19,7 +19,7 @@ typedef struct t_paquete_select
 	char* nombre_tabla;
 	uint32_t nombre_tabla_long;
 	int valor_key;
-} t_paquete_select;
+}__attribute__((packed)) t_paquete_select;
 
 typedef struct t_paquete_insert
 {

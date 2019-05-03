@@ -13,7 +13,6 @@ int main(void)
 
 	while(TRUE){ //lo dejo en true porque el Kernel se da cuenta si mandan un cod_op erroneo. En caso de mandar un cod op mal, kernel se cierra
 
-
 		int cod_op = recibir_operacion(cliente_fd);
 		switch(cod_op){
 		case CREATE:
@@ -27,7 +26,8 @@ int main(void)
 			break;
 		case SELECT: ;
 			//system("clear");
-			t_paquete_select* paquete_select = deserializar_paquete_select(cliente_fd);
+
+			t_paquete_select *paquete_select=deserializar_paquete_select(cliente_fd);
 			log_info(logger, "Se recibio SELECT %s %d \n",paquete_select->nombre_tabla, paquete_select->valor_key);
 			free(paquete_select);
 			break;

@@ -1,4 +1,4 @@
-#include "conexion.h"
+ #include "conexion.h"
 
 int iniciar_conexion(t_log* logger, t_config* config){ //tiene que llegar logger, archivo config y numero de conexion (int)
 

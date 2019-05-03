@@ -31,11 +31,11 @@ typedef enum
 
 typedef struct t_paquete_select
 {
+	uint32_t nombre_tabla_long; //Longitud del nombre de la tabla
 	char* nombre_tabla;
-	uint32_t nombre_tabla_long;
 	int valor_key;
-//	t_buffer* buffer;
-}t_paquete_select;
+
+}__attribute__((packed)) t_paquete_select;
 
 typedef struct t_paquete_insert
 {

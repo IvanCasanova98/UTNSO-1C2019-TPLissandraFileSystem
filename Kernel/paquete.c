@@ -39,7 +39,6 @@ t_paquete_select* selectf(){
 
 	printf("\nIngrese nombre de la tabla: ");
 	scanf("%s", nombre_tabla);
-
 	printf("\nIngrese el valor de la key: ");
 	scanf("%d", &valor_key);
 
