@@ -12,5 +12,7 @@
 #include "envio.h"
 
 void armar_paquete(int conexion);
+char* requestIngresada();
+int convertirStringEnOpCode(char* string);
 
 #endif /* KERNEL_H_ */

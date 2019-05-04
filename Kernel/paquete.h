@@ -56,8 +56,8 @@ t_paquete_insert* crear_paquete_insert(char *nombretabla,int valor_key, char *va
 
 //---------------------ARMAR PAQUETE
 
-t_paquete_select* selectf();
-t_paquete_insert* insert();
+t_paquete_select* selectf(char* parametros);
+t_paquete_insert* insert(char* parametros);
 
 //---------------------LOGGEAR PAQUETE
 

@@ -34,38 +34,37 @@ t_paquete_insert* crear_paquete_insert(char *nombre_tabla,int valor_key, char *v
 
 //---------------------ARMAR PAQUETES
 
-t_paquete_select* selectf(){
+t_paquete_select* selectf(char* parametros){
 
 
 	int valor_key;
 	char* nombre_tabla;
-
-	printf("\nIngrese nombre de la tabla: ");
-	scanf("%s", nombre_tabla);
-	printf("\nIngrese el valor de la key: ");
-	scanf("%d", &valor_key);
-
+	parametros= strtok(NULL, " ");
+	nombre_tabla = parametros;
+	parametros = strtok(NULL, " ");
+	valor_key = atoi(parametros);
 	t_paquete_select* paquete = crear_paquete_select(nombre_tabla, valor_key);
 	loggear_paquete_select(paquete);
 
 	return paquete;
 }
 
-t_paquete_insert* insert(){
+t_paquete_insert* insert(char* parametros){
 
 	int valor_key;
 	char* nombre_tabla;
 	char* value;
 	int timestamp;
 
-	printf("\nIngrese nombre de la tabla: ");
-	scanf("%s", nombre_tabla);
-	printf("\nIngrese el valor de la key: ");
-	scanf("%d", &valor_key);
-	printf("\nIngrese el value: ");
-	scanf("%s", value);
-	printf("\nIngrese el timestamp: ");
-	scanf("%d", &timestamp);
+	parametros= strtok(NULL, " ");
+	nombre_tabla = parametros;
+	parametros = strtok(NULL, " ");
+	valor_key = atoi(parametros);
+	parametros = strtok(NULL, " ");
+	value = parametros;
+	parametros = strtok(NULL, " ");
+	timestamp = atoi(parametros);
+
 
 	t_paquete_insert* paquete = crear_paquete_insert(nombre_tabla, valor_key, value, timestamp);
 	loggear_paquete_insert(paquete);
