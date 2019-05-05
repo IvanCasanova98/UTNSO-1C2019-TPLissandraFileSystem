@@ -47,3 +47,117 @@ Value del paquete: value
 Timestamp: 2147483647
 [INFO] 16:46:41:711 Kernel/(10366:10366): Se envio codigo de operacion: 4
 [INFO] 16:46:41:712 Kernel/(10366:10366): PAQUETE INSERT ENVIADO
+[INFO] 21:27:55:852 Kernel/(3299:3299): CONECTANDO CON MEMORY POOL
+[INFO] 21:28:09:301 Kernel/(3299:3299): 
+Nuevo paquete creado
+Tipo paquete: SELECT
+Nombre tabla: TABLA1
+Valor KEY: 32
+[INFO] 21:28:09:302 Kernel/(3299:3299): Se envio codigo de operacion: 3
+[INFO] 21:28:09:302 Kernel/(3299:3299): PAQUETE SELECT ENVIADO
+[INFO] 21:28:28:40 Kernel/(3299:3299): 
+Nuevo paquete creado
+Tipo paquete: INSERT
+Nombre tabla: TABLA3
+Valor KEY: 43
+Value del paquete: ASDDS
+Timestamp: 545
+[INFO] 21:28:28:40 Kernel/(3299:3299): Se envio codigo de operacion: 4
+[INFO] 21:28:28:41 Kernel/(3299:3299): PAQUETE INSERT ENVIADO
+[INFO] 21:32:35:393 Kernel/(7885:7885): CONECTANDO CON MEMORY POOL
+[INFO] 21:32:43:266 Kernel/(7885:7885): 
+Nuevo paquete creado
+Tipo paquete: SELECT
+Nombre tabla: TABLA43
+Valor KEY: 60
+[INFO] 21:32:43:266 Kernel/(7885:7885): Se envio codigo de operacion: 3
+[INFO] 21:32:43:266 Kernel/(7885:7885): PAQUETE SELECT ENVIADO
+[INFO] 22:24:49:950 Kernel/(9136:9136): CONECTANDO CON MEMORY POOL
+[INFO] 22:25:02:311 Kernel/(9136:9136): 
+Nuevo paquete creado
+Tipo paquete: SELECT
+Nombre tabla: TABLA1
+Valor KEY: 534
+[INFO] 22:25:02:311 Kernel/(9136:9136): Se envio codigo de operacion: 3
+[INFO] 22:25:02:312 Kernel/(9136:9136): PAQUETE SELECT ENVIADO
+[INFO] 22:26:41:496 Kernel/(9496:9496): CONECTANDO CON MEMORY POOL
+[INFO] 22:27:10:883 Kernel/(9496:9496): 
+Nuevo paquete creado
+Tipo paquete: SELECT
+Nombre tabla: TABLA
+Valor KEY: 23
+[INFO] 22:27:10:884 Kernel/(9496:9496): Se envio codigo de operacion: 3
+[INFO] 22:27:10:884 Kernel/(9496:9496): PAQUETE SELECT ENVIADO
+[INFO] 22:37:23:307 Kernel/(9924:9924): CONECTANDO CON MEMORY POOL
+[INFO] 22:37:31:848 Kernel/(9924:9924): 
+Nuevo paquete creado
+Tipo paquete: SELECT
+Nombre tabla: TABLA34
+Valor KEY: 123
+[INFO] 22:37:31:848 Kernel/(9924:9924): Se envio codigo de operacion: 3
+[INFO] 22:37:31:848 Kernel/(9924:9924): PAQUETE SELECT ENVIADO
+[INFO] 22:37:46:650 Kernel/(9924:9924): 
+Nuevo paquete creado
+Tipo paquete: INSERT
+Nombre tabla: TABLA3
+Valor KEY: 32
+Value del paquete: asdddd
+Timestamp: 123
+[INFO] 22:37:46:650 Kernel/(9924:9924): Se envio codigo de operacion: 4
+[INFO] 22:37:46:650 Kernel/(9924:9924): PAQUETE INSERT ENVIADO
+[INFO] 22:39:09:507 Kernel/(10085:10085): CONECTANDO CON MEMORY POOL
+[INFO] 22:39:40:903 Kernel/(10206:10206): CONECTANDO CON MEMORY POOL
+[INFO] 22:39:50:585 Kernel/(10206:10206): 
+Nuevo paquete creado
+Tipo paquete: SELECT
+Nombre tabla: TABLA
+Valor KEY: 32
+[INFO] 23:30:35:105 Kernel/(11212:11212): CONECTANDO CON MEMORY POOL
+[INFO] 23:30:40:945 Kernel/(11212:11212): 
+Nuevo paquete creado
+Tipo paquete: SELECT
+Nombre tabla: TABLA3
+Valor KEY: 45
+[INFO] 23:30:40:946 Kernel/(11212:11212): Se envio codigo de operacion: 3
+[INFO] 23:30:40:946 Kernel/(11212:11212): PAQUETE SELECT ENVIADO
+[INFO] 23:32:21:39 Kernel/(11386:11386): CONECTANDO CON MEMORY POOL
+[INFO] 23:32:27:629 Kernel/(11386:11386): 
+Nuevo paquete creado
+Tipo paquete: SELECT
+Nombre tabla: TABL
+Valor KEY: 43
+[INFO] 23:32:27:629 Kernel/(11386:11386): Se envio codigo de operacion: 3
+[INFO] 23:32:27:629 Kernel/(11386:11386): PAQUETE SELECT ENVIADO
+[INFO] 23:34:24:249 Kernel/(11764:11764): CONECTANDO CON MEMORY POOL
+[INFO] 23:34:28:660 Kernel/(11764:11764): 
+Nuevo paquete creado
+Tipo paquete: SELECT
+Nombre tabla: TABL
+Valor KEY: 42
+[INFO] 23:34:51:892 Kernel/(11785:11785): CONECTANDO CON MEMORY POOL
+[INFO] 23:35:21:533 Kernel/(11805:11805): CONECTANDO CON MEMORY POOL
+[INFO] 23:36:37:161 Kernel/(11848:11848): CONECTANDO CON MEMORY POOL
+[INFO] 23:36:45:830 Kernel/(11860:11860): CONECTANDO CON MEMORY POOL
+[INFO] 23:36:53:140 Kernel/(11860:11860): 
+Nuevo paquete creado
+Tipo paquete: SELECT
+Nombre tabla: TAL
+Valor KEY: 423
+[INFO] 23:36:53:140 Kernel/(11860:11860): Se envio codigo de operacion: 3
+[INFO] 23:36:53:140 Kernel/(11860:11860): PAQUETE SELECT ENVIADO
+[INFO] 23:48:55:573 Kernel/(12398:12398): CONECTANDO CON MEMORY POOL
+[INFO] 23:49:15:865 Kernel/(12398:12398): 
+Nuevo paquete creado
+Tipo paquete: SELECT
+Nombre tabla: TABLAXD
+Valor KEY: 43
+[INFO] 23:49:15:865 Kernel/(12398:12398): Se envio codigo de operacion: 3
+[INFO] 23:49:15:865 Kernel/(12398:12398): PAQUETE SELECT ENVIADO
+[INFO] 23:54:11:14 Kernel/(12732:12732): CONECTANDO CON MEMORY POOL
+[INFO] 23:54:27:468 Kernel/(12732:12732): 
+Nuevo paquete creado
+Tipo paquete: SELECT
+Nombre tabla: TABLA
+Valor KEY: 23
+[INFO] 23:54:27:468 Kernel/(12732:12732): Se envio codigo de operacion: 3
+[INFO] 23:54:27:468 Kernel/(12732:12732): PAQUETE SELECT ENVIADO

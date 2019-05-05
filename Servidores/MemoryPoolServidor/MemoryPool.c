@@ -5,7 +5,13 @@ int main(void)
 
 
 	logger = log_create("MemoryPool.log", "MemoryPool", 1, LOG_LEVEL_DEBUG);
-	int server_fd = iniciar_servidor();
+
+	t_config* configMemory = leer_config();
+
+	int server_fd = iniciar_servidor(
+			config_get_string_value(configMemory, "IP"),
+			config_get_string_value(configMemory, "PUERTOESCUCHA")
+			);
 	log_info(logger, "INICIO CONEXION. Servidor listo para recibir al Kernel ");
 	int cliente_fd = esperar_cliente(server_fd);
 
@@ -28,6 +34,15 @@ int main(void)
 			system("clear");
 			t_paquete_select *paquete_select=deserializar_paquete_select(cliente_fd);
 			log_info(logger, "Se recibio SELECT %s %d \n",paquete_select->nombre_tabla, paquete_select->valor_key);
+
+			//------------Codigo de prueba para que solo se efectue 1 conexion con LSF, hay que cambiarlo dsp
+//
+//			int conexionLFS = iniciar_conexion(logger, configMemory);
+//			enviar_paquete_select(paquete_select,conexionLFS);
+//
+			//No anda esto, llega mal. nose xq
+
+			//------------------------------------------------------------------------------------------------
 			free(paquete_select);
 			break;
 		case INSERT: ;

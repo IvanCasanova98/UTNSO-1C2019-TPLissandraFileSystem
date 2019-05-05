@@ -15765,3 +15765,25 @@
 
 [INFO] 16:46:41:715 MemoryPool/(10328:10328): Se recibio paquete tipo: INSERT tablita3 333 value 2147483647 
 
+[INFO] 21:27:44:567 MemoryPool/(3290:3290): INICIO CONEXION. Servidor listo para recibir al Kernel 
+[INFO] 21:27:55:858 MemoryPool/(3290:3290): Kernel conectado!
+[INFO] 21:28:09:318 MemoryPool/(3290:3290): Se recibio SELECT TABLA1 32 
+
+[INFO] 21:28:28:47 MemoryPool/(3290:3290): Se recibio paquete tipo: INSERT TABLA3 43 ASDDS 545 
+
+[INFO] 21:32:29:146 MemoryPool/(7879:7879): INICIO CONEXION. Servidor listo para recibir al Kernel 
+[INFO] 21:32:35:394 MemoryPool/(7879:7879): Kernel conectado!
+[INFO] 21:32:43:278 MemoryPool/(7879:7879): Se recibio SELECT TABLA43 60 
+
+[INFO] 23:48:03:586 MemoryPool/(12356:12356): INICIO CONEXION. Servidor listo para recibir al Kernel 
+[INFO] 23:48:55:578 MemoryPool/(12356:12356): Kernel conectado!
+[INFO] 23:49:15:870 MemoryPool/(12356:12356): Se recibio SELECT TABLAXD 43 
+
+[INFO] 23:49:15:870 MemoryPool/(12356:12356): CONECTANDO CON LFS
+[INFO] 23:49:15:870 Kernel/(12356:12356): PAQUETE SELECT ENVIADO
+[INFO] 23:53:37:375 MemoryPool/(12593:12593): INICIO CONEXION. Servidor listo para recibir al Kernel 
+[INFO] 23:54:11:18 MemoryPool/(12593:12593): Kernel conectado!
+[INFO] 23:54:27:482 MemoryPool/(12593:12593): Se recibio SELECT TABLA 23 
+
+[INFO] 23:54:27:482 MemoryPool/(12593:12593): CONECTANDO CON LFS
+[INFO] 23:54:27:482 Kernel/(12593:12593): PAQUETE SELECT ENVIADO
