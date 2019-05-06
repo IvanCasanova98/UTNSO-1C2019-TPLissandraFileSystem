@@ -43,7 +43,7 @@ typedef struct t_paquete_insert
 }t_paquete_insert;
 
 //--------------------RECIBIR PAQUETE
-void recibir_paquetes(t_log* logger, int cliente_fd);
+void recibir_paquetes(t_log* logger, int cliente_fd, int server_fd);
 
 //--------------------RECIBIR OPERACION
 int recibir_operacion(int);
@@ -55,5 +55,8 @@ t_paquete_insert* deserializar_paquete_insert(int socket_cliente);
 //--------------------ARCHIVOS LOGGER/CONFIGURACION
 t_log* iniciar_logger(void);
 t_config* leer_config(void);
+
+//--------------------ARCHIVO CONEXION.C
+int esperar_cliente(int);
 
 #endif /* RECIBIR_H_ */

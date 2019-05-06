@@ -42,7 +42,7 @@ int iniciar_servidor(t_config* config)
 
     freeaddrinfo(servinfo);
 
-	log_info(logger, "INICIO CONEXION. Servidor listo para recibir al Kernel ");
+	log_info(logger, "INICIO CONEXION. Esperando Kernel ");
 
     return socket_servidor;
 }

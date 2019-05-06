@@ -1,21 +1,11 @@
-[INFO] 21:05:52:540 Kernel/(6384:6384): INICIO CONEXION. Servidor listo para recibir al Kernel 
-[INFO] 21:06:21:837 Kernel/(6384:6384): KERNEL CONECTADO
-[INFO] 21:06:38:544 Kernel/(6384:6384): Se recibio SELECT TABLA1 1 
-[INFO] 21:06:44:72 Kernel/(6384:6384): Se recibio INSERT TABLA2 2 HOLA 22 
-[ERROR] 21:06:46:112 Kernel/(6384:6384): FIN CONEXION. Kernel desconectado. Terminando Servidor Memory Pool.
+[INFO] 22:11:40:208 Kernel/(7300:7300): KERNEL CONECTADO
+[INFO] 22:12:03:519 Kernel/(7300:7300): Se recibio SELECT TABLA3 3 
+[INFO] 22:12:15:479 Kernel/(7300:7300): Se recibio INSERT TABLA4 4 ZXC 44 
+[INFO] 22:12:21:771 Kernel/(7300:7300): FIN CONEXION. Kernel desconectado.
 
-[INFO] 21:33:08:607 Kernel/(6607:6607): INICIO CONEXION. Servidor listo para recibir al Kernel 
-[INFO] 21:33:33:824 Kernel/(6607:6607): KERNEL CONECTADO
-[INFO] 21:33:42:226 Kernel/(6607:6607): Se recibio SELECT TABLA1 1 
-[ERROR] 21:33:46:209 Kernel/(6607:6607): FIN CONEXION. Kernel desconectado. Terminando Servidor Memory Pool.
+[INFO] 22:17:56:345 Kernel/(7423:7423): INICIO CONEXION. Servidor listo para recibir al Kernel 
+[INFO] 22:18:33:314 Kernel/(7423:7423): KERNEL CONECTADO
+[INFO] 22:19:25:33 Kernel/(7423:7423): Se recibio INSERT TABLA5 5 HOLA 55 
+[INFO] 22:19:34:597 Kernel/(7423:7423): Se recibio SELECT TABLA6 6 
+[INFO] 22:19:40:7 Kernel/(7423:7423): FIN CONEXION. Kernel desconectado.
 
-[INFO] 21:37:13:616 Kernel/(6696:6696): INICIO CONEXION. Servidor listo para recibir al Kernel 
-[INFO] 21:37:28:191 Kernel/(6696:6696): KERNEL CONECTADO
-[INFO] 21:37:39:216 Kernel/(6696:6696): Se recibio SELECT TABLA1 1 
-[INFO] 21:37:45:735 Kernel/(6696:6696): Se recibio INSERT TABLA2 2 HOLA 22 
-[ERROR] 21:37:54:359 Kernel/(6696:6696): FIN CONEXION. Kernel desconectado. Terminando Servidor Memory Pool.
-
-[INFO] 21:52:30:583 Kernel/(6910:6910): INICIO CONEXION. Servidor listo para recibir al Kernel 
-[INFO] 21:52:52:381 Kernel/(6910:6910): KERNEL CONECTADO
-[INFO] 21:55:11:529 Kernel/(6975:6975): INICIO CONEXION. Servidor listo para recibir al Kernel 
-[INFO] 21:55:27:577 Kernel/(6975:6975): KERNEL CONECTADO

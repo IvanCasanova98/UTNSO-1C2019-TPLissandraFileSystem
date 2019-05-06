@@ -9,14 +9,10 @@ int main(void)
 
 	int cliente_fd = esperar_cliente(server_fd);
 
-	recibir_paquetes(logger, cliente_fd);
+	recibir_paquetes(logger, cliente_fd, server_fd);
+
+	log_info(logger, "FIN CONEXION");
 
 	return EXIT_SUCCESS;
 
 }
-
-
-
-
-
-

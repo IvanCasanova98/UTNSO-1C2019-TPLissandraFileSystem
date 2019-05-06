@@ -1,11 +1,17 @@
 #include "recibir.h"
 
 //----------------------------RECIBIR PAQUETE
-void recibir_paquetes(t_log* logger, int cliente_fd)
+void recibir_paquetes(t_log* logger, int cliente_fd, int server_fd)
 {
+	int cod_op;
 	while(1){
-
-		int cod_op = recibir_operacion(cliente_fd);
+		if (cliente_fd!=0){
+			cod_op = recibir_operacion(cliente_fd);
+		}
+		else{
+			cliente_fd = esperar_cliente(server_fd);
+			cod_op = recibir_operacion(cliente_fd);
+		}
 		switch(cod_op){
 		case CREATE:
 			log_info(logger, "Se recibio paquete tipo: CREATE");
@@ -21,7 +27,7 @@ void recibir_paquetes(t_log* logger, int cliente_fd)
 		case SELECT: ;
 
 			t_paquete_select *paquete_select=deserializar_paquete_select(cliente_fd);
-			log_info(logger, "Se recibio SELECT %s %d ",paquete_select->nombre_tabla, paquete_select->valor_key);
+			log_info(logger, "SELECT %s %d ",paquete_select->nombre_tabla, paquete_select->valor_key);
 
 			free(paquete_select);
 
@@ -29,7 +35,7 @@ void recibir_paquetes(t_log* logger, int cliente_fd)
 		case INSERT: ;
 
 			t_paquete_insert* paquete_insert = deserializar_paquete_insert(cliente_fd);
-			log_info(logger, "Se recibio INSERT %s %d %s %d ",paquete_insert->nombre_tabla, paquete_insert->valor_key,paquete_insert->value, paquete_insert->timestamp);
+			log_info(logger, "INSERT %s %d %s %d ",paquete_insert->nombre_tabla, paquete_insert->valor_key,paquete_insert->value, paquete_insert->timestamp);
 
 			free(paquete_insert);
 
@@ -44,8 +50,9 @@ void recibir_paquetes(t_log* logger, int cliente_fd)
 			log_info(logger, "Se recibio paquete tipo: ADD");
 			break;
 		case -1:
-			log_error(logger, "FIN CONEXION. Kernel desconectado. Terminando Servidor Memory Pool.\n");
-			return;
+			log_info(logger, "FIN CONEXION. Kernel desconectado.\n");
+			cliente_fd=0;
+			break;
 		default:
 			log_warning(logger, "Operacion desconocida.");
 			break;
