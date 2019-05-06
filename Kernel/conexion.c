@@ -1,17 +1,5 @@
  #include "conexion.h"
 
-int iniciar_conexion(t_log* logger, t_config* config){ //tiene que llegar logger, archivo config y numero de conexion (int)
-
-	log_info(logger, "CONECTANDO CON MEMORY POOL");
-
-	int conexion = crear_conexion(
-		config_get_string_value(config, "IP"),
-		config_get_string_value(config, "PUERTO")
-	);
-
-	return conexion;
-}
-
 int crear_conexion(char *ip, char* puerto){
 	struct addrinfo hints;
 	struct addrinfo *server_info;
@@ -33,7 +21,20 @@ int crear_conexion(char *ip, char* puerto){
 	return socket_cliente;
 }
 
+int iniciar_conexion(t_log* logger, t_config* config){ //tiene que llegar logger, archivo config y numero de conexion (int)
+
+	log_info(logger, "CONECTANDO CON MEMORY POOL");
+
+	int conexion = crear_conexion(
+		config_get_string_value(config, "IP"),
+		config_get_string_value(config, "PUERTO")
+	);
+
+	return conexion;
+}
+
 void terminar_conexion(t_log* logger, t_config* config, int conexion){
+	log_info(logger, "DESCONECTADO DE MEMORY POOL\n");
 	log_destroy(logger);
 	config_destroy(config);
 	close(conexion);

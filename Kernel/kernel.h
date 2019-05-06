@@ -3,16 +3,12 @@
 
 #include<stdio.h>
 #include<stdlib.h>
-#include<readline/readline.h>
-#include<string.h>
-#include<curses.h>
-#include<commons/temporal.h>
+
 #include "conexion.h"
 #include "paquete.h"
 #include "envio.h"
 
-void armar_paquete(int conexion);
-char* requestIngresada();
-int convertirStringEnOpCode(char* string);
+//---------------------INGRESO DE PAQUETE
+void ingresar_paquete(int conexion, t_log* logger);
 
 #endif /* KERNEL_H_ */

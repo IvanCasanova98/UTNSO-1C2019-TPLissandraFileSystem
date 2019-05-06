@@ -1,5 +1,5 @@
-#ifndef PAQUETE_H_
-#define PAQUETE_H_
+#ifndef RECIBIR_H_
+#define RECIBIR_H_
 
 #include<stdio.h>
 #include<stdlib.h>
@@ -9,15 +9,28 @@
 #include<netdb.h>
 #include<commons/log.h>
 #include<commons/collections/list.h>
+#include<commons/string.h>
+#include<commons/config.h>
 #include<string.h>
 
+typedef enum
+{
+	CREATE,
+	DROP,
+	DESCRIBE,
+	SELECT,
+	INSERT,
+	JOURNAL,
+	RUN,
+	ADD
+}op_code;
 
 typedef struct t_paquete_select
 {
 	char* nombre_tabla;
 	uint32_t nombre_tabla_long;
 	int valor_key;
-}__attribute__((packed)) t_paquete_select;
+}t_paquete_select;
 
 typedef struct t_paquete_insert
 {
@@ -27,29 +40,20 @@ typedef struct t_paquete_insert
 	int valor_key;
 	char* value;
 	int timestamp;
-}__attribute__((packed)) t_paquete_insert;
+}t_paquete_insert;
 
-void recibir_mensaje(int);
+//--------------------RECIBIR PAQUETE
+void recibir_paquetes(t_log* logger, int cliente_fd);
+
+//--------------------RECIBIR OPERACION
 int recibir_operacion(int);
 
 //---------------------DESERIALIZAR PAQUETE
-
 t_paquete_select* deserializar_paquete_select(int socket_cliente);
 t_paquete_insert* deserializar_paquete_insert(int socket_cliente);
 
-//---------------------CREAR PAQUETE
+//--------------------ARCHIVOS LOGGER/CONFIGURACION
+t_log* iniciar_logger(void);
+t_config* leer_config(void);
 
-t_paquete_select* crear_paquete_select(char *nombretabla,int valor_key);
-t_paquete_insert* crear_paquete_insert(char *nombretabla,int valor_key, char *value, int timestamp);
-
-
-//---------------------LOGGEAR PAQUETE
-
-void loggear_paquete_select(t_paquete_select* paquete);
-void loggear_paquete_insert(t_paquete_insert* paquete);
-
-
-
-
-
-#endif /* PAQUETE_H_ */
+#endif /* RECIBIR_H_ */

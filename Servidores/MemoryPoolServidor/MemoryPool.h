@@ -1,4 +1,3 @@
-
 #ifndef MEMORYPOOL_H_
 #define MEMORYPOOL_H_
 
@@ -8,9 +7,8 @@
 #include<commons/log.h>
 #include<curses.h>
 #include<commons/temporal.h>
-#include "conexion.h"
-#include "paquete.h"
 
-void imprimirTipoPaquete(op_code);
+#include "conexion.h"
+#include "recibir.h"
 
 #endif /* MEMORYPOOL_H_ */

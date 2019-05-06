@@ -1,5 +1,7 @@
 #include "envio.h"
 
+//----------------------------ARCHIVOS LOGGER Y CONFIG
+
 t_log* iniciar_logger() {
 	return log_create("Kernel.log", "Kernel", 1, LOG_LEVEL_INFO);
 }
@@ -70,7 +72,6 @@ void enviar_paquete_select(t_paquete_select* paquete, int socket_cliente)
 		    log_destroy(logger);
 
 	}
-
 	free(a_enviar);
 }
 
