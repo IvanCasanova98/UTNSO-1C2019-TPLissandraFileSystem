@@ -50,7 +50,7 @@ typedef struct t_paquete_insert
 	int valor_key;
 	uint32_t value_long; 		//Longitud del value
 	char* value;
-	int timestamp;
+	uint16_t timestamp;
 }__attribute__((packed)) t_paquete_insert;
 
 //---------------------ARCHIVO LOGGER/CONFIG

@@ -50,7 +50,7 @@ void ingresar_paquete(int conexion, t_log* logger){
 
 char* ingresar_request()
 {
-	printf("\n\nCREATE\nDROP\nDESCRIBE\nSELECT    NOMBRETABLA KEY\nINSERT    NOMBRETABLA KEY VALUE TIMESTAMP\nJOURNAL\nRUN\nADD\nEXIT\n");
+	printf("\n\nCREATE\nDROP\nDESCRIBE\nSELECT    NOMBRETABLA KEY\nINSERT    NOMBRETABLA KEY VALUE \nJOURNAL\nRUN\nADD\nEXIT\n");
 
 	printf("\nIngrese REQUEST ");
 
@@ -114,7 +114,7 @@ t_paquete_insert* crear_paquete_insert(char *nombre_tabla,int valor_key, char *v
 
 	uint32_t tamanio_tabla = strlen(nombre_tabla)+1;
 	uint32_t tamanio_value = strlen(value)+1;
-	t_paquete_insert* paquete = malloc(16 + tamanio_tabla + tamanio_value );
+	t_paquete_insert* paquete = malloc(sizeof(int)*3 + tamanio_tabla + tamanio_value + sizeof(uint16_t));
 
 	paquete->nombre_tabla= nombre_tabla;
 	paquete->value = value;
@@ -151,7 +151,7 @@ t_paquete_insert* insert(char* parametros){
 	int valor_key;
 	char* nombre_tabla;
 	char* value;
-	int timestamp;
+	int timestamp=0;
 
 	parametros= strtok(NULL, " ");
 	nombre_tabla = parametros;
@@ -159,8 +159,8 @@ t_paquete_insert* insert(char* parametros){
 	valor_key = atoi(parametros);
 	parametros = strtok(NULL, " ");
 	value = parametros;
-	parametros = strtok(NULL, " ");
-	timestamp = atoi(parametros);
+	//parametros = strtok(NULL, " ");
+	//timestamp = atoi(parametros);
 
 	t_paquete_insert* paquete = crear_paquete_insert(nombre_tabla, valor_key, value, timestamp);
 
@@ -181,7 +181,7 @@ void loggear_paquete_select(t_paquete_select* paquete){
 void loggear_paquete_insert(t_paquete_insert* paquete){
 
 	t_log* logger = iniciar_logger();
-	log_info(logger, "NUEVO PAQUETE INSERT CREADO\nNombre tabla: %s\nValor KEY   : %d\nValue       : %s\nTimestamp   : %d", paquete->nombre_tabla, paquete->valor_key, paquete->value, paquete->timestamp);
+	log_info(logger, "NUEVO PAQUETE INSERT CREADO\nNombre tabla: %s\nValor KEY   : %d\nValue       : %s\n", paquete->nombre_tabla, paquete->valor_key, paquete->value);
     log_destroy(logger);
 }
 
