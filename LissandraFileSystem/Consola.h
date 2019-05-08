@@ -20,7 +20,11 @@
 #include<commons/string.h>
 #include<commons/config.h>
 #include<commons/temporal.h>
+#include <sys/time.h>
 #include"recibir.h"
+
+
+void deployMenu();
 //---------------------INGRESO DE PAQUETE
 char* ingresar_request();
 void* prenderConsola(void* );

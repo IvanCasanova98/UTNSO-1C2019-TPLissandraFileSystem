@@ -85,8 +85,8 @@ t_paquete_select* deserializar_paquete_select(int socket_cliente){
 
 	t_paquete_select *paqueteSelect= malloc(tamanioTabla+sizeof(uint16_t)+sizeof(int));
 	paqueteSelect->nombre_tabla = malloc(tamanioTabla);
-	paqueteSelect->nombre_tabla_long = malloc(sizeof(int));
-	paqueteSelect->valor_key = malloc(sizeof(uint16_t));
+
+
 
 	void *buffer = malloc(tamanioTabla+sizeof(uint16_t));
 
@@ -113,17 +113,14 @@ t_paquete_insert* deserializar_paquete_insert(int socket_cliente){
 
 	memcpy(&tamanioTabla ,buffer_para_longitudes,sizeof(uint32_t));
 	memcpy(&tamanioValue ,buffer_para_longitudes+sizeof(uint32_t),sizeof(uint32_t));
-	t_paquete_insert *paquete_insert = malloc(tamanioTabla + tamanioValue + sizeof(int)*3 + sizeof(uint16_t));
+	t_paquete_insert *paquete_insert = malloc(tamanioTabla + tamanioValue + sizeof(int)*2 + sizeof(uint16_t)+ sizeof(long long));
 
 		paquete_insert->nombre_tabla = malloc(tamanioTabla);
 		paquete_insert->value = malloc(tamanioValue);
-		paquete_insert->valor_key = malloc(sizeof(uint16_t));
-		paquete_insert->timestamp =malloc(sizeof(int));
 
+	void *buffer = malloc(sizeof(long long)+ sizeof(uint16_t) +tamanioTabla+tamanioValue);
 
-	void *buffer = malloc(sizeof(int)+ sizeof(uint16_t) +tamanioTabla+tamanioValue);
-
-	recv(socket_cliente, buffer, sizeof(int)+ sizeof(uint16_t) +tamanioTabla+tamanioValue ,MSG_WAITALL);
+	recv(socket_cliente, buffer, sizeof(long long)+ sizeof(uint16_t) +tamanioTabla+tamanioValue ,MSG_WAITALL);
 
 	memcpy(paquete_insert->nombre_tabla,buffer + desplazamiento,tamanioTabla);
 	desplazamiento+= tamanioTabla;
@@ -131,11 +128,12 @@ t_paquete_insert* deserializar_paquete_insert(int socket_cliente){
 	desplazamiento+= tamanioValue;
 	memcpy(&(paquete_insert->valor_key),buffer + desplazamiento, sizeof(uint16_t));
 	desplazamiento+= sizeof(uint16_t);
-	memcpy(&(paquete_insert->timestamp),buffer + desplazamiento, sizeof(int));
-	desplazamiento+= sizeof(int);
+	memcpy(&(paquete_insert->timestamp),buffer + desplazamiento, sizeof(long long));
+	desplazamiento+= sizeof(long long);
 	paquete_insert->nombre_tabla_long = tamanioTabla;
 	paquete_insert->value_long = tamanioValue;
 	free(buffer_para_longitudes);
 	free(buffer);
 	return paquete_insert;
 }
+

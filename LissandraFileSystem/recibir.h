@@ -39,7 +39,7 @@ typedef struct t_paquete_insert
 	char* nombre_tabla;
 	uint16_t valor_key;
 	char* value;
-	int timestamp;
+	long long timestamp;
 }t_paquete_insert;
 
 //--------------------RECIBIR PAQUETE
