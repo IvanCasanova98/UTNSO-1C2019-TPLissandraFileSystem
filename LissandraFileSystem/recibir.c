@@ -75,19 +75,6 @@ int recibir_operacion(int socket_cliente)
 }
 
 
-//----------------------------TIPO DE OPERACION RECIBIDA
-int recibir_operacion(int socket_cliente)
-{
-	int cod_op;
-	if(recv(socket_cliente, &cod_op, sizeof(int), MSG_WAITALL) != 0) return cod_op;
-	else
-	{
-		close(socket_cliente);
-		puts(" *** No se recibio correctamente el COD OP ***");
-		return -1;
-	}
-}
-
 //----------------------------DESERIALIZAR PAQUETES
 t_paquete_select* deserializar_paquete_select(int socket_cliente){
 
