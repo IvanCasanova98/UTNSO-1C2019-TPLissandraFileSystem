@@ -15,7 +15,7 @@ t_config* leer_config() {
 void* serializar_paquete_select(t_paquete_select* paquete)
 {
 
-	void* buffer = malloc(sizeof(uint32_t) + sizeof(int)  + paquete->nombre_tabla_long);
+	void* buffer = malloc(sizeof(uint32_t) + sizeof(uint16_t)  + paquete->nombre_tabla_long);
 	int desplazamiento = 0;
 
 	memcpy(buffer + desplazamiento, &paquete->nombre_tabla_long, sizeof(uint32_t));
@@ -24,8 +24,8 @@ void* serializar_paquete_select(t_paquete_select* paquete)
 	memcpy(buffer + desplazamiento, paquete->nombre_tabla, paquete->nombre_tabla_long);
 	desplazamiento+= paquete->nombre_tabla_long;
 
-	memcpy(buffer + desplazamiento, &paquete->valor_key, 4);
-	desplazamiento+= 4;
+	memcpy(buffer + desplazamiento, &paquete->valor_key, sizeof(uint16_t));
+	desplazamiento+= sizeof(uint16_t);
 	return buffer;
 	free(buffer);
 }
@@ -47,11 +47,11 @@ void* serializar_paquete_insert(t_paquete_insert* paquete)
 	memcpy(buffer + desplazamiento, paquete->value, paquete->value_long);
 	desplazamiento+= paquete->value_long;
 
-	memcpy(buffer + desplazamiento, &(paquete->valor_key), sizeof(int));
-	desplazamiento+=  sizeof(int);
-
-	memcpy(buffer + desplazamiento, &(paquete->timestamp), sizeof(uint16_t));
+	memcpy(buffer + desplazamiento, &(paquete->valor_key), sizeof(uint16_t));
 	desplazamiento+=  sizeof(uint16_t);
+
+	memcpy(buffer + desplazamiento, &(paquete->timestamp), sizeof(int));
+	desplazamiento+=  sizeof(int);
 
 	return buffer; //es void y se esta tornando mmm
 	free(buffer);
@@ -62,7 +62,7 @@ void* serializar_paquete_insert(t_paquete_insert* paquete)
 
 void enviar_paquete_select(t_paquete_select* paquete, int socket_cliente)
 {
-	int bytes = 8 + paquete->nombre_tabla_long;
+	int bytes = sizeof(int) + sizeof(uint16_t) + paquete->nombre_tabla_long;
 	void* a_enviar = serializar_paquete_select(paquete);
 	printf("%s %d",paquete->nombre_tabla,paquete->valor_key);
 	if ( send(socket_cliente, a_enviar, bytes, 0) <= 0) puts("Error en envio de PAQUETE SELECT.");

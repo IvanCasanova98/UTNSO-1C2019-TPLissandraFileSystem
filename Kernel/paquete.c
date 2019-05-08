@@ -95,10 +95,10 @@ int codigo_ingresado(char* parametros){
 
 //---------------------CREAR PAQUETES
 
-t_paquete_select* crear_paquete_select(char* nombretabla,int valor_key) //Agregado
+t_paquete_select* crear_paquete_select(char* nombretabla, uint16_t valor_key) //Agregado
 {
 	uint32_t tamaniotabla = strlen(nombretabla)+1;
-	t_paquete_select* paquete = malloc(8+tamaniotabla);
+	t_paquete_select* paquete = malloc(sizeof(int)+sizeof(uint16_t)+tamaniotabla);
 
 	paquete->nombre_tabla= nombretabla;
 	paquete->valor_key = valor_key;
@@ -108,7 +108,7 @@ t_paquete_select* crear_paquete_select(char* nombretabla,int valor_key) //Agrega
 
 }
 
-t_paquete_insert* crear_paquete_insert(char *nombre_tabla,int valor_key, char *value, int timestamp) //Agregado
+t_paquete_insert* crear_paquete_insert(char *nombre_tabla, uint16_t valor_key, char *value, int timestamp) //Agregado
 {
 
 
@@ -131,14 +131,14 @@ t_paquete_insert* crear_paquete_insert(char *nombre_tabla,int valor_key, char *v
 t_paquete_select* selectf(char* parametros){
 
 
-	int valor_key;
+	uint16_t valor_key;
 	char* nombre_tabla;
 
 	parametros= strtok(NULL, " ");
 	nombre_tabla = parametros;
 	parametros = strtok(NULL, " ");
 	valor_key = atoi(parametros);
-
+	printf("%d",valor_key);
 	t_paquete_select* paquete = crear_paquete_select(nombre_tabla, valor_key);
 
 	loggear_paquete_select(paquete);
@@ -148,7 +148,7 @@ t_paquete_select* selectf(char* parametros){
 
 t_paquete_insert* insert(char* parametros){
 
-	int valor_key;
+	uint16_t valor_key;
 	char* nombre_tabla;
 	char* value;
 	int timestamp=0;
@@ -161,7 +161,7 @@ t_paquete_insert* insert(char* parametros){
 	value = parametros;
 	//parametros = strtok(NULL, " ");
 	//timestamp = atoi(parametros);
-
+	printf("%d",valor_key);
 	t_paquete_insert* paquete = crear_paquete_insert(nombre_tabla, valor_key, value, timestamp);
 
 	loggear_paquete_insert(paquete);

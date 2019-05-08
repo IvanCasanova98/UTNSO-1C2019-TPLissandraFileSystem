@@ -37,7 +37,7 @@ typedef struct t_paquete_insert
 	uint32_t nombre_tabla_long; //Longitud del nombre de la tabla
 	uint32_t value_long; 		//Longitud del value
 	char* nombre_tabla;
-	int valor_key;
+	uint16_t valor_key;
 	char* value;
 	int timestamp;
 }t_paquete_insert;

@@ -47,10 +47,10 @@ typedef struct t_paquete_insert
 {
 	uint32_t nombre_tabla_long; //Longitud del nombre de la tabla
 	char* nombre_tabla;
-	int valor_key;
+	uint16_t valor_key;
 	uint32_t value_long; 		//Longitud del value
 	char* value;
-	uint16_t timestamp;
+	int timestamp;
 }__attribute__((packed)) t_paquete_insert;
 
 //---------------------ARCHIVO LOGGER/CONFIG
@@ -66,8 +66,8 @@ char* ingresar_request();
 int codigo_ingresado(char* lineaRequest);
 
 //---------------------CREAR PAQUETE
-t_paquete_select* crear_paquete_select(char *nombretabla,int valor_key);
-t_paquete_insert* crear_paquete_insert(char *nombretabla,int valor_key, char *value, int timestamp);
+t_paquete_select* crear_paquete_select(char *nombretabla,uint16_t valor_key);
+t_paquete_insert* crear_paquete_insert(char *nombretabla,uint16_t valor_key, char *value, int timestamp);
 
 //---------------------ARMAR PAQUETE
 t_paquete_select* selectf(char* parametros);

@@ -74,6 +74,20 @@ int recibir_operacion(int socket_cliente)
 	}
 }
 
+
+//----------------------------TIPO DE OPERACION RECIBIDA
+int recibir_operacion(int socket_cliente)
+{
+	int cod_op;
+	if(recv(socket_cliente, &cod_op, sizeof(int), MSG_WAITALL) != 0) return cod_op;
+	else
+	{
+		close(socket_cliente);
+		puts(" *** No se recibio correctamente el COD OP ***");
+		return -1;
+	}
+}
+
 //----------------------------DESERIALIZAR PAQUETES
 t_paquete_select* deserializar_paquete_select(int socket_cliente){
 
@@ -81,20 +95,20 @@ t_paquete_select* deserializar_paquete_select(int socket_cliente){
 	int desplazamiento = 0;
 	size_t tamanioTabla;
 
-	recv(socket_cliente, &tamanioTabla, 4 ,MSG_WAITALL);
+	recv(socket_cliente, &tamanioTabla, sizeof(int) ,MSG_WAITALL);
 
-	t_paquete_select *paqueteSelect= malloc(tamanioTabla+8);
+	t_paquete_select *paqueteSelect= malloc(tamanioTabla+sizeof(uint16_t)+sizeof(int));
 	paqueteSelect->nombre_tabla = malloc(tamanioTabla);
 	paqueteSelect->nombre_tabla_long = malloc(sizeof(int));
-	paqueteSelect->valor_key = malloc(sizeof(int));
+	paqueteSelect->valor_key = malloc(sizeof(uint16_t));
 
-	void *buffer = malloc(tamanioTabla+sizeof(int));
+	void *buffer = malloc(tamanioTabla+sizeof(uint16_t));
 
-	recv(socket_cliente, buffer, tamanioTabla+4 ,MSG_WAITALL);
+	recv(socket_cliente, buffer, tamanioTabla+sizeof(uint16_t) ,MSG_WAITALL);
 	memcpy(paqueteSelect->nombre_tabla,buffer + desplazamiento, tamanioTabla);
 	desplazamiento+= tamanioTabla;
-	memcpy(&(paqueteSelect->valor_key),buffer + desplazamiento, sizeof(int));
-	desplazamiento+= sizeof(int);
+	memcpy(&(paqueteSelect->valor_key),buffer + desplazamiento, sizeof(uint16_t));
+	desplazamiento+= sizeof(uint16_t);
 	paqueteSelect->nombre_tabla_long=tamanioTabla;
 	free(buffer);
 	return paqueteSelect;
@@ -117,8 +131,8 @@ t_paquete_insert* deserializar_paquete_insert(int socket_cliente){
 
 		paquete_insert->nombre_tabla = malloc(tamanioTabla);
 		paquete_insert->value = malloc(tamanioValue);
-		paquete_insert->valor_key = malloc(sizeof(int));
-		paquete_insert->timestamp =malloc(sizeof(uint16_t));
+		paquete_insert->valor_key = malloc(sizeof(uint16_t));
+		paquete_insert->timestamp =malloc(sizeof(int));
 
 
 	void *buffer = malloc(sizeof(int)+ sizeof(uint16_t) +tamanioTabla+tamanioValue);
@@ -129,13 +143,14 @@ t_paquete_insert* deserializar_paquete_insert(int socket_cliente){
 	desplazamiento+= tamanioTabla;
 	memcpy(paquete_insert->value,buffer + desplazamiento, tamanioValue);
 	desplazamiento+= tamanioValue;
-	memcpy(&(paquete_insert->valor_key),buffer + desplazamiento, sizeof(int));
-	desplazamiento+= sizeof(int);
-	memcpy(&(paquete_insert->timestamp),buffer + desplazamiento, sizeof(uint16_t));
+	memcpy(&(paquete_insert->valor_key),buffer + desplazamiento, sizeof(uint16_t));
 	desplazamiento+= sizeof(uint16_t);
+	memcpy(&(paquete_insert->timestamp),buffer + desplazamiento, sizeof(int));
+	desplazamiento+= sizeof(int);
 	paquete_insert->nombre_tabla_long = tamanioTabla;
 	paquete_insert->value_long = tamanioValue;
 	free(buffer_para_longitudes);
 	free(buffer);
 	return paquete_insert;
 }
+
