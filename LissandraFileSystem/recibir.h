@@ -29,7 +29,7 @@ typedef struct t_paquete_select
 {
 	char* nombre_tabla;
 	uint32_t nombre_tabla_long;
-	int valor_key;
+	uint16_t valor_key;
 }t_paquete_select;
 
 typedef struct t_paquete_insert

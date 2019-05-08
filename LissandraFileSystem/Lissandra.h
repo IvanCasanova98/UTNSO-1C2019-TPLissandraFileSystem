@@ -7,8 +7,9 @@
 #include<commons/log.h>
 #include<curses.h>
 #include<commons/temporal.h>
-
+#include<pthread.h>
 #include "conexion.h"
 #include "recibir.h"
+#include "Consola.h"
 
 #endif /* LISSANDRA_H_ */

@@ -2,8 +2,12 @@
 
 int main(void)
 {
+	pthread_t consola;
 	logger = iniciar_logger();
 	t_config* config = leer_config();
+
+
+	pthread_create(&consola,NULL,prenderConsola,NULL);
 
 	int server_fd = iniciar_servidor(config);
 
