@@ -53,7 +53,7 @@ void INSERT(char *nombre_tabla, uint16_t valor_key, char *value, long long times
 	  }
 	  else
 	  {
-		  InsertarleRegistroATabla(registroIngresado,TablaDeseada);
+		  InsertarleRegistroATablaAlFinal(registroIngresado,TablaDeseada);
 	  }
 
 
@@ -103,7 +103,7 @@ ptr_nodo_tabla BuscarLaTabla(ptr_nodo_tabla TablaInicial, char *nombre_tabla)
 
 	while((Auxiliar != NULL) && !loEncontro)
 	{
-		if(strcmp(Auxiliar->nombre_tabla,nombre_tabla,0) == 0)
+		if(strcmp(Auxiliar->nombre_tabla,nombre_tabla) == 0)
 		{
 			loEncontro = 1;
 		}
