@@ -1,36 +1,26 @@
 #include "memTable.h"
 
 
-uint16_t SELECT(char *nombre_tabla, uint16_t valor_key){
+long long SELECT(char *nombre_tabla, uint16_t valor_key_buscado){
+
+//	t_KeyValue_Timestamp keyValue_timestamp;
+
+	long long timestampMayorEncontrado;
 	ptr_nodo_tabla TablaInicial; //tengo dudas aca. quiero apuntar al primer elemento
 
-	ptr_nodo_tabla tablaBuscada = BuscarLaTabla(TablaInicial,nombre_tabla);
+	ptr_nodo_tabla TablaBuscada = BuscarLaTabla(TablaInicial,nombre_tabla);
 
-	if (tablaBuscada == NULL)
+
+	if (TablaBuscada == NULL)
 	{
 		printf("No se encontro tabla.\n");
 	}
 	else
 	{
-	/*
-	 * Recorrer todos los registros, arrancando por tablaBuscada->sgte_registro
-	 * con un ptr_nodo_registro RegistroAuxiliar, mientras sea distinto de NULL.
-	 * Fijarse si valor_key == registroAuxiliar->valor_key
-	 * si lo es, agregar a lista_de_KeyValue_Timestamp
-	 * con una funcion tipo insertarAListaStructDeKeyValueYTimestampAlFinal()
-	 * le mando por parametro a esa funcion:
-	 * registroAuxiliar->valor_key;
-	 * registroAuxiliar->timestamp;
-	 *
-	 * Cuando llegue a NULL significa que recorrio todos los registros.
-	 * Ahi hay que empezar a recorrer la otra lista, estableciendo como long long max = 0
-	 * y viendo que timestamp lo va superando para ser el maximo, hasta dar con el mas grande de todos.
-	 * avanzando el puntero.
-	 * ahi devolver el lista_keyValue_timestamp -> valor_key;
-	 */
+		timestampMayorEncontrado = Buscar_KeyValue_conMayor_TimeStamp(TablaBuscada,valor_key_buscado);
 	}
 
-	return 0;
+	return timestampMayorEncontrado;
 
 }
 
@@ -44,11 +34,14 @@ void INSERT(char *nombre_tabla, uint16_t valor_key, char *value, long long times
 	  ptr_nodo_tabla TablaInicial; //tengo dudas aca. quiero apuntar al primer elemento
 	  ptr_nodo_tabla TablaDeseada;
 
-	  TablaDeseada= BuscarLaTabla(nombre_tabla,TablaInicial);
+	  TablaDeseada= BuscarLaTabla(TablaInicial,nombre_tabla);
 
 	  if ( TablaDeseada == NULL) //No Existe la tabla ingresada. Habra que crearla.
 	  {
-	  	  ptr_nodo_tabla nuevaTabla = CrearTabla(nombre_tabla);
+	  	  ptr_nodo_tabla nuevaTabla;
+	  	  nuevaTabla = (ptr_nodo_tabla) malloc(sizeof(nodo_tabla_tmp));
+
+	  	  nuevaTabla = CrearTabla(nombre_tabla);
 	  	  InsertarTablaAlFinal(registroIngresado,TablaInicial, nuevaTabla);
 	  }
 	  else
@@ -66,7 +59,7 @@ void imprimirRegistrosVALUEDe(char *nombre_tabla)
 {
 	ptr_nodo_tabla TablaInicial;
 	ptr_nodo_tabla TablaDeseada;
-	TablaDeseada= BuscarLaTabla(nombre_tabla,TablaInicial);
+	TablaDeseada= BuscarLaTabla(TablaInicial, nombre_tabla);
 
 	ptr_nodo_registro RegistroAuxiliar;
 
@@ -80,6 +73,37 @@ void imprimirRegistrosVALUEDe(char *nombre_tabla)
 
 }
 //*****************************************************
+
+long long Buscar_KeyValue_conMayor_TimeStamp(ptr_nodo_tabla TablaBuscada,uint16_t valor_key_buscado)
+{
+
+	long long timeStampMax = 0;
+	ptr_nodo_registro RegistroAuxiliar;
+
+	RegistroAuxiliar = TablaBuscada->sgte_registro; //Pongo como registro auxiliar el primer registro.
+
+	while(RegistroAuxiliar->sgte_registro != NULL)
+	{
+		if( (RegistroAuxiliar->valor_key == valor_key_buscado) &&
+		    (RegistroAuxiliar->timestamp > timeStampMax))
+		{
+			timeStampMax = RegistroAuxiliar->timestamp;
+		}
+		RegistroAuxiliar = RegistroAuxiliar->sgte_registro;
+	}
+
+	// me parece que se va antes de analizar el ultimo registro.
+	// hare otro if un ultimo.
+
+	if( (RegistroAuxiliar->valor_key == valor_key_buscado) &&
+		(RegistroAuxiliar->timestamp > timeStampMax))
+	{
+		timeStampMax = RegistroAuxiliar->timestamp;
+	}
+
+	if (timeStampMax== 0) printf("\nNo Se Encontro ningun registro del KEY-VALUE deseado.\n");
+	return timeStampMax;
+}
 
 
 void InsertarleRegistroATablaAlFinal(ptr_nodo_registro nuevoRegistro, ptr_nodo_tabla TablaDeseada)

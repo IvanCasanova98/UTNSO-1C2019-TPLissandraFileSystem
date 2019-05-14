@@ -1,10 +1,10 @@
 #ifndef MEMTABLE_H_
 #define MEMTABLE_H_
-
+#include<stdint.h>
 #include<stdio.h>
-#include<conio.h>
 #include<stdlib.h>
-#include<alloc.h>
+#include<string.h>
+
 
 typedef struct nodo_registro_tmp
 {
@@ -22,14 +22,22 @@ typedef struct nodo_tabla_tmp
 	struct nodo_tabla_tmp *sgte_tabla;
 }nodo_tabla_tmp;
 
+/*
 typedef struct lista_de_KeyValue_Timestamp
 {
 	uint16_t valor_key;
 	long long timestamp;
-	struct lista_de_KeyValue_Timestamp *sgte;
+	struct lista_de_KeyValue_Timestamp *anterior;
+	struct lista_de_KeyValue_Timestamp *siguiente;
 }lista_de_KeyValue_Timestamp;
+*/
 
-uint16_t SELECT(char *nombre_tabla, uint16_t valor_key);
+//typedef struct t_KeyValue_Timestamp{
+//	uint16_t valor_key;
+//	long long timestamp;
+//}t_KeyValue_Timestamp;
+
+long long SELECT(char *nombre_tabla, uint16_t valor_key);
 void INSERT(char *nombre_tabla, uint16_t valor_key, char *value, long long timestamp);
 
 
@@ -42,8 +50,9 @@ void INSERT(char *nombre_tabla, uint16_t valor_key, char *value, long long times
 typedef nodo_registro_tmp *ptr_nodo_registro;
 typedef nodo_tabla_tmp *ptr_nodo_tabla;
 
+//typedef lista_de_KeyValue_Timestamp *ptr_KeyValue_Timestamp;
 
-
+long long Buscar_KeyValue_conMayor_TimeStamp(ptr_nodo_tabla TablaBuscada,uint16_t valor_key);
 ptr_nodo_registro CargarRegistrosAUnNodo(uint16_t valor_key, char *value, long long timestamp);
 ptr_nodo_tabla BuscarLaTabla(ptr_nodo_tabla TablaInicial, char *nombre_tabla);
 ptr_nodo_tabla CrearTabla(char *nombre_tabla);
