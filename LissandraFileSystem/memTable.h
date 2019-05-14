@@ -58,6 +58,7 @@ ptr_nodo_tabla BuscarLaTabla(ptr_nodo_tabla TablaInicial, char *nombre_tabla);
 ptr_nodo_tabla CrearTabla(char *nombre_tabla);
 void InsertarleRegistroATablaAlFinal(ptr_nodo_registro nuevoRegistro, ptr_nodo_tabla TablaDeseada);
 void InsertarTablaAlFinal(ptr_nodo_registro registroDeLaNuevaLista,ptr_nodo_tabla TablaInicial,ptr_nodo_tabla TablaAInsertar);
+void BorrarRegistrosDeTabla(ptr_nodo_tabla TablaABorrar);
 
 //FUNCION PARA PROBAR
 void imprimirRegistrosVALUEDe(char *nombre_tabla);

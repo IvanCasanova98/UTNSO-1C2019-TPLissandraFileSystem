@@ -55,6 +55,28 @@ void INSERT(char *nombre_tabla, uint16_t valor_key, char *value, long long times
 
 //*********************************FUNCION PARA TESTEAR
 
+void BorrarRegistrosDeTabla(ptr_nodo_tabla TablaABorrar)
+{
+	ptr_nodo_registro RegistroAuxiliarActual;
+	ptr_nodo_registro RegistroAuxiliarSgte;
+
+	RegistroAuxiliarActual = TablaABorrar->sgte_registro;
+	RegistroAuxiliarSgte = RegistroAuxiliarActual->sgte_registro;
+
+	TablaABorrar->sgte_registro=NULL;
+
+	while(RegistroAuxiliarActual != NULL)
+	{
+		free(RegistroAuxiliarActual);
+		RegistroAuxiliarActual = RegistroAuxiliarSgte;
+		if(RegistroAuxiliarActual == NULL)
+		{
+			break; //Breakeo aca porque no quiero que le asigne nada al RegistroAuxiliarSgte.
+		}
+		else RegistroAuxiliarSgte = RegistroAuxiliarSgte->sgte_registro;
+	}
+}
+
 void imprimirRegistrosVALUEDe(char *nombre_tabla)
 {
 	ptr_nodo_tabla TablaInicial;
@@ -82,7 +104,7 @@ long long Buscar_KeyValue_conMayor_TimeStamp(ptr_nodo_tabla TablaBuscada,uint16_
 
 	RegistroAuxiliar = TablaBuscada->sgte_registro; //Pongo como registro auxiliar el primer registro.
 
-	while(RegistroAuxiliar->sgte_registro != NULL)
+	while(RegistroAuxiliar != NULL)
 	{
 		if( (RegistroAuxiliar->valor_key == valor_key_buscado) &&
 		    (RegistroAuxiliar->timestamp > timeStampMax))
@@ -90,15 +112,6 @@ long long Buscar_KeyValue_conMayor_TimeStamp(ptr_nodo_tabla TablaBuscada,uint16_
 			timeStampMax = RegistroAuxiliar->timestamp;
 		}
 		RegistroAuxiliar = RegistroAuxiliar->sgte_registro;
-	}
-
-	// me parece que se va antes de analizar el ultimo registro.
-	// hare otro if un ultimo.
-
-	if( (RegistroAuxiliar->valor_key == valor_key_buscado) &&
-		(RegistroAuxiliar->timestamp > timeStampMax))
-	{
-		timeStampMax = RegistroAuxiliar->timestamp;
 	}
 
 	if (timeStampMax== 0) printf("\nNo Se Encontro ningun registro del KEY-VALUE deseado.\n");
