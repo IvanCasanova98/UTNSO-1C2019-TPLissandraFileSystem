@@ -1,21 +1,12 @@
 #include "conexion.h"
 
-//----------------------------ARCHIVOS LOGGER/CONFIG
-t_log* iniciar_logger() {
-	return log_create("MemoryPool.log", "Kernel", 1, LOG_LEVEL_INFO);
-}
-
-t_config* leer_config() {
-	return config_create("MemoryPool.config");
-}
-
-//----------------------------CONEXION
+//----------------------------CONEXION COMO SERVIDOR
 int iniciar_servidor(t_config* config)
 {
 
 	int socket_servidor;
 	char* ip = config_get_string_value(config, "IP");
-	char* puerto = config_get_string_value(config, "PUERTOESCUCHA");
+	char* puerto = config_get_string_value(config, "PUERTOSERVER");
 
     struct addrinfo hints, *servinfo, *p;
 
@@ -58,4 +49,43 @@ int esperar_cliente(int socket_servidor)
 	log_info(logger, "INICIO CONEXION");
 
 	return socket_cliente;
+}
+
+//----------------------------CONEXION COMO CLIENTE
+
+int crear_conexion(char *ip, char* puerto){
+	struct addrinfo hints;
+	struct addrinfo *server_info;
+
+	memset(&hints, 0, sizeof(hints));
+	hints.ai_family = AF_UNSPEC;
+	hints.ai_socktype = SOCK_STREAM;
+	hints.ai_flags = AI_PASSIVE;
+
+	getaddrinfo(ip, puerto, &hints, &server_info);
+
+	int socket_cliente = socket(server_info->ai_family, server_info->ai_socktype, server_info->ai_protocol);
+
+	if(connect(socket_cliente, server_info->ai_addr, server_info->ai_addrlen) == -1)
+		printf("error");
+
+	freeaddrinfo(server_info);
+
+	return socket_cliente;
+}
+
+int iniciar_conexion(t_log* logger, t_config* config){ //tiene que llegar logger, archivo config y numero de conexion (int)
+
+	int conexion = crear_conexion(
+		config_get_string_value(config, "IP"),
+		config_get_string_value(config, "PUERTOLFS")
+	);
+
+	return conexion;
+}
+
+void terminar_conexion(t_log* logger, t_config* config, int conexion){
+	log_destroy(logger);
+	config_destroy(config);
+	close(conexion);
 }

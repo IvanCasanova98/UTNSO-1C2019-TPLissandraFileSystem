@@ -37,8 +37,8 @@ typedef struct lista_de_KeyValue_Timestamp
 //	long long timestamp;
 //}t_KeyValue_Timestamp;
 
-long long SELECT(char *nombre_tabla, uint16_t valor_key);
-void INSERT(char *nombre_tabla, uint16_t valor_key, char *value, long long timestamp);
+//long long SELECT(char *nombre_tabla, uint16_t valor_key);
+//void INSERT(char *nombre_tabla, uint16_t valor_key, char *value, long long timestamp);
 
 
 

@@ -10,5 +10,6 @@
 
 #include "conexion.h"
 #include "recibir.h"
+#include "conexion.h"
 
 #endif /* MEMORYPOOL_H_ */

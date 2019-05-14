@@ -27,7 +27,12 @@ void recibir_paquetes(t_log* logger, int cliente_fd, int server_fd)
 		case SELECT: ;
 
 			t_paquete_select *paquete_select=deserializar_paquete_select(cliente_fd);
+
 			log_info(logger, "SELECT %s %d ",paquete_select->nombre_tabla, paquete_select->valor_key);
+
+
+
+			selectf(paquete_select);
 
 			free(paquete_select);
 
@@ -35,7 +40,7 @@ void recibir_paquetes(t_log* logger, int cliente_fd, int server_fd)
 		case INSERT: ;
 
 			t_paquete_insert* paquete_insert = deserializar_paquete_insert(cliente_fd);
-			log_info(logger, "INSERT %s %d %s  ",paquete_insert->nombre_tabla, paquete_insert->valor_key,paquete_insert->value);
+			log_info(logger, "INSERT %s %d %s %d ",paquete_insert->nombre_tabla, paquete_insert->valor_key,paquete_insert->value, paquete_insert->timestamp);
 
 			free(paquete_insert);
 
@@ -69,7 +74,6 @@ int recibir_operacion(int socket_cliente)
 	else
 	{
 		close(socket_cliente);
-		puts(" *** No se recibio correctamente el COD OP ***");
 		return -1;
 	}
 }
@@ -91,6 +95,8 @@ t_paquete_select* deserializar_paquete_select(int socket_cliente){
 	void *buffer = malloc(tamanioTabla+sizeof(uint16_t));
 
 	recv(socket_cliente, buffer, tamanioTabla+sizeof(uint16_t) ,MSG_WAITALL);
+
+
 	memcpy(paqueteSelect->nombre_tabla,buffer + desplazamiento, tamanioTabla);
 	desplazamiento+= tamanioTabla;
 	memcpy(&(paqueteSelect->valor_key),buffer + desplazamiento, sizeof(uint16_t));
@@ -136,4 +142,3 @@ t_paquete_insert* deserializar_paquete_insert(int socket_cliente){
 	free(buffer);
 	return paquete_insert;
 }
-

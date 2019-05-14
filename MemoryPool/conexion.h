@@ -16,7 +16,13 @@
 
 t_log* logger;
 
+//----------------------------CONEXION COMO SERVIDOR
 int iniciar_servidor(t_config* config);
 int esperar_cliente(int);
+
+//----------------------------CONEXION COMO CLIENTE
+int iniciar_conexion(t_log* logger, t_config* config);
+int crear_conexion(char *ip, char* puerto);
+void terminar_conexion(t_log* logger, t_config* config, int conexion);
 
 #endif /* CONEXION_H_ */

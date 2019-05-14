@@ -1,57 +1,57 @@
 #include "memTable.h"
 
-
-long long SELECT(char *nombre_tabla, uint16_t valor_key_buscado){
-
-//	t_KeyValue_Timestamp keyValue_timestamp;
-
-	long long timestampMayorEncontrado;
-	ptr_nodo_tabla TablaInicial; //tengo dudas aca. quiero apuntar al primer elemento
-
-	ptr_nodo_tabla TablaBuscada = BuscarLaTabla(TablaInicial,nombre_tabla);
-
-
-	if (TablaBuscada == NULL)
-	{
-		printf("No se encontro tabla.\n");
-	}
-	else
-	{
-		timestampMayorEncontrado = Buscar_KeyValue_conMayor_TimeStamp(TablaBuscada,valor_key_buscado);
-	}
-
-	return timestampMayorEncontrado;
-
-}
-
-void INSERT(char *nombre_tabla, uint16_t valor_key, char *value, long long timestamp){
-
-
-	  ptr_nodo_registro registroIngresado;
-	  registroIngresado = (ptr_nodo_registro) malloc (sizeof(nodo_registro_tmp));
-	  registroIngresado = CargarRegistrosAUnNodo(valor_key,value,timestamp);
-
-	  ptr_nodo_tabla TablaInicial; //tengo dudas aca. quiero apuntar al primer elemento
-	  ptr_nodo_tabla TablaDeseada;
-
-	  TablaDeseada= BuscarLaTabla(TablaInicial,nombre_tabla);
-
-	  if ( TablaDeseada == NULL) //No Existe la tabla ingresada. Habra que crearla.
-	  {
-	  	  ptr_nodo_tabla nuevaTabla;
-	  	  nuevaTabla = (ptr_nodo_tabla) malloc(sizeof(nodo_tabla_tmp));
-
-	  	  nuevaTabla = CrearTabla(nombre_tabla);
-	  	  InsertarTablaAlFinal(registroIngresado,TablaInicial, nuevaTabla);
-	  }
-	  else
-	  {
-		  InsertarleRegistroATablaAlFinal(registroIngresado,TablaDeseada);
-	  }
-
-
-
-}
+//
+//long long SELECT(char *nombre_tabla, uint16_t valor_key_buscado){
+//
+////	t_KeyValue_Timestamp keyValue_timestamp;
+//
+//	long long timestampMayorEncontrado;
+//	ptr_nodo_tabla TablaInicial; //tengo dudas aca. quiero apuntar al primer elemento
+//
+//	ptr_nodo_tabla TablaBuscada = BuscarLaTabla(TablaInicial,nombre_tabla);
+//
+//
+//	if (TablaBuscada == NULL)
+//	{
+//		printf("No se encontro tabla.\n");
+//	}
+//	else
+//	{
+//		timestampMayorEncontrado = Buscar_KeyValue_conMayor_TimeStamp(TablaBuscada,valor_key_buscado);
+//	}
+//
+//	return timestampMayorEncontrado;
+//
+//}
+//
+//void INSERT(char *nombre_tabla, uint16_t valor_key, char *value, long long timestamp){
+//
+//
+//	  ptr_nodo_registro registroIngresado;
+//	  registroIngresado = (ptr_nodo_registro) malloc (sizeof(nodo_registro_tmp));
+//	  registroIngresado = CargarRegistrosAUnNodo(valor_key,value,timestamp);
+//
+//	  ptr_nodo_tabla TablaInicial; //tengo dudas aca. quiero apuntar al primer elemento
+//	  ptr_nodo_tabla TablaDeseada;
+//
+//	  TablaDeseada= BuscarLaTabla(TablaInicial,nombre_tabla);
+//
+//	  if ( TablaDeseada == NULL) //No Existe la tabla ingresada. Habra que crearla.
+//	  {
+//	  	  ptr_nodo_tabla nuevaTabla;
+//	  	  nuevaTabla = (ptr_nodo_tabla) malloc(sizeof(nodo_tabla_tmp));
+//
+//	  	  nuevaTabla = CrearTabla(nombre_tabla);
+//	  	  InsertarTablaAlFinal(registroIngresado,TablaInicial, nuevaTabla);
+//	  }
+//	  else
+//	  {
+//		  InsertarleRegistroATablaAlFinal(registroIngresado,TablaDeseada);
+//	  }
+//
+//
+//
+//}
 
 //*********************************FUNCION PARA TESTEAR
 
