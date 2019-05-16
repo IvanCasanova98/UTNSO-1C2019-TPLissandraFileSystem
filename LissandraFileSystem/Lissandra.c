@@ -15,8 +15,7 @@ int main(void)
 
 	recibir_paquetes(logger, cliente_fd, server_fd);
 
-	log_info(logger, "FIN CONEXION");
+	//log_info(logger, "FIN CONEXION");
 
 	return EXIT_SUCCESS;
-
 }

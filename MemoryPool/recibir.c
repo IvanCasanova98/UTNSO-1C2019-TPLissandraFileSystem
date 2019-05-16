@@ -34,7 +34,6 @@ void recibir_paquetes(t_log* logger, int cliente_fd, int server_fd)
 
 			selectf(paquete_select);
 
-			free(paquete_select);
 
 			break;
 		case INSERT: ;
@@ -42,7 +41,9 @@ void recibir_paquetes(t_log* logger, int cliente_fd, int server_fd)
 			t_paquete_insert* paquete_insert = deserializar_paquete_insert(cliente_fd);
 			log_info(logger, "INSERT %s %d %s %d ",paquete_insert->nombre_tabla, paquete_insert->valor_key,paquete_insert->value, paquete_insert->timestamp);
 
-			free(paquete_insert);
+			insert(paquete_insert);
+
+
 
 			break;
 		case JOURNAL:

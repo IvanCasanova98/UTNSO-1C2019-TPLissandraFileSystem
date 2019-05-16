@@ -30,7 +30,6 @@ void recibir_paquetes(t_log* logger, int cliente_fd, int server_fd)
 			log_info(logger, "SELECT %s %d ",paquete_select->nombre_tabla, paquete_select->valor_key);
 
 
-
 			free(paquete_select);
 			break;
 		case INSERT: ;

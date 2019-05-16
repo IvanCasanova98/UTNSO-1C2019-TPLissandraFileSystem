@@ -67,7 +67,6 @@ void enviar_paquete_select(t_paquete_select* paquete, int socket_cliente)
 {
 	int bytes = 8 + paquete->nombre_tabla_long;
 	void* a_enviar = serializar_paquete_select(paquete);
-	//printf("%s %d",paquete->nombre_tabla,paquete->valor_key);
 	if ( send(socket_cliente, a_enviar, bytes, 0) <= 0) puts("Error en envio de PAQUETE SELECT.");
 	else {
 
