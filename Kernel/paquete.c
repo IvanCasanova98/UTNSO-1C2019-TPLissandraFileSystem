@@ -8,8 +8,7 @@ void ingresar_paquete(int conexion, t_log* logger){
 	char* parametros = strtok(lineaRequest, " ");
 	int cod_ingresado = codigo_ingresado(parametros);
 
-	while(1)
-	{
+
 		switch(cod_ingresado){
 
 			case 3:;
@@ -38,13 +37,13 @@ void ingresar_paquete(int conexion, t_log* logger){
 
 				printf("Operacion desconocida.");
 				break;
-			}
+		}
 
 		lineaRequest = ingresar_request();
 		parametros = strtok(lineaRequest, " ");
 		cod_ingresado = codigo_ingresado(parametros);
 
-	}
+
 
 }
 
