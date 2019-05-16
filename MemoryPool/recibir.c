@@ -115,8 +115,8 @@ t_paquete_insert* deserializar_paquete_insert(int socket_cliente){
 	memcpy(&tamanioValue ,buffer_para_longitudes+sizeof(uint32_t),sizeof(uint32_t));
 	t_paquete_insert *paquete_insert = malloc(tamanioTabla + tamanioValue + sizeof(int)*2 + sizeof(uint16_t)+ sizeof(long long));
 
-		paquete_insert->nombre_tabla = malloc(tamanioTabla);
-		paquete_insert->value = malloc(tamanioValue);
+	paquete_insert->nombre_tabla = malloc(tamanioTabla);
+	paquete_insert->value = malloc(tamanioValue);
 
 	void *buffer = malloc(sizeof(long long)+ sizeof(uint16_t) +tamanioTabla+tamanioValue);
 

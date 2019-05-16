@@ -130,7 +130,6 @@ char* DirectorioDeMetadataTabla(char* tabla){
 	return directorioTablas;
 
 }
-
 char* DirectorioDeMetadata(){
 	t_config* config = config_create("Lissandra.config");
 	char* Montaje= config_get_string_value(config,"PUNTO_MONTAJE");

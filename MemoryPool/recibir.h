@@ -27,8 +27,8 @@ typedef enum
 
 typedef struct t_paquete_select
 {
-	char* nombre_tabla;
 	uint32_t nombre_tabla_long;
+	char* nombre_tabla;
 	uint16_t valor_key;
 }t_paquete_select;
 
@@ -39,7 +39,7 @@ typedef struct t_paquete_insert
 	char* nombre_tabla;
 	uint16_t valor_key;
 	char* value;
-	int timestamp;
+	long long timestamp;
 }t_paquete_insert;
 
 //--------------------RECIBIR PAQUETE
