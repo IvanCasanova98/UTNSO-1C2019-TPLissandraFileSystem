@@ -9,7 +9,6 @@
 void* prenderConsola(void* arg){
 
 
-	//t_log* logger= (t_log *)arg;
 	char* lineaRequest=NULL;
 
 	while(lineaRequest==NULL){
@@ -21,22 +20,27 @@ void* prenderConsola(void* arg){
 	while(1)
 	{
 		switch(cod_ingresado){
-
+			case 0:;
+				t_paquete_create* paquete_create =LeerCreate(parametros) ;
+				APIcreate(paquete_create);
+				free(paquete_create);
+				break;
 			case 3:;
 
-				t_paquete_select* paquete_select =selectf(parametros) ;
+				t_paquete_select* paquete_select =LeerSelect(parametros) ;
 				free(paquete_select);
 
 				break;
 
 			case 4:;
 
-				t_paquete_insert* paquete_insert=insert(parametros);
+				t_paquete_insert* paquete_insert=LeerInsert(parametros);
 				free(paquete_insert);
 
 				break;
 
 			case 5:
+
 				return EXIT_SUCCESS;
 			default:
 
@@ -53,10 +57,24 @@ void* prenderConsola(void* arg){
 
 }
 void deployMenu(){
-	printf("\n\nCREATE\nDROP\nDESCRIBE\nSELECT    NOMBRETABLA KEY\nINSERT    NOMBRETABLA KEY VALUE TIMESTAMP (OPCIONAL) \n");
+	printf("\n\nCREATE NOMBRETABLA CONSISTENCIA PARTICIONES TIEMPO_COMPACTACION \nDROP\nDESCRIBE\nSELECT    NOMBRETABLA KEY\nINSERT    NOMBRETABLA KEY VALUE TIMESTAMP (OPCIONAL) \n");
 	printf("\nIngrese REQUEST ");
+	nodoTablaMemTable* nodo1 = crearNodoTabla("Tabla1");
+	nodoTablaMemTable* nodo2 = crearNodoTabla("Tabla2");
+	nodoTablaMemTable* nodo3 = crearNodoTabla("Tabla3");
+	nodoRegistroMemTable* registro1 = crearNodoRegistro("Registro1",2,10);
+	nodoRegistroMemTable* registro2 = crearNodoRegistro("Registro2",2000,10000);
+	agregarTabla(nodo1);
+	agregarTabla(nodo2);
+	agregarTabla(nodo3);
+	agregarRegistro(nodo2, registro1);
+	agregarRegistro(nodo2, registro2);
+	imprimirRegistrosTabla(nodo2);
 
 
+	eliminarNodoTabla(nodo1);
+	eliminarNodoTabla(nodo2);
+	eliminarNodoTabla(nodo3);
 }
 
 char* ingresar_request()
@@ -96,7 +114,7 @@ int codigo_ingresado(char* codOp){
 
 	return EXIT_FAILURE;
 }
-t_paquete_select* selectf(char* parametros){
+t_paquete_select* LeerSelect(char* parametros){
 
 
 	uint16_t valor_key;
@@ -114,7 +132,7 @@ t_paquete_select* selectf(char* parametros){
 	return paquete;
 }
 
-t_paquete_insert* insert(char* parametros){
+t_paquete_insert* LeerInsert(char* parametros){
 
 	uint16_t valor_key;
 	char* nombre_tabla;
@@ -141,6 +159,30 @@ t_paquete_insert* insert(char* parametros){
 	return paquete;
 }
 
+t_paquete_create* LeerCreate(char* parametros){
+
+
+
+	char* nombre_tabla;
+	consistency consistencia;
+	int particiones;
+	int compactacion;
+
+	parametros= strtok(NULL, " ");
+	nombre_tabla = parametros;
+	parametros = strtok(NULL, " ");
+	consistencia = pasarAConsistenciaINT(parametros);
+	parametros = strtok(NULL, " ");
+	particiones = atoi(parametros);
+	parametros = strtok(NULL, " ");
+	compactacion = atoi(parametros);
+
+	t_paquete_create* paquete = crear_paquete_create(nombre_tabla, consistencia,particiones,compactacion);
+
+	loggear_request_create(paquete);
+
+	return paquete;
+}
 
 
 void loggear_request_select(t_paquete_select* paquete){
@@ -149,11 +191,16 @@ void loggear_request_select(t_paquete_select* paquete){
 	log_info(logger, "NUEVA REQUEST: SELECT %s %d\n", paquete->nombre_tabla,paquete->valor_key);
     log_destroy(logger);
 }
-
 void loggear_request_insert(t_paquete_insert* paquete){
 
 	t_log* logger = iniciar_logger();
 	log_info(logger, "NUEVA REQUEST: INSERT %s %d %s %d\n", paquete->nombre_tabla, paquete->valor_key, paquete->value, paquete->timestamp);
+    log_destroy(logger);
+}
+void loggear_request_create(t_paquete_create* paquete){
+
+	t_log* logger = iniciar_logger();
+	log_info(logger, "NUEVA REQUEST: CREATE %s %s %d %d \n", paquete->nombre_tabla,pasarAConsistenciaChar(paquete->metadata.consistencia),paquete->metadata.particiones,paquete->metadata.tiempo_de_compactacion);
     log_destroy(logger);
 }
 
@@ -188,4 +235,25 @@ t_paquete_insert* crear_paquete_insert(char *nombre_tabla, uint16_t valor_key, c
 
 	return paquete;
 }
+
+t_paquete_create* crear_paquete_create(char* nombretabla, consistency consistencia, int particiones,int tiempo_de_compactacion) //Agregado
+{
+	uint32_t tamaniotabla = strlen(nombretabla)+1;
+	t_paquete_create* paquete = malloc(sizeof(metadata)+tamaniotabla);
+
+	paquete->nombre_tabla= nombretabla;
+	paquete->metadata.consistencia = consistencia;
+	paquete->metadata.particiones = particiones;
+	paquete->metadata.tiempo_de_compactacion = tiempo_de_compactacion;
+	paquete->nombre_tabla_long= tamaniotabla;
+
+	return paquete;
+
+}
+
+
+
+
+
+
 

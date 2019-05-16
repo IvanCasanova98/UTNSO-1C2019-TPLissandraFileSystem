@@ -2,21 +2,38 @@
 
 int main(void)
 {
-	pthread_t consola;
+	pthread_t consola, atender[20];
 	logger = iniciar_logger();
-	t_config* config = leer_config();
 
-
+	int cantidadDeRequest =0;
+	argumentosEnvioPaquete* argumentos [20];
 	pthread_create(&consola,NULL,prenderConsola,NULL);
-
-	int server_fd = iniciar_servidor(config);
-
-	int cliente_fd = esperar_cliente(server_fd);
-
-	recibir_paquetes(logger, cliente_fd, server_fd);
+	int server_fd;
+	int cliente_fd;
+//	server_fd = iniciar_servidor();
+//	while(1){
+//
+//	if(cliente_fd = esperar_cliente(server_fd)){;
+//	argumentos[cantidadDeRequest]= crearArgumentosDeConexion(cliente_fd, server_fd);
+//	pthread_create(&atender[cantidadDeRequest],NULL,(void*)recibir_paquetes,(void*)argumentos);
+//	//recibir_paquetes(argumentos);
+//
+//	close(cliente_fd);
+//
+//	}
+//	pthread_join(atender[cantidadDeRequest], (void**)NULL);
+//	}
 
 	log_info(logger, "FIN CONEXION");
-
+	pthread_join(consola, (void**)NULL);
 	return EXIT_SUCCESS;
+}
 
+
+
+argumentosEnvioPaquete* crearArgumentosDeConexion(int clientefd, int serverfd){
+	struct argumentosEnvioPaquete *infoConexion =malloc(sizeof(argumentosEnvioPaquete));
+	infoConexion->clientefd =clientefd;
+	infoConexion->serverfd =serverfd;
+	return infoConexion;
 }

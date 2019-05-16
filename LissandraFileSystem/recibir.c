@@ -1,10 +1,15 @@
 #include "recibir.h"
 
 //----------------------------RECIBIR PAQUETE
-void recibir_paquetes(t_log* logger, int cliente_fd, int server_fd)
+void recibir_paquetes(void* argumentos)
 {
-	int cod_op;
-	while(1){
+
+	int cliente_fd=((struct argumentosEnvioPaquete*)argumentos)->clientefd;
+	int server_fd= ((struct argumentosEnvioPaquete*)argumentos)->serverfd;
+
+
+	int cod_op=0;
+
 		if (cliente_fd!=0){
 			cod_op = recibir_operacion(cliente_fd);
 		}
@@ -28,9 +33,7 @@ void recibir_paquetes(t_log* logger, int cliente_fd, int server_fd)
 			system("clear");
 			t_paquete_select *paquete_select=deserializar_paquete_select(cliente_fd);
 			log_info(logger, "SELECT %s %d ",paquete_select->nombre_tabla, paquete_select->valor_key);
-
-
-
+			free(paquete_select->nombre_tabla);
 			free(paquete_select);
 			break;
 		case INSERT: ;
@@ -39,6 +42,8 @@ void recibir_paquetes(t_log* logger, int cliente_fd, int server_fd)
 			log_info(logger, "INSERT %s %d %s %d ",paquete_insert->nombre_tabla, paquete_insert->valor_key,paquete_insert->value, paquete_insert->timestamp);
 
 
+			free(paquete_insert->value);
+			free(paquete_insert->nombre_tabla);
 			free(paquete_insert);
 			break;
 		case JOURNAL:
@@ -59,7 +64,8 @@ void recibir_paquetes(t_log* logger, int cliente_fd, int server_fd)
 			break;
 		}
 
-	}
+		pthread_exit(NULL);
+
 }
 
 //----------------------------TIPO DE OPERACION RECIBIDA
@@ -82,16 +88,10 @@ t_paquete_select* deserializar_paquete_select(int socket_cliente){
 
 	int desplazamiento = 0;
 	size_t tamanioTabla;
-
 	recv(socket_cliente, &tamanioTabla, sizeof(int) ,MSG_WAITALL);
-
 	t_paquete_select *paqueteSelect= malloc(tamanioTabla+sizeof(uint16_t)+sizeof(int));
 	paqueteSelect->nombre_tabla = malloc(tamanioTabla);
-
-
-
 	void *buffer = malloc(tamanioTabla+sizeof(uint16_t));
-
 	recv(socket_cliente, buffer, tamanioTabla+sizeof(uint16_t) ,MSG_WAITALL);
 	memcpy(paqueteSelect->nombre_tabla,buffer + desplazamiento, tamanioTabla);
 	desplazamiento+= tamanioTabla;

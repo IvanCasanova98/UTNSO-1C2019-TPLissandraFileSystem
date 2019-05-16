@@ -12,8 +12,11 @@
 #include<commons/string.h>
 #include<commons/config.h>
 #include<string.h>
+#include<pthread.h>
 
-typedef enum
+t_log* logger;
+
+typedef enum op_code
 {
 	CREATE,
 	DROP,
@@ -24,6 +27,28 @@ typedef enum
 	RUN,
 	ADD
 }op_code;
+
+typedef enum consistency
+{
+	SC,
+	SHC,
+	EC
+
+}consistency;
+
+
+typedef struct  argumentosEnvioPaquete{
+	int clientefd;
+	int serverfd;
+
+}argumentosEnvioPaquete;
+
+typedef struct metadata
+{
+	consistency consistencia;
+	int particiones;
+	int tiempo_de_compactacion;
+}metadata;
 
 typedef struct t_paquete_select
 {
@@ -42,8 +67,17 @@ typedef struct t_paquete_insert
 	long long timestamp;
 }t_paquete_insert;
 
+
+typedef struct t_paquete_create
+{
+	uint32_t nombre_tabla_long; //Longitud del nombre de la tabla
+	char* nombre_tabla;
+	metadata metadata;
+
+}t_paquete_create;
+
 //--------------------RECIBIR PAQUETE
-void recibir_paquetes(t_log* logger, int cliente_fd, int server_fd);
+void recibir_paquetes(void*);
 
 //--------------------RECIBIR OPERACION
 int recibir_operacion(int);

@@ -2,7 +2,7 @@
 
 //----------------------------ARCHIVOS LOGGER/CONFIG
 t_log* iniciar_logger() {
-	return log_create("Lissandra.log", "MemoryPool", 1, LOG_LEVEL_INFO);
+	return log_create("Lissandra.log", "LFS", 1, LOG_LEVEL_INFO);
 }
 
 t_config* leer_config() {
@@ -10,10 +10,10 @@ t_config* leer_config() {
 }
 
 //----------------------------CONEXION
-int iniciar_servidor(t_config* config)
+int iniciar_servidor()
 {
-
 	int socket_servidor;
+	t_config* config = leer_config();
 	char* ip = config_get_string_value(config, "IP");
 	char* puerto = config_get_string_value(config, "PUERTOESCUCHA");
 
@@ -42,7 +42,7 @@ int iniciar_servidor(t_config* config)
 
     freeaddrinfo(servinfo);
 
-	log_info(logger, "ESPERANDO MEMORY POOL ");
+	log_info(logger, "ESPERANDO MEMORIA");
 
     return socket_servidor;
 }

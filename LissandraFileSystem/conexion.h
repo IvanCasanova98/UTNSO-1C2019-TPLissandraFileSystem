@@ -16,7 +16,7 @@
 
 t_log* logger;
 
-int iniciar_servidor(t_config* config);
+int iniciar_servidor();
 int esperar_cliente(int);
 
 #endif /* CONEXION_H_ */
