@@ -15,7 +15,7 @@
 
 
 
-argumentosEnvioPaquete* crearArgumentosDeConexion(int clientefd, int serverfd);
+//argumentosEnvioPaquete* crearArgumentosDeConexion(int clientefd, int serverfd);
 
 
 #endif /* LISSANDRA_H_ */

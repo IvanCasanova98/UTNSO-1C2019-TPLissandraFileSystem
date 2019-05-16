@@ -1,22 +1,28 @@
 #include "recibir.h"
 
 //----------------------------RECIBIR PAQUETE
-void recibir_paquetes(void* argumentos)
+void* recibir_paquetes(void *arg)
 {
+	int cliente_fd = *((int *) arg);
+	free(arg);
 
-	int cliente_fd=((struct argumentosEnvioPaquete*)argumentos)->clientefd;
-	int server_fd= ((struct argumentosEnvioPaquete*)argumentos)->serverfd;
 
+//	int cliente_fd=((struct argumentosEnvioPaquete*)argumentos)->clientefd;
+//	int server_fd= ((struct argumentosEnvioPaquete*)argumentos)->serverfd;
+//	int *cliente_fd = (int *)clienteFd;
+//	int *ptr_cliente_fd = (int *)clienteFd;
+//	int cliente_fd = *ptr_cliente_fd;
+//	int cliente_fd = (int)clienteFd;
+//	int cliente_fd = (int) arg;
 
-	int cod_op=0;
+	printf("\n\n\nEL hilo entro a la funcion recibir_paquetes!!!\n\n\n");
+	int cod_op = recibir_operacion(cliente_fd);
 
-		if (cliente_fd!=0){
-			cod_op = recibir_operacion(cliente_fd);
+		if (cliente_fd==0){
+			printf("Error al conectarse para intentar recibir paquete\ņ");
+			pthread_exit(NULL);
 		}
-		else{
-			cliente_fd = esperar_cliente(server_fd);
-			cod_op = recibir_operacion(cliente_fd);
-		}
+
 		switch(cod_op){
 		case CREATE:
 			log_info(logger, "Se recibio paquete tipo: CREATE");
@@ -47,7 +53,13 @@ void recibir_paquetes(void* argumentos)
 			free(paquete_insert);
 			break;
 		case JOURNAL:
+
+			//AGREGE ACA PARA SALIR. !!
+			log_info(logger, "FIN CONEXION.\n");
+			cliente_fd=0;
 			log_info(logger, "Se recibio paquete tipo: JOURNAL");
+			pthread_exit(NULL);
+
 			break;
 		case RUN:
 			log_info(logger, "Se recibio paquete tipo: RUN");
@@ -58,13 +70,15 @@ void recibir_paquetes(void* argumentos)
 		case -1:
 			log_info(logger, "FIN CONEXION.\n");
 			cliente_fd=0;
+			pthread_exit(NULL);
 			break;
 		default:
 			log_warning(logger, "Operacion desconocida.");
 			break;
 		}
 
-		pthread_exit(NULL);
+
+
 
 }
 
