@@ -77,7 +77,7 @@ typedef struct t_paquete_create
 }t_paquete_create;
 
 //--------------------RECIBIR PAQUETE
-void recibir_paquetes(void*);
+void* recibir_paquetes(void*);
 
 //--------------------RECIBIR OPERACION
 int recibir_operacion(int);

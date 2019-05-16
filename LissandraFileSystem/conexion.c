@@ -59,3 +59,4 @@ int esperar_cliente(int socket_servidor)
 
 	return socket_cliente;
 }
+
