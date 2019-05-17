@@ -61,6 +61,9 @@ t_config* leer_config(void);
 void enviar_paquete_select(t_paquete_select* paquete, int socket_cliente);
 void enviar_paquete_insert(t_paquete_insert* paquete, int socket_cliente);
 
+//---------------------INGRESO DE PAQUETE
+void ingresar_paquete(int conexion);
+
 //---------------------INGRESO DE PAQUETE(FUNC AUX)
 char* ingresar_request();
 int codigo_ingresado(char* lineaRequest);

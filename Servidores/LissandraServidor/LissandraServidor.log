@@ -1,0 +1,19 @@
+[INFO] 12:44:19:965 LissandraServidor/(5050:5050): Servidor listo para recibir al Memory Pool
+[INFO] 12:55:26:523 LissandraServidor/(5275:5275): Servidor listo para recibir al Memory Pool
+[INFO] 12:55:54:650 LissandraServidor/(5275:5275): Kernel conectado!
+[INFO] 12:57:03:570 LissandraServidor/(5275:5275): hola
+[INFO] 12:57:03:570 LissandraServidor/(5275:5275): como
+[INFO] 12:57:03:570 LissandraServidor/(5275:5275): estas
+[ERROR] 12:57:03:570 LissandraServidor/(5275:5275): Memory Pool desconectado. Terminando Servidor Lissandra.
+[INFO] 12:59:41:937 LissandraServidor/(5389:5389): Servidor listo para recibir al Memory Pool
+[INFO] 13:00:09:912 LissandraServidor/(5389:5389): Memory Pool conectado!
+[INFO] 13:00:22:567 LissandraServidor/(5389:5389): uno
+[INFO] 13:00:22:567 LissandraServidor/(5389:5389): dos
+[INFO] 13:00:22:567 LissandraServidor/(5389:5389): tres
+[ERROR] 13:00:22:568 LissandraServidor/(5389:5389): Memory Pool desconectado. Terminando Servidor Lissandra.
+[INFO] 13:50:49:211 LissandraServidor/(7328:7328): Servidor listo para recibir al Memory Pool
+[INFO] 13:50:58:275 LissandraServidor/(7328:7328): Memory Pool conectado!
+[INFO] 13:51:05:29 LissandraServidor/(7328:7328): uno
+[INFO] 13:51:05:29 LissandraServidor/(7328:7328): dos
+[INFO] 13:51:05:29 LissandraServidor/(7328:7328): tres
+[ERROR] 13:51:05:29 LissandraServidor/(7328:7328): Memory Pool desconectado. Terminando Servidor Lissandra.

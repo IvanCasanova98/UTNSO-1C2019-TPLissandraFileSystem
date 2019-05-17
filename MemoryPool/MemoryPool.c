@@ -1,18 +1,18 @@
+//incluir dos logs
+
 #include "MemoryPool.h"
 
 int main(void)
+
 {
-	logger = iniciar_logger();
-	t_config* config = leer_config();
+	pthread_t hilo_servidor;
+	pthread_t hilo_consola;
 
-	int server_fd = iniciar_servidor(config);
+	pthread_create(&hilo_servidor, NULL, servidor, NULL); //Falta verificacion en la creacion de hilos
+	pthread_create(&hilo_consola, NULL, ingresar_paquete, NULL);
 
-	int cliente_fd = esperar_cliente(server_fd);
-
-	recibir_paquetes(logger, cliente_fd, server_fd);
-
-	log_info(logger, "FIN CONEXION");
+	pthread_join(hilo_servidor,NULL);
+	pthread_join(hilo_consola,NULL);
 
 	return 1;
-
 }

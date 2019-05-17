@@ -1,10 +1,12 @@
 #include "recibir.h"
 
 //----------------------------RECIBIR PAQUETE
-void recibir_paquetes(t_log* logger, int cliente_fd, int server_fd)
+void recibir_paquetes(int cliente_fd, int server_fd)
 {
 	int cod_op;
+
 	while(1){
+
 		if (cliente_fd!=0){
 			cod_op = recibir_operacion(cliente_fd);
 		}
@@ -12,55 +14,44 @@ void recibir_paquetes(t_log* logger, int cliente_fd, int server_fd)
 			cliente_fd = esperar_cliente(server_fd);
 			cod_op = recibir_operacion(cliente_fd);
 		}
+
 		switch(cod_op){
+
 		case CREATE:
-			log_info(logger, "Se recibio paquete tipo: CREATE");
 			break;
 		case DROP:
-
-			log_info(logger, "Se recibio paquete tipo: DROP");
 			break;
-
 		case DESCRIBE:
-			log_info(logger, "Se recibio paquete tipo: DESCRIBE");
 			break;
-		case SELECT: ;
+		case SELECT:;
 
-			t_paquete_select *paquete_select=deserializar_paquete_select(cliente_fd);
+			t_paquete_select *paquete_select = deserializar_paquete_select(cliente_fd);
 
-			log_info(logger, "SELECT %s %d ",paquete_select->nombre_tabla, paquete_select->valor_key);
-
-
+			loggear_paquete_select(paquete_select);
 
 			selectf(paquete_select);
 
-
 			break;
-		case INSERT: ;
+		case INSERT:;
 
 			t_paquete_insert* paquete_insert = deserializar_paquete_insert(cliente_fd);
-			log_info(logger, "INSERT %s %d %s %d ",paquete_insert->nombre_tabla, paquete_insert->valor_key,paquete_insert->value, paquete_insert->timestamp);
+
+			loggear_paquete_insert(paquete_insert);
 
 			insert(paquete_insert);
 
-
-
 			break;
 		case JOURNAL:
-			log_info(logger, "Se recibio paquete tipo: JOURNAL");
 			break;
 		case RUN:
-			log_info(logger, "Se recibio paquete tipo: RUN");
 			break;
 		case ADD:
-			log_info(logger, "Se recibio paquete tipo: ADD");
 			break;
 		case -1:
-			log_info(logger, "FIN CONEXION.\n");
 			cliente_fd=0;
 			break;
 		default:
-			log_warning(logger, "Operacion desconocida.");
+			printf("operacion desconocida");
 			break;
 		}
 
@@ -91,12 +82,9 @@ t_paquete_select* deserializar_paquete_select(int socket_cliente){
 	t_paquete_select *paqueteSelect= malloc(tamanioTabla+sizeof(uint16_t)+sizeof(int));
 	paqueteSelect->nombre_tabla = malloc(tamanioTabla);
 
-
-
 	void *buffer = malloc(tamanioTabla+sizeof(uint16_t));
 
 	recv(socket_cliente, buffer, tamanioTabla+sizeof(uint16_t) ,MSG_WAITALL);
-
 
 	memcpy(paqueteSelect->nombre_tabla,buffer + desplazamiento, tamanioTabla);
 	desplazamiento+= tamanioTabla;
@@ -110,7 +98,7 @@ t_paquete_select* deserializar_paquete_select(int socket_cliente){
 
 t_paquete_insert* deserializar_paquete_insert(int socket_cliente){
 
-	void *buffer_para_longitudes = malloc(sizeof(uint32_t)*2); //hice este buffer para sacar los tamaños de las longitudes variables. EL otro buffer saca TODa la info deaa
+	void *buffer_para_longitudes = malloc(sizeof(uint32_t)*2);
 
 	int desplazamiento = 0;
 	size_t tamanioTabla;

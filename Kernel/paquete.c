@@ -2,7 +2,7 @@
 
 //------------------------------INGRESO DE PAQUETES------------------------------------
 
-void ingresar_paquete(int conexion, t_log* logger){
+void ingresar_paquete(int conexion){
 
 	char* lineaRequest = ingresar_request();
 	char* parametros = strtok(lineaRequest, " ");
@@ -32,7 +32,12 @@ void ingresar_paquete(int conexion, t_log* logger){
 
 				break;
 
-			case 8:
+			case 8:;
+				funcion_LQL(parametros, conexion);
+
+				break;
+
+			case 9:
 				return;
 			default:
 
@@ -50,7 +55,7 @@ void ingresar_paquete(int conexion, t_log* logger){
 
 char* ingresar_request()
 {
-	printf("\n\nCREATE\nDROP\nDESCRIBE\nSELECT    NOMBRETABLA KEY\nINSERT    NOMBRETABLA KEY VALUE \nJOURNAL\nRUN\nADD\nEXIT\n");
+	printf("\n\nCREATE\nDROP\nDESCRIBE\nSELECT    NOMBRETABLA KEY\nINSERT    NOMBRETABLA KEY VALUE \nJOURNAL\nRUN\nADD\nLQL    PATH\nEXIT\n");
 
 	printf("\nIngrese REQUEST ");
 
@@ -90,7 +95,10 @@ int codigo_ingresado(char* parametros){
 	else if (strcmp(parametros, "ADD")==0) {
 		return 7;
 	}
-	else {return 8;}
+	else if (strcmp(parametros, "LQL")==0) {
+		return 8;
+	}
+	else {return 9;}
 }
 
 //---------------------CREAR PAQUETES
@@ -138,7 +146,7 @@ t_paquete_select* selectf(char* parametros){
 	nombre_tabla = parametros;
 	parametros = strtok(NULL, " ");
 	valor_key = atoi(parametros);
-	printf("%d",valor_key);
+
 	t_paquete_select* paquete = crear_paquete_select(nombre_tabla, valor_key);
 
 	loggear_paquete_select(paquete);
@@ -161,7 +169,7 @@ t_paquete_insert* insert(char* parametros){
 	value = parametros;
 	//parametros = strtok(NULL, " ");
 	//timestamp = atoi(parametros);
-	printf("%d",valor_key);
+
 	t_paquete_insert* paquete = crear_paquete_insert(nombre_tabla, valor_key, value, timestamp);
 
 	loggear_paquete_insert(paquete);

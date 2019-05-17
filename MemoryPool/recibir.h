@@ -17,7 +17,7 @@
 #include "API.h"
 
 //--------------------RECIBIR PAQUETE
-void recibir_paquetes(t_log* logger, int cliente_fd, int server_fd);
+void recibir_paquetes(int cliente_fd, int server_fd);
 
 //--------------------RECIBIR OPERACION
 int recibir_operacion(int);

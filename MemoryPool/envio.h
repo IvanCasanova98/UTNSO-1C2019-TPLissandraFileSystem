@@ -26,4 +26,8 @@ void* serializar_paquete_insert(t_paquete_insert* paquete);
 void enviar_paquete_select(t_paquete_select* paquete, int socket_cliente);
 void enviar_paquete_insert(t_paquete_insert* paquete, int socket_cliente);
 
+//----------------------------ENVIOS DE SERVIDOR A LISSANDRA
+void enviar_select_lissandra(t_paquete_select* paquete);
+void enviar_insert_lissandra(t_paquete_insert* paquete);
+
 #endif /* ENVIO_H_ */

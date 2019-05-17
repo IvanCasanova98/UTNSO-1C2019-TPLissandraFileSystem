@@ -16,8 +16,11 @@
 
 t_log* logger;
 
+//--------------------LEVANTAR SERVIDOR
+void* servidor(void *arg);
+
 //----------------------------CONEXION COMO SERVIDOR
-int iniciar_servidor(t_config* config);
+int iniciar_servidor();
 int esperar_cliente(int);
 
 //----------------------------CONEXION COMO CLIENTE

@@ -8,8 +8,13 @@
 #include<curses.h>
 #include<commons/temporal.h>
 
+#include<pthread.h>
+
 #include "conexion.h"
 #include "recibir.h"
-#include "conexion.h"
+#include "consola.h"
+
+int crear_hilo_servidor();
+int crear_hilo_consola();
 
 #endif /* MEMORYPOOL_H_ */

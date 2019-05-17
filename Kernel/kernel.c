@@ -8,7 +8,7 @@ int main(void){
 
 	int conexion = iniciar_conexion(logger, config);
 
-	ingresar_paquete(conexion, logger);
+	ingresar_paquete(conexion);
 
 	terminar_conexion(logger,config,conexion);
 

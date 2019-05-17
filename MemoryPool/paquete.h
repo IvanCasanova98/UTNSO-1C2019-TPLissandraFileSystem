@@ -1,6 +1,27 @@
 #ifndef PAQUETE_H_
 #define PAQUETE_H_
 
+#include<stdlib.h>
+#include<string.h>
+#include<stdint.h>
+#include<curses.h>
+
+#include<sys/socket.h>
+
+#include<readline/readline.h>
+#include<readline/history.h>
+
+#include<commons/log.h>
+#include<commons/string.h>
+#include<commons/config.h>
+#include<commons/temporal.h>
+
+typedef struct
+{
+	int size;
+	void* stream;
+} t_buffer;
+
 typedef enum
 {
 	CREATE,
@@ -29,5 +50,17 @@ typedef struct t_paquete_insert
 	char* value;
 	int timestamp;
 }t_paquete_insert;
+
+//---------------------CREAR PAQUETE
+t_paquete_select* crear_paquete_select(char *nombretabla,uint16_t valor_key);
+t_paquete_insert* crear_paquete_insert(char *nombretabla,uint16_t valor_key, char *value, long long timestamp);
+
+//---------------------ARMAR PAQUETE
+t_paquete_select* paquete_select(char* parametros);
+t_paquete_insert* paquete_insert(char* parametros);
+
+//---------------------LOGGEAR PAQUETE
+void loggear_paquete_select(t_paquete_select* paquete);
+void loggear_paquete_insert(t_paquete_insert* paquete);
 
 #endif /* PAQUETE_H_ */

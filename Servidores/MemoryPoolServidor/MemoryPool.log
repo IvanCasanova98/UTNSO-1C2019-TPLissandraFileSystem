@@ -1,0 +1,48 @@
+[INFO] 06:28:18:125 MemoryPool/(22853:22853): INICIO CONEXION. Servidor listo para recibir al Kernel 
+[INFO] 06:28:22:807 MemoryPool/(22853:22853): Kernel conectado!
+[INFO] 06:29:49:917 MemoryPool/(22896:22896): INICIO CONEXION. Servidor listo para recibir al Kernel 
+[INFO] 06:29:54:352 MemoryPool/(22896:22896): Kernel conectado!
+[INFO] 06:35:51:590 MemoryPool/(23072:23072): INICIO CONEXION. Servidor listo para recibir al Kernel 
+[INFO] 06:35:57:947 MemoryPool/(23072:23072): Kernel conectado!
+[INFO] 06:36:04:803 MemoryPool/(23072:23072): Se recibio paquete tipo: INSERT asd 333 asd 1 
+
+[INFO] 06:36:23:261 MemoryPool/(23072:23072): Se recibio paquete tipo: INSERT fuihqwekufhlq 123 fuihqwekufhlq 3 
+
+[INFO] 16:26:01:289 MemoryPool/(8817:8817): INICIO CONEXION. Servidor listo para recibir al Kernel 
+[INFO] 16:26:10:259 MemoryPool/(8817:8817): Kernel conectado!
+[INFO] 16:26:21:407 MemoryPool/(8817:8817): Se recibio SELECT tabla_1 456 
+
+[INFO] 16:26:41:232 MemoryPool/(8817:8817): Se recibio SELECT tabla_12 111 
+
+[INFO] 16:27:11:432 MemoryPool/(8817:8817): Se recibio SELECT tabla 123 
+
+[ERROR] 16:28:48:842 MemoryPool/(8817:8817): FIN CONEXION. Kernel desconectado. Terminando Servidor Memory Pool.
+[INFO] 16:34:11:452 MemoryPool/(9206:9206): INICIO CONEXION. Servidor listo para recibir al Kernel 
+[INFO] 16:34:15:979 MemoryPool/(9206:9206): Kernel conectado!
+[INFO] 16:34:45:540 MemoryPool/(9206:9206): Se recibio paquete tipo: INSERT banana 134 banana 1634 
+
+[ERROR] 16:35:20:458 MemoryPool/(9206:9206): FIN CONEXION. Kernel desconectado. Terminando Servidor Memory Pool.
+[INFO] 16:39:14:899 MemoryPool/(9381:9381): INICIO CONEXION. Servidor listo para recibir al Kernel 
+[INFO] 16:39:19:201 MemoryPool/(9381:9381): Kernel conectado!
+[INFO] 16:39:36:263 MemoryPool/(9381:9381): Se recibio paquete tipo: INSERT valor1 444 valor1 1654 
+
+[ERROR] 16:40:46:158 MemoryPool/(9381:9381): FIN CONEXION. Kernel desconectado. Terminando Servidor Memory Pool.
+[INFO] 16:41:03:758 MemoryPool/(9452:9452): INICIO CONEXION. Servidor listo para recibir al Kernel 
+[INFO] 16:41:07:816 MemoryPool/(9452:9452): Kernel conectado!
+[INFO] 16:41:24:718 MemoryPool/(9452:9452): Se recibio paquete tipo: INSERT valor1 19 valor1 1645 
+
+[ERROR] 16:41:57:532 MemoryPool/(9452:9452): FIN CONEXION. Kernel desconectado. Terminando Servidor Memory Pool.
+[INFO] 16:42:26:140 MemoryPool/(9502:9502): INICIO CONEXION. Servidor listo para recibir al Kernel 
+[INFO] 16:42:29:953 MemoryPool/(9502:9502): Kernel conectado!
+[INFO] 16:42:38:549 MemoryPool/(9502:9502): Se recibio paquete tipo: INSERT valor 123 valor 11 
+
+[ERROR] 16:42:58:515 MemoryPool/(9502:9502): FIN CONEXION. Kernel desconectado. Terminando Servidor Memory Pool.
+[INFO] 16:43:19:671 MemoryPool/(9554:9554): INICIO CONEXION. Servidor listo para recibir al Kernel 
+[INFO] 16:43:23:266 MemoryPool/(9554:9554): Kernel conectado!
+[INFO] 16:43:32:27 MemoryPool/(9554:9554): Se recibio paquete tipo: INSERT valor 123 valor 1111 
+
+[ERROR] 16:44:29:703 MemoryPool/(9554:9554): FIN CONEXION. Kernel desconectado. Terminando Servidor Memory Pool.
+[INFO] 16:44:46:181 MemoryPool/(9612:9612): INICIO CONEXION. Servidor listo para recibir al Kernel 
+[INFO] 16:44:50:146 MemoryPool/(9612:9612): Kernel conectado!
+[INFO] 16:45:04:107 MemoryPool/(9612:9612): Se recibio paquete tipo: INSERT valor 123 valor 111 
+
