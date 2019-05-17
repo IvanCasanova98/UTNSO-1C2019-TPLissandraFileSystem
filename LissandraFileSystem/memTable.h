@@ -27,34 +27,40 @@
 #include <errno.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include<commons/collections/list.h>
+#include <stdbool.h>
+#include "Lissandra.h"
+
 
 
 typedef struct nodoRegistroMemTable{
 	char* value;
 	uint16_t key;
 	long long timestamp;
-	struct nodoRegistroMemTable* siguienteRegistro;
+
 }nodoRegistroMemTable;
 
 typedef struct nodoTablaMemTable{
 	char* nombreTabla;
-	struct nodoTablaMemTable* siguiente;
-	struct nodoRegistroMemTable* primerRegistro;
-	struct nodoRegistroMemTable* ultimoRegistro;
+	t_list* registros;
 }nodoTablaMemTable;
 
-
-
-
-
+void mostrarRegistros(void* elemento);
+void mostrarTablas(void* elemento);
+t_list* crearMemTable();
 extern nodoTablaMemTable* primer; //la memtable siempre arranca vacia;
 extern nodoTablaMemTable* ultimo;
-
-void agregarTabla(nodoTablaMemTable*);
-int existeDuplicado(nodoTablaMemTable* nodoTabla);
+bool _mismoNombre(void* elemento);
+bool igualNombre(void* elemento,char* nombreBuscado);
+void agregarTabla(nodoTablaMemTable* nodoTabla,nodoRegistroMemTable* nodoRegistro);
+bool existeDuplicado(nodoTablaMemTable* nodoTabla);
 nodoTablaMemTable* crearNodoTabla(char* nombreTabla);
 void imprimirListaTablas();
-void eliminarNodoTabla(nodoTablaMemTable* nodoTabla);
+void eliminarNodoTabla();
 void agregarRegistro(nodoTablaMemTable* nodoTabla, nodoRegistroMemTable* nodoRegistro);
 void imprimirRegistrosTabla();
+void eliminarUltimoRegistro(nodoTablaMemTable* nodoTabla);
+void dump();
+nodoTablaMemTable* crearNodoTabla(char* nombreTabla);
+nodoRegistroMemTable* crearNodoRegistro(char*value,uint16_t key,long long timestamp);
 #endif /* MEMTABLE_H_ */

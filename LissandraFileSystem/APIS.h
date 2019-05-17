@@ -20,10 +20,12 @@
 #include<readline/readline.h>
 #include<readline/history.h>
 #include<commons/log.h>
+#include<commons/error.h>
 #include<commons/string.h>
 #include<commons/config.h>
 #include<commons/temporal.h>
 #include"recibir.h"
+#include"memTable.h"
 #include <dirent.h>
 #include <errno.h>
 #include <sys/stat.h>

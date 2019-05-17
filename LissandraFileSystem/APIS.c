@@ -4,10 +4,12 @@
 
 
 void APIcreate(t_paquete_create* paquete_create){
+
 	char nombreTablaMayuscula [strlen(paquete_create->nombre_tabla)+1];
+	string_to_upper(nombreTablaMayuscula);
 	strcpy(nombreTablaMayuscula,paquete_create->nombre_tabla);
-	int i =0;
-	while(nombreTablaMayuscula[i]){nombreTablaMayuscula[i]= (unsigned char)toupper(nombreTablaMayuscula[i]); i++;}
+//	int i =0;
+//	while(nombreTablaMayuscula[i]){nombreTablaMayuscula[i]= (unsigned char)toupper(nombreTablaMayuscula[i]); i++;}
 
 	if(!existeTabla(nombreTablaMayuscula)){
 		crearTabla(nombreTablaMayuscula);
@@ -15,12 +17,32 @@ void APIcreate(t_paquete_create* paquete_create){
 		crearParticiones(nombreTablaMayuscula,paquete_create->metadata.particiones);
 
 }else if(EEXIST==errno){
-	 logLaTablaYaExiste();}
+	error_show("EXISTE LA TABLA");}
 
 }
 
 
+void APIinsert(t_paquete_insert* paquete_insert){
 
+	char nombreTablaMayuscula[strlen(paquete_insert->nombre_tabla)+1];
+	strcpy(nombreTablaMayuscula,paquete_insert->nombre_tabla);
+	string_to_upper(nombreTablaMayuscula);
+	//char* nombreTablaMayuscula = realloc(paquete_insert->nombre_tabla, strlen(paquete_insert->nombre_tabla)+1);
+
+	if(existeTabla(nombreTablaMayuscula)){
+
+	nodoTablaMemTable* nuevaTabla =	crearNodoTabla(nombreTablaMayuscula);
+	nodoRegistroMemTable* nuevoRegistro = crearNodoRegistro(paquete_insert->value,paquete_insert->valor_key,paquete_insert->timestamp);
+	agregarTabla(nuevaTabla,nuevoRegistro);
+	//agregarRegistro(nuevaTabla,nuevoRegistro);
+	imprimirRegistrosTabla(nuevaTabla);
+	//imprimirListaTablas();
+
+
+	} else error_show("NO EXISTE LA TABLA");
+
+
+}
 
 
 

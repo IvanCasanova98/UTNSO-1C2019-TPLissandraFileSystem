@@ -35,6 +35,7 @@ void* prenderConsola(void* arg){
 			case 4:;
 
 				t_paquete_insert* paquete_insert=LeerInsert(parametros);
+				APIinsert(paquete_insert);
 				free(paquete_insert);
 
 				break;
@@ -49,6 +50,7 @@ void* prenderConsola(void* arg){
 			}
 
 		free(parametros);
+		//imprimirListaTablas();
 		lineaRequest = ingresar_request();
 		parametros = strtok(lineaRequest, " ");
 		cod_ingresado = codigo_ingresado(parametros);
@@ -58,23 +60,41 @@ void* prenderConsola(void* arg){
 }
 void deployMenu(){
 	printf("\n\nCREATE NOMBRETABLA CONSISTENCIA PARTICIONES TIEMPO_COMPACTACION \nDROP\nDESCRIBE\nSELECT    NOMBRETABLA KEY\nINSERT    NOMBRETABLA KEY VALUE TIMESTAMP (OPCIONAL) \n");
-	printf("\nIngrese REQUEST ");
-	nodoTablaMemTable* nodo1 = crearNodoTabla("Tabla1");
-	nodoTablaMemTable* nodo2 = crearNodoTabla("Tabla2");
-	nodoTablaMemTable* nodo3 = crearNodoTabla("Tabla3");
-	nodoRegistroMemTable* registro1 = crearNodoRegistro("Registro1",2,10);
-	nodoRegistroMemTable* registro2 = crearNodoRegistro("Registro2",2000,10000);
-	agregarTabla(nodo1);
-	agregarTabla(nodo2);
-	agregarTabla(nodo3);
-	agregarRegistro(nodo2, registro1);
-	agregarRegistro(nodo2, registro2);
-	imprimirRegistrosTabla(nodo2);
+	printf("\nIngrese REQUEST\n");
+//	nodoTablaMemTable* nodo1 = crearNodoTabla("Tabla1");
+//	nodoTablaMemTable* nodo2 = crearNodoTabla("Tabla2");
+//	nodoTablaMemTable* nodo3 = crearNodoTabla("Tabla3");
+//	nodoRegistroMemTable* registro1 = crearNodoRegistro("Registro1",2,10);
+//	nodoRegistroMemTable* registro2 = crearNodoRegistro("Registro2",2000,10000);
+//
+//	agregarTabla(nodo1);
+//	agregarTabla(nodo2);
+//	agregarRegistro(nodo1, registro1);
+//
+//	agregarRegistro(nodo1, registro1);
+//	agregarRegistro(nodo1, registro1);
+//	agregarTabla(nodo3);
+//	agregarRegistro(nodo2, registro2);
+//
+//	eliminarUltimoRegistro(nodo1);
+//	imprimirListaTablas();
+//	agregarTabla(nodo2);
+//	agregarTabla(nodo3);
+//	imprimirListaTablas();
 
 
-	eliminarNodoTabla(nodo1);
-	eliminarNodoTabla(nodo2);
-	eliminarNodoTabla(nodo3);
+//	eliminarNodoTabla();
+//	imprimirListaTablas();
+//	agregarRegistro(nodo1, registro1);
+//	agregarRegistro(nodo3, registro2);
+//	imprimirRegistrosTabla(nodo1);
+//	eliminarPrimerRegistro(nodo3);
+//	imprimirRegistrosTabla(nodo3);
+//	//dump();
+//	//imprimirRegistrosTabla(nodo2);
+//	eliminarNodoTabla(nodo1);
+//	eliminarNodoTabla(nodo2);
+//	eliminarNodoTabla(nodo3);
 }
 
 char* ingresar_request()
