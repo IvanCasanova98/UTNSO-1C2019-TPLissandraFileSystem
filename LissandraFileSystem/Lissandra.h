@@ -14,9 +14,9 @@
 #include "APIS.h"
 #include "memTable.h"
 #include<commons/collections/list.h>
-
+#include<commons/collections/dictionary.h>
 
 //argumentosEnvioPaquete* crearArgumentosDeConexion(int clientefd, int serverfd);
-extern t_list* memTable;
+extern t_dictionary* memTable;
 
 #endif /* LISSANDRA_H_ */

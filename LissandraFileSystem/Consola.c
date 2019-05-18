@@ -9,10 +9,12 @@
 void* prenderConsola(void* arg){
 
 
-	char* lineaRequest=NULL;
+	char* lineaRequest="";
 
-	while(lineaRequest==NULL){
+	while(string_is_empty(lineaRequest )){
+
 		lineaRequest = ingresar_request();
+
 	}
 
 	char* parametros = strtok(lineaRequest, " ");
@@ -28,6 +30,7 @@ void* prenderConsola(void* arg){
 			case 3:;
 
 				t_paquete_select* paquete_select =LeerSelect(parametros) ;
+				APIselect(paquete_select);
 				free(paquete_select);
 
 				break;
@@ -61,40 +64,10 @@ void* prenderConsola(void* arg){
 void deployMenu(){
 	printf("\n\nCREATE NOMBRETABLA CONSISTENCIA PARTICIONES TIEMPO_COMPACTACION \nDROP\nDESCRIBE\nSELECT    NOMBRETABLA KEY\nINSERT    NOMBRETABLA KEY VALUE TIMESTAMP (OPCIONAL) \n");
 	printf("\nIngrese REQUEST\n");
-//	nodoTablaMemTable* nodo1 = crearNodoTabla("Tabla1");
-//	nodoTablaMemTable* nodo2 = crearNodoTabla("Tabla2");
-//	nodoTablaMemTable* nodo3 = crearNodoTabla("Tabla3");
-//	nodoRegistroMemTable* registro1 = crearNodoRegistro("Registro1",2,10);
-//	nodoRegistroMemTable* registro2 = crearNodoRegistro("Registro2",2000,10000);
-//
-//	agregarTabla(nodo1);
-//	agregarTabla(nodo2);
-//	agregarRegistro(nodo1, registro1);
-//
-//	agregarRegistro(nodo1, registro1);
-//	agregarRegistro(nodo1, registro1);
-//	agregarTabla(nodo3);
-//	agregarRegistro(nodo2, registro2);
-//
-//	eliminarUltimoRegistro(nodo1);
-//	imprimirListaTablas();
-//	agregarTabla(nodo2);
-//	agregarTabla(nodo3);
-//	imprimirListaTablas();
 
 
-//	eliminarNodoTabla();
-//	imprimirListaTablas();
-//	agregarRegistro(nodo1, registro1);
-//	agregarRegistro(nodo3, registro2);
-//	imprimirRegistrosTabla(nodo1);
-//	eliminarPrimerRegistro(nodo3);
-//	imprimirRegistrosTabla(nodo3);
-//	//dump();
-//	//imprimirRegistrosTabla(nodo2);
-//	eliminarNodoTabla(nodo1);
-//	eliminarNodoTabla(nodo2);
-//	eliminarNodoTabla(nodo3);
+
+
 }
 
 char* ingresar_request()
@@ -171,7 +144,7 @@ t_paquete_insert* LeerInsert(char* parametros){
 	struct timeval te;
 	gettimeofday(&te, NULL); // get current time
 	timestamp = te.tv_sec*1000LL + te.tv_usec/1000;
-	} else {timestamp = atoi(parametros);}
+	} else {timestamp = (long long)atoi(parametros);}
 
 	t_paquete_insert* paquete = crear_paquete_insert(nombre_tabla, valor_key, value, timestamp);
 	loggear_request_insert(paquete);
@@ -238,7 +211,7 @@ t_paquete_select* crear_paquete_select(char* nombretabla, uint16_t valor_key) //
 
 }
 
-t_paquete_insert* crear_paquete_insert(char *nombre_tabla, uint16_t valor_key, char *value, int timestamp) //Agregado
+t_paquete_insert* crear_paquete_insert(char *nombre_tabla, uint16_t valor_key, char *value, long long timestamp) //Agregado
 {
 
 
@@ -259,7 +232,7 @@ t_paquete_insert* crear_paquete_insert(char *nombre_tabla, uint16_t valor_key, c
 t_paquete_create* crear_paquete_create(char* nombretabla, consistency consistencia, int particiones,int tiempo_de_compactacion) //Agregado
 {
 	uint32_t tamaniotabla = strlen(nombretabla)+1;
-	t_paquete_create* paquete = malloc(sizeof(metadata)+tamaniotabla);
+	t_paquete_create* paquete = malloc(sizeof(t_metadata)+tamaniotabla);
 
 	paquete->nombre_tabla= nombretabla;
 	paquete->metadata.consistencia = consistencia;

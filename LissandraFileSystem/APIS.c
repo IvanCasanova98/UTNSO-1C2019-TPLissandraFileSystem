@@ -8,47 +8,107 @@ void APIcreate(t_paquete_create* paquete_create){
 	char nombreTablaMayuscula [strlen(paquete_create->nombre_tabla)+1];
 	string_to_upper(nombreTablaMayuscula);
 	strcpy(nombreTablaMayuscula,paquete_create->nombre_tabla);
-//	int i =0;
-//	while(nombreTablaMayuscula[i]){nombreTablaMayuscula[i]= (unsigned char)toupper(nombreTablaMayuscula[i]); i++;}
 
 	if(!existeTabla(nombreTablaMayuscula)){
 		crearTabla(nombreTablaMayuscula);
 		crearMetadataConfig(nombreTablaMayuscula,paquete_create->metadata.consistencia,paquete_create->metadata.particiones,paquete_create->metadata.tiempo_de_compactacion);
 		crearParticiones(nombreTablaMayuscula,paquete_create->metadata.particiones);
 
-}else if(EEXIST==errno){
-	error_show("EXISTE LA TABLA");}
+	} else if (EEXIST==errno) error_show("EXISTE LA TABLA");
 
 }
 
 
 void APIinsert(t_paquete_insert* paquete_insert){
+	/*
+		 *1. Verificar que la tabla exista en el file system. En caso que no exista, informa el error y continúa su ejecución.
+		 *2. Obtener la metadata asociada a dicha tabla.
+		 *3. Verificar si existe en memoria una lista de datos a dumpear. De no existir, alocar dicha memoria.
+		 *4. El parámetro Timestamp es opcional. En caso que un request no lo provea (por ejemplo insertando un valor desde la consola), se usará el valor actual del Epoch UNIX.
+		 *5. Insertar en la memoria temporal del punto anterior una nueva entrada que contenga los datos enviados en la request.
 
+		 * En los request solo se utilizarán las comillas (“”) para enmascarar el Value que se envíe. No se proveerán request con comillas en otros puntos.
+	 */
 	char nombreTablaMayuscula[strlen(paquete_insert->nombre_tabla)+1];
 	strcpy(nombreTablaMayuscula,paquete_insert->nombre_tabla);
 	string_to_upper(nombreTablaMayuscula);
-	//char* nombreTablaMayuscula = realloc(paquete_insert->nombre_tabla, strlen(paquete_insert->nombre_tabla)+1);
-
 	if(existeTabla(nombreTablaMayuscula)){
+	agregarTabla(paquete_insert);
+	imprimirListaTablas();
 
-	nodoTablaMemTable* nuevaTabla =	crearNodoTabla(nombreTablaMayuscula);
-	nodoRegistroMemTable* nuevoRegistro = crearNodoRegistro(paquete_insert->value,paquete_insert->valor_key,paquete_insert->timestamp);
-	agregarTabla(nuevaTabla,nuevoRegistro);
-	//agregarRegistro(nuevaTabla,nuevoRegistro);
-	imprimirRegistrosTabla(nuevaTabla);
-	//imprimirListaTablas();
-
+	//free(nuevaTabla);
+	//free(nuevoRegistro);
 
 	} else error_show("NO EXISTE LA TABLA");
 
 
 }
 
+char* APIselect(t_paquete_select* paquete_select){
+	/*
+	 *1. Verificar que la tabla exista en el file system.
+	 *2. Obtener la metadata asociada a dicha tabla.
+	 *3. Calcular cual es la partición que contiene dicho KEY.
+	 *4. Escanear la partición objetivo, todos los archivos temporales y la memoria temporal de dicha tabla (si existe) buscando la key deseada.
+	 *5. Encontradas las entradas para dicha Key, se retorna el valor con el Timestamp más grande.
+	 *
+	 */
+	char nombreTablaMayuscula[strlen(paquete_select->nombre_tabla)+1];
+	strcpy(nombreTablaMayuscula,paquete_select->nombre_tabla);
+	string_to_upper(nombreTablaMayuscula);
+
+		if(existeTabla(nombreTablaMayuscula)){
+			t_metadata* metadataDeTabla=obtenerMetadataTabla(nombreTablaMayuscula);
+			int particionKey;
+			particionKey =	particionDeKey(paquete_select->valor_key,metadataDeTabla->particiones);
+			t_list* RegistrosEncontrados=list_create();
+			list_add(RegistrosEncontrados,buscarMemTable(nombreTablaMayuscula,paquete_select->valor_key));
+			//list_add(RegistrosEncontrados,buscarParticiones(nombreTablaMayuscula,paquete_select->valor_key));
+			//list_add(RegistrosEncontrados,buscarTemporal(nombreTablaMayuscula,paquete_select->valor_key));
+			char* valueEncontrado = elegirMayorTimeStamp(RegistrosEncontrados);
+			printf("El Value encontrado fue %s\n",valueEncontrado);
+			free(metadataDeTabla);
+			list_clean(RegistrosEncontrados);
+			return valueEncontrado;
+
+		}else return NULL;
+
+}
+
+char* elegirMayorTimeStamp(t_list* RegistrosEncontrados){
+	list_sort(RegistrosEncontrados,mayorTimeStamp);
+	t_registro* registroConMayorTimeStamp = (t_registro*)list_remove(RegistrosEncontrados,0);
+	return registroConMayorTimeStamp->value;
+}
+
+t_registro* crearRegistro (char*value,uint16_t key,long long timestamp){
+	t_registro* registroNuevo=malloc(sizeof(t_registro));
+	registroNuevo->value=malloc(strlen(value));
+	strcpy(registroNuevo->value,value);
+	registroNuevo->key=key;
+	registroNuevo->timestamp=timestamp;
+	return registroNuevo;
+}
+
+int particionDeKey(int key,int particiones){
+	return particiones%key;
+
+}
+
+t_metadata* obtenerMetadataTabla (char* nombreTabla ){
+
+	char* ubicacionMetaData = DirectorioDeMetadataTabla(nombreTabla);
+	t_config* config = config_create(ubicacionMetaData);
+	char* consistencia = config_get_string_value(config,"CONSISTENCY");
+	int particiones = atoi(config_get_string_value(config,"PARTITIONS"));
+	int compactacion = atoi(config_get_string_value(config,"COMPACTION_TIME"));
+	t_metadata* metadataObtenida=crearMetadata(pasarAConsistenciaINT(consistencia),particiones,compactacion);
+	free(ubicacionMetaData);
+	return metadataObtenida;
+	config_destroy(config);
+}
 
 
-
-
-//herramientasDeApis las usamos para facilitar la declaratividad de las funciones apis
 int existeTabla(char* TablaBuscada){
 
 	char* directorioTablas = DirectorioDeTabla(TablaBuscada);
@@ -76,8 +136,8 @@ int existeTabla(char* TablaBuscada){
 	}
 }
 
-metadata* crearMetadata(consistency consistencia, int particiones,int tiempo_compactacion){
-	metadata* metadata = malloc(sizeof(metadata));
+t_metadata* crearMetadata(consistency consistencia, int particiones,int tiempo_compactacion){
+	t_metadata* metadata = malloc(sizeof(metadata));
 
 	metadata->consistencia=consistencia;
 	metadata->particiones=particiones;
@@ -199,8 +259,8 @@ char* DirectorioBitMap(){
 void crearBitMap(){
 	t_config* config = config_create(DirectorioDeMetadata());
 	char* blockNum = config_get_string_value(config,"BLOCKS");
-	t_bitarray *bitmap=malloc(512);
-	bitmap=bitarray_create_with_mode("00000000",512,0);
+	t_bitarray *bitmap;
+	bitmap=bitarray_create_with_mode("\n",512,0); // aca va la cantidad de 0 necesarios dividido 8
 	FILE *fp=NULL;
 	fp=fopen( DirectorioBitMap(),"a");
 	int i = 0;

@@ -32,6 +32,9 @@
 #include <unistd.h>
 #include<commons/bitarray.h>
 #include <stdbool.h>
+#include<commons/collections/dictionary.h>
+#include "Lissandra.h"
+#include <commons/collections/node.h>
 t_config config;
 
 
@@ -44,8 +47,12 @@ void APIinsert(t_paquete_insert*);
 
 void APIcreate(t_paquete_create*);
 
+char* elegirMayorTimeStamp(t_list* RegistrosEncontrados);
+t_registro* crearRegistro (char*value,uint16_t key,long long timestamp);
+int particionDeKey(int key,int particiones);
+t_metadata* obtenerMetadataTabla (char* nombreTabla );
 char* DirectorioDeTabla(char* tabla);
-metadata* crearMetadata(consistency consistencia, int particiones,int tiempo_compactacion);
+t_metadata* crearMetadata(consistency consistencia, int particiones,int tiempo_compactacion);
 int pasarAConsistenciaINT(char* consistencia);
 char* pasarAConsistenciaChar(int consistencia);
 void logLaTablaYaExiste();

@@ -43,12 +43,20 @@ typedef struct  argumentosEnvioPaquete{
 
 }argumentosEnvioPaquete;
 
-typedef struct metadata
+typedef struct t_metadata
 {
 	consistency consistencia;
 	int particiones;
 	int tiempo_de_compactacion;
-}metadata;
+}t_metadata;
+
+typedef struct t_registro
+{
+	char* value;
+	uint16_t key;
+	long long timestamp;
+
+}t_registro;
 
 typedef struct t_paquete_select
 {
@@ -67,12 +75,11 @@ typedef struct t_paquete_insert
 	long long timestamp;
 }t_paquete_insert;
 
-
 typedef struct t_paquete_create
 {
 	uint32_t nombre_tabla_long; //Longitud del nombre de la tabla
 	char* nombre_tabla;
-	metadata metadata;
+	t_metadata metadata;
 
 }t_paquete_create;
 

@@ -38,7 +38,7 @@ int codigo_ingresado(char* codOp);
 
 //---------------------CREAR PAQUETE
 t_paquete_select* crear_paquete_select(char *nombretabla,uint16_t valor_key);
-t_paquete_insert* crear_paquete_insert(char *nombretabla,uint16_t valor_key, char *value, int timestamp);
+t_paquete_insert* crear_paquete_insert(char *nombretabla,uint16_t valor_key, char *value, long long timestamp);
 t_paquete_create* crear_paquete_create(char* nombretabla, consistency consistencia, int particiones,int tiempo_de_compactacion);
 
 //---------------------ARMAR PAQUETE

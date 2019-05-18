@@ -29,8 +29,9 @@
 #include <unistd.h>
 #include<commons/collections/list.h>
 #include <stdbool.h>
+#include<commons/collections/dictionary.h>
 #include "Lissandra.h"
-
+#include <commons/collections/node.h>
 
 
 typedef struct nodoRegistroMemTable{
@@ -46,18 +47,21 @@ typedef struct nodoTablaMemTable{
 }nodoTablaMemTable;
 
 void mostrarRegistros(void* elemento);
-void mostrarTablas(void* elemento);
+void mostrarTablas(char*key,void* elemento);
 t_list* crearMemTable();
-extern nodoTablaMemTable* primer; //la memtable siempre arranca vacia;
-extern nodoTablaMemTable* ultimo;
+
+
+bool mayorTimeStamp(void*elemento1,void*elemento2);
+bool filtrarPorKey(void* elemento,int key);
+t_registro* buscarMemTable(char* nombreTabla,int key);
 bool _mismoNombre(void* elemento);
 bool igualNombre(void* elemento,char* nombreBuscado);
-void agregarTabla(nodoTablaMemTable* nodoTabla,nodoRegistroMemTable* nodoRegistro);
+void agregarTabla(t_paquete_insert* paquete_insert);
 bool existeDuplicado(nodoTablaMemTable* nodoTabla);
 nodoTablaMemTable* crearNodoTabla(char* nombreTabla);
 void imprimirListaTablas();
 void eliminarNodoTabla();
-void agregarRegistro(nodoTablaMemTable* nodoTabla, nodoRegistroMemTable* nodoRegistro);
+t_list* agregarRegistro(t_list* listaTabla, nodoRegistroMemTable* nodoRegistro);
 void imprimirRegistrosTabla();
 void eliminarUltimoRegistro(nodoTablaMemTable* nodoTabla);
 void dump();

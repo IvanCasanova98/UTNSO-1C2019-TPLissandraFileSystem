@@ -1,6 +1,6 @@
 #include "Lissandra.h"
 
-t_list* memTable=NULL;
+t_dictionary* memTable=NULL;
 
 int main(void)
 {
