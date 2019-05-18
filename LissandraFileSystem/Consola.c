@@ -65,8 +65,30 @@ void deployMenu(){
 	printf("\n\nCREATE NOMBRETABLA CONSISTENCIA PARTICIONES TIEMPO_COMPACTACION \nDROP\nDESCRIBE\nSELECT    NOMBRETABLA KEY\nINSERT    NOMBRETABLA KEY VALUE TIMESTAMP (OPCIONAL) \n");
 	printf("\nIngrese REQUEST\n");
 
+//	char *parametros= "TABLA1 20 \"HOLA COMO ESTAS\" 3030";
+//
+////***** PRUEBA CON STRING_N_SPLIT
+//	char **substring = string_n_split(parametros,3," \" ");
+//
+//	printf("%s ",substring[0]); //TABLA1
+//	printf("%s ",substring[1]); //20
+//
+//	char **segundaParte = string_split(substring[2],"\"");
+//
+//	printf("%s ",segundaParte[0]); //HOLA COMO ESTAS (sin comillas)
+//	if(segundaParte[1] == NULL){
+//
+//	} else printf("%s",segundaParte[1]); //3030
+//
 
-
+	//FALTA CASTEAR LOS VALORES PORQUE QUEDARON TODOS string
+	//PERO
+	/*
+	 * paquete_insert->nombre_tabla = substring[0];
+	 * paquete_insert->key = substring[1];
+	 * paquete_insert->value = segundaParte[0];
+	 * paquete_insert->timestamp = segundaParte[1];
+	 */
 
 }
 
