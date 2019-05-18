@@ -65,6 +65,8 @@ void deployMenu(){
 	printf("\n\nCREATE NOMBRETABLA CONSISTENCIA PARTICIONES TIEMPO_COMPACTACION \nDROP\nDESCRIBE\nSELECT    NOMBRETABLA KEY\nINSERT    NOMBRETABLA KEY VALUE TIMESTAMP (OPCIONAL) \n");
 	printf("\nIngrese REQUEST\n");
 
+	//crearBitMap();
+	//printf("%d",existeBitmap());
 //	char *parametros= "TABLA1 20 \"HOLA COMO ESTAS\" 3030";
 //
 ////***** PRUEBA CON STRING_N_SPLIT

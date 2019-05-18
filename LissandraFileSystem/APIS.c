@@ -33,9 +33,10 @@ void APIinsert(t_paquete_insert* paquete_insert){
 	strcpy(nombreTablaMayuscula,paquete_insert->nombre_tabla);
 	string_to_upper(nombreTablaMayuscula);
 	if(existeTabla(nombreTablaMayuscula)){
+	t_metadata* metadataDeTabla=obtenerMetadataTabla(nombreTablaMayuscula);
 	agregarTabla(paquete_insert);
 	imprimirListaTablas();
-
+	free(metadataDeTabla);
 	//free(nuevaTabla);
 	//free(nuevoRegistro);
 
@@ -135,6 +136,21 @@ int existeTabla(char* TablaBuscada){
 	    return 0;
 	}
 }
+
+int existeBitmap(){
+
+	char* directorioBitMap = DirectorioBitMap();
+	FILE*file;
+	if(file=fopen(directorioBitMap,"r")){
+		fclose(file);
+		free(directorioBitMap);
+		return 1;
+	}
+free(directorioBitMap);
+return 0;
+}
+
+
 
 t_metadata* crearMetadata(consistency consistencia, int particiones,int tiempo_compactacion){
 	t_metadata* metadata = malloc(sizeof(metadata));
@@ -236,6 +252,14 @@ char* DirectorioDeParticion(char* nombretabla,int numeroParticion){
 
 
 }
+char* DirectorioBitMap(){
+	t_config* config = config_create("Lissandra.config");
+	char* Montaje= config_get_string_value(config,"PUNTO_MONTAJE");
+	char *directorioMetadata = malloc(strlen(Montaje)  +strlen("Metadata/bitmap.bin")  +1);
+	strcpy(directorioMetadata,Montaje);
+	strcat(directorioMetadata,"Metadata/bitmap.bin");
+	return directorioMetadata;
+}
 
 void crearMetadataConfig(char*nombreTablaMayuscula, consistency consistencia, int particiones,int tiempo_compactacion){
 	char *directorioTablaNueva = DirectorioDeMetadataTabla(nombreTablaMayuscula);
@@ -246,45 +270,31 @@ void crearMetadataConfig(char*nombreTablaMayuscula, consistency consistencia, in
 	free(directorioTablaNueva);
 }
 
-char* DirectorioBitMap(){
-	t_config* config = config_create("Lissandra.config");
-	char* Montaje= config_get_string_value(config,"PUNTO_MONTAJE");
-	char *directorioMetadata = malloc(strlen(Montaje)  +strlen("Metadata/bitmap.bin")  +1);
-	strcpy(directorioMetadata,Montaje);
-	strcat(directorioMetadata,"Metadata/bitmap.bin");
-	return directorioMetadata;
-}
 
 
 void crearBitMap(){
 	t_config* config = config_create(DirectorioDeMetadata());
-	char* blockNum = config_get_string_value(config,"BLOCKS");
+	int blockNum = atoi(config_get_string_value(config,"BLOCKS"));
 	t_bitarray *bitmap;
-	bitmap=bitarray_create_with_mode("\n",512,0); // aca va la cantidad de 0 necesarios dividido 8
+	char* cerosTotalesBytes = string_repeat(0, blockNum/8);
+	bitmap=bitarray_create_with_mode(cerosTotalesBytes,blockNum/8,0); // aca va la cantidad de 0 necesarios dividido 8 todos los bit arrancan en 0
 	FILE *fp=NULL;
 	fp=fopen( DirectorioBitMap(),"a");
 	int i = 0;
-	while(i<4096){
+	while(i<blockNum){
 		//bitarray_set_bit(bitmap, i);
 		int valor = bitarray_test_bit(bitmap, i);
+		printf("%d",valor);
 		fprintf(fp,"%d",valor);
 	//bitarray_clean_bit(bitmap, 1);
-	//printf("%d\n",bitPrueba);
+
 	i++;}
 	fclose(fp);
 	bitarray_destroy(bitmap);
+	config_destroy(config);
 }
 
-void limpiarBitMap(){ // cuando creas el bitmap puede venir con cualquier valor
-	FILE *fp=NULL;
-	fp=fopen( DirectorioBitMap(),"a+");
-	char i;
-	while((i = fgetc(fp)) !=EOF){
-		if (i == 1){ i=0; fprintf(fp,"%d",i);}
-		printf("%c",i);
 
-	}
-}
 
 
 void crearParticiones(char*nombreTabla ,int particiones){

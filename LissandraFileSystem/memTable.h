@@ -50,7 +50,7 @@ void mostrarRegistros(void* elemento);
 void mostrarTablas(char*key,void* elemento);
 t_list* crearMemTable();
 
-
+bool listaVacia(t_list* lista);
 bool mayorTimeStamp(void*elemento1,void*elemento2);
 bool filtrarPorKey(void* elemento,int key);
 t_registro* buscarMemTable(char* nombreTabla,int key);

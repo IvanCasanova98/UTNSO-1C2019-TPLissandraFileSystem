@@ -72,15 +72,19 @@ t_registro* buscarMemTable(char* nombreTabla,int key){
 	t_list* listaRegistrosKey = list_sorted(
 								list_filter(
 								dictionary_get(memTable,nombreTabla),_filtradoKey),mayorTimeStamp);
+	if(!listaVacia(listaRegistrosKey)){
 	nodoRegistroMemTable* registroEncontrado =(nodoRegistroMemTable*) list_remove(listaRegistrosKey, 0); // 0 es el primero
-
 	t_registro* registroKey = crearRegistro(registroEncontrado->value,registroEncontrado->key,registroEncontrado->timestamp);
-
 	list_clean(listaRegistrosKey);
-
 	return registroKey;
-
+	}
+	return NULL;
 }
+
+bool listaVacia(t_list* lista){
+	return list_is_empty(lista);
+}
+
 bool filtrarPorKey(void* elemento,int key){
 	return ((nodoRegistroMemTable*) elemento)->key == key;
 }

@@ -35,6 +35,8 @@
 #include<commons/collections/dictionary.h>
 #include "Lissandra.h"
 #include <commons/collections/node.h>
+#include "commons/txt.h"
+
 t_config config;
 
 
@@ -46,7 +48,7 @@ char* APIselect(t_paquete_select*);
 void APIinsert(t_paquete_insert*);
 
 void APIcreate(t_paquete_create*);
-
+int existeBitmap();
 char* elegirMayorTimeStamp(t_list* RegistrosEncontrados);
 t_registro* crearRegistro (char*value,uint16_t key,long long timestamp);
 int particionDeKey(int key,int particiones);
@@ -63,7 +65,6 @@ void crearMetadataConfig(char*nombreTablaMayuscula, consistency consistencia, in
 char* DirectorioDeMetadata();
 void crearBitMap();
 char* DirectorioBitMap();
-void limpiarBitMap();
 void crearParticiones(char*nombreTabla ,int particiones);
 char* DirectorioDeParticion(char* ,int numeroParticion);
 void crearParticiones(char*nombreTabla ,int particiones);
