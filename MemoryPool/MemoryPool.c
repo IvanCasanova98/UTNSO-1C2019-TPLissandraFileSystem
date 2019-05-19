@@ -1,16 +1,10 @@
 #include "MemoryPool.h"
 
-int main(void)
+int main(int argc, char* archivo[])
 {
-//	struct parametros
-//	{
-//		t_config* config;
-//		t_log* logger;
-//	};
-
 	struct parametros parametro;
 
-	parametro.config = leer_config();
+	parametro.config = leer_config(archivo[1]);
 	parametro.logger = iniciar_logger();
 
 	pthread_t hilo_servidor;
@@ -24,6 +18,5 @@ int main(void)
 
 	config_destroy(parametro.config);
 	log_destroy(parametro.logger);
-
 	return 1;
 }

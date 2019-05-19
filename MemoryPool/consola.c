@@ -4,12 +4,6 @@
 
 void ingresar_paquete(void * arg)
 {
-//	struct parametros
-//	{
-//		t_config* config;
-//		t_log* logger;
-//	};
-
 	struct parametros * parametro;
 	parametro = ( struct parametros *) arg ;
 

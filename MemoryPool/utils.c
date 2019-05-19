@@ -7,9 +7,9 @@ t_log* iniciar_logger()
 	return log_create("MemoryPool.log", "MemoryPool", 0, LOG_LEVEL_INFO);
 }
 
-t_config* leer_config()
+t_config* leer_config(char* archivo)
 {
-	return config_create("MemoryPool.config");
+	return config_create(archivo);
 }
 
 //----------------------------------------------------LOGGEO DE PAQUETES

@@ -22,7 +22,7 @@ struct parametros
 
 //----------------------------ARCHIVOS LOGGER/CONFIG
 t_log* iniciar_logger(void);
-t_config* leer_config(void);
+t_config* leer_config(char* archivo);
 
 //---------------------LOGGEAR PAQUETE
 void loggear_paquete_select(t_paquete_select* paquete, t_log* logger);
