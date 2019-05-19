@@ -13,19 +13,15 @@
 #include<commons/config.h>
 
 #include "recibir.h"
-
-t_log* logger;
-
-//--------------------LEVANTAR SERVIDOR
-void* servidor(void *arg);
+#include "utils.h"
 
 //----------------------------CONEXION COMO SERVIDOR
-int iniciar_servidor();
+int iniciar_servidor(t_config* config);
 int esperar_cliente(int);
 
 //----------------------------CONEXION COMO CLIENTE
-int iniciar_conexion(t_log* logger, t_config* config);
+int iniciar_conexion(t_config* config);
 int crear_conexion(char *ip, char* puerto);
-void terminar_conexion(t_log* logger, t_config* config, int conexion);
+void terminar_conexion(int conexion);
 
 #endif /* CONEXION_H_ */

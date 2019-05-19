@@ -1,24 +1,9 @@
 #include "conexion.h"
 
-//---------------------------LEVANTAR SERVIDOR
-
-void* servidor(void *arg){
-
-	int server_fd = iniciar_servidor();
-
-	int cliente_fd = esperar_cliente(server_fd);
-
-	recibir_paquetes(cliente_fd, server_fd);
-
-    return NULL;
-}
-
 //----------------------------CONEXION COMO SERVIDOR
-int iniciar_servidor()
+
+int iniciar_servidor(t_config* config)
 {
-
-
-	t_config* config = leer_config();
 	int socket_servidor;
 	char* ip = config_get_string_value(config, "IP");
 	char* puerto = config_get_string_value(config, "PUERTOSERVER");
@@ -53,7 +38,6 @@ int iniciar_servidor()
 
 int esperar_cliente(int socket_servidor)
 {
-
 	struct sockaddr_in dir_cliente;
 	int tam_direccion = sizeof(struct sockaddr_in);
 
@@ -64,7 +48,8 @@ int esperar_cliente(int socket_servidor)
 
 //----------------------------CONEXION COMO CLIENTE
 
-int crear_conexion(char *ip, char* puerto){
+int crear_conexion(char *ip, char* puerto)
+{
 	struct addrinfo hints;
 	struct addrinfo *server_info;
 
@@ -85,17 +70,17 @@ int crear_conexion(char *ip, char* puerto){
 	return socket_cliente;
 }
 
-int iniciar_conexion(t_log* logger, t_config* config){ //tiene que llegar logger, archivo config y numero de conexion (int)
-
-	int conexion = crear_conexion(
+int iniciar_conexion(t_config* config)
+{
+	int conexion = crear_conexion
+	(
 		config_get_string_value(config, "IP"),
 		config_get_string_value(config, "PUERTOLFS")
 	);
 	return conexion;
 }
 
-void terminar_conexion(t_log* logger, t_config* config, int conexion){
-	log_destroy(logger);
-	config_destroy(config);
+void terminar_conexion(int conexion)
+{
 	close(conexion);
 }

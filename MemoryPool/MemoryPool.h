@@ -13,6 +13,7 @@
 #include "conexion.h"
 #include "recibir.h"
 #include "consola.h"
+#include "utils.h"
 
 int crear_hilo_servidor();
 int crear_hilo_consola();

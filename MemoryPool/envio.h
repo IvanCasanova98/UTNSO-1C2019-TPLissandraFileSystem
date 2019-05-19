@@ -13,21 +13,19 @@
 #include<commons/config.h>
 
 #include "paquete.h"
-
-//----------------------------ARCHIVOS LOGGER/CONFIG
-t_log* iniciar_logger(void);
-t_config* leer_config(void);
+#include "conexion.h"
+#include "utils.h"
 
 //----------------------------SERIALIZAR PAQUETES
 void* serializar_paquete_select(t_paquete_select* paquete);
 void* serializar_paquete_insert(t_paquete_insert* paquete);
 
 //----------------------------ENVIAR PAQUETES
-void enviar_paquete_select(t_paquete_select* paquete, int socket_cliente);
-void enviar_paquete_insert(t_paquete_insert* paquete, int socket_cliente);
+void enviar_paquete_select(t_paquete_select* paquete, int socket_cliente, t_log* logger);
+void enviar_paquete_insert(t_paquete_insert* paquete, int socket_cliente, t_log* logger);
 
 //----------------------------ENVIOS DE SERVIDOR A LISSANDRA
-void enviar_select_lissandra(t_paquete_select* paquete);
-void enviar_insert_lissandra(t_paquete_insert* paquete);
+void enviar_select_lissandra(t_paquete_select* paquete, t_config* config, t_log* logger);
+void enviar_insert_lissandra(t_paquete_insert* paquete, t_config* config, t_log* logger);
 
 #endif /* ENVIO_H_ */

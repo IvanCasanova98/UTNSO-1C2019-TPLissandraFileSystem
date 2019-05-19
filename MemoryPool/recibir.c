@@ -1,22 +1,47 @@
 #include "recibir.h"
 
+//---------------------------LEVANTAR SERVIDOR
+
+void* servidor(void * arg)
+{
+//	struct parametros
+//	{
+//		t_config* config;
+//		t_log* logger;
+//	};
+
+	struct parametros * parametro;
+	parametro = ( struct parametros *) arg ;
+
+	int server_fd = iniciar_servidor(parametro->config);
+
+	int cliente_fd = esperar_cliente(server_fd);
+
+	recibir_paquetes(cliente_fd, server_fd, parametro->config, parametro->logger);
+
+    return NULL;
+}
+
 //----------------------------RECIBIR PAQUETE
-void recibir_paquetes(int cliente_fd, int server_fd)
+
+void recibir_paquetes(int cliente_fd, int server_fd, t_config* config, t_log* logger)
 {
 	int cod_op;
 
 	while(1){
 
-		if (cliente_fd!=0){
+		if (cliente_fd!=0)
+		{
 			cod_op = recibir_operacion(cliente_fd);
 		}
-		else{
+		else
+		{
 			cliente_fd = esperar_cliente(server_fd);
 			cod_op = recibir_operacion(cliente_fd);
 		}
 
-		switch(cod_op){
-
+		switch(cod_op)
+		{
 		case CREATE:
 			break;
 		case DROP:
@@ -24,21 +49,19 @@ void recibir_paquetes(int cliente_fd, int server_fd)
 		case DESCRIBE:
 			break;
 		case SELECT:;
-
 			t_paquete_select *paquete_select = deserializar_paquete_select(cliente_fd);
 
-			loggear_paquete_select(paquete_select);
+			loggear_paquete_select(paquete_select, logger);
 
-			selectf(paquete_select);
+			selectf(paquete_select, config, logger);
 
 			break;
 		case INSERT:;
-
 			t_paquete_insert* paquete_insert = deserializar_paquete_insert(cliente_fd);
 
-			loggear_paquete_insert(paquete_insert);
+			loggear_paquete_insert(paquete_insert, logger);
 
-			insert(paquete_insert);
+			insert(paquete_insert, config, logger);
 
 			break;
 		case JOURNAL:
@@ -54,11 +77,11 @@ void recibir_paquetes(int cliente_fd, int server_fd)
 			printf("operacion desconocida");
 			break;
 		}
-
 	}
 }
 
 //----------------------------TIPO DE OPERACION RECIBIDA
+
 int recibir_operacion(int socket_cliente)
 {
 	int cod_op;
@@ -71,9 +94,9 @@ int recibir_operacion(int socket_cliente)
 }
 
 //----------------------------DESERIALIZAR PAQUETES
-t_paquete_select* deserializar_paquete_select(int socket_cliente){
 
-
+t_paquete_select* deserializar_paquete_select(int socket_cliente)
+{
 	int desplazamiento = 0;
 	size_t tamanioTabla;
 
@@ -96,8 +119,8 @@ t_paquete_select* deserializar_paquete_select(int socket_cliente){
 }
 
 
-t_paquete_insert* deserializar_paquete_insert(int socket_cliente){
-
+t_paquete_insert* deserializar_paquete_insert(int socket_cliente)
+{
 	void *buffer_para_longitudes = malloc(sizeof(uint32_t)*2);
 
 	int desplazamiento = 0;

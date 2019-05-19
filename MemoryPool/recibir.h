@@ -15,9 +15,13 @@
 
 #include "paquete.h"
 #include "API.h"
+#include "utils.h"
+
+//--------------------LEVANTAR SERVIDOR
+void* servidor(void * arg);
 
 //--------------------RECIBIR PAQUETE
-void recibir_paquetes(int cliente_fd, int server_fd);
+void recibir_paquetes(int cliente_fd, int server_fd, t_config* config, t_log* logger);
 
 //--------------------RECIBIR OPERACION
 int recibir_operacion(int);
@@ -27,6 +31,6 @@ t_paquete_select* deserializar_paquete_select(int socket_cliente);
 t_paquete_insert* deserializar_paquete_insert(int socket_cliente);
 
 //--------------------ARCHIVO CONEXION.C
-int esperar_cliente(int);
+int esperar_cliente(int); //conexion.c ya incluye a "recibir.h", por lo que no puedo agregar a "conexion.h" en este header
 
 #endif /* RECIBIR_H_ */

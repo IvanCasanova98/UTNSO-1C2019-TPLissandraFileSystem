@@ -189,7 +189,7 @@ void loggear_paquete_select(t_paquete_select* paquete){
 void loggear_paquete_insert(t_paquete_insert* paquete){
 
 	t_log* logger = iniciar_logger();
-	log_info(logger, "NUEVO PAQUETE INSERT CREADO\nNombre tabla: %s\nValor KEY   : %d\nValue       : %s\n", paquete->nombre_tabla, paquete->valor_key, paquete->value);
+	log_info(logger, "NUEVO PAQUETE INSERT CREADO\nNombre tabla: %s\nValor KEY   : %d\nValue       : %s", paquete->nombre_tabla, paquete->valor_key, paquete->value);
     log_destroy(logger);
 }
 

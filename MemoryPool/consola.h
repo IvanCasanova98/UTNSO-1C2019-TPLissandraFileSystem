@@ -5,6 +5,7 @@
 #include<string.h>
 #include<stdint.h>
 #include<curses.h>
+#include<unistd.h>
 
 #include<sys/socket.h>
 
@@ -19,17 +20,10 @@
 #include "envio.h"
 #include "conexion.h"
 #include "paquete.h"
-
-//---------------------ARCHIVO LOGGER/CONFIG
-t_log* iniciar_logger(void);
-t_config* leer_config(void);
-
-//----------------------------ENVIAR PAQUETES
-void enviar_paquete_select(t_paquete_select* paquete, int socket_cliente);
-void enviar_paquete_insert(t_paquete_insert* paquete, int socket_cliente);
+#include "utils.h"
 
 //---------------------INGRESO DE PAQUETE
-void ingresar_paquete();
+void ingresar_paquete(void * arg);
 
 //---------------------INGRESO DE PAQUETE(FUNC AUX)
 char* ingresar_request();
