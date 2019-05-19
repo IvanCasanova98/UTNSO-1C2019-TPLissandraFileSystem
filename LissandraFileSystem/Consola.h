@@ -24,6 +24,7 @@
 #include"recibir.h"
 #include"memTable.h"
 #include"Lissandra.h"
+#include"bitmap.h"
 #include"APIS.h"
 #include <dirent.h>
 #include <errno.h>

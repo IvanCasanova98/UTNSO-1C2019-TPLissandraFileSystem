@@ -1,7 +1,7 @@
 #include "Lissandra.h"
 
 t_dictionary* memTable=NULL;
-
+t_bitarray* bitmap;
 int main(void)
 {
 

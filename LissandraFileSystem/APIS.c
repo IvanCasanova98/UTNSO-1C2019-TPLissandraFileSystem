@@ -137,18 +137,7 @@ int existeTabla(char* TablaBuscada){
 	}
 }
 
-int existeBitmap(){
 
-	char* directorioBitMap = DirectorioBitMap();
-	FILE*file;
-	if(file=fopen(directorioBitMap,"r")){
-		fclose(file);
-		free(directorioBitMap);
-		return 1;
-	}
-free(directorioBitMap);
-return 0;
-}
 
 
 
@@ -259,6 +248,7 @@ char* DirectorioBitMap(){
 	strcpy(directorioMetadata,Montaje);
 	strcat(directorioMetadata,"Metadata/bitmap.bin");
 	return directorioMetadata;
+
 }
 
 void crearMetadataConfig(char*nombreTablaMayuscula, consistency consistencia, int particiones,int tiempo_compactacion){
@@ -272,37 +262,18 @@ void crearMetadataConfig(char*nombreTablaMayuscula, consistency consistencia, in
 
 
 
-void crearBitMap(){
-	t_config* config = config_create(DirectorioDeMetadata());
-	int blockNum = atoi(config_get_string_value(config,"BLOCKS"));
-	t_bitarray *bitmap;
-	char* cerosTotalesBytes = string_repeat(0, blockNum/8);
-	bitmap=bitarray_create_with_mode(cerosTotalesBytes,blockNum/8,0); // aca va la cantidad de 0 necesarios dividido 8 todos los bit arrancan en 0
-	FILE *fp=NULL;
-	fp=fopen( DirectorioBitMap(),"a");
-	int i = 0;
-	while(i<blockNum){
-		//bitarray_set_bit(bitmap, i);
-		int valor = bitarray_test_bit(bitmap, i);
-		printf("%d",valor);
-		fprintf(fp,"%d",valor);
-	//bitarray_clean_bit(bitmap, 1);
-
-	i++;}
-	fclose(fp);
-	bitarray_destroy(bitmap);
-	config_destroy(config);
-}
-
-
 
 
 void crearParticiones(char*nombreTabla ,int particiones){
+	char* directorioMetadata=DirectorioDeMetadata();
+	char* directorioBitmap=DirectorioBitMap();
+	t_config* config = config_create(directorioMetadata);
+	int blockNum = atoi(config_get_string_value(config,"BLOCKS"));
 	FILE *fp=NULL;
 	FILE *particion=NULL;
-	char bitmap[4096];
+	char bitmap[blockNum];
 
-	fp=fopen(DirectorioBitMap(),"r+");
+	fp=fopen(directorioBitmap,"r+");
 	fseek(fp,0,SEEK_SET);
 	fread(bitmap,sizeof(char),1,fp);
 	int i=0;
@@ -318,6 +289,8 @@ void crearParticiones(char*nombreTabla ,int particiones){
 		i++;
 
 	}
+	free(directorioMetadata);
+	free(directorioBitmap);
 	fclose(particion);
 	i=0;
 	while(i<4096){

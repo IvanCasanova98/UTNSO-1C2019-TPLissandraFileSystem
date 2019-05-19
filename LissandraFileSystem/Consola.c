@@ -64,7 +64,8 @@ void* prenderConsola(void* arg){
 void deployMenu(){
 	printf("\n\nCREATE NOMBRETABLA CONSISTENCIA PARTICIONES TIEMPO_COMPACTACION \nDROP\nDESCRIBE\nSELECT    NOMBRETABLA KEY\nINSERT    NOMBRETABLA KEY VALUE TIMESTAMP (OPCIONAL) \n");
 	printf("\nIngrese REQUEST\n");
-
+	//crearBitMap();
+	ObtenerBitmap();
 	//crearBitMap();
 	//printf("%d",existeBitmap());
 //	char *parametros= "TABLA1 20 \"HOLA COMO ESTAS\" 3030";

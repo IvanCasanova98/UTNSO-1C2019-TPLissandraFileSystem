@@ -15,8 +15,8 @@
 #include "memTable.h"
 #include<commons/collections/list.h>
 #include<commons/collections/dictionary.h>
-
+#include"bitmap.h"
 //argumentosEnvioPaquete* crearArgumentosDeConexion(int clientefd, int serverfd);
 extern t_dictionary* memTable;
-
+extern t_bitarray* bitmap;
 #endif /* LISSANDRA_H_ */
