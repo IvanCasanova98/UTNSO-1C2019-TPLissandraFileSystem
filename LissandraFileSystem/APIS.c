@@ -12,9 +12,12 @@ void APIcreate(t_paquete_create* paquete_create){
 	if(!existeTabla(nombreTablaMayuscula)){
 		crearTabla(nombreTablaMayuscula);
 		crearMetadataConfig(nombreTablaMayuscula,paquete_create->metadata.consistencia,paquete_create->metadata.particiones,paquete_create->metadata.tiempo_de_compactacion);
-		crearParticiones(nombreTablaMayuscula,paquete_create->metadata.particiones);
+		//crearParticiones(nombreTablaMayuscula,paquete_create->metadata.particiones);
+		//int particiones=paquete_create->metadata.particiones;
+		for(int particiones=paquete_create->metadata.particiones;particiones;particiones--)
+		crearParticion(nombreTablaMayuscula,particiones);
 
-	} else if (EEXIST==errno) error_show("EXISTE LA TABLA");
+	} else if (EEXIST==errno) error_show("YA EXISTE LA TABLA");
 
 }
 
@@ -29,6 +32,8 @@ void APIinsert(t_paquete_insert* paquete_insert){
 
 		 * En los request solo se utilizarán las comillas (“”) para enmascarar el Value que se envíe. No se proveerán request con comillas en otros puntos.
 	 */
+
+	LogearInsert(paquete_insert->timestamp,paquete_insert->valor_key,paquete_insert->value,paquete_insert->nombre_tabla);
 	char nombreTablaMayuscula[strlen(paquete_insert->nombre_tabla)+1];
 	strcpy(nombreTablaMayuscula,paquete_insert->nombre_tabla);
 	string_to_upper(nombreTablaMayuscula);
@@ -37,12 +42,10 @@ void APIinsert(t_paquete_insert* paquete_insert){
 	agregarTabla(paquete_insert);
 	imprimirListaTablas();
 	free(metadataDeTabla);
-	//free(nuevaTabla);
-	//free(nuevoRegistro);
 
-	} else error_show("NO EXISTE LA TABLA");
+	} else LaTablaNoExiste(paquete_insert->timestamp,paquete_insert->valor_key,paquete_insert->value,paquete_insert->nombre_tabla);
 
-
+log_destroy(logger);
 }
 
 char* APIselect(t_paquete_select* paquete_select){
@@ -54,6 +57,8 @@ char* APIselect(t_paquete_select* paquete_select){
 	 *5. Encontradas las entradas para dicha Key, se retorna el valor con el Timestamp más grande.
 	 *
 	 */
+
+
 	char nombreTablaMayuscula[strlen(paquete_select->nombre_tabla)+1];
 	strcpy(nombreTablaMayuscula,paquete_select->nombre_tabla);
 	string_to_upper(nombreTablaMayuscula);
@@ -262,42 +267,64 @@ void crearMetadataConfig(char*nombreTablaMayuscula, consistency consistencia, in
 
 
 
-
-
-void crearParticiones(char*nombreTabla ,int particiones){
+void crearParticiones(char*nombreTabla ,int nroParticiones){
 	char* directorioMetadata=DirectorioDeMetadata();
 	char* directorioBitmap=DirectorioBitMap();
 	t_config* config = config_create(directorioMetadata);
 	int blockNum = atoi(config_get_string_value(config,"BLOCKS"));
-	FILE *fp=NULL;
-	FILE *particion=NULL;
-	char bitmap[blockNum];
+	while(blockNum%8!=0){
+			blockNum++; //BASICAMENTE AUMENTO BLOCK NUM HASTA QUE SEA DIVISIBLE POR 8 PARA TRABAJAR CON BYTES
+	}
+	FILE *particionBin;
 
-	fp=fopen(directorioBitmap,"r+");
-	fseek(fp,0,SEEK_SET);
-	fread(bitmap,sizeof(char),1,fp);
+
 	int i=0;
-	while(particiones){
-		if(bitmap[i]=='0'){
-		particiones=particiones-1;
-		bitmap[i]='1';
-		particion=NULL;
-		particion=fopen(DirectorioDeParticion(nombreTabla,i),"w");
-		fprintf(particion,"SIZE=0\nBLOCKS=[%d]",i);
+	while(nroParticiones){
 
-		}
-		i++;
-
+	if(!bitarray_test_bit(bitmap,i)){
+		particionBin=fopen(DirectorioDeParticion(nombreTabla,nroParticiones),"w");
+		fprintf(particionBin,"SIZE=0\nBLOCKS=[%d]",i);
+		nroParticiones--;
+		bitarray_set_bit(bitmap,i);
+		fclose(particionBin);
+	}
+	i++;
 	}
 	free(directorioMetadata);
 	free(directorioBitmap);
-	fclose(particion);
-	i=0;
-	while(i<4096){
-	fprintf(fp,"%c",bitmap[i]);
-	i ++;
+	fclose(particionBin);
+	config_destroy(config);
+
+}
+
+void crearParticion(char*nombreTabla ,int nroParticion){
+	char* directorioMetadata=DirectorioDeMetadata();
+	char* directorioBitmap=DirectorioBitMap();
+	t_config* config = config_create(directorioMetadata);
+	int blockNum = atoi(config_get_string_value(config,"BLOCKS"));
+	while(blockNum%8!=0){
+			blockNum++; //BASICAMENTE AUMENTO BLOCK NUM HASTA QUE SEA DIVISIBLE POR 8 PARA TRABAJAR CON BYTES
 	}
-	fclose(fp);
+	FILE *particionBin;
+
+
+	int i=0;
+	while(i<blockNum){
+	if(!bitarray_test_bit(bitmap,i)){
+		particionBin=fopen(DirectorioDeParticion(nombreTabla,nroParticion),"w");
+		fprintf(particionBin,"SIZE=0\nBLOCKS=[%d]",i);
+		bitarray_set_bit(bitmap,i);
+		pruebasSet();
+		break;//bitarray_set_bit(bitmap, i);
+	}
+	i++;
+	}
+	free(directorioMetadata);
+	free(directorioBitmap);
+	fclose(particionBin);
+	config_destroy(config);
+
+
 }
 
 

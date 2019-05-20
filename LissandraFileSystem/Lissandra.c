@@ -4,11 +4,13 @@ t_dictionary* memTable=NULL;
 t_bitarray* bitmap;
 int main(void)
 {
-
+	crearArchivoBitmap();
+	crearBitMap();
 	pthread_t consola;//, atender[20];
 	logger = iniciar_logger();
 	pthread_t recibidorDePaquetes;
-	crearBitMap();
+	//crearArchivoBitmap();
+
 //	int cantidadDeRequest =0;
 //	argumentosEnvioPaquete* argumentos[20];
 	pthread_create(&consola,NULL,prenderConsola,NULL);

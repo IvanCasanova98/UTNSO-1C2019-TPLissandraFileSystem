@@ -15,6 +15,7 @@
 #include<stdlib.h>
 #include<string.h>
 #include<stdint.h>
+#include <stdbool.h>
 #include<curses.h>
 #include<sys/socket.h>
 #include<readline/readline.h>
@@ -24,19 +25,19 @@
 #include<commons/string.h>
 #include<commons/config.h>
 #include<commons/temporal.h>
-#include"recibir.h"
-#include"memTable.h"
+#include<commons/bitarray.h>
+#include<commons/collections/dictionary.h>
+#include <commons/collections/node.h>
+#include <commons/txt.h>
 #include <dirent.h>
 #include <errno.h>
 #include <sys/stat.h>
 #include <unistd.h>
-#include<commons/bitarray.h>
-#include <stdbool.h>
-#include<commons/collections/dictionary.h>
+#include"recibir.h"
+#include"memTable.h"
 #include "Lissandra.h"
-#include <commons/collections/node.h>
-#include "commons/txt.h"
-
+#include "bitmap.h"
+#include"logs.h"
 t_config config;
 
 
@@ -49,6 +50,8 @@ void APIinsert(t_paquete_insert*);
 
 void APIcreate(t_paquete_create*);
 
+
+void crearParticiones(char*nombreTabla ,int nroParticiones);
 char* elegirMayorTimeStamp(t_list* RegistrosEncontrados);
 t_registro* crearRegistro (char*value,uint16_t key,long long timestamp);
 int particionDeKey(int key,int particiones);
@@ -66,5 +69,5 @@ char* DirectorioDeMetadata();
 char* DirectorioBitMap();
 void crearParticiones(char*nombreTabla ,int particiones);
 char* DirectorioDeParticion(char* ,int numeroParticion);
-void crearParticiones(char*nombreTabla ,int particiones);
+void crearParticion(char*nombreTabla ,int particiones);
 #endif /* APIS_H_ */

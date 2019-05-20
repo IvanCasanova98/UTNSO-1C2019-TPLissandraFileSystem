@@ -37,10 +37,9 @@ void* prenderConsola(void* arg){
 
 			case 4:;
 
-				//t_paquete_insert* paquete_insert=
-				LeerInsert(parametros);
-				//APIinsert(paquete_insert);
-				//free(paquete_insert);
+				t_paquete_insert* paquete_insert=LeerInsert(parametros);
+				APIinsert(paquete_insert);
+				free(paquete_insert);
 
 				break;
 
@@ -65,7 +64,7 @@ void* prenderConsola(void* arg){
 void deployMenu(){
 	printf("\n\nCREATE NOMBRETABLA CONSISTENCIA PARTICIONES TIEMPO_COMPACTACION \nDROP\nDESCRIBE\nSELECT    NOMBRETABLA KEY\nINSERT    NOMBRETABLA KEY \"VALUE\" TIMESTAMP (OPCIONAL) \n");
 	printf("\nIngrese REQUEST\n");
-
+	//pruebasSet();
 
 }
 
@@ -146,7 +145,7 @@ t_paquete_insert* LeerInsert(char* parametros){
 	} else {timestamp = atoll(parametros);}
 
 	t_paquete_insert* paquete = crear_paquete_insert(nombre_tabla, valor_key, value, timestamp);
-	loggear_request_insert(paquete);
+	//loggear_request_insert(paquete);
 
 	return paquete;
 }
