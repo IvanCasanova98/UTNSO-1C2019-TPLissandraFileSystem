@@ -165,10 +165,10 @@ t_paquete_insert* insert(char* parametros){
 	nombre_tabla = parametros;
 	parametros = strtok(NULL, " ");
 	valor_key = atoi(parametros);
-	parametros = strtok(NULL, " ");
+	parametros = strtok(NULL, "\"");
 	value = parametros;
-	//parametros = strtok(NULL, " ");
-	//timestamp = atoi(parametros);
+	parametros = strtok(NULL, " ");
+	timestamp = get_timestamp(parametros);
 
 	t_paquete_insert* paquete = crear_paquete_insert(nombre_tabla, valor_key, value, timestamp);
 
@@ -177,6 +177,16 @@ t_paquete_insert* insert(char* parametros){
 	return paquete;
 }
 
+long long get_timestamp(char* parametros){
+	long long valor;
+	if (parametros==NULL) {
+		struct timeval te;
+		gettimeofday(&te, NULL); // get current time
+		valor = te.tv_sec*1000LL + te.tv_usec/1000;
+	} else {valor = atoll(parametros);}
+
+	return valor;
+}
 //----------------------------------------------------LOGGEO DE PAQUETES
 
 void loggear_paquete_select(t_paquete_select* paquete){

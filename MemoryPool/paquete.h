@@ -15,6 +15,7 @@
 #include<commons/string.h>
 #include<commons/config.h>
 #include<commons/temporal.h>
+#include <sys/time.h>
 
 typedef struct
 {
@@ -48,7 +49,7 @@ typedef struct t_paquete_insert
 	char* nombre_tabla;
 	uint16_t valor_key;
 	char* value;
-	int timestamp;
+	long long timestamp;
 }t_paquete_insert;
 
 //---------------------CREAR PAQUETE
@@ -58,6 +59,7 @@ t_paquete_insert* crear_paquete_insert(char *nombretabla,uint16_t valor_key, cha
 //---------------------ARMAR PAQUETE
 t_paquete_select* paquete_select(char* parametros, t_log* logger);
 t_paquete_insert* paquete_insert(char* parametros, t_log* logger);
+long long get_timestamp(char* parametros);
 
 //---------------------LOGGEAR PAQUETE (funciones de utils.c)
 void loggear_paquete_select(t_paquete_select* paquete, t_log* logger);
