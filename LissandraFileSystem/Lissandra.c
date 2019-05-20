@@ -8,7 +8,7 @@ int main(void)
 	pthread_t consola;//, atender[20];
 	logger = iniciar_logger();
 	pthread_t recibidorDePaquetes;
-
+	crearBitMap();
 //	int cantidadDeRequest =0;
 //	argumentosEnvioPaquete* argumentos[20];
 	pthread_create(&consola,NULL,prenderConsola,NULL);

@@ -41,5 +41,6 @@
 char* eliminarBarra0(char* nuevoChar);
 int existeBitmap();
 void crearBitMap();
-void ObtenerBitmap();
+void ActualizarBitmap();
+void crearArchivoBitmap();
 #endif /* BITMAP_H_ */

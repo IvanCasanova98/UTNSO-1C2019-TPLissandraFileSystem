@@ -37,9 +37,10 @@ void* prenderConsola(void* arg){
 
 			case 4:;
 
-				t_paquete_insert* paquete_insert=LeerInsert(parametros);
-				APIinsert(paquete_insert);
-				free(paquete_insert);
+				//t_paquete_insert* paquete_insert=
+				LeerInsert(parametros);
+				//APIinsert(paquete_insert);
+				//free(paquete_insert);
 
 				break;
 
@@ -62,36 +63,9 @@ void* prenderConsola(void* arg){
 
 }
 void deployMenu(){
-	printf("\n\nCREATE NOMBRETABLA CONSISTENCIA PARTICIONES TIEMPO_COMPACTACION \nDROP\nDESCRIBE\nSELECT    NOMBRETABLA KEY\nINSERT    NOMBRETABLA KEY VALUE TIMESTAMP (OPCIONAL) \n");
+	printf("\n\nCREATE NOMBRETABLA CONSISTENCIA PARTICIONES TIEMPO_COMPACTACION \nDROP\nDESCRIBE\nSELECT    NOMBRETABLA KEY\nINSERT    NOMBRETABLA KEY \"VALUE\" TIMESTAMP (OPCIONAL) \n");
 	printf("\nIngrese REQUEST\n");
-	//crearBitMap();
-	ObtenerBitmap();
-	//crearBitMap();
-	//printf("%d",existeBitmap());
-//	char *parametros= "TABLA1 20 \"HOLA COMO ESTAS\" 3030";
-//
-////***** PRUEBA CON STRING_N_SPLIT
-//	char **substring = string_n_split(parametros,3," \" ");
-//
-//	printf("%s ",substring[0]); //TABLA1
-//	printf("%s ",substring[1]); //20
-//
-//	char **segundaParte = string_split(substring[2],"\"");
-//
-//	printf("%s ",segundaParte[0]); //HOLA COMO ESTAS (sin comillas)
-//	if(segundaParte[1] == NULL){
-//
-//	} else printf("%s",segundaParte[1]); //3030
-//
 
-	//FALTA CASTEAR LOS VALORES PORQUE QUEDARON TODOS string
-	//PERO
-	/*
-	 * paquete_insert->nombre_tabla = substring[0];
-	 * paquete_insert->key = substring[1];
-	 * paquete_insert->value = segundaParte[0];
-	 * paquete_insert->timestamp = segundaParte[1];
-	 */
 
 }
 
@@ -161,15 +135,15 @@ t_paquete_insert* LeerInsert(char* parametros){
 	nombre_tabla = parametros;
 	parametros = strtok(NULL, " ");
 	valor_key = atoi(parametros);
-	parametros = strtok(NULL, " ");
-	value = parametros;
+	parametros = strtok(NULL, "\"");
+	value=parametros;
 	parametros = strtok(NULL, " ");
 
 	if (parametros==NULL) {
 	struct timeval te;
 	gettimeofday(&te, NULL); // get current time
 	timestamp = te.tv_sec*1000LL + te.tv_usec/1000;
-	} else {timestamp = (long long)atoi(parametros);}
+	} else {timestamp = atoll(parametros);}
 
 	t_paquete_insert* paquete = crear_paquete_insert(nombre_tabla, valor_key, value, timestamp);
 	loggear_request_insert(paquete);
@@ -212,7 +186,7 @@ void loggear_request_select(t_paquete_select* paquete){
 void loggear_request_insert(t_paquete_insert* paquete){
 
 	t_log* logger = iniciar_logger();
-	log_info(logger, "NUEVA REQUEST: INSERT %s %d %s %d\n", paquete->nombre_tabla, paquete->valor_key, paquete->value, paquete->timestamp);
+	log_info(logger, "NUEVA REQUEST: INSERT %s %d %s %lli\n", paquete->nombre_tabla, paquete->valor_key, paquete->value, paquete->timestamp);
     log_destroy(logger);
 }
 void loggear_request_create(t_paquete_create* paquete){
