@@ -6,16 +6,8 @@ void* recibir_paquetes(void *arg)
 	int cliente_fd = *((int *) arg);
 	free(arg);
 
-
-//	int cliente_fd=((struct argumentosEnvioPaquete*)argumentos)->clientefd;
-//	int server_fd= ((struct argumentosEnvioPaquete*)argumentos)->serverfd;
-//	int *cliente_fd = (int *)clienteFd;
-//	int *ptr_cliente_fd = (int *)clienteFd;
-//	int cliente_fd = *ptr_cliente_fd;
-//	int cliente_fd = (int)clienteFd;
-//	int cliente_fd = (int) arg;
-
 	printf("\n\n\nEL hilo entro a la funcion recibir_paquetes!!!\n\n\n");
+	//mutex
 	int cod_op = recibir_operacion(cliente_fd);
 
 		if (cliente_fd==0){
@@ -76,8 +68,8 @@ void* recibir_paquetes(void *arg)
 			log_warning(logger, "Operacion desconocida.");
 			break;
 		}
-
-
+		//salgo mutex
+		pthread_exit(NULL);
 
 
 }
