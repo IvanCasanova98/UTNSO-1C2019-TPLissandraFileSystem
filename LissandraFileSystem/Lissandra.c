@@ -4,7 +4,7 @@ t_dictionary* memTable=NULL;
 t_bitarray* bitmap;
 int main(void)
 {
-	crearArchivoBitmap();
+	//crearArchivoBitmap();
 	crearBitMap();
 	pthread_t consola;//, atender[20];
 	logger = iniciar_logger();

@@ -23,6 +23,7 @@
 #include <sys/time.h>
 #include"recibir.h"
 #include"memTable.h"
+#include"bloque.h"
 #include"Lissandra.h"
 #include"bitmap.h"
 #include"APIS.h"

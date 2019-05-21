@@ -208,9 +208,9 @@ char* DirectorioDeTabla(char* tabla){
 	strcat(directorioTablas,"Tables/");
 	strcat(directorioTablas,tabla);
 	return directorioTablas;
-
-
 }
+
+
 char* DirectorioDeMetadataTabla(char* tabla){
 	t_config* config = config_create("Lissandra.config");
 	char* Montaje= config_get_string_value(config,"PUNTO_MONTAJE");
@@ -246,6 +246,23 @@ char* DirectorioDeParticion(char* nombretabla,int numeroParticion){
 
 
 }
+
+char* DirectorioDeBloque(int numeroBloque){
+	t_config* config = config_create("Lissandra.config");
+	char* buffer=malloc(sizeof(int));
+	sprintf(buffer,"%d",numeroBloque);
+	char* Montaje= config_get_string_value(config,"PUNTO_MONTAJE");
+	char *directorioBloque = malloc(strlen(Montaje) + strlen(".bin") +strlen("Bloques/") +sizeof(buffer)+1);
+	strcpy(directorioBloque,Montaje);
+	strcat(directorioBloque,"Bloques/");
+	strcat(directorioBloque,buffer);
+	strcat(directorioBloque,".bin");
+	free(buffer);
+	return directorioBloque;
+
+
+}
+
 char* DirectorioBitMap(){
 	t_config* config = config_create("Lissandra.config");
 	char* Montaje= config_get_string_value(config,"PUNTO_MONTAJE");
@@ -315,6 +332,7 @@ void crearParticion(char*nombreTabla ,int nroParticion){
 		fprintf(particionBin,"SIZE=0\nBLOCKS=[%d]",i);
 		bitarray_set_bit(bitmap,i);
 		pruebasSet();
+		//ActualizarBitmap();
 		break;//bitarray_set_bit(bitmap, i);
 	}
 	i++;

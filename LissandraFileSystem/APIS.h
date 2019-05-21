@@ -50,7 +50,7 @@ void APIinsert(t_paquete_insert*);
 
 void APIcreate(t_paquete_create*);
 
-
+char* DirectorioDeBloque(int numeroBloque);
 void crearParticiones(char*nombreTabla ,int nroParticiones);
 char* elegirMayorTimeStamp(t_list* RegistrosEncontrados);
 t_registro* crearRegistro (char*value,uint16_t key,long long timestamp);
