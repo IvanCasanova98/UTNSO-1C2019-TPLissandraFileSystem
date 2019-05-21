@@ -65,7 +65,7 @@ void deployMenu(){
 	printf("\n\nCREATE NOMBRETABLA CONSISTENCIA PARTICIONES TIEMPO_COMPACTACION \nDROP\nDESCRIBE\nSELECT    NOMBRETABLA KEY\nINSERT    NOMBRETABLA KEY \"VALUE\" TIMESTAMP (OPCIONAL) \n");
 	printf("\nIngrese REQUEST\n");
 
-	escribirEnBloque(0, serializarRegistro("BABY",20,200));
+	//escribirEnBloque(0, serializarRegistro("BABY",20,200));
 	//escribirEnBloque(0, serializarRegistro("CUAL",20,200));
 }
 char* ingresar_request()

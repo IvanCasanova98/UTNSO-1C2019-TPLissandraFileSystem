@@ -31,6 +31,7 @@
 #include <stdbool.h>
 #include<commons/collections/dictionary.h>
 #include "Lissandra.h"
+#include "bloque.h"
 #include <commons/collections/node.h>
 
 
@@ -50,6 +51,10 @@ void mostrarRegistros(void* elemento);
 void mostrarTablas(char*key,void* elemento);
 t_list* crearMemTable();
 
+void liberarNodo(void* nodo);
+void crearTemporal(char* nombreTabla,t_list* registros);
+int sumatoriaSize(int numeroTotal,void*elemento1);
+int sizeTotalLista(t_list* registros);
 bool listaVacia(t_list* lista);
 bool mayorTimeStamp(void*elemento1,void*elemento2);
 bool filtrarPorKey(void* elemento,int key);

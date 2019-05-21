@@ -37,5 +37,7 @@
 
 
 char* serializarRegistro(char* value,uint16_t key,long long timestamp);
+void escribirEnBloque(int nroBloque, char* registro, bool ContienefinalRegistro);
+void crearBloque(int nroBloque);
 
 #endif /* BLOQUE_H_ */

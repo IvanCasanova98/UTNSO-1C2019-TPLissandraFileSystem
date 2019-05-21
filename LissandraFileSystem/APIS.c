@@ -40,7 +40,11 @@ void APIinsert(t_paquete_insert* paquete_insert){
 	if(existeTabla(nombreTablaMayuscula)){
 	t_metadata* metadataDeTabla=obtenerMetadataTabla(nombreTablaMayuscula);
 	agregarTabla(paquete_insert);
+	agregarTabla(paquete_insert);
+	agregarTabla(paquete_insert);
 	imprimirListaTablas();
+	crearTemporal("TABLA1",dictionary_get(memTable,"TABLA1"));
+	//imprimirListaTablas();
 	free(metadataDeTabla);
 
 	} else LaTablaNoExiste(paquete_insert->timestamp,paquete_insert->valor_key,paquete_insert->value,paquete_insert->nombre_tabla);
@@ -284,7 +288,7 @@ void crearMetadataConfig(char*nombreTablaMayuscula, consistency consistencia, in
 
 
 
-void crearParticiones(char*nombreTabla ,int nroParticiones){
+void crearParticiones(char*nombreTabla ,int nroParticiones){ // no anda pero la dejo x las dudas
 	char* directorioMetadata=DirectorioDeMetadata();
 	char* directorioBitmap=DirectorioBitMap();
 	t_config* config = config_create(directorioMetadata);
@@ -331,6 +335,7 @@ void crearParticion(char*nombreTabla ,int nroParticion){
 		particionBin=fopen(DirectorioDeParticion(nombreTabla,nroParticion),"w");
 		fprintf(particionBin,"SIZE=0\nBLOCKS=[%d]",i);
 		bitarray_set_bit(bitmap,i);
+		crearBloque(i);
 		pruebasSet();
 		//ActualizarBitmap();
 		break;//bitarray_set_bit(bitmap, i);

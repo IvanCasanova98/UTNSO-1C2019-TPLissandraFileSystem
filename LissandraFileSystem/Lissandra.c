@@ -6,12 +6,12 @@ int main(void)
 {
 
 	t_config* config = leer_config();
-//	crearArchivoBitmap();
-//	crearBitMap();
+	//crearArchivoBitmap();
+	crearBitMap();
 	pthread_t consola;
 
 	logger = iniciar_logger();
-	//crearArchivoBitmap();
+
 	pthread_create(&consola,NULL,prenderConsola,NULL);
 
 

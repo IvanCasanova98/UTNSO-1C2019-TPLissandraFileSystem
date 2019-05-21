@@ -93,6 +93,48 @@ bool mayorTimeStamp(void*elemento1,void*elemento2){
 	return ((nodoRegistroMemTable*) elemento1)->timestamp > ((nodoRegistroMemTable*) elemento2)->timestamp;
 }
 
+
+
+void crearTemporal(char* nombreTabla,t_list* registros){  //dictionary_iterator(memTable, crearTemporal);
+
+	int sizeLista= list_size(registros);
+	int i=0;
+	while(i<sizeLista){
+
+	nodoRegistroMemTable* nodoASerializar= list_get(registros, i);
+	char * nodoSerializado= serializarRegistro(((nodoRegistroMemTable*) nodoASerializar)->value,((nodoRegistroMemTable*) nodoASerializar)->key,((nodoRegistroMemTable*) nodoASerializar)->timestamp);
+	list_replace_and_destroy_element(registros, i, nodoSerializado, liberarNodo);
+	i++;
+	}
+	int sizeTotal= sizeTotalLista(registros);
+	printf("%d",sizeTotal);
+}
+
+void liberarNodo(void* nodo){
+	free(((nodoRegistroMemTable*) nodo)->value);
+	free((nodoRegistroMemTable*) nodo);
+}
+
+int sumatoriaSize(int numeroTotal,void*elemento1){
+	//printf("o");
+	return numeroTotal=numeroTotal+ (strlen(elemento1)+1);
+}
+
+int sizeTotalLista(t_list* registros){
+	return list_fold(registros,0,sumatoriaSize);
+}
+
+//int sizeTotalLista(t_list* registros){
+//	int sizeLista= list_size(registros);
+//	int i=0;
+//	int size=0;
+//	while(i<sizeLista){
+//		size=size + (strlen(list_get(registros, i))+1);
+//	i++;
+//	}
+//	return size;
+//}
+
 //void eliminarUltimoRegistro(nodoTablaMemTable* nodoTabla){
 //	bool _mismoNombre(void* elemento){
 //			return igualNombre(elemento ,nodoTabla->nombreTabla);
