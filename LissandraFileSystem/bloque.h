@@ -34,8 +34,9 @@
 #include "Lissandra.h"
 #include "bitmap.h"
 #include"logs.h"
-
-
+#include <math.h>
+void liberarBloque(void* elemento);
+int tamanioBloque(int nroBloque);
 char* serializarRegistro(char* value,uint16_t key,long long timestamp);
 void escribirEnBloque(int nroBloque, char* registro, bool ContienefinalRegistro);
 void crearBloque(int nroBloque);

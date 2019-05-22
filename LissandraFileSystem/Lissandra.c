@@ -6,9 +6,10 @@ int main(void)
 {
 
 	t_config* config = leer_config();
+	//int tiempoDump=atoi()
 	//crearArchivoBitmap();
 	crearBitMap();
-	pthread_t consola;
+	pthread_t consola,dump;
 
 	logger = iniciar_logger();
 

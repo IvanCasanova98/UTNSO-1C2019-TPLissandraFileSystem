@@ -33,7 +33,7 @@
 #include "Lissandra.h"
 #include "bloque.h"
 #include <commons/collections/node.h>
-
+#include <math.h>
 
 typedef struct nodoRegistroMemTable{
 	char* value;
@@ -46,6 +46,10 @@ typedef struct nodoTablaMemTable{
 	char* nombreTabla;
 	t_list* registros;
 }nodoTablaMemTable;
+char* crearArrayBloques(int*bloques,int cantBloques);
+int cargarRegistro(char* registroActual,int bytesEnBloque, int* bloquesDisponibles,int bloquesEnUso);
+void crearTemporal(char* nombreTabla,t_list* registros);
+void crearArchivotmp(char* nombreTabla, int size, int*bloques,int cantBloques);
 
 void mostrarRegistros(void* elemento);
 void mostrarTablas(char*key,void* elemento);

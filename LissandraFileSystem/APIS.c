@@ -43,13 +43,13 @@ void APIinsert(t_paquete_insert* paquete_insert){
 	agregarTabla(paquete_insert);
 	agregarTabla(paquete_insert);
 	imprimirListaTablas();
-	crearTemporal("TABLA1",dictionary_get(memTable,"TABLA1"));
-	//imprimirListaTablas();
+
+	crearTemporal("TABLA_B",dictionary_get(memTable, "TABLA_B"));
 	free(metadataDeTabla);
 
 	} else LaTablaNoExiste(paquete_insert->timestamp,paquete_insert->valor_key,paquete_insert->value,paquete_insert->nombre_tabla);
 
-log_destroy(logger);
+	//log_destroy(logger);
 }
 
 char* APIselect(t_paquete_select* paquete_select){
@@ -250,6 +250,48 @@ char* DirectorioDeParticion(char* nombretabla,int numeroParticion){
 
 
 }
+
+int existe_temporal(char* path){
+	//printf("%s",path);
+	struct stat buffer;
+	return(stat(path,&buffer)==0);
+}
+
+char* DirectorioDeTemporal(char* nombretabla){
+	t_config* config = config_create("Lissandra.config");
+	char* NombreTmp = string_substring_until(string_reverse(nombretabla), 1);
+
+	char buffer [3];
+	char* Montaje= config_get_string_value(config,"PUNTO_MONTAJE");
+	char* directorioAux= malloc(strlen(Montaje) + strlen(".tmp") +strlen("Tables/") +sizeof(buffer)+ strlen(nombretabla)+strlen(NombreTmp)+1);
+	char* directorioTablas = malloc(strlen(Montaje) + strlen(".tmp") +strlen("Tables/") +sizeof(buffer)+ strlen(nombretabla)+strlen(NombreTmp)+1);
+	strcpy(directorioTablas,Montaje);
+	strcat(directorioTablas,"Tables/");
+	strcat(directorioTablas,nombretabla);
+	strcat(directorioTablas,"/");
+	strcat(directorioTablas,NombreTmp);
+	int i =1;
+	strcpy(directorioAux,directorioTablas);
+	sprintf(buffer,"%d",i);
+	strcat(directorioAux,buffer);
+	strcat(directorioAux,".tmp");
+	while(existe_temporal(directorioAux)){
+		i++;
+		strcpy(directorioAux,directorioTablas);
+		sprintf(buffer,"%d",i);
+		strcat(directorioAux,buffer);
+		strcat(directorioAux,".tmp");
+	}
+
+	strcat(directorioTablas,buffer);
+	strcat(directorioTablas,".tmp");
+	free(directorioAux);
+	return directorioTablas;
+
+
+}
+
+
 
 char* DirectorioDeBloque(int numeroBloque){
 	t_config* config = config_create("Lissandra.config");

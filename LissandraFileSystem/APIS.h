@@ -35,6 +35,7 @@
 #include <unistd.h>
 #include"recibir.h"
 #include"memTable.h"
+#include "bloque.h"
 #include "Lissandra.h"
 #include "bitmap.h"
 #include"logs.h"
@@ -50,6 +51,8 @@ void APIinsert(t_paquete_insert*);
 
 void APIcreate(t_paquete_create*);
 
+char* DirectorioDeTemporal(char* nombretabla);
+int existe_temporal(char* path);
 char* DirectorioDeBloque(int numeroBloque);
 void crearParticiones(char*nombreTabla ,int nroParticiones);
 char* elegirMayorTimeStamp(t_list* RegistrosEncontrados);

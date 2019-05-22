@@ -24,7 +24,35 @@ void crearBloque(int nroBloque){
 	config_destroy(config);
 }
 
+int tamanioBloque(int nroBloque){
+	char* directorioMetadata=DirectorioDeMetadata();
 
+	t_config* config = config_create(directorioMetadata);
+
+	int sizeBloque = atoi(config_get_string_value(config,"BLOCK_SIZE"));
+
+	char* directorioBloque=DirectorioDeBloque(nroBloque);
+
+	int fd = open(directorioBloque, O_RDWR|O_CREAT|O_APPEND, (mode_t)0600);
+
+		ftruncate(fd,tamanioBloque);
+		char* archivoBloque;// =malloc(tamañoBloque);
+		archivoBloque=(char*) mmap(0,tamanioBloque, PROT_READ|PROT_WRITE, MAP_SHARED ,fd,0);
+		if(archivoBloque==MAP_FAILED){
+				printf("ERROR AL MAPEAR A MEMORIA");
+				close(fd);
+		}
+		char* RegistrosBloque=malloc(strlen(archivoBloque));
+		strcpy(RegistrosBloque,archivoBloque);
+		int sz= string_length(RegistrosBloque);
+		msync(archivoBloque,sizeBloque,MS_SYNC);
+		munmap(archivoBloque,sizeBloque);
+		close(fd);
+		free(directorioMetadata);
+		free(directorioBloque);
+		config_destroy(config);
+	return sz;
+}
 
 void escribirEnBloque(int nroBloque, char* registro, bool ContienefinalRegistro){
 	char* directorioMetadata=DirectorioDeMetadata();
@@ -41,20 +69,19 @@ void escribirEnBloque(int nroBloque, char* registro, bool ContienefinalRegistro)
 			close(fd);
 	}
 	strcat(archivoBloque,registro);
-	if(ContienefinalRegistro)
-	strcat(archivoBloque,"\n");
+	if(ContienefinalRegistro) strcat(archivoBloque,"\n");
 	//if(string_ends_with(archivoBloque,"\n")) printf("ultimo caracter salto de linea");
-	char* RegistrosBloque=malloc(strlen(archivoBloque)+1);
-
-	strcpy(RegistrosBloque,archivoBloque);
-	printf("%d",string_length(RegistrosBloque));
+//	char* RegistrosBloque=malloc(strlen(archivoBloque)+1);
+//
+//	strcpy(RegistrosBloque,archivoBloque);
+//	printf("%d",string_length(RegistrosBloque));
 	msync(archivoBloque,tamanioBloque,MS_SYNC);
 	munmap(archivoBloque,tamanioBloque);
 	close(fd);
 	free(directorioMetadata);
 	free(directorioBloque);
 	config_destroy(config);
-	printf("Prueba: %s",RegistrosBloque);
+	//printf("Prueba: %s",RegistrosBloque);
 }
 
 char* serializarRegistro(char* value,uint16_t key,long long timestamp){
@@ -75,3 +102,9 @@ char* serializarRegistro(char* value,uint16_t key,long long timestamp){
 
 
 }
+
+
+void liberarBloque(void* elemento){
+	free((char*)elemento);
+}
+

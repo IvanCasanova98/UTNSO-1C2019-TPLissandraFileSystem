@@ -61,9 +61,17 @@ void* prenderConsola(void* arg){
 	}
 
 }
+
+
 void deployMenu(){
 	printf("\n\nCREATE NOMBRETABLA CONSISTENCIA PARTICIONES TIEMPO_COMPACTACION \nDROP\nDESCRIBE\nSELECT    NOMBRETABLA KEY\nINSERT    NOMBRETABLA KEY \"VALUE\" TIMESTAMP (OPCIONAL) \n");
 	printf("\nIngrese REQUEST\n");
+	int* bloque=0;
+	int bloc[2];
+	bloc[0]=1;
+	bloc[1]=7;
+	int i=0;
+	//escribirEnBloque(0, "300;20;HOLA", 1);
 
 	//escribirEnBloque(0, serializarRegistro("BABY",20,200));
 	//escribirEnBloque(0, serializarRegistro("CUAL",20,200));
