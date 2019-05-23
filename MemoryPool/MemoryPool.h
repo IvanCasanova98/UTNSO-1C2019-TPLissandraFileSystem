@@ -7,12 +7,14 @@
 #include<commons/log.h>
 #include<curses.h>
 #include<commons/temporal.h>
+#include<commons/collections/list.h>
 
 #include<pthread.h>
 
 #include "conexion.h"
 #include "recibir.h"
 #include "consola.h"
+#include "tablas.h"
 #include "utils.h"
 
 int crear_hilo_servidor();

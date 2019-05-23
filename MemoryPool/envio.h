@@ -17,6 +17,8 @@
 #include "utils.h"
 
 //----------------------------SERIALIZAR PAQUETES
+
+void* serializar_mensaje(char* value, int bytes);
 void* serializar_paquete_select(t_paquete_select* paquete);
 void* serializar_paquete_insert(t_paquete_insert* paquete);
 

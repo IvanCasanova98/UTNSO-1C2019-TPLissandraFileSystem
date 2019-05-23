@@ -47,7 +47,7 @@ void recibir_paquetes(int cliente_fd, int server_fd, t_config* config, t_log* lo
 
 			loggear_paquete_select(paquete_select, logger);
 
-			selectf(paquete_select, config, logger);
+			selectf(cliente_fd, paquete_select, config, logger);
 
 			break;
 		case INSERT:;

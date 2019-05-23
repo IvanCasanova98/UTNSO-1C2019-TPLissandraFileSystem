@@ -16,6 +16,8 @@
 #include<commons/config.h>
 #include<commons/temporal.h>
 #include <sys/time.h>
+
+#include"recibir.h"
 //---------------------ESTRUCTURA PAQUETES
 typedef struct
 {

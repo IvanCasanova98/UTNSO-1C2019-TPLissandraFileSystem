@@ -74,7 +74,7 @@ int iniciar_conexion(t_config* config)
 {
 	int conexion = crear_conexion
 	(
-		config_get_string_value(config, "IP"),
+		config_get_string_value(config, "IP_LFS"),
 		config_get_string_value(config, "PUERTOLFS")
 	);
 	return conexion;

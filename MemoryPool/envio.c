@@ -2,6 +2,19 @@
 
 //----------------------------SERIALIZAR PAQUETES
 
+void* serializar_mensaje(char* value, int bytes)
+{
+	void* buffer = malloc(bytes);
+	int desplazamiento = 0;
+
+	int tamanio=strlen(value)+1;
+	memcpy(buffer + desplazamiento, &(tamanio), sizeof(int));
+	desplazamiento+= sizeof(int);
+	memcpy(buffer + desplazamiento, value, strlen(value)+1);
+
+	return buffer;
+}
+
 void* serializar_paquete_select(t_paquete_select* paquete)
 {
 	void* buffer = malloc(sizeof(uint32_t) + sizeof(uint16_t)  + paquete->nombre_tabla_long);
