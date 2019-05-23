@@ -31,3 +31,31 @@ Valor KEY   : 34
 Value       : HOLA QUE TAL
  timestamp   : 1558378880129
 [INFO] 16:01:20:131 MemoryPool/(5943:5944): PAQUETE INSERT ENVIADO
+[INFO] 11:28:44:888 MemoryPool/(4992:4993): NUEVO PAQUETE SELECT CREADO
+Nombre tabla: tabla0
+Valor KEY   : 0
+[INFO] 11:30:24:965 MemoryPool/(5075:5076): NUEVO PAQUETE SELECT CREADO
+Nombre tabla: TABLA0
+Valor KEY   : 0
+[INFO] 11:32:07:26 MemoryPool/(5142:5143): NUEVO PAQUETE SELECT CREADO
+Nombre tabla: TABLA0
+Valor KEY   : 0
+[INFO] 11:34:01:280 MemoryPool/(5184:5185): NUEVO PAQUETE SELECT CREADO
+Nombre tabla: TABLA0
+Valor KEY   : 0
+[INFO] 11:37:13:150 MemoryPool/(5308:5309): NUEVO PAQUETE SELECT CREADO
+Nombre tabla: TABLA0
+Valor KEY   : 0
+[INFO] 11:40:58:433 MemoryPool/(5386:5387): NUEVO PAQUETE INSERT CREADO
+Nombre tabla: TABLA0
+Valor KEY   : 1
+Value       : HOLA
+ timestamp   : 1558622458432
+[INFO] 11:54:17:610 MemoryPool/(5801:5802): NUEVO PAQUETE INSERT CREADO
+Nombre tabla: TABLA0
+Valor KEY   : 3
+Value       : tres
+ timestamp   : 1558623257610
+[INFO] 11:54:34:474 MemoryPool/(5801:5802): NUEVO PAQUETE SELECT CREADO
+Nombre tabla: TABLA0
+Valor KEY   : 3

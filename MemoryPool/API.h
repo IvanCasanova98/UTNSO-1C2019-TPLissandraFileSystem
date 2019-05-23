@@ -3,6 +3,7 @@
 
 #include "envio.h"
 #include "conexion.h"
+#include "tablas.h"
 
 void selectf(t_paquete_select* paquete, t_config* config, t_log* logger);
 void insert(t_paquete_insert* paquete, t_config* config, t_log* logger);
