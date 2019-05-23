@@ -40,8 +40,14 @@ void APIinsert(t_paquete_insert* paquete_insert){
 	if(existeTabla(nombreTablaMayuscula)){
 	t_metadata* metadataDeTabla=obtenerMetadataTabla(nombreTablaMayuscula);
 	agregarTabla(paquete_insert);
-	agregarTabla(paquete_insert);
-	agregarTabla(paquete_insert);
+//	agregarTabla(paquete_insert);
+//	agregarTabla(paquete_insert);
+//	agregarTabla(paquete_insert);
+//	agregarTabla(paquete_insert);
+//	agregarTabla(paquete_insert);
+//	agregarTabla(paquete_insert);
+//	agregarTabla(paquete_insert);
+//	agregarTabla(paquete_insert);
 	imprimirListaTablas();
 
 	crearTemporal("TABLA_B",dictionary_get(memTable, "TABLA_B"));
@@ -378,7 +384,7 @@ void crearParticion(char*nombreTabla ,int nroParticion){
 		fprintf(particionBin,"SIZE=0\nBLOCKS=[%d]",i);
 		bitarray_set_bit(bitmap,i);
 		crearBloque(i);
-		pruebasSet();
+		//pruebasSet();
 		//ActualizarBitmap();
 		break;//bitarray_set_bit(bitmap, i);
 	}

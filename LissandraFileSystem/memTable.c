@@ -124,22 +124,28 @@ void crearArchivotmp(char* nombreTabla, int size, int*bloques,int cantBloques){
 
 }
 
+
+
 void crearTemporal(char* nombreTabla,t_list* registros){  //dictionary_iterator(memTable, crearTemporal);
 
 	int cantidadTotalRegistros= list_size(registros);
 	int i=0;
+	//registros =list_map(registros, void*(*transformer)(void*));
+	t_list* listaDeRegistros=list_create();
 	while(i<cantidadTotalRegistros){
 		nodoRegistroMemTable* nodoASerializar= list_get(registros, i);
 		char * nodoSerializado= serializarRegistro(((nodoRegistroMemTable*) nodoASerializar)->value,((nodoRegistroMemTable*) nodoASerializar)->key,((nodoRegistroMemTable*) nodoASerializar)->timestamp);
-		list_replace_and_destroy_element(registros, i, nodoSerializado, liberarNodo);
+		list_add(listaDeRegistros, nodoSerializado);
+
 		i++;
 	}
+	list_clean_and_destroy_elements(registros, liberarBloque);
 	char* directorioMetadata=DirectorioDeMetadata();
 	t_config* config = config_create(directorioMetadata);
 	int sizeBloque = atoi(config_get_string_value(config,"BLOCK_SIZE"));
 	int blockNum = atoi(config_get_string_value(config,"BLOCKS"));
 
-	int sizeTotal= sizeTotalLista(registros);
+	int sizeTotal= sizeTotalLista(listaDeRegistros);
 	int nroBloques;
 
 	if(sizeTotal%sizeBloque==0){
@@ -168,25 +174,30 @@ void crearTemporal(char* nombreTabla,t_list* registros){  //dictionary_iterator(
 	crearArchivotmp(nombreTabla, sizeTotal, bloquesDisponibles,nroBloques);
 
 
+	free(directorioMetadata);
+	config_destroy(config);
+	int registroCharTotales=list_size(listaDeRegistros);
 
 
-
+	int desplazamiento=0;
 	int bloquesEnUso=0;
 	int registrosCargados=0;
-	while(registrosCargados<cantidadTotalRegistros){
+	while(registrosCargados<registroCharTotales){
 		int bytesEnBloque=tamanioBloque(bloquesDisponibles[bloquesEnUso]);
-		char* registroActual= list_take(registros, registrosCargados);
+		char* registroActual= list_get(listaDeRegistros, registrosCargados);
+		printf("%s\n",registroActual);
 		int tamanioRegistro = string_length(registroActual) +1;
-		int desplazamiento=cargarRegistro(registroActual,bytesEnBloque,bloquesDisponibles,bloquesEnUso);
+		desplazamiento=desplazamiento+cargarRegistro(registroActual,bytesEnBloque,bloquesDisponibles,bloquesEnUso);
+
 		bloquesEnUso = bloquesEnUso + desplazamiento;
 		registrosCargados++;
 
 
 
 	}
-	free(directorioMetadata);
-	list_clean_and_destroy_elements(registros, liberarBloque);
-	config_destroy(config);
+
+	list_clean_and_destroy_elements(listaDeRegistros, liberarBloque);
+
 
 }
 
@@ -194,25 +205,45 @@ void crearTemporal(char* nombreTabla,t_list* registros){  //dictionary_iterator(
 
 int cargarRegistro(char* registroActual,int bytesEnBloque, int* bloquesDisponibles,int bloquesEnUso){
 	char* directorioMetadata=DirectorioDeMetadata();
-	t_config* config = config_create(directorioMetadata);
-	int tamanioBloque = atoi(config_get_string_value(config,"BLOCK_SIZE"));
+	t_config* config2 = config_create(directorioMetadata);
+	printf("asdasda");
+	int tamanioBloque = atoi(config_get_string_value(config2,"BLOCK_SIZE"));
 	int tamanioRegistro = string_length(registroActual) +1;
 	int desplazamiento=0;
-	if(tamanioRegistro+bytesEnBloque>tamanioBloque){
-		int tamanioQueEntra=abs(tamanioBloque-(tamanioRegistro+bytesEnBloque));
-		char* parteQueEntra= string_substring(registroActual, 0,tamanioQueEntra);
-		escribirEnBloque(bloquesDisponibles[bloquesEnUso], parteQueEntra,0);
-		char* parteQueNoEntra= string_substring_from(registroActual,tamanioQueEntra);
-		desplazamiento++;
-		free(directorioMetadata);
-		config_destroy(config);
-		cargarRegistro(parteQueNoEntra,tamanioBloque,bloquesDisponibles,bloquesEnUso++);
-	}else{
-	escribirEnBloque(bloquesDisponibles[bloquesEnUso], registroActual,1);
-	free(directorioMetadata);
-	config_destroy(config);
-	}
 
+	if((tamanioRegistro+bytesEnBloque)>tamanioBloque){
+
+	int tamanioQueEntra=abs(tamanioBloque-bytesEnBloque);
+	printf("entro al if");
+	char* parteQueEntra= malloc(tamanioQueEntra);
+	strcpy(parteQueEntra,string_substring(registroActual, 0,tamanioQueEntra));
+	escribirEnBloque(bloquesDisponibles[bloquesEnUso], parteQueEntra,0);
+	char* parteQueNoEntra= malloc(tamanioRegistro-tamanioQueEntra);
+	strcpy(parteQueNoEntra,string_substring_from(registroActual,tamanioQueEntra));
+	bloquesEnUso++;
+	desplazamiento++;
+	tamanioRegistro= tamanioRegistro-tamanioQueEntra;
+	while(tamanioRegistro>tamanioBloque){
+		strcpy(parteQueEntra,string_substring(parteQueNoEntra, 0,tamanioBloque));
+		escribirEnBloque(bloquesDisponibles[bloquesEnUso], parteQueEntra,0);
+		strcpy(parteQueNoEntra,string_substring_from(parteQueNoEntra,tamanioBloque));
+		bloquesEnUso++;
+		desplazamiento++;
+		tamanioRegistro= tamanioRegistro-tamanioBloque;
+	}
+	escribirEnBloque(bloquesDisponibles[bloquesEnUso], parteQueNoEntra,1);
+
+
+//		free(directorioMetadata);
+//		config_destroy(config2);
+//		desplazamiento+=cargarRegistro(parteQueNoEntra,tamanioBloque,bloquesDisponibles,bloquesEnUso);
+	}else{
+
+	escribirEnBloque(bloquesDisponibles[bloquesEnUso], registroActual,1);
+
+	}
+	free(directorioMetadata);
+	config_destroy(config2);
 	return desplazamiento;
 }
 

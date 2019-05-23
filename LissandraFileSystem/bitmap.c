@@ -129,7 +129,7 @@ return 0;
 void pruebasSet(){
 	//bitarray_set_bit(bitmap, 5);
 	int i=0;
-	while(i<16) {printf("%d\n",bitarray_test_bit(bitmap,i));i++;};
+	while(i<512) {printf("%d",i);i++;};
 	//ActualizarBitmap();
 	//printf("%d",bitarray_test_bit(bitmap,5));
 
