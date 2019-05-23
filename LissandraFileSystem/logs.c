@@ -9,20 +9,27 @@
 void LogearInsert(char* timestamp,uint16_t key,char* value,char*nombreTabla){
 
 	t_log* logger=iniciar_logger();
-	log_info(logger,"INSERTANDO %lli;%d;%s en %s",timestamp,key,value,nombreTabla);
+	log_info(logger,"INSERTANDO %lli;%d;%s en %s\n",timestamp,key,value,nombreTabla);
+	log_destroy(logger);
+}
+
+void LogearDrop(char* nombreTabla)
+{
+	t_log* logger=iniciar_logger();
+	log_info(logger,"BORRANDO %s\n",nombreTabla);
 	log_destroy(logger);
 }
 
 void LogearCreate(char*nombreTabla){
 
 	t_log* logger=iniciar_logger();
-	log_info(logger,"CREANDO TABLA %s",nombreTabla);
+	log_info(logger,"CREANDO TABLA %s\n",nombreTabla);
 	log_destroy(logger);
 }
 void LogearSelect(char* timestamp,uint16_t key,char* value,char*nombreTabla){
 
 	t_log* logger=iniciar_logger();
-	log_info(logger,"BUSCANDO  %lli;%d;%s en %s",timestamp,key,value,nombreTabla);
+	log_info(logger,"BUSCANDO  %lli;%d;%s en %s\n",timestamp,key,value,nombreTabla);
 	log_destroy(logger);
 }
 
