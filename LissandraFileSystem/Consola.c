@@ -51,8 +51,9 @@ void* prenderConsola(void* arg){
 				printf("Operacion desconocida.");
 				break;
 			}
-
+		//free(lineaRequest);
 		free(parametros);
+		//chekearDumpeo();
 		//imprimirListaTablas();
 		lineaRequest = ingresar_request();
 		parametros = strtok(lineaRequest, " ");
@@ -66,11 +67,10 @@ void* prenderConsola(void* arg){
 void deployMenu(){
 	printf("\n\nCREATE NOMBRETABLA CONSISTENCIA PARTICIONES TIEMPO_COMPACTACION \nDROP\nDESCRIBE\nSELECT    NOMBRETABLA KEY\nINSERT    NOMBRETABLA KEY \"VALUE\" TIMESTAMP (OPCIONAL) \n");
 	printf("\nIngrese REQUEST\n");
-	int* bloque=0;
-	int bloc[2];
-	bloc[0]=1;
-	bloc[1]=7;
-	int i=0;
+
+
+
+
 	//escribirEnBloque(0, "300;20;HOLA", 1);
 
 	//escribirEnBloque(0, serializarRegistro("BABY",20,200));
@@ -86,8 +86,9 @@ char* ingresar_request()
 	  while(1) {
 		linea = readline(">");
 		if(linea)add_history(linea);
-	    return linea;
-	    free(linea);
+
+		return linea;
+		free(linea);
 	  }
 }
 
@@ -153,7 +154,7 @@ t_paquete_insert* LeerInsert(char* parametros){
 	} else {timestamp = atoll(parametros);}
 
 	t_paquete_insert* paquete = crear_paquete_insert(nombre_tabla, valor_key, value, timestamp);
-	//loggear_request_insert(paquete);
+
 
 	return paquete;
 }
@@ -247,6 +248,27 @@ t_paquete_create* crear_paquete_create(char* nombretabla, consistency consistenc
 	paquete->nombre_tabla_long= tamaniotabla;
 
 	return paquete;
+
+}
+
+void chekearDumpeo(){
+			pthread_t dumpeo;
+			t_config* config = leer_config();
+			int tiempoDump = atoi(config_get_string_value(config, "TIEMPO_DUMP"));
+			struct timeval verificar;
+			gettimeofday(&verificar,NULL);
+
+			int tiempoTranscurrido = ((double)(verificar.tv_sec - tiempoHastaDump.tv_sec) + (double)(verificar.tv_usec - tiempoHastaDump.tv_usec)/1000000)*1000;
+
+			//gettimeofday(&tiempoHastaDump,NULL);
+			if(!estaDump && (tiempoDump<tiempoTranscurrido)){
+				printf("ENTRODUMP");
+				estaDump=1;
+				pthread_create(&dumpeo,NULL,dump,NULL);
+				pthread_join(dumpeo, (void**)NULL);
+				gettimeofday(&tiempoHastaDump,NULL);
+			}
+			config_destroy(config);
 
 }
 

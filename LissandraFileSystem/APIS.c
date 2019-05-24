@@ -45,17 +45,14 @@ void APIinsert(t_paquete_insert* paquete_insert){
 //	agregarTabla(paquete_insert);
 //	agregarTabla(paquete_insert);
 //	agregarTabla(paquete_insert);
-//	agregarTabla(paquete_insert);
-//	agregarTabla(paquete_insert);
-//	agregarTabla(paquete_insert);
 	imprimirListaTablas();
-
-	crearTemporal("TABLA_B",dictionary_get(memTable, "TABLA_B"));
+	//dump();
+	//crearTemporal("TABLA_B",dictionary_get(memTable, "TABLA_B"));
 	free(metadataDeTabla);
 
 	} else LaTablaNoExiste(paquete_insert->timestamp,paquete_insert->valor_key,paquete_insert->value,paquete_insert->nombre_tabla);
 
-	//log_destroy(logger);
+
 }
 
 char* APIselect(t_paquete_select* paquete_select){
@@ -75,8 +72,8 @@ char* APIselect(t_paquete_select* paquete_select){
 
 		if(existeTabla(nombreTablaMayuscula)){
 			t_metadata* metadataDeTabla=obtenerMetadataTabla(nombreTablaMayuscula);
-			int particionKey;
-			particionKey =	particionDeKey(paquete_select->valor_key,metadataDeTabla->particiones);
+			//int particionKey;
+			//particionKey =	particionDeKey(paquete_select->valor_key,metadataDeTabla->particiones);
 			t_list* RegistrosEncontrados=list_create();
 			list_add(RegistrosEncontrados,buscarMemTable(nombreTablaMayuscula,paquete_select->valor_key));
 			//list_add(RegistrosEncontrados,buscarParticiones(nombreTablaMayuscula,paquete_select->valor_key));
@@ -120,16 +117,15 @@ t_metadata* obtenerMetadataTabla (char* nombreTabla ){
 	int compactacion = atoi(config_get_string_value(config,"COMPACTION_TIME"));
 	t_metadata* metadataObtenida=crearMetadata(pasarAConsistenciaINT(consistencia),particiones,compactacion);
 	free(ubicacionMetaData);
-	return metadataObtenida;
 	config_destroy(config);
+	return metadataObtenida;
+
 }
 
 
 int existeTabla(char* TablaBuscada){
 
 	char* directorioTablas = DirectorioDeTabla(TablaBuscada);
-	//directorioTablas termina siendo el directorio en especifico buscado.
-	//por ejemplo "/home/utnso/lfs/LissandraFileSystem/Tablas/TablasA"
 
 	DIR* dir = opendir(directorioTablas);
 	if (dir)
@@ -145,7 +141,7 @@ int existeTabla(char* TablaBuscada){
 	}
 	else
 	{
-		/* Fallo por otra razon */
+
 		printf("Fallo desconocido :(\n");
 		free(directorioTablas);
 	    return 0;
@@ -180,6 +176,7 @@ int pasarAConsistenciaINT(char* consistencia){
 		return 2;
 
 	}
+	return 0;
 
 }
 
@@ -194,6 +191,7 @@ char* pasarAConsistenciaChar(int consistencia){
 	else if (consistencia==2) {
 		return "EC";
 	}
+	return "SC";
 
 }
 
@@ -258,7 +256,6 @@ char* DirectorioDeParticion(char* nombretabla,int numeroParticion){
 }
 
 int existe_temporal(char* path){
-	//printf("%s",path);
 	struct stat buffer;
 	return(stat(path,&buffer)==0);
 }

@@ -16,8 +16,11 @@
 #include<commons/collections/list.h>
 #include<commons/collections/dictionary.h>
 #include"bitmap.h"
-
+#include<time.h>
 
 extern t_dictionary* memTable;
 extern t_bitarray* bitmap;
+extern struct timeval tiempoHastaDump;
+//extern struct timespec stopDump;
+extern bool estaDump;
 #endif /* LISSANDRA_H_ */

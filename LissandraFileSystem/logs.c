@@ -6,7 +6,7 @@
  */
 #include "logs.h"
 
-void LogearInsert(char* timestamp,uint16_t key,char* value,char*nombreTabla){
+void LogearInsert(long long timestamp,uint16_t key,char* value,char*nombreTabla){
 
 	t_log* logger=iniciar_logger();
 	log_info(logger,"INSERTANDO %lli;%d;%s en %s",timestamp,key,value,nombreTabla);
@@ -19,7 +19,7 @@ void LogearCreate(char*nombreTabla){
 	log_info(logger,"CREANDO TABLA %s",nombreTabla);
 	log_destroy(logger);
 }
-void LogearSelect(char* timestamp,uint16_t key,char* value,char*nombreTabla){
+void LogearSelect(long long timestamp,uint16_t key,char* value,char*nombreTabla){
 
 	t_log* logger=iniciar_logger();
 	log_info(logger,"BUSCANDO  %lli;%d;%s en %s",timestamp,key,value,nombreTabla);
@@ -29,16 +29,23 @@ void LogearSelect(char* timestamp,uint16_t key,char* value,char*nombreTabla){
 
 // WARNINGS DE ERRORES
 
-void LaTablaNoExiste(char* timestamp,uint16_t key,char* value,char*nombreTabla){
+void LaTablaNoExiste(long long timestamp,uint16_t key,char* value,char*nombreTabla){
 
 	t_log* logger=iniciar_logger();
 	log_warning(logger, "ERROR AL INSERTAR %lli;%d;%s en %s LA TABLA NO EXISTE",timestamp,key,value,nombreTabla );
 	log_destroy(logger);
 }
 
-void LaTablaYaExiste(char* timestamp,uint16_t key,char* value,char*nombreTabla){
+void LaTablaYaExiste(long long timestamp,uint16_t key,char* value,char*nombreTabla){
 
 	t_log* logger=iniciar_logger();
 	log_warning(logger, "ERROR AL CREAR %s LA TABLA YA EXISTE",nombreTabla);
+	log_destroy(logger);
+}
+
+
+void LogDumpeo(){
+	t_log* logger=iniciar_logger();
+	log_info(logger,"REALIZANDO DUMP");
 	log_destroy(logger);
 }

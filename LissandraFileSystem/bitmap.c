@@ -105,25 +105,19 @@ void ActualizarBitmap(){
 
 }
 
-char* eliminarBarra0(char* nuevoChar){
-	int i=0;
-	int longitud=strlen(nuevoChar);
-	nuevoChar[longitud] = "";
-	return nuevoChar;
-}
-
-int existeBitmap(){
-
-	char* directorioBitMap = DirectorioBitMap();
-	FILE*file;
-	if(file=fopen(directorioBitMap,"r")){
-		fclose(file);
-		free(directorioBitMap);
-		return 1;
-	}
-free(directorioBitMap);
-return 0;
-}
+//
+//int existeBitmap(){
+//
+//	char* directorioBitMap = DirectorioBitMap();
+//	FILE*file;
+//	if(file=fopen(directorioBitMap,"r")){
+//		fclose(file);
+//		free(directorioBitMap);
+//		return 1;
+//	}
+//free(directorioBitMap);
+//return 0;
+//}
 
 
 void pruebasSet(){

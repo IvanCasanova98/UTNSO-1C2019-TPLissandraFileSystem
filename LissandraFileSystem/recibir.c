@@ -28,14 +28,14 @@ void* recibir_paquetes(void *arg)
 			log_info(logger, "Se recibio paquete tipo: DESCRIBE");
 			break;
 		case SELECT: ;
-			system("clear");
+			//system("clear");
 			t_paquete_select *paquete_select=deserializar_paquete_select(cliente_fd);
 			log_info(logger, "SELECT %s %d ",paquete_select->nombre_tabla, paquete_select->valor_key);
 			free(paquete_select->nombre_tabla);
 			free(paquete_select);
 			break;
 		case INSERT: ;
-			system("clear");
+			//system("clear");
 			t_paquete_insert* paquete_insert = deserializar_paquete_insert(cliente_fd);
 			log_info(logger, "INSERT %s %d %s %d ",paquete_insert->nombre_tabla, paquete_insert->valor_key,paquete_insert->value, paquete_insert->timestamp);
 

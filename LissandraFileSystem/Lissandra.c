@@ -2,17 +2,19 @@
 
 t_dictionary* memTable=NULL;
 t_bitarray* bitmap;
+struct timeval tiempoHastaDump;
+bool estaDump =0;
 int main(void)
 {
 
 	t_config* config = leer_config();
-	//int tiempoDump=atoi()
 	//crearArchivoBitmap();
 	crearBitMap();
-	pthread_t consola,dump;
-
+	pthread_t consola,dumpeo;
 	logger = iniciar_logger();
+	int tiempoEntreDump = atoi(config_get_string_value(config, "TIEMPO_DUMP"));
 
+	gettimeofday(&tiempoHastaDump,NULL);
 	pthread_create(&consola,NULL,prenderConsola,NULL);
 
 
@@ -64,13 +66,16 @@ int main(void)
 		{
 			printf("NUEVA CONEXION ACEPTADA.\n");
 
-			pthread_t recibidorPaquetes;
+
 			int *arg = malloc(sizeof(*arg));
 			*arg = socket_cliente;
-			pthread_create(&recibidorPaquetes,NULL,recibir_paquetes,arg);
+
+			//chekearDumpeo()
+			//pthread_create(&recibidorPaquetes,NULL,recibir_paquetes,arg);
+
 		}
 
-
+	config_destroy(config);
 	log_info(logger, "FIN CONEXION");
 	pthread_join(consola, (void**)NULL);
 	return EXIT_SUCCESS;

@@ -35,12 +35,12 @@
 #include "Lissandra.h"
 #include"logs.h"
 
-void LogearInsert(char* timestamp,uint16_t key,char* value,char*nombreTabla);
+void LogearInsert(long long timestamp,uint16_t key,char* value,char*nombreTabla);
 void LogearCreate(char*nombreTabla);
-void LogearSelect(char* timestamp,uint16_t key,char* value,char*nombreTabla);
-void LaTablaNoExiste(char* timestamp,uint16_t key,char* value,char*nombreTabla);
-void LaTablaYaExiste(char* timestamp,uint16_t key,char* value,char*nombreTabla);
-
+void LogearSelect(long long timestamp,uint16_t key,char* value,char*nombreTabla);
+void LaTablaNoExiste(long long timestamp,uint16_t key,char* value,char*nombreTabla);
+void LaTablaYaExiste(long long timestamp,uint16_t key,char* value,char*nombreTabla);
+void LogDumpeo();
 
 
 #endif /* LOGS_H_ */

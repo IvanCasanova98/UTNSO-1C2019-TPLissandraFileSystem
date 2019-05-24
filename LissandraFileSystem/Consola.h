@@ -36,8 +36,8 @@ void deployMenu();
 char* ingresar_request();
 void* prenderConsola(void* );
 int codigo_ingresado(char* codOp);
-
-
+void chekearDumpeo();
+void tiempoTranscurrido();
 //---------------------CREAR PAQUETE
 t_paquete_select* crear_paquete_select(char *nombretabla,uint16_t valor_key);
 t_paquete_insert* crear_paquete_insert(char *nombretabla,uint16_t valor_key, char *value, long long timestamp);

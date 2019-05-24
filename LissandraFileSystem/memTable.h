@@ -46,17 +46,22 @@ typedef struct nodoTablaMemTable{
 	char* nombreTabla;
 	t_list* registros;
 }nodoTablaMemTable;
+
+void* dump();
+
+
+
 char* crearArrayBloques(int*bloques,int cantBloques);
 int cargarRegistro(char* registroActual,int bytesEnBloque, int* bloquesDisponibles,int bloquesEnUso);
-void crearTemporal(char* nombreTabla,t_list* registros);
+void* crearTemporal(char* nombreTabla,t_list* registros);
 void crearArchivotmp(char* nombreTabla, int size, int*bloques,int cantBloques);
 
 void mostrarRegistros(void* elemento);
 void mostrarTablas(char*key,void* elemento);
-t_list* crearMemTable();
+t_dictionary* crearMemTable();
 
 void liberarNodo(void* nodo);
-void crearTemporal(char* nombreTabla,t_list* registros);
+
 int sumatoriaSize(int numeroTotal,void*elemento1);
 int sizeTotalLista(t_list* registros);
 bool listaVacia(t_list* lista);
@@ -73,7 +78,7 @@ void eliminarNodoTabla();
 t_list* agregarRegistro(t_list* listaTabla, nodoRegistroMemTable* nodoRegistro);
 void imprimirRegistrosTabla();
 void eliminarUltimoRegistro(nodoTablaMemTable* nodoTabla);
-void dump();
+
 nodoTablaMemTable* crearNodoTabla(char* nombreTabla);
 nodoRegistroMemTable* crearNodoRegistro(char*value,uint16_t key,long long timestamp);
 #endif /* MEMTABLE_H_ */

@@ -7,7 +7,7 @@
 #include "memTable.h"
 
 
-t_list* crearMemTable(){
+t_dictionary* crearMemTable(){
 	t_dictionary* memTable=dictionary_create();
 	return memTable;
 }
@@ -29,7 +29,7 @@ void agregarTabla(t_paquete_insert* paquete_insert){
 
 
 void imprimirListaTablas(){
-	system("clear");
+	//system("clear");
 	dictionary_iterator(memTable,mostrarTablas);
 }
 
@@ -126,7 +126,7 @@ void crearArchivotmp(char* nombreTabla, int size, int*bloques,int cantBloques){
 
 
 
-void crearTemporal(char* nombreTabla,t_list* registros){  //dictionary_iterator(memTable, crearTemporal);
+void* crearTemporal(char* nombreTabla,t_list* registros){  //dictionary_iterator(memTable, crearTemporal);
 
 	int cantidadTotalRegistros= list_size(registros);
 	int i=0;
@@ -186,7 +186,7 @@ void crearTemporal(char* nombreTabla,t_list* registros){  //dictionary_iterator(
 		int bytesEnBloque=tamanioBloque(bloquesDisponibles[bloquesEnUso]);
 		char* registroActual= list_get(listaDeRegistros, registrosCargados);
 		printf("%s\n",registroActual);
-		int tamanioRegistro = string_length(registroActual) +1;
+		//int tamanioRegistro = string_length(registroActual) +1;
 		desplazamiento=desplazamiento+cargarRegistro(registroActual,bytesEnBloque,bloquesDisponibles,bloquesEnUso);
 
 		bloquesEnUso = bloquesEnUso + desplazamiento;
@@ -206,7 +206,6 @@ void crearTemporal(char* nombreTabla,t_list* registros){  //dictionary_iterator(
 int cargarRegistro(char* registroActual,int bytesEnBloque, int* bloquesDisponibles,int bloquesEnUso){
 	char* directorioMetadata=DirectorioDeMetadata();
 	t_config* config2 = config_create(directorioMetadata);
-	printf("asdasda");
 	int tamanioBloque = atoi(config_get_string_value(config2,"BLOCK_SIZE"));
 	int tamanioRegistro = string_length(registroActual) +1;
 	int desplazamiento=0;
@@ -214,7 +213,6 @@ int cargarRegistro(char* registroActual,int bytesEnBloque, int* bloquesDisponibl
 	if((tamanioRegistro+bytesEnBloque)>tamanioBloque){
 
 	int tamanioQueEntra=abs(tamanioBloque-bytesEnBloque);
-	printf("entro al if");
 	char* parteQueEntra= malloc(tamanioQueEntra);
 	strcpy(parteQueEntra,string_substring(registroActual, 0,tamanioQueEntra));
 	escribirEnBloque(bloquesDisponibles[bloquesEnUso], parteQueEntra,0);
@@ -232,7 +230,8 @@ int cargarRegistro(char* registroActual,int bytesEnBloque, int* bloquesDisponibl
 		tamanioRegistro= tamanioRegistro-tamanioBloque;
 	}
 	escribirEnBloque(bloquesDisponibles[bloquesEnUso], parteQueNoEntra,1);
-
+	free(parteQueEntra);
+	free(parteQueNoEntra);
 
 //		free(directorioMetadata);
 //		config_destroy(config2);
@@ -260,6 +259,19 @@ int sumatoriaSize(int numeroTotal,void*elemento1){
 int sizeTotalLista(t_list* registros){
 	return list_fold(registros,0,sumatoriaSize);
 }
+
+
+void* dump(){
+	if(!(memTable==NULL)){
+	LogDumpeo();
+	dictionary_iterator(memTable, crearTemporal);
+	dictionary_destroy(memTable);
+	memTable=NULL;
+	estaDump=0;
+	}
+}
+
+
 
 //int sizeTotalLista(t_list* registros){
 //	int sizeLista= list_size(registros);

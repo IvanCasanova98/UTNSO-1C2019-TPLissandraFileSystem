@@ -12,13 +12,13 @@ void crearBloque(int nroBloque){
 	char* directorioMetadata=DirectorioDeMetadata();
 	char* directorioBloque=DirectorioDeBloque(nroBloque);
 	t_config* config = config_create(directorioMetadata);
-	int tamanioBloque = atoi(config_get_string_value(config,"BLOCK_SIZE"));
-	FILE *fp;
+	int sizeBloque = atoi(config_get_string_value(config,"BLOCK_SIZE"));
+	int fp;
 
 	//printf("\n");
-	fp=fopen(directorioBloque,"w");
-	ftruncate(fp,tamanioBloque);
-	fclose(fp);
+	fp=open(directorioBloque, O_RDWR|O_CREAT|O_TRUNC, (mode_t)0600);
+	ftruncate(fp,sizeBloque);
+	close(fp);
 	free(directorioBloque);
 	free(directorioMetadata);
 	config_destroy(config);
@@ -35,9 +35,9 @@ int tamanioBloque(int nroBloque){
 
 	int fd = open(directorioBloque, O_RDWR|O_CREAT|O_APPEND, (mode_t)0600);
 
-		ftruncate(fd,tamanioBloque);
+		ftruncate(fd,sizeBloque);
 		char* archivoBloque;// =malloc(tamañoBloque);
-		archivoBloque=(char*) mmap(0,tamanioBloque, PROT_READ|PROT_WRITE, MAP_SHARED ,fd,0);
+		archivoBloque=(char*) mmap(0,sizeBloque, PROT_READ|PROT_WRITE, MAP_SHARED ,fd,0);
 		if(archivoBloque==MAP_FAILED){
 				printf("ERROR AL MAPEAR A MEMORIA");
 				close(fd);
@@ -48,6 +48,7 @@ int tamanioBloque(int nroBloque){
 		msync(archivoBloque,sizeBloque,MS_SYNC);
 		munmap(archivoBloque,sizeBloque);
 		close(fd);
+		free(RegistrosBloque);
 		free(directorioMetadata);
 		free(directorioBloque);
 		config_destroy(config);
