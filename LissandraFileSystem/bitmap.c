@@ -44,7 +44,7 @@ void crearBitMap(){
 			blockNum++; //BASICAMENTE AUMENTO BLOCK NUM HASTA QUE SEA DIVISIBLE POR 8 PARA TRABAJAR CON BYTES
 	}
 	int bytes = BIT_CHAR(blockNum);
-	char* archivoBitmap =malloc(bytes);
+	char* archivoBitmap;
 	int fd = open(directorioBitmap, O_RDWR , (mode_t)0600);
 	struct stat mystat;
 	if(fstat(fd,&mystat)<0){
@@ -60,7 +60,7 @@ void crearBitMap(){
 	}
 
 
-	bitmap=malloc(mystat.st_size);
+	//bitmap=malloc(mystat.st_size);
 	bitmap=bitarray_create_with_mode(archivoBitmap , mystat.st_size ,0);
 
 
