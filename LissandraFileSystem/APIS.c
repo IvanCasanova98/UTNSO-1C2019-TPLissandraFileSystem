@@ -17,41 +17,66 @@ void APIdrop(t_paquete_drop* paquete_drop){
 	//BORRAR DE LA MEMTABLE.
 
 	if(existeTabla(nombreTablaMayuscula)){
-		if(dictionary_has_key(memTable,nombreTablaMayuscula))
-			{dictionary_remove_and_destroy(memTable,nombreTablaMayuscula,liberarNodo);}
+		if(memTable != NULL)
+		{
+			if(dictionary_has_key(memTable,nombreTablaMayuscula))
+			{
+			dictionary_remove_and_destroy(memTable,nombreTablaMayuscula,liberarNodo);
+			printf("Se eliminaron los registros de %s de la memTable.\n",nombreTablaMayuscula);
+			} else {printf("No se hallaron registros en la memTable de %s\n",nombreTablaMayuscula);}
+
+		}
 
 		char *directorioDeTablaABorrar = DirectorioDeTabla(nombreTablaMayuscula);
 
 		t_metadata* metadataDeTabla=obtenerMetadataTabla(nombreTablaMayuscula);
 		int particiones = metadataDeTabla->particiones;
-		printf("el directorio es: %s", directorioDeTablaABorrar);
+		free(metadataDeTabla);
+//		rmdir(directorioDeTablaABorrar); //BORRA LA CARPETA SI ESTA VACIA.
+
+//		printf("el directorio es: %s", directorioDeTablaABorrar);
+//		IMPRIME /home/utnso/LISSANDRA_FS/Tables/TABLA_B
 
 
+		//---- ESTO FUNCIONA BORRA 1.bin
 //		char buffer [3];
 //		sprintf(buffer,"/%d",1);
-//		printf("el directorio es: %s", directorioDeTablaABorrar);
-//		strcat(directorioDeTablaABorrar,"1");
+//		strcat(directorioDeTablaABorrar,buffer);
 //		strcat(directorioDeTablaABorrar,".bin");
-//		printf("el directorio es: %s", directorioDeTablaABorrar);
 //		remove(directorioDeTablaABorrar);
-//		char buffer [3];
-//		for(int i = 1; i<= particiones; i++)
-//		{
-//			sprintf(buffer,"/%d",i);
-//			strcat(directorioDeTablaABorrar,buffer);
-//			strcat(directorioDeTablaABorrar,".bin");
-//			char **arrayBloques = string_get_string_as_array(config_get_string_value(directorioDeTablaABorrar,"BLOCKS"));
+		//---- ESTO FUNCIONA BORRA 1.bin
+
+		char buffer [3];
+//		char *nroParticion;
+//		for(int i=1;i<=particiones;i++){
+
+
+			sprintf(buffer,"/%c",string_itoa(1));
+			strcat(directorioDeTablaABorrar,buffer);
+			strcat(directorioDeTablaABorrar,".bin");
+			printf(directorioDeTablaABorrar);
+			t_config* directorio = config_create(directorioDeTablaABorrar);
+//			char **arrayBloques = string_get_string_as_array(config_get_string_value(directorio,"BLOCKS"));
 //			string_iterate_lines(arrayBloques,removerBloque);
+			//ESTA FUNCION REMUEVE CADA BLOQUE ASIGNADO A ESA PARTICION.
+
 //			free(arrayBloques);
 //			remove(directorioDeTablaABorrar);
-//
+//			config_destroy(directorio);
+//			free(directorioDeTablaABorrar);
+			//ESTE REMOVE REMUEVE LA PARTICION.
 //			strcpy(directorioDeTablaABorrar,DirectorioDeTabla(nombreTablaMayuscula));
 //		}
+
+
+
+
 //		free(directorioDeTablaABorrar);
 		//faltan limpiar los temporales con sus respectivos bloques ocupados.
 		//faltan setear los bloques en 0 que limpie con mmap.
 		//falta borrar metadata.
-		//y ahi borra directorio.
+		//y ahi borra directorio. rmdir(directorioDeTablaABorrar);
+//			free(metadataDeTabla);
 	}
 	printf("Se elimino %s\n",nombreTablaMayuscula);
 
