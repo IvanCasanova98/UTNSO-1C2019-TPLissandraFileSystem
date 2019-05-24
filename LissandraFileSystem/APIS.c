@@ -2,7 +2,66 @@
 
 #include "APIS.h"
 
+void APIdrop(t_paquete_drop* paquete_drop){
 
+	/*
+	 *1. Verifica si existe un segmento de dicha tabla en la memoria principal
+	 *   y de haberlo libera dicho espacio.
+	 *2. Informa al FileSystem dicha operación para que este último realice la operación adecuada.
+	 */
+	char nombreTablaMayuscula [strlen(paquete_drop->nombre_tabla)+1];
+	string_to_upper(nombreTablaMayuscula);
+	strcpy(nombreTablaMayuscula,paquete_drop->nombre_tabla);
+	LogearDrop(nombreTablaMayuscula);
+
+	//BORRAR DE LA MEMTABLE.
+
+	if(existeTabla(nombreTablaMayuscula)){
+		if(dictionary_has_key(memTable,nombreTablaMayuscula))
+			{dictionary_remove_and_destroy(memTable,nombreTablaMayuscula,liberarNodo);}
+
+		char *directorioDeTablaABorrar = DirectorioDeTabla(nombreTablaMayuscula);
+
+		t_metadata* metadataDeTabla=obtenerMetadataTabla(nombreTablaMayuscula);
+		int particiones = metadataDeTabla->particiones;
+		printf("el directorio es: %s", directorioDeTablaABorrar);
+
+
+//		char buffer [3];
+//		sprintf(buffer,"/%d",1);
+//		printf("el directorio es: %s", directorioDeTablaABorrar);
+//		strcat(directorioDeTablaABorrar,"1");
+//		strcat(directorioDeTablaABorrar,".bin");
+//		printf("el directorio es: %s", directorioDeTablaABorrar);
+//		remove(directorioDeTablaABorrar);
+//		char buffer [3];
+//		for(int i = 1; i<= particiones; i++)
+//		{
+//			sprintf(buffer,"/%d",i);
+//			strcat(directorioDeTablaABorrar,buffer);
+//			strcat(directorioDeTablaABorrar,".bin");
+//			char **arrayBloques = string_get_string_as_array(config_get_string_value(directorioDeTablaABorrar,"BLOCKS"));
+//			string_iterate_lines(arrayBloques,removerBloque);
+//			free(arrayBloques);
+//			remove(directorioDeTablaABorrar);
+//
+//			strcpy(directorioDeTablaABorrar,DirectorioDeTabla(nombreTablaMayuscula));
+//		}
+//		free(directorioDeTablaABorrar);
+		//faltan limpiar los temporales con sus respectivos bloques ocupados.
+		//faltan setear los bloques en 0 que limpie con mmap.
+		//falta borrar metadata.
+		//y ahi borra directorio.
+	}
+	printf("Se elimino %s\n",nombreTablaMayuscula);
+
+}
+
+void removerBloque(char* nroBloque){
+	char *directorioDeBloque = DirectorioDeBloque(atoi(nroBloque));
+	remove(directorioDeBloque);
+	free(directorioDeBloque);
+}
 void APIcreate(t_paquete_create* paquete_create){
 
 	char nombreTablaMayuscula [strlen(paquete_create->nombre_tabla)+1];
@@ -33,10 +92,10 @@ void APIinsert(t_paquete_insert* paquete_insert){
 		 * En los request solo se utilizarán las comillas (“”) para enmascarar el Value que se envíe. No se proveerán request con comillas en otros puntos.
 	 */
 
-	LogearInsert(paquete_insert->timestamp,paquete_insert->valor_key,paquete_insert->value,paquete_insert->nombre_tabla);
 	char nombreTablaMayuscula[strlen(paquete_insert->nombre_tabla)+1];
 	strcpy(nombreTablaMayuscula,paquete_insert->nombre_tabla);
 	string_to_upper(nombreTablaMayuscula);
+	LogearInsert(paquete_insert->timestamp,paquete_insert->valor_key,paquete_insert->value,nombreTablaMayuscula);
 	if(existeTabla(nombreTablaMayuscula)){
 	t_metadata* metadataDeTabla=obtenerMetadataTabla(nombreTablaMayuscula);
 	agregarTabla(paquete_insert);

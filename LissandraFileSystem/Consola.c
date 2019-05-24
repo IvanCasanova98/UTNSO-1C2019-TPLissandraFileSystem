@@ -27,6 +27,11 @@ void* prenderConsola(void* arg){
 				APIcreate(paquete_create);
 				free(paquete_create);
 				break;
+			case 1:;
+				t_paquete_drop* paquete_drop =LeerDrop(parametros);
+				APIdrop(paquete_drop);
+				free(paquete_drop);
+				break;
 			case 3:;
 
 				t_paquete_select* paquete_select =LeerSelect(parametros) ;
@@ -68,13 +73,6 @@ void deployMenu(){
 	printf("\n\nCREATE NOMBRETABLA CONSISTENCIA PARTICIONES TIEMPO_COMPACTACION \nDROP\nDESCRIBE\nSELECT    NOMBRETABLA KEY\nINSERT    NOMBRETABLA KEY \"VALUE\" TIMESTAMP (OPCIONAL) \n");
 	printf("\nIngrese REQUEST\n");
 
-
-
-
-	//escribirEnBloque(0, "300;20;HOLA", 1);
-
-	//escribirEnBloque(0, serializarRegistro("BABY",20,200));
-	//escribirEnBloque(0, serializarRegistro("CUAL",20,200));
 }
 char* ingresar_request()
 {
@@ -114,6 +112,19 @@ int codigo_ingresado(char* codOp){
 
 	return EXIT_FAILURE;
 }
+
+t_paquete_drop* LeerDrop(char *parametros){
+	char* nombre_tabla;
+	parametros= strtok(NULL, " ");
+	nombre_tabla = parametros;
+
+	t_paquete_drop* paquete = crear_paquete_drop(nombre_tabla);
+	loggear_request_drop(paquete);
+
+	return paquete;
+
+}
+
 t_paquete_select* LeerSelect(char* parametros){
 
 
@@ -204,6 +215,13 @@ void loggear_request_create(t_paquete_create* paquete){
     log_destroy(logger);
 }
 
+void loggear_request_drop(t_paquete_drop* paquete)
+{
+	t_log* logger = iniciar_logger();
+	log_info(logger, "NUEVA REQUEST: DROP %s\n",paquete->nombre_tabla);
+	log_destroy(logger);
+}
+
 
 t_paquete_select* crear_paquete_select(char* nombretabla, uint16_t valor_key) //Agregado
 {
@@ -216,6 +234,17 @@ t_paquete_select* crear_paquete_select(char* nombretabla, uint16_t valor_key) //
 
 	return paquete;
 
+}
+
+t_paquete_drop* crear_paquete_drop(char *nombre_tabla)
+{
+	uint32_t tamanio_tabla= strlen(nombre_tabla)+1;
+	t_paquete_drop* paquete= malloc(tamanio_tabla + sizeof(int));
+
+	paquete->nombre_tabla = nombre_tabla;
+	paquete->nombre_tabla_long = tamanio_tabla;
+
+	return paquete;
 }
 
 t_paquete_insert* crear_paquete_insert(char *nombre_tabla, uint16_t valor_key, char *value, long long timestamp) //Agregado
@@ -271,10 +300,4 @@ void chekearDumpeo(){
 			config_destroy(config);
 
 }
-
-
-
-
-
-
 

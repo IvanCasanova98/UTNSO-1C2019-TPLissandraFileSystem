@@ -45,11 +45,12 @@ t_config config;
 
 int existeTabla(char* TablaBuscada);
 
+//**********- FUNCIONES API -**********
+void  APIdrop(t_paquete_drop*);
 char* APIselect(t_paquete_select*);
-
-void APIinsert(t_paquete_insert*);
-
-void APIcreate(t_paquete_create*);
+void  APIinsert(t_paquete_insert*);
+void  APIcreate(t_paquete_create*);
+//*************************************
 
 char* DirectorioDeTemporal(char* nombretabla);
 int existe_temporal(char* path);
@@ -73,4 +74,5 @@ char* DirectorioBitMap();
 void crearParticiones(char*nombreTabla ,int particiones);
 char* DirectorioDeParticion(char* ,int numeroParticion);
 void crearParticion(char*nombreTabla ,int particiones);
+void removerBloque(char* nroBloque);
 #endif /* APIS_H_ */
