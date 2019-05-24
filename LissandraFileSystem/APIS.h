@@ -75,4 +75,9 @@ void crearParticiones(char*nombreTabla ,int particiones);
 char* DirectorioDeParticion(char* ,int numeroParticion);
 void crearParticion(char*nombreTabla ,int particiones);
 void removerBloque(char* nroBloque);
+void RemoverTemporalesDeTablaYSusBloques(char* nombretabla);
+void RemoverMetadataDeTabla(char *nombreTabla);
+void RemoverCarpetaVaciaDeTabla(char *nombreTabla);
+void RemoverDeLaMemtable(char *nombreTabla);
+void RemoverParticionesDeTablaYSusBloques(char* nombreTabla);
 #endif /* APIS_H_ */

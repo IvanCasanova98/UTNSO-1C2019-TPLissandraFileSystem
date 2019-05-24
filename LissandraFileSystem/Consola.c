@@ -73,8 +73,6 @@ void deployMenu(){
 	printf("\n\nCREATE NOMBRETABLA CONSISTENCIA PARTICIONES TIEMPO_COMPACTACION \nDROP\nDESCRIBE\nSELECT    NOMBRETABLA KEY\nINSERT    NOMBRETABLA KEY \"VALUE\" TIMESTAMP (OPCIONAL) \n");
 	printf("\nIngrese REQUEST\n");
 
-//	char * directorioDeTablaABorrar= "/home/utnso/LISSANDRA_FS/Tables/TABLA_B/1.bin";
-
 
 }
 char* ingresar_request()
