@@ -115,6 +115,75 @@ char* APIselect(t_paquete_select* paquete_select){
 
 }
 
+t_metadata* APIdescribe (t_paquete_describe* paquete_describe){
+	char nombreTablaMayuscula [strlen(paquete_describe->nombre_tabla)+1];
+	strcpy(nombreTablaMayuscula,paquete_describe->nombre_tabla);
+	string_to_upper(nombreTablaMayuscula);
+
+	if(existeTabla(nombreTablaMayuscula)){
+		t_metadata* metadataDeTabla = obtenerMetadataTabla(nombreTablaMayuscula);
+		return metadataDeTabla;
+		free(metadataDeTabla);
+	} else {
+		error_show("NO EXISTE %s\n",nombreTablaMayuscula);
+		return NULL;
+	}
+
+}
+
+void APIdescribeTodasLasTablas(){
+	t_list* listaDeTablas = listarTablasExistentes();
+	if(listaDeTablas != NULL){
+		list_iterate(listaDeTablas,imprimirMetadataDeTabla);
+	}
+	list_destroy(listaDeTablas);
+	//DESPUES VAMOS A TENER QUE CAMBIAR A TIPO T_LIST LA FUNCION ASI RETORNAMOS LA LISTA
+	//Y VEMOS COMO LA ENVIAMOS.
+}
+
+void listarTablas(){
+	DIR *d;
+	  struct dirent *dir;
+	  d = opendir("/home/utnso/LISSANDRA_FS/Tables");
+	  if (d)
+	  {
+		while ((dir = readdir(d)) != NULL) {
+			if (!string_contains(dir->d_name,".")) printf("%s ", dir->d_name);
+
+		}
+		closedir(d);
+	  }
+}
+
+void imprimirMetadata(t_metadata* metadataDeTablaPedida){
+	printf("%s%s ",BLUE,pasarAConsistenciaChar(metadataDeTablaPedida->consistencia));
+	printf(" %d ",metadataDeTablaPedida->particiones);
+	printf(" %d\n",metadataDeTablaPedida->tiempo_de_compactacion);
+	printf("%s",NORMAL_COLOR);
+}
+
+
+
+t_list* listarTablasExistentes() {
+  DIR *d;
+  struct dirent *dir;
+  d = opendir("/home/utnso/LISSANDRA_FS/Tables");
+  t_list *listaDeTablas = list_create();
+  if (d)
+  {
+    while ((dir = readdir(d)) != NULL) {
+    	if (!string_contains(dir->d_name,".")){
+    	list_add(listaDeTablas,dir->d_name);
+    	}
+
+    }
+    return listaDeTablas;
+    closedir(d);
+  } else return listaDeTablas;
+
+  	list_destroy(listaDeTablas);
+}
+
 char* elegirMayorTimeStamp(t_list* RegistrosEncontrados){
 	list_sort(RegistrosEncontrados,mayorTimeStamp);
 	t_registro* registroConMayorTimeStamp = (t_registro*)list_remove(RegistrosEncontrados,0);

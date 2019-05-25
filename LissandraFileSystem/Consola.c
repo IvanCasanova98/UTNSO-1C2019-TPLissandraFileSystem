@@ -32,6 +32,17 @@ void* prenderConsola(void* arg){
 				APIdrop(paquete_drop);
 				free(paquete_drop);
 				break;
+			case 2:;
+				t_paquete_describe* paquete_describe = LeerDescribe(parametros);
+				if(paquete_describe == NULL){
+					APIdescribeTodasLasTablas();
+				} else{
+					t_metadata* metadataDeTablaPedida = APIdescribe(paquete_describe);
+					if(metadataDeTablaPedida != NULL) imprimirMetadata(metadataDeTablaPedida);
+					free(metadataDeTablaPedida);
+				}
+				free(paquete_describe);
+				break;
 			case 3:;
 
 				t_paquete_select* paquete_select =LeerSelect(parametros) ;
@@ -68,10 +79,16 @@ void* prenderConsola(void* arg){
 
 }
 
+void imprimirMetadataDeTabla(char* nombre_tabla){
+	t_metadata* metadata = obtenerMetadataTabla(nombre_tabla);
+	imprimirMetadata(metadata);
+	free(metadata);
+}
 
 void deployMenu(){
 	printf("\n\nCREATE NOMBRETABLA CONSISTENCIA PARTICIONES TIEMPO_COMPACTACION \nDROP\nDESCRIBE\nSELECT    NOMBRETABLA KEY\nINSERT    NOMBRETABLA KEY \"VALUE\" TIMESTAMP (OPCIONAL) \n");
 	printf("\nIngrese REQUEST\n");
+
 
 
 }
@@ -123,6 +140,24 @@ t_paquete_drop* LeerDrop(char *parametros){
 	loggear_request_drop(paquete);
 
 	return paquete;
+
+}
+
+t_paquete_describe* LeerDescribe(char *parametros){
+	char* nombre_tabla;
+	parametros= strtok(NULL, " ");
+	if(parametros == NULL){
+		printf("DESCRIBE SOLO\n");
+		loggear_request_describe_sin_tabla();
+		return NULL;
+	}
+	else
+	{
+		nombre_tabla = parametros;
+		t_paquete_describe* paquete = crear_paquete_describe(nombre_tabla);
+		loggear_request_describe_con_tabla(paquete);
+		return paquete;
+	}
 
 }
 
@@ -223,6 +258,17 @@ void loggear_request_drop(t_paquete_drop* paquete)
 	log_destroy(logger);
 }
 
+void loggear_request_describe_con_tabla(t_paquete_describe* paquete){
+	t_log* logger = iniciar_logger();
+	log_info(logger, "NUEVA REQUEST: DESCRIBE DE %s\n",paquete->nombre_tabla);
+	log_destroy(logger);
+}
+
+void loggear_request_describe_sin_tabla(){
+	t_log* logger = iniciar_logger();
+	log_info(logger, "NUEVA REQUEST: DESCRIBE DE TODAS LAS TABLAS\n");
+	log_destroy(logger);
+}
 
 t_paquete_select* crear_paquete_select(char* nombretabla, uint16_t valor_key) //Agregado
 {
@@ -241,6 +287,17 @@ t_paquete_drop* crear_paquete_drop(char *nombre_tabla)
 {
 	uint32_t tamanio_tabla= strlen(nombre_tabla)+1;
 	t_paquete_drop* paquete= malloc(tamanio_tabla + sizeof(int));
+
+	paquete->nombre_tabla = nombre_tabla;
+	paquete->nombre_tabla_long = tamanio_tabla;
+
+	return paquete;
+}
+
+t_paquete_describe* crear_paquete_describe(char *nombre_tabla)
+{
+	uint32_t tamanio_tabla= strlen(nombre_tabla)+1;
+	t_paquete_describe* paquete= malloc(tamanio_tabla + sizeof(int));
 
 	paquete->nombre_tabla = nombre_tabla;
 	paquete->nombre_tabla_long = tamanio_tabla;

@@ -10,7 +10,7 @@
 
 
 
-
+#include <dirent.h>
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
@@ -41,7 +41,9 @@
 #include"logs.h"
 t_config config;
 
-
+#define GREEN  "\x1B[32m"
+#define BLUE  "\x1B[34m"
+#define NORMAL_COLOR  "\x1B[0m"
 
 int existeTabla(char* TablaBuscada);
 
@@ -50,7 +52,14 @@ void  APIdrop(t_paquete_drop*);
 char* APIselect(t_paquete_select*);
 void  APIinsert(t_paquete_insert*);
 void  APIcreate(t_paquete_create*);
+t_metadata*  APIdescribe(t_paquete_describe*);
+void  APIdescribeTodasLasTablas();
 //*************************************
+
+void imprimirMetadataDeTabla(char* nombre_tabla);
+void imprimirMetadata(t_metadata* metadataDeTablaPedida);
+void listarTablas(); //ESTA FUNCION NO SIRVE PARA NADA, SOLO POR SI QUEREMOS LISTARLAS.
+t_list* listarTablasExistentes();
 
 char* DirectorioDeTemporal(char* nombretabla);
 int existe_temporal(char* path);

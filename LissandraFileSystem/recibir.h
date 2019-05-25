@@ -70,6 +70,11 @@ typedef struct t_paquete_drop{
 	char* nombre_tabla;
 } t_paquete_drop;
 
+typedef struct t_paquete_describe{
+	uint32_t nombre_tabla_long;
+	char* nombre_tabla;
+} t_paquete_describe;
+
 typedef struct t_paquete_insert
 {
 	uint32_t nombre_tabla_long; //Longitud del nombre de la tabla

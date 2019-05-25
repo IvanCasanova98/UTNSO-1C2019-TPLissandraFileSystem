@@ -39,20 +39,27 @@ int codigo_ingresado(char* codOp);
 void chekearDumpeo();
 void tiempoTranscurrido();
 //---------------------CREAR PAQUETE
-t_paquete_select* crear_paquete_select(char* nombretabla,uint16_t valor_key);
-t_paquete_insert* crear_paquete_insert(char* nombretabla,uint16_t valor_key, char *value, long long timestamp);
-t_paquete_create* crear_paquete_create(char* nombretabla, consistency consistencia, int particiones,int tiempo_de_compactacion);
-t_paquete_drop*   crear_paquete_drop(char *nombretabla);
+t_paquete_select* 	crear_paquete_select(char* nombretabla,uint16_t valor_key);
+t_paquete_insert* 	crear_paquete_insert(char* nombretabla,uint16_t valor_key, char *value, long long timestamp);
+t_paquete_create* 	crear_paquete_create(char* nombretabla, consistency consistencia, int particiones,int tiempo_de_compactacion);
+t_paquete_drop*   	crear_paquete_drop(char *nombretabla);
+t_paquete_describe* crear_paquete_describe(char *nombre_tabla);
+
 
 //---------------------ARMAR PAQUETE
-t_paquete_select* LeerSelect(char* parametros);
-t_paquete_insert* LeerInsert(char* parametros);
-t_paquete_create* LeerCreate(char* parametros);
-t_paquete_drop*   LeerDrop(char *parametros);
+t_paquete_select* 	LeerSelect(char* parametros);
+t_paquete_insert* 	LeerInsert(char* parametros);
+t_paquete_create* 	LeerCreate(char* parametros);
+t_paquete_drop*   	LeerDrop(char *parametros);
+t_paquete_describe* LeerDescribe(char *parametros);
 
 //---------------------LOGGEAR PAQUETE
 void loggear_request_select(t_paquete_select* paquete);
 void loggear_request_insert(t_paquete_insert* paquete);
 void loggear_request_create(t_paquete_create* paquete);
 void loggear_request_drop(t_paquete_drop* paquete);
+void loggear_request_describe_con_tabla(t_paquete_describe* paquete);
+void loggear_request_describe_sin_tabla();
+
+
 #endif /* CONSOLA_H_ */
