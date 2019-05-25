@@ -9,7 +9,7 @@ void* servidor(void * arg)
 
 	int server_fd = iniciar_servidor(parametro->config);
 
-	int cliente_fd = esperar_cliente(server_fd);
+	int cliente_fd = esperar_cliente(parametro->config, server_fd);
 
 	recibir_paquetes(cliente_fd, server_fd, parametro->config, parametro->logger);
 
@@ -30,7 +30,7 @@ void recibir_paquetes(int cliente_fd, int server_fd, t_config* config, t_log* lo
 		}
 		else
 		{
-			cliente_fd = esperar_cliente(server_fd);
+			cliente_fd = esperar_cliente(config, server_fd);
 			cod_op = recibir_operacion(cliente_fd);
 		}
 
@@ -48,7 +48,6 @@ void recibir_paquetes(int cliente_fd, int server_fd, t_config* config, t_log* lo
 			loggear_paquete_select(paquete_select, logger);
 
 			selectf(cliente_fd, paquete_select, config, logger);
-
 			break;
 		case INSERT:;
 			t_paquete_insert* paquete_insert = deserializar_paquete_insert(cliente_fd);
@@ -56,7 +55,6 @@ void recibir_paquetes(int cliente_fd, int server_fd, t_config* config, t_log* lo
 			loggear_paquete_insert(paquete_insert, logger);
 
 			insert(paquete_insert, config, logger);
-
 			break;
 		case JOURNAL:
 			break;

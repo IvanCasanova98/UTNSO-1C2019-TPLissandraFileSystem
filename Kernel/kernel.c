@@ -8,6 +8,12 @@ int main(void){
 
 	int conexion = iniciar_conexion(logger, config);
 
+	recibir_SEED(conexion);
+
+	//desconecta de memoria 0
+	//elige memoria
+	//conectar a la memoria elegida
+
 	ingresar_paquete(conexion);
 
 	terminar_conexion(logger,config,conexion);

@@ -26,8 +26,8 @@ int iniciar_conexion(t_log* logger, t_config* config){ //tiene que llegar logger
 	log_info(logger, "CONECTANDO CON MEMORY POOL");
 
 	int conexion = crear_conexion(
-		config_get_string_value(config, "IP"),
-		config_get_string_value(config, "PUERTO")
+		config_get_string_value(config, "IP_MEMORIA"),
+		config_get_string_value(config, "PUERTO_MEMORIA")
 	);
 
 	return conexion;

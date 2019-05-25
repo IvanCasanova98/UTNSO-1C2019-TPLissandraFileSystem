@@ -1,6 +1,6 @@
 #include "envio.h"
 
-//----------------------------SERIALIZAR PAQUETES
+//----------------------------SERIALIZAR MENSAJE
 
 void* serializar_mensaje(char* value, int bytes)
 {
@@ -10,10 +10,40 @@ void* serializar_mensaje(char* value, int bytes)
 	int tamanio=strlen(value)+1;
 	memcpy(buffer + desplazamiento, &(tamanio), sizeof(int));
 	desplazamiento+= sizeof(int);
-	memcpy(buffer + desplazamiento, value, strlen(value)+1);
+	memcpy(buffer + desplazamiento, value, tamanio);
 
 	return buffer;
 }
+
+void* serializar_array(char** array, int bytes, int cant_elementos)
+{
+	void* buffer = malloc(bytes);
+	int desplazamiento = 0;
+	int tamanio = 0;
+	int i = 0;
+
+
+	tamanio=cant_elementos;
+	memcpy(buffer + desplazamiento, &(tamanio), sizeof(int));
+	desplazamiento+= sizeof(int);
+
+	while(i<cant_elementos)
+	{
+		tamanio=strlen(array[i]) + 5;
+		memcpy(buffer + desplazamiento, &(tamanio), sizeof(int));
+		desplazamiento+= sizeof(int);
+
+		memcpy(buffer + desplazamiento, array[i], tamanio);
+		desplazamiento+= tamanio;
+		printf("\nIP N° %d: %s", i,array[i]);
+		i++;
+	}
+
+	return buffer;
+	free(buffer);
+}
+
+//----------------------------SERIALIZAR PAQUETES
 
 void* serializar_paquete_select(t_paquete_select* paquete)
 {
@@ -57,6 +87,25 @@ void* serializar_paquete_insert(t_paquete_insert* paquete)
 
 	return buffer;
 	free(buffer);
+}
+
+//---------------------------ENVIOS DE MEMORIAS
+
+void enviar_memorias(int socket_cliente, t_config* config)
+{
+	char** IP_SEEDS = config_get_array_value(config, "IP_SEEDS");
+	char** PUERTO_SEEDS = config_get_array_value(config, "PUERTO_SEEDS");
+
+	int cant_elementos = cant_elementos_array(IP_SEEDS);
+
+	int bytes_IP = tamanio_array(IP_SEEDS);
+	int bytes_PUERTO = tamanio_array(PUERTO_SEEDS);
+
+	void* enviar_IP_SEEDS = serializar_array(IP_SEEDS, bytes_IP, cant_elementos);
+	void* enviar_PUERTO_SEEDS = serializar_array(PUERTO_SEEDS, bytes_PUERTO, cant_elementos);
+
+	send(socket_cliente,enviar_IP_SEEDS,bytes_IP,0);
+	send(socket_cliente,enviar_PUERTO_SEEDS,bytes_PUERTO,0);
 }
 
 //----------------------------ENVIAR PAQUETES

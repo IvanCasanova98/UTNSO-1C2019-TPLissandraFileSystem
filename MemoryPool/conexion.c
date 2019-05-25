@@ -6,7 +6,7 @@ int iniciar_servidor(t_config* config)
 {
 	int socket_servidor;
 	char* ip = config_get_string_value(config, "IP");
-	char* puerto = config_get_string_value(config, "PUERTOSERVER");
+	char* puerto = config_get_string_value(config, "PUERTO");
 
     struct addrinfo hints, *servinfo, *p;
 
@@ -36,12 +36,14 @@ int iniciar_servidor(t_config* config)
     return socket_servidor;
 }
 
-int esperar_cliente(int socket_servidor)
+int esperar_cliente(t_config* config, int socket_servidor)
 {
 	struct sockaddr_in dir_cliente;
 	int tam_direccion = sizeof(struct sockaddr_in);
 
 	int socket_cliente = accept(socket_servidor, (void*) &dir_cliente, &tam_direccion);
+
+	enviar_memorias(socket_cliente, config);
 
 	return socket_cliente;
 }
@@ -74,8 +76,8 @@ int iniciar_conexion(t_config* config)
 {
 	int conexion = crear_conexion
 	(
-		config_get_string_value(config, "IP_LFS"),
-		config_get_string_value(config, "PUERTOLFS")
+		config_get_string_value(config, "IP_FS"),
+		config_get_string_value(config, "PUERTO_FS")
 	);
 	return conexion;
 }

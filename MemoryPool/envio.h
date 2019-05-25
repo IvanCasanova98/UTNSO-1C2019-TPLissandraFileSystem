@@ -19,14 +19,21 @@
 //----------------------------SERIALIZAR PAQUETES
 
 void* serializar_mensaje(char* value, int bytes);
+void* serializar_array(char** array, int bytes, int cant_elementos);
 void* serializar_paquete_select(t_paquete_select* paquete);
 void* serializar_paquete_insert(t_paquete_insert* paquete);
 
+//---------------------------ENVIOS DE MEMORIAS
+
+void enviar_memorias(int socket_cliente, t_config* config);
+
 //----------------------------ENVIAR PAQUETES
+
 void enviar_paquete_select(t_paquete_select* paquete, int socket_cliente, t_log* logger);
 void enviar_paquete_insert(t_paquete_insert* paquete, int socket_cliente, t_log* logger);
 
 //----------------------------ENVIOS DE SERVIDOR A LISSANDRA
+
 void enviar_select_lissandra(t_paquete_select* paquete, t_config* config, t_log* logger);
 void enviar_insert_lissandra(t_paquete_insert* paquete, t_config* config, t_log* logger);
 

@@ -7,5 +7,6 @@
 #include "conexion.h"
 #include "paquete.h"
 #include "envio.h"
+#include "recibir.h"
 
 #endif /* KERNEL_H_ */

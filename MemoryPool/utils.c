@@ -1,5 +1,27 @@
 #include "utils.h"
 
+//---------------------------CALCULAR TAMAÑO DE CHAR**------------------
+int tamanio_array(char** array)
+{
+	int tamanio=0;
+	int i=0;
+	while(array[i]!=NULL)
+	{
+		tamanio+= sizeof(int) + strlen(array[i]) + 5; //Por qué hay que agregarle 5 para que ande bien.
+		i++;
+	}
+	return tamanio;
+}
+//-------------CALCULAR CANTIDAD DE ELEMENTOS DE ARRAY---------------
+int cant_elementos_array(char** array)
+{
+	int i=0;
+	while(array[i]!=NULL)
+	{
+		i++;
+	}
+	return i;
+}
 //----------------------------ARCHIVOS LOGGER Y CONFIG
 
 t_log* iniciar_logger()

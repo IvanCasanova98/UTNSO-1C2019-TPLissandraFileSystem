@@ -17,7 +17,7 @@
 
 //----------------------------CONEXION COMO SERVIDOR
 int iniciar_servidor(t_config* config);
-int esperar_cliente(int);
+int esperar_cliente(t_config* config, int);
 
 //----------------------------CONEXION COMO CLIENTE
 int iniciar_conexion(t_config* config);

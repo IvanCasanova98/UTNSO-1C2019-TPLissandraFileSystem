@@ -19,6 +19,8 @@ struct parametros
 	t_config* config;
 	t_log* logger;
 };
+//---------------------------CALCULAR TAMAÑO DE CHAR**
+int tamanio_array(char** array);
 
 //----------------------------ARCHIVOS LOGGER/CONFIG
 t_log* iniciar_logger(void);
