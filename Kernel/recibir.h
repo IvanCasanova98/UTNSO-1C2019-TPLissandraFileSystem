@@ -9,13 +9,10 @@
 #include<sys/socket.h>
 #include<commons/string.h>
 
-typedef struct SEED{
-	char* IP;
-	char* PUERTO;
-}SEED;
+#include "utils.h"
 
 void* recibir_buffer(int* size, int socket_cliente);
 void recibir_mensaje(int socket_cliente);
-void recibir_SEED(int socket_cliente);
+void recibir_seed(int socket_cliente);
 
 #endif /* RECIBIR_H_ */

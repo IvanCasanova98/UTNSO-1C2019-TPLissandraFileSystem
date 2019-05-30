@@ -21,6 +21,10 @@ struct parametros
 };
 //---------------------------CALCULAR TAMAÑO DE CHAR**
 int tamanio_array(char** array);
+int tamanio_array_puerto(char** array); //borrar
+
+//-------------CALCULAR CANTIDAD DE ELEMENTOS DE ARRAY---------------
+int cant_elementos_array(char** array);
 
 //----------------------------ARCHIVOS LOGGER/CONFIG
 t_log* iniciar_logger(void);

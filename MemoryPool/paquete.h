@@ -32,7 +32,8 @@ typedef enum
 	INSERT,
 	JOURNAL,
 	RUN,
-	ADD
+	ADD,
+	HS //HandShake
 }op_code;
 
 typedef struct t_paquete_select

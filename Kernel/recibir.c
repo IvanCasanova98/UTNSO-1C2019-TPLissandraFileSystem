@@ -20,20 +20,26 @@ void recibir_mensaje(int socket_cliente)
 	free(buffer);
 }
 
-void recibir_SEED(int socket_cliente)
+void recibir_seed(int socket_cliente)
 {
 	int size1, i=0, size2, j=0;
 
 	int cant;
 	recv(socket_cliente, &cant, sizeof(int), 0);
 
-	SEED seed[cant];
+	SEED seed_aux[cant];
+
+	for(int i=0; i<cant; i++)
+	{
+		seed[i].IP = seed_aux[i].IP;
+		seed[i].PUERTO = seed_aux[i].PUERTO;
+	}
 
 	while(i<cant)//Recibe IPS
 	{
 		char* array_IP_SEED = recibir_buffer(&size1, socket_cliente);
 
-		seed[i].IP=array_IP_SEED;
+		seed[i].IP = array_IP_SEED;
 
 		i++;
 	}
@@ -42,7 +48,7 @@ void recibir_SEED(int socket_cliente)
 	{
 		char* array_PUERTO_SEED = recibir_buffer(&size2, socket_cliente);
 
-		seed[j].PUERTO=array_PUERTO_SEED;
+		seed[j].PUERTO = array_PUERTO_SEED;
 
 		j++;
 	}

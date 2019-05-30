@@ -5,7 +5,7 @@
 void* servidor(void * arg)
 {
 	struct parametros * parametro;
-	parametro = ( struct parametros *) arg ;
+	parametro = ( struct parametros *) arg;
 
 	int server_fd = iniciar_servidor(parametro->config);
 
@@ -62,11 +62,15 @@ void recibir_paquetes(int cliente_fd, int server_fd, t_config* config, t_log* lo
 			break;
 		case ADD:
 			break;
+		case HS:
+			enviar_memorias(cliente_fd, config);
+			cliente_fd=0;
+			break;
 		case -1:
 			cliente_fd=0;
 			break;
 		default:
-			printf("operacion desconocida");
+			printf("operacion desconocidaaaaAAA");
 			break;
 		}
 	}
@@ -125,8 +129,8 @@ t_paquete_insert* deserializar_paquete_insert(int socket_cliente)
 	memcpy(&tamanioValue ,buffer_para_longitudes+sizeof(uint32_t),sizeof(uint32_t));
 	t_paquete_insert *paquete_insert = malloc(tamanioTabla + tamanioValue + sizeof(int)*2 + sizeof(uint16_t)+ sizeof(long long));
 
-		paquete_insert->nombre_tabla = malloc(tamanioTabla);
-		paquete_insert->value = malloc(tamanioValue);
+	paquete_insert->nombre_tabla = malloc(tamanioTabla);
+	paquete_insert->value = malloc(tamanioValue);
 
 	void *buffer = malloc(sizeof(long long)+ sizeof(uint16_t) +tamanioTabla+tamanioValue);
 

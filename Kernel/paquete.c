@@ -12,6 +12,11 @@ void ingresar_paquete(int conexion){
 	{
 		switch(cod_ingresado){
 
+//			case 0:;
+//
+//				t_paquete_select* paquete_create = create(parametros);
+//				break;
+
 			case 3:;
 
 				t_paquete_select* paquete_select = selectf(parametros);
@@ -37,14 +42,11 @@ void ingresar_paquete(int conexion){
 				break;
 
 			case 8:;
-				funcion_LQL(parametros, conexion);
-
-				break;
-
-			case 9:
 				return;
+			case 9:
+				funcion_LQL(parametros, conexion);
+				break;
 			default:
-
 				printf("Operacion desconocida.");
 				break;
 			}
@@ -100,9 +102,9 @@ int codigo_ingresado(char* parametros){
 		return 7;
 	}
 	else if (strcmp(parametros, "LQL")==0) {
-		return 8;
+		return 9;
 	}
-	else {return 9;}
+	else {return 10;}
 }
 
 //---------------------CREAR PAQUETES

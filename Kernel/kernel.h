@@ -8,5 +8,7 @@
 #include "paquete.h"
 #include "envio.h"
 #include "recibir.h"
+#include "criterio.h"
+#include "utils.h"
 
 #endif /* KERNEL_H_ */

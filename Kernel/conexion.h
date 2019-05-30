@@ -9,8 +9,12 @@
 #include<commons/string.h>
 #include<commons/config.h>
 
-int iniciar_conexion(t_log* logger, t_config* config);
+#include "paquete.h"
+#include "recibir.h"
+
+int iniciar_conexion(t_log* logger, char* ip, char* puerto);
 int crear_conexion(char *ip, char* puerto);
-void terminar_conexion(t_log* logger, t_config* config, int conexion);
+void pedir_seed(int conexion);
+void terminar_kernel(t_log* logger, t_config* config, int conexion);
 
 #endif /* CONEXION_H_ */

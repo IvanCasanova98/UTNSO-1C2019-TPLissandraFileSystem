@@ -35,12 +35,34 @@ void* serializar_array(char** array, int bytes, int cant_elementos)
 
 		memcpy(buffer + desplazamiento, array[i], tamanio);
 		desplazamiento+= tamanio;
-		printf("\nIP N° %d: %s", i,array[i]);
 		i++;
 	}
-
 	return buffer;
-	free(buffer);
+}
+
+void* serializar_array_puerto(char** array, int bytes, int cant_elementos)
+{
+	void* buffer = malloc(bytes);
+	int desplazamiento = 0;
+	int tamanio = 0;
+	int i = 0;
+
+
+	tamanio=cant_elementos;
+	memcpy(buffer + desplazamiento, &(tamanio), sizeof(int));
+	desplazamiento+= sizeof(int);
+
+	while(i<cant_elementos)
+	{
+		tamanio=strlen(array[i]) + 1;
+		memcpy(buffer + desplazamiento, &(tamanio), sizeof(int));
+		desplazamiento+= sizeof(int);
+
+		memcpy(buffer + desplazamiento, array[i], tamanio);
+		desplazamiento+= tamanio;
+		i++;
+	}
+	return buffer;
 }
 
 //----------------------------SERIALIZAR PAQUETES
@@ -59,7 +81,7 @@ void* serializar_paquete_select(t_paquete_select* paquete)
 	memcpy(buffer + desplazamiento, &paquete->valor_key, sizeof(uint16_t));
 	desplazamiento+= sizeof(uint16_t);
 	return buffer;
-	free(buffer);
+	//free(buffer);
 }
 
 void* serializar_paquete_insert(t_paquete_insert* paquete)
@@ -86,7 +108,7 @@ void* serializar_paquete_insert(t_paquete_insert* paquete)
 	desplazamiento+=  sizeof(int);
 
 	return buffer;
-	free(buffer);
+	//free(buffer);
 }
 
 //---------------------------ENVIOS DE MEMORIAS
@@ -99,13 +121,15 @@ void enviar_memorias(int socket_cliente, t_config* config)
 	int cant_elementos = cant_elementos_array(IP_SEEDS);
 
 	int bytes_IP = tamanio_array(IP_SEEDS);
-	int bytes_PUERTO = tamanio_array(PUERTO_SEEDS);
-
 	void* enviar_IP_SEEDS = serializar_array(IP_SEEDS, bytes_IP, cant_elementos);
-	void* enviar_PUERTO_SEEDS = serializar_array(PUERTO_SEEDS, bytes_PUERTO, cant_elementos);
+	send(socket_cliente,enviar_IP_SEEDS,bytes_IP,MSG_WAITALL);
 
-	send(socket_cliente,enviar_IP_SEEDS,bytes_IP,0);
-	send(socket_cliente,enviar_PUERTO_SEEDS,bytes_PUERTO,0);
+	int bytes_PUERTO = tamanio_array(PUERTO_SEEDS);
+	void* enviar_PUERTO_SEEDS = serializar_array_puerto(PUERTO_SEEDS, bytes_PUERTO, cant_elementos);
+	send(socket_cliente,enviar_PUERTO_SEEDS,bytes_PUERTO,MSG_WAITALL);
+
+	free(enviar_IP_SEEDS);
+	free(enviar_PUERTO_SEEDS);
 }
 
 //----------------------------ENVIAR PAQUETES
