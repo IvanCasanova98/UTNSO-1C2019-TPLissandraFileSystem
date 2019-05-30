@@ -19,14 +19,31 @@ void seleccionar_paquete(char* lineaRequest, int conexion){
 
 	switch(cod_ingresado){
 
+		case 0:;
+
+			t_paquete_create* paquete_create = create(parametros);
+
+			if (send(conexion, &cod_ingresado, sizeof(int), 0) <= 0) puts("Error en envio de CODIGO DE OPERACION.");
+			else
+			{
+			}
+
+			free(paquete_create);
+
+			break;
+
 		case 3:;
 
 			t_paquete_select* paquete_select = selectf(parametros);
 
 			if (send(conexion, &cod_ingresado, sizeof(int), 0) <= 0) puts("Error en envio de CODIGO DE OPERACION.");
-			else{enviar_paquete_select(paquete_select, conexion);}
-			free(paquete_select);
+			else
+			{
+				enviar_paquete_select(paquete_select, conexion);
+				recibir_mensaje(conexion);
+			}
 
+			free(paquete_select);
 			break;
 
 		case 4:;

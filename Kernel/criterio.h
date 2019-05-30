@@ -1,8 +1,14 @@
 #ifndef CRITERIO_H_
 #define CRITERIO_H_
 
-//#include "recibir.h"
 #include "utils.h"
+
+typedef enum
+{
+	SC,
+	SHC,
+	EC
+}t_consistencia; //TIPO DE PAQUETE
 
 SEED elegir_memoria();
 

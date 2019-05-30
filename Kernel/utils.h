@@ -9,6 +9,7 @@ typedef struct SEED
 
 SEED seed[];
 
+int codigo_ingresado(char* parametros);
 int numero_random(int max);
 
 #endif /* UTILS_H_ */

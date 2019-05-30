@@ -12,10 +12,18 @@ void ingresar_paquete(int conexion){
 	{
 		switch(cod_ingresado){
 
-//			case 0:;
-//
-//				t_paquete_select* paquete_create = create(parametros);
-//				break;
+			case 0:;
+
+				t_paquete_create* paquete_create = create(parametros);
+
+				if (send(conexion, &cod_ingresado, sizeof(int), 0) <= 0) puts("Error en envio de CODIGO DE OPERACION.");
+				else
+				{
+				}
+
+				free(paquete_create);
+
+				break;
 
 			case 3:;
 
@@ -75,46 +83,14 @@ char* ingresar_request()
 	  }
 }
 
-int codigo_ingresado(char* parametros){
-
-	if (strcmp(parametros, "CREATE")==0) {
-		return 0;
-	}
-	else if (strcmp(parametros, "DROP")==0) {
-		return 1;
-	}
-	else if (strcmp(parametros, "DESCRIBE")==0) {
-		return 2;
-	}
-	else if (strcmp(parametros, "SELECT")==0) {
-		return 3;
-	}
-	else if (strcmp(parametros, "INSERT")==0) {
-		return 4;
-	}
-	else if (strcmp(parametros, "JOURNAL")==0) {
-		return 5;
-	}
-	else if (strcmp(parametros, "RUN")==0) {
-		return 6;
-	}
-	else if (strcmp(parametros, "ADD")==0) {
-		return 7;
-	}
-	else if (strcmp(parametros, "LQL")==0) {
-		return 9;
-	}
-	else {return 10;}
-}
-
 //---------------------CREAR PAQUETES
 
-t_paquete_select* crear_paquete_select(char* nombretabla, uint16_t valor_key) //Agregado
+t_paquete_select* crear_paquete_select(char* nombre_tabla, uint16_t valor_key) //Agregado
 {
-	uint32_t tamaniotabla = strlen(nombretabla)+1;
+	uint32_t tamaniotabla = strlen(nombre_tabla)+1;
 	t_paquete_select* paquete = malloc(sizeof(int)+sizeof(uint16_t)+tamaniotabla);
 
-	paquete->nombre_tabla= nombretabla;
+	paquete->nombre_tabla= nombre_tabla;
 	paquete->valor_key = valor_key;
 	paquete->nombre_tabla_long= tamaniotabla;
 
@@ -136,6 +112,20 @@ t_paquete_insert* crear_paquete_insert(char *nombre_tabla, uint16_t valor_key, c
 	paquete->timestamp = timestamp;
 	paquete->nombre_tabla_long= tamanio_tabla;
 	paquete->value_long= tamanio_value;
+
+	return paquete;
+}
+
+t_paquete_create* crear_paquete_create(char* nombre_tabla, char* consistencia, int particiones, int tiempo_compactacion) //Agregado
+{
+	uint32_t tamanio_tabla = strlen(nombre_tabla)+1;
+	uint32_t tamanio_consistencia = strlen(consistencia)+1;
+	t_paquete_create* paquete = malloc(tamanio_tabla + tamanio_consistencia + sizeof(int) + sizeof(int));
+
+	paquete->nombre_tabla= nombre_tabla;
+	paquete->consistencia = consistencia;
+	paquete->particiones= particiones;
+	paquete->tiempo_compactacion= tiempo_compactacion;
 
 	return paquete;
 }
@@ -183,6 +173,7 @@ t_paquete_insert* insert(char* parametros){
 	return paquete;
 }
 
+
 long long get_timestamp(char* parametros){
 	long long valor;
 	if (parametros==NULL) {
@@ -193,9 +184,32 @@ long long get_timestamp(char* parametros){
 
 	return valor;
 }
+
+t_paquete_create* create(char* parametros)
+{
+	char* nombre_tabla;
+	char* consistencia;
+	int particiones;
+	int tiempo_compactacion;
+
+	parametros= strtok(NULL, " ");
+	nombre_tabla = parametros;
+	parametros = strtok(NULL, " ");
+	consistencia = parametros;
+	parametros = strtok(NULL, " ");
+	particiones = atoi(parametros);
+	parametros = strtok(NULL, " ");
+	tiempo_compactacion = atoi(parametros);
+
+	t_paquete_create* paquete = crear_paquete_create(nombre_tabla, consistencia, particiones, tiempo_compactacion);
+
+	loggear_paquete_create(paquete);
+
+	return paquete;
+}
 //----------------------------------------------------LOGGEO DE PAQUETES
 
-void loggear_paquete_select(t_paquete_select* paquete){
+void loggear_paquete_select(t_paquete_select* paquete){ //FALTA PASAR LOOGER
 
 	t_log* logger = iniciar_logger();
 	log_info(logger, "NUEVO PAQUETE SELECT CREADO\nNombre tabla: %s\nValor KEY   : %d", paquete->nombre_tabla,paquete->valor_key);
@@ -206,6 +220,13 @@ void loggear_paquete_insert(t_paquete_insert* paquete){
 
 	t_log* logger = iniciar_logger();
 	log_info(logger, "NUEVO PAQUETE INSERT CREADO\nNombre tabla: %s\nValor KEY   : %d\nValue       : %s", paquete->nombre_tabla, paquete->valor_key, paquete->value);
+    log_destroy(logger);
+}
+
+void loggear_paquete_create(t_paquete_create* paquete)
+{
+	t_log* logger = iniciar_logger();
+	log_info(logger, "NUEVO PAQUETE CREATE CREADO\nNombre tabla: %s\nConsistencia   : %s\nParticiones       : %d\nTiempo de Compactacion       : %d", paquete->nombre_tabla, paquete->consistencia, paquete->particiones, paquete->tiempo_compactacion);
     log_destroy(logger);
 }
 

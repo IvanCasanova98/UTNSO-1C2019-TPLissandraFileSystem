@@ -18,6 +18,7 @@
 #include <sys/time.h>
 
 #include"recibir.h"
+#include"criterio.h"
 //---------------------ESTRUCTURA PAQUETES
 typedef struct
 {
@@ -37,6 +38,15 @@ typedef enum
 	ADD,
 	HS //HandShake
 }op_code; //TIPO DE PAQUETE
+
+typedef struct t_paquete_create
+{
+	uint32_t nombre_tabla_long; //Longitud del nombre de la tabla
+	char* nombre_tabla;
+	char* consistencia;//CREAR TIPO DE DATO
+	int particiones;
+	int tiempo_compactacion;
+}__attribute__((packed)) t_paquete_create;
 
 typedef struct t_paquete_select
 {
@@ -69,15 +79,16 @@ void ingresar_paquete(int conexion);
 
 //---------------------INGRESO DE PAQUETE(FUNC AUX)
 char* ingresar_request();
-int codigo_ingresado(char* lineaRequest);
 
 //---------------------CREAR PAQUETE
 t_paquete_select* crear_paquete_select(char *nombretabla,uint16_t valor_key);
 t_paquete_insert* crear_paquete_insert(char *nombretabla,uint16_t valor_key, char *value, long long timestamp);
+t_paquete_create* crear_paquete_create(char* nombre_tabla, char* consistencia, int particiones, int tiempo_compactacion);
 
 //---------------------ARMAR PAQUETE
 t_paquete_select* selectf(char* parametros);
 t_paquete_insert* insert(char* parametros);
+t_paquete_create* create(char* parametros);
 long long get_timestamp(char* parametros);
 
 //---------------------LOGGEAR PAQUETE
