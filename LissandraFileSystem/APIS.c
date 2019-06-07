@@ -523,9 +523,9 @@ char* DirectorioDeTemporal(char* nombretabla,int nroTemporal){ //0 ml
 char* DirectorioDeBloque(int numeroBloque){ //0 ml
 	t_config* config = config_create("Lissandra.config");
 	char* buffer=malloc(sizeof(int));
-	sprintf(buffer,"%d",numeroBloque);
+	strcpy(buffer,string_itoa(numeroBloque));
 	char* Montaje= config_get_string_value(config,"PUNTO_MONTAJE");
-	char *directorioBloque = malloc(strlen(Montaje) + strlen(".bin") +strlen("Bloques/") +sizeof(buffer)+1);
+	char *directorioBloque = malloc(strlen(Montaje) + strlen(".bin") +strlen("Bloques/") +sizeof(buffer)+6);
 	strcpy(directorioBloque,Montaje);
 	strcat(directorioBloque,"Bloques/");
 	strcat(directorioBloque,buffer);

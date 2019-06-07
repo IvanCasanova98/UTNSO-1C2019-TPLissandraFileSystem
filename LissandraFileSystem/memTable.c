@@ -102,7 +102,7 @@ bool mayorTimeStamp(void*elemento1,void*elemento2){
 }
 
 char* crearArrayBloques(int*bloques,int cantBloques){
-	char* arrayBloques= malloc(2+2*cantBloques-1);
+	char* arrayBloques= malloc(2+4*cantBloques);
 	strcpy(arrayBloques,"[");
 	int i=0;
 	while(i<cantBloques){
@@ -143,6 +143,7 @@ void* crearTemporal(char* nombreTabla,t_list* registros){  //dictionary_iterator
 	while(i<cantidadTotalRegistros){
 		nodoRegistroMemTable* nodoASerializar= list_get(registros, i);
 		char * nodoSerializado= serializarRegistro(((nodoRegistroMemTable*) nodoASerializar)->value,((nodoRegistroMemTable*) nodoASerializar)->key,((nodoRegistroMemTable*) nodoASerializar)->timestamp);
+		printf("%s\n",nodoSerializado);
 		list_add(listaDeRegistros, nodoSerializado);
 
 		i++;
@@ -191,16 +192,28 @@ void* crearTemporal(char* nombreTabla,t_list* registros){  //dictionary_iterator
 	int bloquesEnUso=0;
 	int registrosCargados=0;
 	while(registrosCargados<registroCharTotales){
+
+
+
 		int bytesEnBloque=tamanioBloque(bloquesDisponibles[bloquesEnUso]);
+
+
+		printf("%d\n",bytesEnBloque);
+
 		char* registroActual= list_get(listaDeRegistros, registrosCargados);
-		printf("%s\n",registroActual);
+		//printf("%s\n",registroActual);
 		//int tamanioRegistro = string_length(registroActual) +1;
-		desplazamiento=desplazamiento+cargarRegistro(registroActual,bytesEnBloque,bloquesDisponibles,bloquesEnUso);
+		desplazamiento=cargarRegistro(registroActual,bytesEnBloque,bloquesDisponibles,bloquesEnUso);
+
 
 		bloquesEnUso = bloquesEnUso + desplazamiento;
+
+		bytesEnBloque=tamanioBloque(bloquesDisponibles[bloquesEnUso]);
+		printf("%d\n",bytesEnBloque);
+
 		registrosCargados++;
 
-
+		//desplazamiento=0;
 
 	}
 
@@ -221,14 +234,15 @@ int cargarRegistro(char* registroActual,int bytesEnBloque, int* bloquesDisponibl
 	if((tamanioRegistro+bytesEnBloque)>tamanioBloque){
 
 	int tamanioQueEntra=abs(tamanioBloque-bytesEnBloque);
-	char* parteQueEntra= malloc(tamanioQueEntra);
+	char* parteQueEntra= malloc(tamanioQueEntra+1);
 	strcpy(parteQueEntra,string_substring(registroActual, 0,tamanioQueEntra));
 	escribirEnBloque(bloquesDisponibles[bloquesEnUso], parteQueEntra,0);
-	char* parteQueNoEntra= malloc(tamanioRegistro-tamanioQueEntra);
+	char* parteQueNoEntra= malloc(tamanioRegistro-tamanioQueEntra+1);
 	strcpy(parteQueNoEntra,string_substring_from(registroActual,tamanioQueEntra));
 	bloquesEnUso++;
 	desplazamiento++;
 	tamanioRegistro= tamanioRegistro-tamanioQueEntra;
+
 	while(tamanioRegistro>tamanioBloque){
 		strcpy(parteQueEntra,string_substring(parteQueNoEntra, 0,tamanioBloque));
 		escribirEnBloque(bloquesDisponibles[bloquesEnUso], parteQueEntra,0);
@@ -270,13 +284,12 @@ int sizeTotalLista(t_list* registros){
 
 
 void* dump(){
-	if(!(memTable==NULL)){
 	LogDumpeo();
 	dictionary_iterator(memTable, crearTemporal);
 	dictionary_destroy(memTable);
 	memTable=NULL;
 	estaDump=0;
-	}
+
 }
 
 void chekearDumpeo(){
@@ -288,7 +301,7 @@ void chekearDumpeo(){
 			int tiempoTranscurrido = ((double)(verificar.tv_sec - tiempoHastaDump.tv_sec) + (double)(verificar.tv_usec - tiempoHastaDump.tv_usec)/1000000)*1000;
 			printf("%d",tiempoTranscurrido);
 //			gettimeofday(&tiempoHastaDump,NULL);
-			if(!estaDump && (tiempoDump<tiempoTranscurrido)){
+			if(!estaDump && (tiempoDump<tiempoTranscurrido && !(memTable==NULL))){
 				estaDump=1;
 				pthread_create(&dumpeo,NULL,dump,NULL);
 				pthread_join(dumpeo, (void**)NULL);
