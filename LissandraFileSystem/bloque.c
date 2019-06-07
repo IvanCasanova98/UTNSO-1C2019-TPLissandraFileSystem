@@ -85,13 +85,42 @@ void escribirEnBloque(int nroBloque, char* registro, bool ContienefinalRegistro)
 	//printf("Prueba: %s",RegistrosBloque);
 }
 
+char* ObtenerContenidoBloque(int nroBloque){ // 0 ml
+	char* directorioMetadata=DirectorioDeMetadata();
+	char* directorioBloque=DirectorioDeBloque(nroBloque);
+	t_config* config = config_create(directorioMetadata);
+	int tamanioBloque = atoi(config_get_string_value(config,"BLOCK_SIZE"));
+	int fd = open(directorioBloque, O_RDWR|O_CREAT|O_APPEND, (mode_t)0600);
+	ftruncate(fd,tamanioBloque);
+	char* archivoBloque;// =malloc(tamañoBloque);
+
+	archivoBloque=(char*) mmap(0,tamanioBloque, PROT_READ|PROT_WRITE, MAP_SHARED ,fd,0);
+		if(archivoBloque==MAP_FAILED){
+			printf("ERROR AL MAPEAR A MEMORIA");
+			close(fd);
+	}
+
+	char* RegistrosBloque=malloc(strlen(archivoBloque)+1);
+
+	strcpy(RegistrosBloque,archivoBloque);
+	msync(archivoBloque,tamanioBloque,MS_SYNC);
+	munmap(archivoBloque,tamanioBloque);
+	close(fd);
+	free(directorioMetadata);
+	free(directorioBloque);
+	config_destroy(config);
+	return RegistrosBloque;
+}
+
+
+
 char* serializarRegistro(char* value,uint16_t key,long long timestamp){
 
 	char aux[256];
 	sprintf(aux,"%lli",timestamp);
 	//char* timeChar= string_itoa(timestamp);
 	char* keyChar=string_itoa(key);
-	char* registro = malloc(strlen(value)+strlen(aux)+strlen(keyChar)+2);
+	char* registro = malloc(strlen(value)+strlen(aux)+strlen(keyChar)+3);
 
 	strcpy(registro,aux);
 	strcat(registro,";");
@@ -108,4 +137,11 @@ char* serializarRegistro(char* value,uint16_t key,long long timestamp){
 void liberarBloque(void* elemento){
 	free((char*)elemento);
 }
+
+
+
+
+
+
+
 

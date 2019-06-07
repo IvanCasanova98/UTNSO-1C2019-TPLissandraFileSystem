@@ -9,23 +9,23 @@
 void* prenderConsola(void* arg){
 
 
-	char* lineaRequest="";
+	char *lineaRequest = ingresar_request();
 
 	while(string_is_empty(lineaRequest )){
-
+		free(lineaRequest);
 		lineaRequest = ingresar_request();
 
 	}
 
 	char* parametros = strtok(lineaRequest, " ");
 	int cod_ingresado = codigo_ingresado(parametros);
+	//free(lineaRequest);
 	while(1)
 	{
 		switch(cod_ingresado){
 			case 0:;
 				t_paquete_create* paquete_create =LeerCreate(parametros) ;
 				APIcreate(paquete_create);
-				free(paquete_create);
 				break;
 			case 1:;
 				t_paquete_drop* paquete_drop =LeerDrop(parametros);
@@ -35,22 +35,25 @@ void* prenderConsola(void* arg){
 			case 3:;
 
 				t_paquete_select* paquete_select =LeerSelect(parametros) ;
-				APIselect(paquete_select);
-				free(paquete_select);
+				void* value=APIselect(paquete_select);
+				if(value!=NULL){
+					//tendria que hacer el send aca
+					free(value);
+				}
 
 				break;
-
 			case 4:;
 
 				t_paquete_insert* paquete_insert=LeerInsert(parametros);
 				APIinsert(paquete_insert);
-				free(paquete_insert);
+				//en recibir.h tendria que hacer un send aca
 
 				break;
 
 			case 5:
 
 				return EXIT_SUCCESS;
+				break;
 			default:
 
 				printf("Operacion desconocida.");
@@ -58,9 +61,12 @@ void* prenderConsola(void* arg){
 			}
 		//free(lineaRequest);
 		free(parametros);
-		//chekearDumpeo();
-		//imprimirListaTablas();
-		lineaRequest = ingresar_request();
+		//free(lineaRequest);
+		lineaRequest=ingresar_request();
+		while(string_is_empty(lineaRequest)){
+			free(lineaRequest);
+			lineaRequest = ingresar_request();
+		}
 		parametros = strtok(lineaRequest, " ");
 		cod_ingresado = codigo_ingresado(parametros);
 
@@ -72,8 +78,16 @@ void* prenderConsola(void* arg){
 void deployMenu(){
 	printf("\n\nCREATE NOMBRETABLA CONSISTENCIA PARTICIONES TIEMPO_COMPACTACION \nDROP\nDESCRIBE\nSELECT    NOMBRETABLA KEY\nINSERT    NOMBRETABLA KEY \"VALUE\" TIMESTAMP (OPCIONAL) \n");
 	printf("\nIngrese REQUEST\n");
+	char* registrosDeBloque= ObtenerContenidoBloque(67);
+	printf("%s",registrosDeBloque);
+	free(registrosDeBloque);
+	//printf("%s",ObtenerContenidoBloque(174));
+	//t_registro* buscado = buscarEnParticion("TABLA_B",1,80);
+	//free(buscado);
+	//printf("%s",buscado->value);
+	//printf("%lli",buscado->timestamp);
 
-//	char * directorioDeTablaABorrar= "/home/utnso/LISSANDRA_FS/Tables/TABLA_B/1.bin";
+	//	char * directorioDeTablaABorrar= "/home/utnso/LISSANDRA_FS/Tables/TABLA_B/1.bin";
 
 
 }
@@ -113,7 +127,7 @@ int codigo_ingresado(char* codOp){
 	}if (strcmp(codOp, "EXIT")==0)
 	{return 5;}
 
-	return EXIT_FAILURE;
+	return 6;
 }
 
 t_paquete_drop* LeerDrop(char *parametros){
@@ -229,9 +243,9 @@ void loggear_request_drop(t_paquete_drop* paquete)
 t_paquete_select* crear_paquete_select(char* nombretabla, uint16_t valor_key) //Agregado
 {
 	uint32_t tamaniotabla = strlen(nombretabla)+1;
-	t_paquete_select* paquete = malloc(sizeof(long long)+sizeof(uint16_t)+tamaniotabla);
-
-	paquete->nombre_tabla= nombretabla;
+	t_paquete_select* paquete = malloc(sizeof(t_paquete_select));
+	paquete->nombre_tabla=malloc(tamaniotabla);
+	strcpy(paquete->nombre_tabla, nombretabla);
 	paquete->valor_key = valor_key;
 	paquete->nombre_tabla_long= tamaniotabla;
 
@@ -256,10 +270,13 @@ t_paquete_insert* crear_paquete_insert(char *nombre_tabla, uint16_t valor_key, c
 
 	uint32_t tamanio_tabla = strlen(nombre_tabla)+1;
 	uint32_t tamanio_value = strlen(value)+1;
-	t_paquete_insert* paquete = malloc(sizeof(int)*2 + tamanio_tabla + tamanio_value + sizeof(uint16_t)+sizeof(long long));
+	t_paquete_insert* paquete = malloc(sizeof(t_paquete_insert));//malloc(sizeof(int)*2 + tamanio_tabla + tamanio_value + sizeof(uint16_t)+sizeof(long long));
+	paquete->nombre_tabla=malloc(tamanio_tabla);
+	paquete->value=malloc(tamanio_value);
 
-	paquete->nombre_tabla= nombre_tabla;
-	paquete->value = value;
+
+	strcpy(paquete->nombre_tabla,nombre_tabla);
+	strcpy(paquete->value , value);
 	paquete->valor_key = valor_key;
 	paquete->timestamp = timestamp;
 	paquete->nombre_tabla_long= tamanio_tabla;
@@ -271,9 +288,10 @@ t_paquete_insert* crear_paquete_insert(char *nombre_tabla, uint16_t valor_key, c
 t_paquete_create* crear_paquete_create(char* nombretabla, consistency consistencia, int particiones,int tiempo_de_compactacion) //Agregado
 {
 	uint32_t tamaniotabla = strlen(nombretabla)+1;
-	t_paquete_create* paquete = malloc(sizeof(t_metadata)+tamaniotabla);
+	t_paquete_create* paquete = malloc(sizeof(t_paquete_create));
+	paquete->nombre_tabla=malloc(tamaniotabla);
 
-	paquete->nombre_tabla= nombretabla;
+	strcpy(paquete->nombre_tabla,nombretabla);
 	paquete->metadata.consistencia = consistencia;
 	paquete->metadata.particiones = particiones;
 	paquete->metadata.tiempo_de_compactacion = tiempo_de_compactacion;
@@ -283,24 +301,5 @@ t_paquete_create* crear_paquete_create(char* nombretabla, consistency consistenc
 
 }
 
-void chekearDumpeo(){
-			pthread_t dumpeo;
-			t_config* config = leer_config();
-			int tiempoDump = atoi(config_get_string_value(config, "TIEMPO_DUMP"));
-			struct timeval verificar;
-			gettimeofday(&verificar,NULL);
 
-			int tiempoTranscurrido = ((double)(verificar.tv_sec - tiempoHastaDump.tv_sec) + (double)(verificar.tv_usec - tiempoHastaDump.tv_usec)/1000000)*1000;
-
-			//gettimeofday(&tiempoHastaDump,NULL);
-			if(!estaDump && (tiempoDump<tiempoTranscurrido)){
-				printf("ENTRODUMP");
-				estaDump=1;
-				pthread_create(&dumpeo,NULL,dump,NULL);
-				pthread_join(dumpeo, (void**)NULL);
-				gettimeofday(&tiempoHastaDump,NULL);
-			}
-			config_destroy(config);
-
-}
 

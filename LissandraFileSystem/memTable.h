@@ -50,6 +50,7 @@ typedef struct nodoTablaMemTable{
 void* dump();
 
 
+void chekearDumpeo();
 
 char* crearArrayBloques(int*bloques,int cantBloques);
 int cargarRegistro(char* registroActual,int bytesEnBloque, int* bloquesDisponibles,int bloquesEnUso);

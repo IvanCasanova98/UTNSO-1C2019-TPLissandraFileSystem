@@ -33,8 +33,23 @@ void LogearSelect(long long timestamp,uint16_t key,char* value,char*nombreTabla)
 	log_destroy(logger);
 }
 
+void valueExiste(char*nombreTabla,uint16_t key,char* value){
+
+	t_log* logger=iniciar_logger();
+	log_info(logger,"EL VALOR DE LA KEY %d en la TABLA %s ES %s",key,nombreTabla,value);
+	log_destroy(logger);
+}
+
 
 // WARNINGS DE ERRORES
+
+void LaTablaNoExisteSelect(char*nombreTabla){
+
+	t_log* logger=iniciar_logger();
+	log_warning(logger, "ERROR AL BUSCAR KEY LA TABLA %s NO EXISTE",nombreTabla );
+	log_destroy(logger);
+}
+
 
 void LaTablaNoExiste(long long timestamp,uint16_t key,char* value,char*nombreTabla){
 
@@ -43,10 +58,17 @@ void LaTablaNoExiste(long long timestamp,uint16_t key,char* value,char*nombreTab
 	log_destroy(logger);
 }
 
-void LaTablaYaExiste(long long timestamp,uint16_t key,char* value,char*nombreTabla){
+void LaTablaYaExiste(char*nombreTabla){
 
 	t_log* logger=iniciar_logger();
 	log_warning(logger, "ERROR AL CREAR %s LA TABLA YA EXISTE",nombreTabla);
+	log_destroy(logger);
+}
+
+void valueNoExiste(char* nombreTabla,int key){
+
+	t_log* logger=iniciar_logger();
+	log_warning(logger, "ERROR AL BUSCAR KEY %d EN %s NO EXISTE REGISTRO",key,nombreTabla);
 	log_destroy(logger);
 }
 

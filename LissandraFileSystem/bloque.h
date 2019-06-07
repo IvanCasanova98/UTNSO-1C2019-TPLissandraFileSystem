@@ -35,6 +35,8 @@
 #include "bitmap.h"
 #include"logs.h"
 #include <math.h>
+
+char* ObtenerContenidoBloque(int nroBloque);
 void liberarBloque(void* elemento);
 int tamanioBloque(int nroBloque);
 char* serializarRegistro(char* value,uint16_t key,long long timestamp);

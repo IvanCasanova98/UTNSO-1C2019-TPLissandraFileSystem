@@ -34,12 +34,14 @@
 #include"memTable.h"
 #include "Lissandra.h"
 #include"logs.h"
-
+void LaTablaNoExisteSelect(char*nombreTabla);
+void valueNoExiste(char* nombreTabla,int key);
+void valueExiste(char*nombreTabla,uint16_t key,char* value);
 void LogearInsert(long long timestamp,uint16_t key,char* value,char*nombreTabla);
 void LogearCreate(char*nombreTabla);
 void LogearSelect(long long timestamp,uint16_t key,char* value,char*nombreTabla);
 void LaTablaNoExiste(long long timestamp,uint16_t key,char* value,char*nombreTabla);
-void LaTablaYaExiste(long long timestamp,uint16_t key,char* value,char*nombreTabla);
+void LaTablaYaExiste(char*nombreTabla);
 void LogDumpeo();
 
 

@@ -51,8 +51,16 @@ char* APIselect(t_paquete_select*);
 void  APIinsert(t_paquete_insert*);
 void  APIcreate(t_paquete_create*);
 //*************************************
-
-char* DirectorioDeTemporal(char* nombretabla);
+void liberarRegistro(void* elemento);
+void liberarPaqueteCreate(t_paquete_create* paquete_create);
+bool mayorTimeStampRegistro(void*elemento1,void*elemento2);
+t_registro* buscarEnTemporales(char* nombreTabla,int key);
+bool filtrarPorKeyRegistro(void* elemento,int key);
+t_registro* buscarRegistroTemporalMasReciente(char* todosLosRegistrosTemporales,int key);
+char* DirectorioDeTemporal(char* nombretabla,int nroTemporal);
+t_registro* buscarKey(char* registrosDeBloque,int key);
+t_registro* buscarEnParticion(char* nombreTabla, int nroParticion,int key);
+char* DirectorioDeTemporalNuevo(char* nombretabla);
 int existe_temporal(char* path);
 char* DirectorioDeBloque(int numeroBloque);
 void crearParticiones(char*nombreTabla ,int nroParticiones);

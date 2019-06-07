@@ -68,7 +68,9 @@ t_registro* buscarMemTable(char* nombreTabla,int key){
 	bool _filtradoKey(void* elemento){
 		return filtrarPorKey(elemento,key);
 	}
-
+	if(memTable==NULL) return NULL;
+	if(dictionary_has_key(memTable,nombreTabla)){
+		if(list_any_satisfy(dictionary_get(memTable,nombreTabla),_filtradoKey)){
 	t_list* listaRegistrosKey = list_sorted(
 								list_filter(
 								dictionary_get(memTable,nombreTabla),_filtradoKey),mayorTimeStamp);
@@ -76,7 +78,11 @@ t_registro* buscarMemTable(char* nombreTabla,int key){
 	nodoRegistroMemTable* registroEncontrado =(nodoRegistroMemTable*) list_remove(listaRegistrosKey, 0); // 0 es el primero
 	t_registro* registroKey = crearRegistro(registroEncontrado->value,registroEncontrado->key,registroEncontrado->timestamp);
 	list_clean_and_destroy_elements(listaRegistrosKey,liberarNodo);
+	list_destroy(listaRegistrosKey);
+	liberarNodo(registroEncontrado);
 	return registroKey;
+			}
+		}
 	}
 	return NULL;
 }
@@ -88,6 +94,8 @@ bool listaVacia(t_list* lista){
 bool filtrarPorKey(void* elemento,int key){
 	return ((nodoRegistroMemTable*) elemento)->key == key;
 }
+
+
 
 bool mayorTimeStamp(void*elemento1,void*elemento2){
 	return ((nodoRegistroMemTable*) elemento1)->timestamp > ((nodoRegistroMemTable*) elemento2)->timestamp;
@@ -109,16 +117,16 @@ char* crearArrayBloques(int*bloques,int cantBloques){
 
 void crearArchivotmp(char* nombreTabla, int size, int*bloques,int cantBloques){
 	char* directorioMetadata=DirectorioDeMetadata();
-	char* directorioTemporal=DirectorioDeTemporal(nombreTabla);
+	char* directorioTemporalNuevo=DirectorioDeTemporalNuevo(nombreTabla);
 	FILE *particionBin;
 
 	char* arrayBloques=crearArrayBloques(bloques,cantBloques);
 
-	particionBin=fopen(directorioTemporal,"w");
+	particionBin=fopen(directorioTemporalNuevo,"w");
 	fprintf(particionBin,"SIZE=%d\nBLOCKS=%s",size,arrayBloques);
 	free(arrayBloques);
 	free(directorioMetadata);
-	free(directorioTemporal);
+	free(directorioTemporalNuevo);
 	fclose(particionBin);
 
 
@@ -139,7 +147,7 @@ void* crearTemporal(char* nombreTabla,t_list* registros){  //dictionary_iterator
 
 		i++;
 	}
-	list_clean_and_destroy_elements(registros, liberarBloque);
+	list_clean_and_destroy_elements(registros, liberarNodo);
 	char* directorioMetadata=DirectorioDeMetadata();
 	t_config* config = config_create(directorioMetadata);
 	int sizeBloque = atoi(config_get_string_value(config,"BLOCK_SIZE"));
@@ -271,7 +279,25 @@ void* dump(){
 	}
 }
 
+void chekearDumpeo(){
+			pthread_t dumpeo;
+			t_config* config = leer_config();
+			int tiempoDump = atoi(config_get_string_value(config, "TIEMPO_DUMP"));
+			struct timeval verificar;
+			gettimeofday(&verificar,NULL);
 
+			int tiempoTranscurrido = ((double)(verificar.tv_sec - tiempoHastaDump.tv_sec) + (double)(verificar.tv_usec - tiempoHastaDump.tv_usec)/1000000)*1000;
+			printf("%d",tiempoTranscurrido);
+			//gettimeofday(&tiempoHastaDump,NULL);
+			if(!estaDump && (tiempoDump<tiempoTranscurrido)){
+				estaDump=1;
+				pthread_create(&dumpeo,NULL,dump,NULL);
+				pthread_join(dumpeo, (void**)NULL);
+				gettimeofday(&tiempoHastaDump,NULL);
+			}else{ gettimeofday(&tiempoHastaDump,NULL);}
+			config_destroy(config);
+
+}
 
 //int sizeTotalLista(t_list* registros){
 //	int sizeLista= list_size(registros);
