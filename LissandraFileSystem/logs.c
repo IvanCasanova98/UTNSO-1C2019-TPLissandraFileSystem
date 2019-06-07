@@ -13,10 +13,17 @@ void LogearInsert(long long timestamp,uint16_t key,char* value,char*nombreTabla)
 	log_destroy(logger);
 }
 
-void LogearDrop(char* nombreTabla)
+void LogearDropCorrecto(char* nombreTabla)
 {
 	t_log* logger=iniciar_logger();
 	log_info(logger,"BORRANDO %s\n",nombreTabla);
+	log_destroy(logger);
+}
+
+void LogearDropFallido(char* nombreTabla)
+{
+	t_log* logger=iniciar_logger();
+	log_info(logger,"NO EXISTE %s\n",nombreTabla);
 	log_destroy(logger);
 }
 

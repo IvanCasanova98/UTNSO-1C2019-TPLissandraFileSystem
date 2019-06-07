@@ -40,6 +40,8 @@ void valueExiste(char*nombreTabla,uint16_t key,char* value);
 void LogearInsert(long long timestamp,uint16_t key,char* value,char*nombreTabla);
 void LogearCreate(char*nombreTabla);
 void LogearSelect(long long timestamp,uint16_t key,char* value,char*nombreTabla);
+void LogearDropCorrecto(char* nombreTabla);
+void LogearDropFallido(char* nombreTabla);
 void LaTablaNoExiste(long long timestamp,uint16_t key,char* value,char*nombreTabla);
 void LaTablaYaExiste(char*nombreTabla);
 void LogDumpeo();

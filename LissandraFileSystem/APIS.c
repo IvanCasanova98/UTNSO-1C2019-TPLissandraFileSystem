@@ -4,14 +4,9 @@
 
 void APIdrop(t_paquete_drop* paquete_drop){
 
-	/*
-	 *1. Verifica si existe un segmento de dicha tabla en la memoria principal
-	 *   y de haberlo libera dicho espacio.
-	 *2. Informa al FileSystem dicha operación para que este último realice la operación adecuada.
-	 */
 	char nombreTablaMayuscula [strlen(paquete_drop->nombre_tabla)+1];
-	string_to_upper(nombreTablaMayuscula);
 	strcpy(nombreTablaMayuscula,paquete_drop->nombre_tabla);
+
 	LogearDrop(nombreTablaMayuscula);
 
 	//BORRAR DE LA MEMTABLE.
@@ -67,30 +62,33 @@ void APIdrop(t_paquete_drop* paquete_drop){
 			//ESTE REMOVE REMUEVE LA PARTICION.
 //			strcpy(directorioDeTablaABorrar,DirectorioDeTabla(nombreTablaMayuscula));
 //		}
-
-
-
-
-//		free(directorioDeTablaABorrar);
-		//faltan limpiar los temporales con sus respectivos bloques ocupados.
-		//faltan setear los bloques en 0 que limpie con mmap.
-		//falta borrar metadata.
-		//y ahi borra directorio. rmdir(directorioDeTablaABorrar);
-//			free(metadataDeTabla);
-	}
-	printf("Se elimino %s\n",nombreTablaMayuscula);
-
-}
-
-void removerBloque(char* nroBloque){
-	char *directorioDeBloque = DirectorioDeBloque(atoi(nroBloque));
-	remove(directorioDeBloque);
-	free(directorioDeBloque);
-}
+//=======
+//	string_to_upper(nombreTablaMayuscula);
+//>>>>>>> 85608229631813e61806435b31f1a8ba35f5d25c
+//
+//	if(existeTabla(nombreTablaMayuscula))
+//	{
+//		LogearDropCorrecto(nombreTablaMayuscula);
+//
+//		RemoverDeLaMemtable(nombreTablaMayuscula);
+//		RemoverParticionesDeTablaYSusBloques(nombreTablaMayuscula);
+//		RemoverTemporalesDeTablaYSusBloques(nombreTablaMayuscula);
+//		RemoverMetadataDeTabla(nombreTablaMayuscula);
+//		RemoverCarpetaVaciaDeTabla(nombreTablaMayuscula); //ESTA FUNCION SIRVE SOLO SI LA CARPETA ESTA VACIA.
+//
+//		printf("%s BORRADA.\n",nombreTablaMayuscula);
+//
+//	} else
+//	{
+//		LogearDropFallido(nombreTablaMayuscula);
+//		error_show("No existe esa tabla.\n");
+//	}
+//
+//
+//}
 
 
 void APIcreate(t_paquete_create* paquete_create){ //0 memory leak
-
 	char nombreTablaMayuscula [strlen(paquete_create->nombre_tabla)+1];
 	string_to_upper(nombreTablaMayuscula);
 	strcpy(nombreTablaMayuscula,paquete_create->nombre_tabla);
@@ -207,6 +205,75 @@ char* APIselect(t_paquete_select* paquete_select){ // bastante ml revisar
 		free(nombreTablaMayuscula);
 		liberarPaqueteSelect(paquete_select);
 		return NULL;}
+}
+
+t_metadata* APIdescribe (t_paquete_describe* paquete_describe){
+	char nombreTablaMayuscula [strlen(paquete_describe->nombre_tabla)+1];
+	strcpy(nombreTablaMayuscula,paquete_describe->nombre_tabla);
+	string_to_upper(nombreTablaMayuscula);
+
+	if(existeTabla(nombreTablaMayuscula)){
+		t_metadata* metadataDeTabla = obtenerMetadataTabla(nombreTablaMayuscula);
+		return metadataDeTabla;
+		free(metadataDeTabla);
+	} else {
+		error_show("NO EXISTE %s\n",nombreTablaMayuscula);
+		return NULL;
+	}
+
+}
+
+void APIdescribeTodasLasTablas(){
+	t_list* listaDeTablas = listarTablasExistentes();
+	if(listaDeTablas != NULL){
+		list_iterate(listaDeTablas,imprimirMetadataDeTabla);
+	}
+	list_destroy(listaDeTablas);
+	//DESPUES VAMOS A TENER QUE CAMBIAR A TIPO T_LIST LA FUNCION ASI RETORNAMOS LA LISTA
+	//Y VEMOS COMO LA ENVIAMOS.
+}
+
+void listarTablas(){
+	DIR *d;
+	  struct dirent *dir;
+	  d = opendir("/home/utnso/LISSANDRA_FS/Tables");
+	  if (d)
+	  {
+		while ((dir = readdir(d)) != NULL) {
+			if (!string_contains(dir->d_name,".")) printf("%s ", dir->d_name);
+
+		}
+		closedir(d);
+	  }
+}
+
+void imprimirMetadata(t_metadata* metadataDeTablaPedida){
+	printf("%s%s ",BLUE,pasarAConsistenciaChar(metadataDeTablaPedida->consistencia));
+	printf(" %d ",metadataDeTablaPedida->particiones);
+	printf(" %d\n",metadataDeTablaPedida->tiempo_de_compactacion);
+	printf("%s",NORMAL_COLOR);
+}
+
+
+
+t_list* listarTablasExistentes() {
+  DIR *d;
+  struct dirent *dir;
+  d = opendir("/home/utnso/LISSANDRA_FS/Tables");
+  t_list *listaDeTablas = list_create();
+  if (d)
+  {
+    while ((dir = readdir(d)) != NULL) {
+    	if (!string_contains(dir->d_name,".")){
+    	list_add(listaDeTablas,dir->d_name);
+    	}
+
+    }
+    return listaDeTablas;
+    closedir(d);
+  } else return listaDeTablas;
+
+  	list_destroy(listaDeTablas);
 }
 
 char* elegirMayorTimeStamp(t_list* RegistrosEncontrados){
@@ -392,7 +459,48 @@ int existe_temporal(char* path){ //0 ml
 	return(stat(path,&buffer)==0);
 }
 
+
 char* DirectorioDeTemporalNuevo(char* nombretabla){ //0 ml
+	t_config* config = config_create("Lissandra.config");
+	char* NombreTmp = string_substring_until(string_reverse(nombretabla), 1);
+
+	char buffer [3];
+	char* Montaje= config_get_string_value(config,"PUNTO_MONTAJE");
+	char* directorioAux= malloc(strlen(Montaje) + strlen(".tmp") +strlen("Tables/") +sizeof(buffer)+ strlen(nombretabla)+strlen(NombreTmp)+1);
+	char* directorioTablas = malloc(strlen(Montaje) + strlen(".tmp") +strlen("Tables/") +sizeof(buffer)+ strlen(nombretabla)+strlen(NombreTmp)+1);
+	strcpy(directorioTablas,Montaje);
+	strcat(directorioTablas,"Tables/");
+	strcat(directorioTablas,nombretabla);
+	strcat(directorioTablas,"/");
+	strcat(directorioTablas,NombreTmp);
+	int i =1;
+	strcpy(directorioAux,directorioTablas);
+	sprintf(buffer,"%d",i);
+	strcat(directorioAux,buffer);
+	strcat(directorioAux,".tmp");
+	while(existe_temporal(directorioAux)){
+
+		t_config* directorioTemporal= config_create(directorioAux);
+		char **arrayBloques = string_get_string_as_array(config_get_string_value(directorioTemporal,"BLOCKS"));
+		string_iterate_lines(arrayBloques,removerBloque);
+		remove(directorioAux);
+		i++;
+		strcpy(directorioAux,directorioTablas);
+		sprintf(buffer,"%d",i);
+		strcat(directorioAux,buffer);
+		strcat(directorioAux,".tmp");
+	}
+
+	strcat(directorioTablas,buffer);
+	strcat(directorioTablas,".tmp");
+	free(directorioAux);
+	return directorioTablas;
+
+}
+
+
+char* DirectorioDeTemporal(char* nombretabla){
+
 	t_config* config = config_create("Lissandra.config");
 	char* NombreTmp = string_substring_until(string_reverse(nombretabla), 1);
 
@@ -558,6 +666,59 @@ void crearParticion(char*nombreTabla ,int nroParticion){ //0 ml
 
 
 }
+//free(nombreTablaMayus);
+void RemoverCarpetaVaciaDeTabla(char *nombreTabla){
+	char *directorioDeTablaABorrar= DirectorioDeTabla(nombreTabla);
+	remove(directorioDeTablaABorrar);
+	free(directorioDeTablaABorrar);
+}
+
+void RemoverMetadataDeTabla(char *nombreTabla){
+	char *directorioDeTablaABorrar= DirectorioDeMetadataTabla(nombreTabla);
+	remove(directorioDeTablaABorrar);
+	free(directorioDeTablaABorrar);
+
+}
+
+void RemoverDeLaMemtable(char *nombreTabla){
+	if(memTable != NULL)
+	{
+		if(dictionary_has_key(memTable,nombreTabla))
+		{ //BORRAR DE LA MEMTABLE.
+		dictionary_remove_and_destroy(memTable,nombreTabla,liberarNodo);
+		printf("Se eliminaron los registros de %s de la memTable.\n",nombreTabla);
+		} else {printf("No se hallaron registros en la memTable de %s\n",nombreTabla);}
+
+	}
+}
+
+void RemoverParticionesDeTablaYSusBloques(char* nombreTabla){
+	t_metadata* metadataDeTabla=obtenerMetadataTabla(nombreTabla);
+	int particiones = metadataDeTabla->particiones;
+	free(metadataDeTabla);
+
+	for(int i=1;i<=particiones;i++){
+
+		char *directorioDeTablaABorrar= DirectorioDeParticion(nombreTabla,i);
+		t_config* directorio = config_create(directorioDeTablaABorrar);
+		char **arrayBloques = string_get_string_as_array(config_get_string_value(directorio,"BLOCKS"));
+		string_iterate_lines(arrayBloques,removerBloque);
+		//ESTA FUNCION REMUEVE CADA BLOQUE ASIGNADO A ESA PARTICION.
+
+		remove(directorioDeTablaABorrar); //ESTE REMOVE REMUEVE LA PARTICION.
+
+		free(arrayBloques);
+		config_destroy(directorio);
+		free(directorioDeTablaABorrar);
+	}
+}
+
+void removerBloque(char* nroBloque){
+	char *directorioDeBloque = DirectorioDeBloque(atoi(nroBloque));
+	bitarray_clean_bit(bitmap,atoi(nroBloque));
+	remove(directorioDeBloque);
+	free(directorioDeBloque);
+}
 
 
 t_registro* buscarEnParticion(char* nombreTabla, int nroParticion,int key){
@@ -653,6 +814,7 @@ t_registro* buscarEnParticion(char* nombreTabla, int nroParticion,int key){
 			}
 
 			i++;
+
 
 
 		}

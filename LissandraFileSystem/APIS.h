@@ -10,7 +10,7 @@
 
 
 
-
+#include <dirent.h>
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
@@ -41,7 +41,9 @@
 #include"logs.h"
 t_config config;
 
-
+#define GREEN  "\x1B[32m"
+#define BLUE  "\x1B[34m"
+#define NORMAL_COLOR  "\x1B[0m"
 
 int existeTabla(char* TablaBuscada);
 
@@ -50,7 +52,10 @@ void  APIdrop(t_paquete_drop*);
 char* APIselect(t_paquete_select*);
 void  APIinsert(t_paquete_insert*);
 void  APIcreate(t_paquete_create*);
+t_metadata*  APIdescribe(t_paquete_describe*);
+void  APIdescribeTodasLasTablas();
 //*************************************
+
 void liberarRegistro(void* elemento);
 void liberarPaqueteCreate(t_paquete_create* paquete_create);
 bool mayorTimeStampRegistro(void*elemento1,void*elemento2);
@@ -61,6 +66,15 @@ char* DirectorioDeTemporal(char* nombretabla,int nroTemporal);
 t_registro* buscarKey(char* registrosDeBloque,int key);
 t_registro* buscarEnParticion(char* nombreTabla, int nroParticion,int key);
 char* DirectorioDeTemporalNuevo(char* nombretabla);
+
+
+void imprimirMetadataDeTabla(char* nombre_tabla);
+void imprimirMetadata(t_metadata* metadataDeTablaPedida);
+void listarTablas(); //ESTA FUNCION NO SIRVE PARA NADA, SOLO POR SI QUEREMOS LISTARLAS.
+t_list* listarTablasExistentes();
+
+char* DirectorioDeTemporal(char* nombretabla);
+
 int existe_temporal(char* path);
 char* DirectorioDeBloque(int numeroBloque);
 void crearParticiones(char*nombreTabla ,int nroParticiones);
@@ -83,4 +97,9 @@ void crearParticiones(char*nombreTabla ,int particiones);
 char* DirectorioDeParticion(char* ,int numeroParticion);
 void crearParticion(char*nombreTabla ,int particiones);
 void removerBloque(char* nroBloque);
+void RemoverTemporalesDeTablaYSusBloques(char* nombretabla);
+void RemoverMetadataDeTabla(char *nombreTabla);
+void RemoverCarpetaVaciaDeTabla(char *nombreTabla);
+void RemoverDeLaMemtable(char *nombreTabla);
+void RemoverParticionesDeTablaYSusBloques(char* nombreTabla);
 #endif /* APIS_H_ */
