@@ -91,22 +91,14 @@ void imprimirMetadataDeTabla(char* nombre_tabla){
 	t_metadata* metadata = obtenerMetadataTabla(nombre_tabla);
 	imprimirMetadata(metadata);
 	free(metadata);
+
 }
 
 void deployMenu(){
-	printf("\n\nCREATE NOMBRETABLA CONSISTENCIA PARTICIONES TIEMPO_COMPACTACION \nDROP\nDESCRIBE\nSELECT    NOMBRETABLA KEY\nINSERT    NOMBRETABLA KEY \"VALUE\" TIMESTAMP (OPCIONAL) \nDESCRIBE NOMBRETABLA\nDROP NOMBRETABLA");
+	printf("\n\nCREATE NOMBRETABLA CONSISTENCIA PARTICIONES TIEMPO_COMPACTACION \nDROP\nDESCRIBE\nSELECT    NOMBRETABLA KEY\nINSERT    NOMBRETABLA KEY \"VALUE\" TIMESTAMP (OPCIONAL) \nDESCRIBE NOMBRETABLA\nDROP\t NOMBRETABLA\n");
 	printf("\nIngrese REQUEST\n");
-//	char* registrosDeBloque= ObtenerContenidoBloque(67);
-//	printf("%s",registrosDeBloque);
-//	free(registrosDeBloque);
-	//printf("%s",ObtenerContenidoBloque(174));
-	//t_registro* buscado = buscarEnParticion("TABLA_B",1,80);
-	//free(buscado);
-	//printf("%s",buscado->value);
-	//printf("%lli",buscado->timestamp);
 
-
-	//	char * directorioDeTablaABorrar= "/home/utnso/LISSANDRA_FS/Tables/TABLA_B/1.bin";
+	listarTablas();
 
 
 }

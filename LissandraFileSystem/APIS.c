@@ -2,7 +2,7 @@
 
 #include "APIS.h"
 
-void APIdrop(t_paquete_drop* paquete_drop){
+void APIdrop(t_paquete_drop* paquete_drop){ //ml 20bytes
 
 	char nombreTablaMayuscula [strlen(paquete_drop->nombre_tabla)+1];
 	strcpy(nombreTablaMayuscula,paquete_drop->nombre_tabla);
@@ -12,9 +12,9 @@ void APIdrop(t_paquete_drop* paquete_drop){
 	{
 		LogearDropCorrecto(nombreTablaMayuscula);
 
-		RemoverDeLaMemtable(nombreTablaMayuscula);
-		RemoverParticionesDeTablaYSusBloques(nombreTablaMayuscula);
-		RemoverTemporalesDeTablaYSusBloques(nombreTablaMayuscula);
+		RemoverDeLaMemtable(nombreTablaMayuscula); //0 ml
+		RemoverParticionesDeTablaYSusBloques(nombreTablaMayuscula); //0 ml
+		RemoverTemporalesDeTablaYSusBloques(nombreTablaMayuscula); //8 bytes ml
 		RemoverMetadataDeTabla(nombreTablaMayuscula);
 		RemoverCarpetaVaciaDeTabla(nombreTablaMayuscula); //ESTA FUNCION SIRVE SOLO SI LA CARPETA ESTA VACIA.
 
@@ -26,7 +26,7 @@ void APIdrop(t_paquete_drop* paquete_drop){
 		error_show("No existe esa tabla.\n");
 	}
 
-
+//	liberarPaqueteDrop(paquete_drop); lo hace romper.
 }
 
 
@@ -167,24 +167,26 @@ t_metadata* APIdescribe (t_paquete_describe* paquete_describe){
 }
 
 void APIdescribeTodasLasTablas(){
-	t_list* listaDeTablas = listarTablasExistentes();
-	if(listaDeTablas != NULL){
-		list_iterate(listaDeTablas,imprimirMetadataDeTabla);
+	void* eliminarNombreTablaHallada(void *elemento){
+		free((char*) elemento);
 	}
-	list_destroy(listaDeTablas);
-	//DESPUES VAMOS A TENER QUE CAMBIAR A TIPO T_LIST LA FUNCION ASI RETORNAMOS LA LISTA
-	//Y VEMOS COMO LA ENVIAMOS.
+	t_list* listaDeTablas = listarTablasExistentes();
+		if(listaDeTablas != NULL){
+			list_iterate(listaDeTablas,imprimirMetadataDeTabla);
+		}
+		list_destroy_and_destroy_elements(listaDeTablas,eliminarNombreTablaHallada);
 }
 
-void listarTablas(){
+
+
+void listarTablas(){ //0 ml
 	DIR *d;
 	  struct dirent *dir;
 	  d = opendir("/home/utnso/LISSANDRA_FS/Tables");
-	  if (d)
+	  if (d != NULL)
 	  {
 		while ((dir = readdir(d)) != NULL) {
 			if (!string_contains(dir->d_name,".")) printf("%s ", dir->d_name);
-
 		}
 		closedir(d);
 	  }
@@ -202,21 +204,28 @@ void imprimirMetadata(t_metadata* metadataDeTablaPedida){
 t_list* listarTablasExistentes() {
   DIR *d;
   struct dirent *dir;
-  d = opendir("/home/utnso/LISSANDRA_FS/Tables");
+  char *directorioTablas= DirectorioDeTabla("");
+  d = opendir(directorioTablas);
   t_list *listaDeTablas = list_create();
-  if (d)
+  if (d != NULL)
   {
+	free(directorioTablas);
     while ((dir = readdir(d)) != NULL) {
     	if (!string_contains(dir->d_name,".")){
-    	list_add(listaDeTablas,dir->d_name);
+
+    	char* nombreTabla = malloc(sizeof(strlen(dir->d_name)+1));
+    	strcpy(nombreTabla,dir->d_name);
+    	list_add(listaDeTablas,nombreTabla);
+//    	free(nombreTabla);
     	}
 
     }
-    return listaDeTablas;
+    closedir(dir);
     closedir(d);
+//    list_destroy(listaDeTablas);
+    return listaDeTablas;
   } else return listaDeTablas;
 
-  	list_destroy(listaDeTablas);
 }
 
 char* elegirMayorTimeStamp(t_list* RegistrosEncontrados){
@@ -412,6 +421,7 @@ void RemoverTemporalesDeTablaYSusBloques(char* nombretabla){
 
 	char buffer [3];
 	char* Montaje= config_get_string_value(config,"PUNTO_MONTAJE");
+	config_destroy(config); //AGREGADO
 	char* directorioAux= malloc(strlen(Montaje) + strlen(".tmp") +strlen("Tables/") +sizeof(buffer)+ strlen(nombretabla)+strlen(NombreTmp)+1);
 	char* directorioTablas = malloc(strlen(Montaje) + strlen(".tmp") +strlen("Tables/") +sizeof(buffer)+ strlen(nombretabla)+strlen(NombreTmp)+1);
 	strcpy(directorioTablas,Montaje);
@@ -430,6 +440,8 @@ void RemoverTemporalesDeTablaYSusBloques(char* nombretabla){
 		char **arrayBloques = string_get_string_as_array(config_get_string_value(directorioTemporal,"BLOCKS"));
 		string_iterate_lines(arrayBloques,removerBloque);
 		remove(directorioAux);
+		config_destroy(directorioTemporal); //AGREGADO
+
 		i++;
 		strcpy(directorioAux,directorioTablas);
 		sprintf(buffer,"%d",i);
@@ -437,9 +449,12 @@ void RemoverTemporalesDeTablaYSusBloques(char* nombretabla){
 		strcat(directorioAux,".tmp");
 	}
 
+
 	strcat(directorioTablas,buffer);
 	strcat(directorioTablas,".tmp");
+	free(directorioTablas); //AGREGADO
 	free(directorioAux);
+	free(NombreTmp); //AGREGADO
 
 }
 
@@ -647,13 +662,16 @@ void RemoverParticionesDeTablaYSusBloques(char* nombreTabla){
 
 		char *directorioDeTablaABorrar= DirectorioDeParticion(nombreTabla,i);
 		t_config* directorio = config_create(directorioDeTablaABorrar);
+
 		char **arrayBloques = string_get_string_as_array(config_get_string_value(directorio,"BLOCKS"));
 		string_iterate_lines(arrayBloques,removerBloque);
 		//ESTA FUNCION REMUEVE CADA BLOQUE ASIGNADO A ESA PARTICION.
 
 		remove(directorioDeTablaABorrar); //ESTE REMOVE REMUEVE LA PARTICION.
+		for(int i=0;arrayBloques[i];i++)
+			free(arrayBloques[i]);
+			free(arrayBloques);
 
-		free(arrayBloques);
 		config_destroy(directorio);
 		free(directorioDeTablaABorrar);
 	}
@@ -850,6 +868,11 @@ void liberarPaqueteSelect(t_paquete_select* paquete_select){
 void liberarPaqueteCreate(t_paquete_create* paquete_create){
 	free(paquete_create->nombre_tabla);
 	free(paquete_create);
+}
+
+void liberarPaqueteDrop(t_paquete_drop* paquete_drop){
+	free(paquete_drop->nombre_tabla);
+	free(paquete_drop);
 }
 
 
