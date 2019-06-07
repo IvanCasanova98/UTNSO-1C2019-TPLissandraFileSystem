@@ -42,7 +42,7 @@ int tamanioBloque(int nroBloque){
 				printf("ERROR AL MAPEAR A MEMORIA");
 				close(fd);
 		}
-		char* RegistrosBloque=malloc(strlen(archivoBloque));
+		char* RegistrosBloque=malloc(strlen(archivoBloque)+1);
 		strcpy(RegistrosBloque,archivoBloque);
 		int sz= string_length(RegistrosBloque);
 		msync(archivoBloque,sizeBloque,MS_SYNC);
