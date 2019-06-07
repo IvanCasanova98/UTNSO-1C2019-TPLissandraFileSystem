@@ -73,7 +73,7 @@ void imprimirMetadata(t_metadata* metadataDeTablaPedida);
 void listarTablas(); //ESTA FUNCION NO SIRVE PARA NADA, SOLO POR SI QUEREMOS LISTARLAS.
 t_list* listarTablasExistentes();
 
-char* DirectorioDeTemporal(char* nombretabla);
+char* DirectorioDeTemporalNuevo(char* nombretabla);
 
 int existe_temporal(char* path);
 char* DirectorioDeBloque(int numeroBloque);

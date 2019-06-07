@@ -6,86 +6,29 @@ void APIdrop(t_paquete_drop* paquete_drop){
 
 	char nombreTablaMayuscula [strlen(paquete_drop->nombre_tabla)+1];
 	strcpy(nombreTablaMayuscula,paquete_drop->nombre_tabla);
+	string_to_upper(nombreTablaMayuscula);
 
-	LogearDrop(nombreTablaMayuscula);
+	if(existeTabla(nombreTablaMayuscula))
+	{
+		LogearDropCorrecto(nombreTablaMayuscula);
 
-	//BORRAR DE LA MEMTABLE.
+		RemoverDeLaMemtable(nombreTablaMayuscula);
+		RemoverParticionesDeTablaYSusBloques(nombreTablaMayuscula);
+		RemoverTemporalesDeTablaYSusBloques(nombreTablaMayuscula);
+		RemoverMetadataDeTabla(nombreTablaMayuscula);
+		RemoverCarpetaVaciaDeTabla(nombreTablaMayuscula); //ESTA FUNCION SIRVE SOLO SI LA CARPETA ESTA VACIA.
 
-	if(existeTabla(nombreTablaMayuscula)){
-		if(memTable != NULL)
-		{
-			if(dictionary_has_key(memTable,nombreTablaMayuscula))
-			{
-			dictionary_remove_and_destroy(memTable,nombreTablaMayuscula,liberarNodo);
-			printf("Se eliminaron los registros de %s de la memTable.\n",nombreTablaMayuscula);
-			} else {printf("No se hallaron registros en la memTable de %s\n",nombreTablaMayuscula);}
+		printf("%s BORRADA.\n",nombreTablaMayuscula);
 
-		}
-
-		char *directorioDeTablaABorrar = DirectorioDeTabla(nombreTablaMayuscula);
-
-		t_metadata* metadataDeTabla=obtenerMetadataTabla(nombreTablaMayuscula);
-		int particiones = metadataDeTabla->particiones;
-		free(metadataDeTabla);
-//		rmdir(directorioDeTablaABorrar); //BORRA LA CARPETA SI ESTA VACIA.
-
-//		printf("el directorio es: %s", directorioDeTablaABorrar);
-//		IMPRIME /home/utnso/LISSANDRA_FS/Tables/TABLA_B
+	} else
+	{
+		LogearDropFallido(nombreTablaMayuscula);
+		error_show("No existe esa tabla.\n");
+	}
 
 
-		//---- ESTO FUNCIONA BORRA 1.bin
-//		char buffer [3];
-//		sprintf(buffer,"/%d",1);
-//		strcat(directorioDeTablaABorrar,buffer);
-//		strcat(directorioDeTablaABorrar,".bin");
-//		remove(directorioDeTablaABorrar);
-		//---- ESTO FUNCIONA BORRA 1.bin
+}
 
-		char buffer [3];
-//		char *nroParticion;
-//		for(int i=1;i<=particiones;i++){
-///
-
-			sprintf(buffer,"/%c",string_itoa(1));
-			strcat(directorioDeTablaABorrar,buffer);
-			strcat(directorioDeTablaABorrar,".bin");
-			printf(directorioDeTablaABorrar);
-			t_config* directorio = config_create(directorioDeTablaABorrar);
-//			char **arrayBloques = string_get_string_as_array(config_get_string_value(directorio,"BLOCKS"));
-//			string_iterate_lines(arrayBloques,removerBloque);
-			//ESTA FUNCION REMUEVE CADA BLOQUE ASIGNADO A ESA PARTICION.
-
-//			free(arrayBloques);
-//			remove(directorioDeTablaABorrar);
-//			config_destroy(directorio);
-//			free(directorioDeTablaABorrar);
-			//ESTE REMOVE REMUEVE LA PARTICION.
-//			strcpy(directorioDeTablaABorrar,DirectorioDeTabla(nombreTablaMayuscula));
-//		}
-//=======
-//	string_to_upper(nombreTablaMayuscula);
-//>>>>>>> 85608229631813e61806435b31f1a8ba35f5d25c
-//
-//	if(existeTabla(nombreTablaMayuscula))
-//	{
-//		LogearDropCorrecto(nombreTablaMayuscula);
-//
-//		RemoverDeLaMemtable(nombreTablaMayuscula);
-//		RemoverParticionesDeTablaYSusBloques(nombreTablaMayuscula);
-//		RemoverTemporalesDeTablaYSusBloques(nombreTablaMayuscula);
-//		RemoverMetadataDeTabla(nombreTablaMayuscula);
-//		RemoverCarpetaVaciaDeTabla(nombreTablaMayuscula); //ESTA FUNCION SIRVE SOLO SI LA CARPETA ESTA VACIA.
-//
-//		printf("%s BORRADA.\n",nombreTablaMayuscula);
-//
-//	} else
-//	{
-//		LogearDropFallido(nombreTablaMayuscula);
-//		error_show("No existe esa tabla.\n");
-//	}
-//
-//
-//}
 
 
 void APIcreate(t_paquete_create* paquete_create){ //0 memory leak
@@ -460,7 +403,10 @@ int existe_temporal(char* path){ //0 ml
 }
 
 
-char* DirectorioDeTemporalNuevo(char* nombretabla){ //0 ml
+
+
+
+void RemoverTemporalesDeTablaYSusBloques(char* nombretabla){
 	t_config* config = config_create("Lissandra.config");
 	char* NombreTmp = string_substring_until(string_reverse(nombretabla), 1);
 
@@ -494,12 +440,12 @@ char* DirectorioDeTemporalNuevo(char* nombretabla){ //0 ml
 	strcat(directorioTablas,buffer);
 	strcat(directorioTablas,".tmp");
 	free(directorioAux);
-	return directorioTablas;
 
 }
 
 
-char* DirectorioDeTemporal(char* nombretabla){
+
+char* DirectorioDeTemporalNuevo(char* nombretabla){ //0 ml
 
 	t_config* config = config_create("Lissandra.config");
 	char* NombreTmp = string_substring_until(string_reverse(nombretabla), 1);
@@ -697,7 +643,7 @@ void RemoverParticionesDeTablaYSusBloques(char* nombreTabla){
 	int particiones = metadataDeTabla->particiones;
 	free(metadataDeTabla);
 
-	for(int i=1;i<=particiones;i++){
+	for(int i=0;i<particiones;i++){
 
 		char *directorioDeTablaABorrar= DirectorioDeParticion(nombreTabla,i);
 		t_config* directorio = config_create(directorioDeTablaABorrar);

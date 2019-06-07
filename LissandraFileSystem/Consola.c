@@ -92,11 +92,11 @@ void imprimirMetadataDeTabla(char* nombre_tabla){
 }
 
 void deployMenu(){
-	printf("\n\nCREATE NOMBRETABLA CONSISTENCIA PARTICIONES TIEMPO_COMPACTACION \nDROP\nDESCRIBE\nSELECT    NOMBRETABLA KEY\nINSERT    NOMBRETABLA KEY \"VALUE\" TIMESTAMP (OPCIONAL) \n");
+	printf("\n\nCREATE NOMBRETABLA CONSISTENCIA PARTICIONES TIEMPO_COMPACTACION \nDROP\nDESCRIBE\nSELECT    NOMBRETABLA KEY\nINSERT    NOMBRETABLA KEY \"VALUE\" TIMESTAMP (OPCIONAL) \nDESCRIBE NOMBRETABLA\nDROP NOMBRETABLA");
 	printf("\nIngrese REQUEST\n");
-	char* registrosDeBloque= ObtenerContenidoBloque(67);
-	printf("%s",registrosDeBloque);
-	free(registrosDeBloque);
+//	char* registrosDeBloque= ObtenerContenidoBloque(67);
+//	printf("%s",registrosDeBloque);
+//	free(registrosDeBloque);
 	//printf("%s",ObtenerContenidoBloque(174));
 	//t_registro* buscado = buscarEnParticion("TABLA_B",1,80);
 	//free(buscado);
