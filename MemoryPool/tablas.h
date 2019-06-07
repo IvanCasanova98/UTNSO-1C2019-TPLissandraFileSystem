@@ -28,6 +28,12 @@ typedef struct {
 	t_list* lista_paginas;
 } t_tabla_paginas;
 
+typedef struct{
+	char* nombre_tabla;
+	uint16_t particiones;
+}t_particiones;
+
+
 //----------------TABLA DE SEGMENTOS
 
 void agregar_tabla( char* nombre_tabla, t_list* tabla_paginas);
@@ -37,10 +43,11 @@ t_list* buscar_tabla_paginas(char* nombre_tabla_paginas);
 //----------------TABLA DE PAGINAS
 
 bool existe_pagina(char* nombre_tabla, uint16_t valor_key);
-t_list* crear_tabla_paginas(char* nombre_tabla);
+t_list* crear_tabla_paginas(char* nombre_tabla, uint16_t particiones);
 void agregar_pagina(char* nombre_tabla, t_pagina_completa* pagina_completa);
 t_pagina* buscar_pagina(char* nombre_pagina, uint16_t valor_key);
 bool tiene_key(uint16_t key,t_pagina_completa* pagina_completa);
+int cant_paginas(char* nombre_tabla);
 
 //----------------PAGINAS
 
@@ -50,6 +57,11 @@ t_pagina* devolver_pagina(t_pagina_completa* pagina_completa);
 
 //---------------------AUXILIAR
 bool condicion_select(char* nombre_tabla, uint16_t valor_key);
+bool condicion_insert(char* nombre_tabla);
+bool verificar_particiones(char* nombre_tabla);
+bool tabla_buscada(t_particiones* particion, char* nombre_tabla);
+uint16_t buscar_particion(char* nombre_tabla);
+
 void mostrar_pagina(t_pagina* pagina);
 void mostrar_pagina_completa(t_pagina_completa* pagina_completa);
 void mostrar_tabla_paginas(t_tabla_paginas* tabla_paginas);

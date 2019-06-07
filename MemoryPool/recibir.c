@@ -36,7 +36,15 @@ void recibir_paquetes(int cliente_fd, int server_fd, t_config* config, t_log* lo
 
 		switch(cod_op)
 		{
-		case CREATE:
+		case CREATE:;
+			t_paquete_create* paquete_create = deserializar_paquete_create(cliente_fd);
+
+			//printf("%s   %s   %d   %d\n",paquete_create->nombre_tabla, paquete_create->consistencia, paquete_create->particiones, paquete_create->tiempo_compactacion);
+
+			loggear_paquete_create(paquete_create, logger);
+
+			create(paquete_create, config, logger);
+
 			break;
 		case DROP:
 			break;
@@ -123,7 +131,7 @@ t_paquete_insert* deserializar_paquete_insert(int socket_cliente)
 	size_t tamanioTabla;
 	size_t tamanioValue;
 
-	recv(socket_cliente, buffer_para_longitudes, sizeof(uint32_t)*2 ,MSG_WAITALL);
+	recv(socket_cliente, buffer_para_longitudes, sizeof(uint32_t)*2, MSG_WAITALL);
 
 	memcpy(&tamanioTabla ,buffer_para_longitudes,sizeof(uint32_t));
 	memcpy(&tamanioValue ,buffer_para_longitudes+sizeof(uint32_t),sizeof(uint32_t));
@@ -149,4 +157,45 @@ t_paquete_insert* deserializar_paquete_insert(int socket_cliente)
 	free(buffer_para_longitudes);
 	free(buffer);
 	return paquete_insert;
+}
+
+t_paquete_create* deserializar_paquete_create(int socket_cliente)
+{
+	void *buffer_para_longitudes = malloc(sizeof(uint32_t)*2);
+
+	int desplazamiento = 0;
+	size_t tamanio_tabla;
+	size_t tamanio_consistencia;
+
+	recv(socket_cliente, buffer_para_longitudes, sizeof(uint32_t)*2 ,MSG_WAITALL);
+
+	memcpy(&tamanio_tabla ,buffer_para_longitudes,sizeof(uint32_t));
+	memcpy(&tamanio_consistencia ,buffer_para_longitudes+sizeof(uint32_t),sizeof(uint32_t));
+	t_paquete_create* paquete_create = malloc(tamanio_tabla + tamanio_consistencia + sizeof(uint32_t)*2 + sizeof(uint16_t)*2);
+
+	paquete_create->nombre_tabla = malloc(tamanio_tabla);
+	paquete_create->consistencia = malloc(tamanio_consistencia);
+
+	void *buffer = malloc(tamanio_tabla + tamanio_consistencia + sizeof(uint16_t)*2);
+
+	recv(socket_cliente, buffer, sizeof(uint16_t)*2 +tamanio_tabla+tamanio_consistencia ,MSG_WAITALL);
+
+	memcpy(paquete_create->nombre_tabla,buffer + desplazamiento, tamanio_tabla);
+	desplazamiento+= tamanio_tabla;
+
+	memcpy(paquete_create->consistencia,buffer + desplazamiento, tamanio_consistencia);
+	desplazamiento+= tamanio_consistencia;
+
+	memcpy(&(paquete_create->particiones),buffer + desplazamiento, sizeof(uint16_t));
+	desplazamiento+= sizeof(uint16_t);
+
+	memcpy(&(paquete_create->tiempo_compactacion),buffer + desplazamiento, sizeof(uint16_t));
+	desplazamiento+= sizeof(uint16_t);
+
+	paquete_create->nombre_tabla_long = tamanio_tabla;
+	paquete_create->consistencia_long = tamanio_consistencia;
+
+	free(buffer_para_longitudes);
+	free(buffer);
+	return paquete_create;
 }

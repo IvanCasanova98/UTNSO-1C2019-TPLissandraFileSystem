@@ -1,3 +1,6 @@
+//REVISAR BYTES PARA LOS MALLOCS CUANDO EJECUTAS LA FUNCION SERIALIZAR, ESTRUCTURA REPETIDA
+//ENVIAR TAMANIO COMPLETO DEL PAQUETE, Y LUEGO BUFFER
+
 #include "kernel.h"
 
 int main(void){
@@ -10,12 +13,12 @@ int main(void){
 
 	int conexion = iniciar_conexion(logger, ip, puerto);
 
-	pedir_seed(conexion);
-
-	close(conexion);//desconecta de memoria 0 (A MENOS DE QUE SE VUELVA A CONECTAR A LA MEMORIA 0)
-
-	SEED memoria = elegir_memoria();
-	conexion = iniciar_conexion(logger, memoria.IP, memoria.PUERTO);//conectar a la memoria elegida
+//	pedir_seed(conexion);
+//
+//	close(conexion);//desconecta de memoria 0 (A MENOS DE QUE SE VUELVA A CONECTAR A LA MEMORIA 0)
+//
+//	SEED memoria = elegir_memoria();
+//	conexion = iniciar_conexion(logger, memoria.IP, memoria.PUERTO);//conectar a la memoria elegida
 
 	ingresar_paquete(conexion);
 

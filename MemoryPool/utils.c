@@ -34,6 +34,19 @@ int cant_elementos_array(char** array)
 	}
 	return i;
 }
+
+//------------------------ENVIO DE ERRORES---------------------------
+
+void enviar_select_error(int cliente)
+{
+//	t_pagina* pagina_encontrada = buscar_pagina(paquete -> nombre_tabla, paquete -> valor_key);
+	char* mensaje_error = "Key no encontrada";
+
+	int bytes = sizeof(int) + strlen(mensaje_error) + 1;
+	void* a_enviar = serializar_mensaje(mensaje_error, bytes);
+	send(cliente,a_enviar,bytes,0);
+}
+
 //----------------------------ARCHIVOS LOGGER Y CONFIG
 
 t_log* iniciar_logger()
@@ -56,4 +69,9 @@ void loggear_paquete_select(t_paquete_select* paquete, t_log* logger)
 void loggear_paquete_insert(t_paquete_insert* paquete, t_log* logger)
 {
 	log_info(logger, "NUEVO PAQUETE INSERT CREADO\nNombre tabla: %s\nValor KEY   : %d\nValue       : %s\n timestamp   : %lld", paquete->nombre_tabla, paquete->valor_key, paquete->value, paquete->timestamp);
+}
+
+void loggear_paquete_create(t_paquete_create* paquete, t_log* logger)
+{
+	log_info(logger, "NUEVO PAQUETE CREATE CREADO\nNombre tabla       : %s\nConsistencia       : %s\nParticiones        : %d\nTiempo compactacion: %d", paquete->nombre_tabla, paquete->consistencia, paquete->particiones, paquete->tiempo_compactacion);
 }

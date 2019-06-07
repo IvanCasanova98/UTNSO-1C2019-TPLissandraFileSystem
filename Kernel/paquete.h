@@ -43,9 +43,10 @@ typedef struct t_paquete_create
 {
 	uint32_t nombre_tabla_long; //Longitud del nombre de la tabla
 	char* nombre_tabla;
+	uint32_t consistencia_long;
 	char* consistencia;//CREAR TIPO DE DATO
-	int particiones;
-	int tiempo_compactacion;
+	uint16_t particiones;
+	uint16_t tiempo_compactacion;
 }__attribute__((packed)) t_paquete_create;
 
 typedef struct t_paquete_select

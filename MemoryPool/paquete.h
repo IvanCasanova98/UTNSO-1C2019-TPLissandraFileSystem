@@ -36,6 +36,16 @@ typedef enum
 	HS //HandShake
 }op_code;
 
+typedef struct t_paquete_create
+{
+	uint32_t nombre_tabla_long; //Longitud del nombre de la tabla
+	char* nombre_tabla;
+	uint32_t consistencia_long;
+	char* consistencia;//CREAR TIPO DE DATO
+	uint16_t particiones;
+	uint16_t tiempo_compactacion;
+}__attribute__((packed)) t_paquete_create;
+
 typedef struct t_paquete_select
 {
 	char* nombre_tabla;
@@ -65,5 +75,6 @@ long long get_timestamp(char* parametros);
 //---------------------LOGGEAR PAQUETE (funciones de utils.c)
 void loggear_paquete_select(t_paquete_select* paquete, t_log* logger);
 void loggear_paquete_insert(t_paquete_insert* paquete, t_log* logger);
+//void loggear_paquete_create(t_paquete_create* paquete, t_log* logger);
 
 #endif /* PAQUETE_H_ */

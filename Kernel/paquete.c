@@ -19,6 +19,7 @@ void ingresar_paquete(int conexion){
 				if (send(conexion, &cod_ingresado, sizeof(int), 0) <= 0) puts("Error en envio de CODIGO DE OPERACION.");
 				else
 				{
+					enviar_paquete_create(paquete_create,conexion);
 				}
 
 				free(paquete_create);
@@ -69,7 +70,7 @@ void ingresar_paquete(int conexion){
 
 char* ingresar_request()
 {
-	printf("\n\nCREATE\nDROP\nDESCRIBE\nSELECT    NOMBRETABLA KEY\nINSERT    NOMBRETABLA KEY VALUE \nJOURNAL\nRUN\nADD\nLQL    PATH\nEXIT\n");
+	printf("\n\nCREATE    NOMBRETABLA CONSISTENCIA PARTICIONES T_COMPACTACION\nDROP\nDESCRIBE\nSELECT    NOMBRETABLA KEY\nINSERT    NOMBRETABLA KEY VALUE \nJOURNAL\nRUN\nADD\nLQL    PATH\nEXIT\n");
 
 	printf("\nIngrese REQUEST ");
 
@@ -120,12 +121,14 @@ t_paquete_create* crear_paquete_create(char* nombre_tabla, char* consistencia, i
 {
 	uint32_t tamanio_tabla = strlen(nombre_tabla)+1;
 	uint32_t tamanio_consistencia = strlen(consistencia)+1;
-	t_paquete_create* paquete = malloc(tamanio_tabla + tamanio_consistencia + sizeof(int) + sizeof(int));
+	t_paquete_create* paquete = malloc(tamanio_tabla + tamanio_consistencia + sizeof(uint32_t)*2 + sizeof(uint16_t)*2);
 
 	paquete->nombre_tabla= nombre_tabla;
 	paquete->consistencia = consistencia;
 	paquete->particiones= particiones;
 	paquete->tiempo_compactacion= tiempo_compactacion;
+	paquete->nombre_tabla_long = tamanio_tabla;
+	paquete->consistencia_long = tamanio_consistencia;
 
 	return paquete;
 }
@@ -189,8 +192,8 @@ t_paquete_create* create(char* parametros)
 {
 	char* nombre_tabla;
 	char* consistencia;
-	int particiones;
-	int tiempo_compactacion;
+	uint16_t particiones;
+	uint16_t tiempo_compactacion;
 
 	parametros= strtok(NULL, " ");
 	nombre_tabla = parametros;

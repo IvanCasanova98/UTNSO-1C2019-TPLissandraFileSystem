@@ -1,7 +1,10 @@
 #include "tablas.h"
 
 //----------------TABLA DE SEGMENTOS
+
 t_dictionary* tabla_segmentos;
+t_list* tabla_particiones;
+
 
 void agregar_tabla( char* nombre_tabla, t_list* tabla_paginas)//no debe recibir tabla_segmentos (variable global)
 {
@@ -19,12 +22,18 @@ t_list* buscar_tabla_paginas(char* nombre_tabla_paginas){
 
 //----------------TABLA DE PAGINAS
 
-t_list* crear_tabla_paginas(char* nombre_tabla)
+t_list* crear_tabla_paginas(char* nombre_tabla, uint16_t particiones)
 {
-	//fijarse si ya esta creada, sino...
 	t_list* tabla_paginas = list_create();
+
+	t_particiones* particion = malloc(strlen(nombre_tabla)+1+sizeof(uint16_t));
+	particion->nombre_tabla = nombre_tabla;
+	particion->particiones = particiones;
+	list_add(tabla_particiones, particion);
+
 	agregar_tabla(nombre_tabla, tabla_paginas); //la agrega a la tabla de segmentos
 	return tabla_paginas;
+	free(particion);
 }
 
 void agregar_pagina(char* nombre_tabla, t_pagina_completa* pagina_completa) //a tabla de paginas
@@ -60,6 +69,12 @@ bool tiene_key(uint16_t key,t_pagina_completa* pagina_completa)
 {
 	return (pagina_completa -> pagina -> valor_key) == key;
 }
+
+int cant_paginas(char* nombre_tabla)
+{
+	t_list* tabla_paginas = buscar_tabla_paginas(nombre_tabla);
+	return list_size(tabla_paginas);
+}
 //----------------PAGINAS
 
 t_pagina* crear_pagina(uint16_t valor_key, char* value, long long timestamp)
@@ -94,6 +109,31 @@ bool condicion_select(char* nombre_tabla, uint16_t valor_key) //Verifica la exis
 	return existe_tabla_paginas(nombre_tabla) && existe_pagina(nombre_tabla, valor_key);
 }
 
+bool condicion_insert(char* nombre_tabla)
+{
+	return existe_tabla_paginas(nombre_tabla) && verificar_particiones(nombre_tabla);
+}
+
+bool verificar_particiones(char* nombre_tabla)
+{
+	int cantidad_paginas = cant_paginas(nombre_tabla);
+	uint16_t particion_max = buscar_particion(nombre_tabla);
+	return particion_max>cantidad_paginas ;
+}
+
+uint16_t buscar_particion(char* nombre_tabla)
+{
+	bool _tabla_buscada(void* elemento){return tabla_buscada(elemento, nombre_tabla);}
+	t_particiones* particion = list_find(tabla_particiones, _tabla_buscada);
+
+	return  particion->particiones;
+}
+
+bool tabla_buscada(t_particiones* particion, char* nombre_tabla)
+{
+	return strcmp(particion->nombre_tabla, nombre_tabla);
+}
+
 //-----------------------MOSTRAR ELEMENTOS
 
 void mostrar_pagina(t_pagina* pagina)
@@ -117,26 +157,33 @@ void mostrar_tabla_segmentos()
 	printf("\n");
 }
 
-//
+
 
 void startup_memoria()
 {
 	tabla_segmentos = dictionary_create();
+	tabla_particiones = list_create();
 
-	t_list* tabla_paginas0 = crear_tabla_paginas("TABLA0");
-	t_list* tabla_paginas1 = crear_tabla_paginas("TABLA1");
-	t_list* tabla_paginas2 = crear_tabla_paginas("TABLA2");
+
+	t_list* tabla_paginas0 = crear_tabla_paginas("TABLA0",4);
+	t_list* tabla_paginas1 = crear_tabla_paginas("TABLA1",5);
+	t_list* tabla_paginas2 = crear_tabla_paginas("TABLA2",5);
 
 	t_pagina* pagina0 = crear_pagina(0, "cero", 12);
 	t_pagina* pagina1 = crear_pagina(1, "uno", 34);
 	t_pagina* pagina2 = crear_pagina(2, "dos", 56);
+	t_pagina* pagina3 = crear_pagina(3, "tres", 78);
+	t_pagina* pagina4 = crear_pagina(4, "cuatro", 90);
 
 	t_pagina_completa* pagina_completa0 = crear_pagina_completa(pagina0);
 	t_pagina_completa* pagina_completa1 = crear_pagina_completa(pagina1);
 	t_pagina_completa* pagina_completa2 = crear_pagina_completa(pagina2);
+	t_pagina_completa* pagina_completa3 = crear_pagina_completa(pagina3);
+	t_pagina_completa* pagina_completa4 = crear_pagina_completa(pagina4);
 
 	agregar_pagina("TABLA0", pagina_completa0);
 	agregar_pagina("TABLA1", pagina_completa1);
 	agregar_pagina("TABLA2", pagina_completa2);
-
+	agregar_pagina("TABLA0", pagina_completa3);
+	agregar_pagina("TABLA0", pagina_completa4);
 }
