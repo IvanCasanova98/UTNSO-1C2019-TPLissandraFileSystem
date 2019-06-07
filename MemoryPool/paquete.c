@@ -30,6 +30,22 @@ t_paquete_insert* crear_paquete_insert(char *nombre_tabla, uint16_t valor_key, c
 	return paquete;
 }
 
+t_paquete_create* crear_paquete_create(char* nombre_tabla, char* consistencia, int particiones, int tiempo_compactacion)
+{
+	uint32_t tamanio_tabla = strlen(nombre_tabla)+1;
+	uint32_t tamanio_consistencia = strlen(consistencia)+1;
+	t_paquete_create* paquete = malloc(tamanio_tabla + tamanio_consistencia + sizeof(uint32_t)*2 + sizeof(uint16_t)*2);
+
+	paquete->nombre_tabla= nombre_tabla;
+	paquete->consistencia = consistencia;
+	paquete->particiones= particiones;
+	paquete->tiempo_compactacion= tiempo_compactacion;
+	paquete->nombre_tabla_long = tamanio_tabla;
+	paquete->consistencia_long = tamanio_consistencia;
+
+	return paquete;
+}
+
 //---------------------ARMAR PAQUETES
 
 t_paquete_select* paquete_select(char* parametros, t_log* logger)
@@ -82,4 +98,28 @@ long long get_timestamp(char* parametros){
 	} else {valor = atoll(parametros);}
 
 	return valor;
+}
+
+
+t_paquete_create* paquete_create(char* parametros, t_log* logger)
+{
+	char* nombre_tabla;
+	char* consistencia;
+	uint16_t particiones;
+	uint16_t tiempo_compactacion;
+
+	parametros= strtok(NULL, " ");
+	nombre_tabla = parametros;
+	parametros = strtok(NULL, " ");
+	consistencia = parametros;
+	parametros = strtok(NULL, " ");
+	particiones = atoi(parametros);
+	parametros = strtok(NULL, " ");
+	tiempo_compactacion = atoi(parametros);
+
+	t_paquete_create* paquete = crear_paquete_create(nombre_tabla, consistencia, particiones, tiempo_compactacion);
+
+	loggear_paquete_create(paquete, logger);
+
+	return paquete;
 }

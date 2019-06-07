@@ -15,29 +15,17 @@ void ingresar_paquete(void * arg)
 	{
 		switch(cod_ingresado)
 		{
+			case 0:;
+				t_paquete_create* paquete_c = paquete_create(parametros_paquete, parametro->logger);
+				create(paquete_c, parametro->config, parametro->logger);
+				break;
 			case 3:;
-				int conexion_s = iniciar_conexion(parametro->config);
-
 				t_paquete_select* paquete_s = paquete_select(parametros_paquete, parametro->logger);
-
-				if (send(conexion_s, &cod_ingresado, sizeof(int), 0) <= 0) puts("Error en envio de CODIGO DE OPERACION.");
-				else{enviar_paquete_select(paquete_s, conexion_s, parametro->logger);}
-				free(paquete_s);
-
-				terminar_conexion(conexion_s);
-
+				selectf(NULL,paquete_s, parametro->config, parametro->logger);
 				break;
 			case 4:;
-				int conexion_i = iniciar_conexion(parametro->config);
-
 				t_paquete_insert* paquete_i = paquete_insert(parametros_paquete, parametro->logger);
-
-				if (send(conexion_i, &cod_ingresado, sizeof(int), 0) <= 0) puts("Error en envio de CODIGO DE OPERACION.");
-				else{enviar_paquete_insert(paquete_i, conexion_i, parametro->logger);}
-				free(paquete_i);
-
-				terminar_conexion(conexion_i);
-
+				insert(paquete_i, parametro->config,  parametro->logger);
 				break;
 			case 8:
 				return;
@@ -54,7 +42,7 @@ void ingresar_paquete(void * arg)
 
 char* ingresar_request()
 {
-	printf("\n\nCREATE    NOMBRETABLA CONSISTENCIA PARTICIONES T_COMPACTACION\nDROP\nDESCRIBE\nSELECT    NOMBRETABLA KEY\nINSERT    NOMBRETABLA KEY VALUE \nJOURNAL\nRUN\nADD\nEXIT\n");
+	printf("\n\nCREATE    NOMBRETABLA CONSISTENCIA PARTICIONES T_COMPACTACION\nDROP\nDESCRIBE\nSELECT    NOMBRETABLA KEY\nINSERT    NOMBRETABLA KEY VALUE \nJOURNAL\nRUN\nADD\nLQL    PATH\nEXIT\n");
 
 	printf("\nIngrese REQUEST ");
 

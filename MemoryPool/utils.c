@@ -63,15 +63,15 @@ t_config* leer_config(char* archivo)
 
 void loggear_paquete_select(t_paquete_select* paquete, t_log* logger)
 {
-	log_info(logger, "NUEVO PAQUETE SELECT CREADO\nNombre tabla: %s\nValor KEY   : %d", paquete->nombre_tabla,paquete->valor_key);
+	log_info(logger, "SELECT:\nNombre tabla: %s\nValor KEY   : %d", paquete->nombre_tabla,paquete->valor_key);
 }
 
 void loggear_paquete_insert(t_paquete_insert* paquete, t_log* logger)
 {
-	log_info(logger, "NUEVO PAQUETE INSERT CREADO\nNombre tabla: %s\nValor KEY   : %d\nValue       : %s\n timestamp   : %lld", paquete->nombre_tabla, paquete->valor_key, paquete->value, paquete->timestamp);
+	log_info(logger, "INSERT:\nNombre tabla: %s\nValor KEY   : %d\nValue       : %s\nTimestamp   : %lld", paquete->nombre_tabla, paquete->valor_key, paquete->value, paquete->timestamp);
 }
 
 void loggear_paquete_create(t_paquete_create* paquete, t_log* logger)
 {
-	log_info(logger, "NUEVO PAQUETE CREATE CREADO\nNombre tabla       : %s\nConsistencia       : %s\nParticiones        : %d\nTiempo compactacion: %d", paquete->nombre_tabla, paquete->consistencia, paquete->particiones, paquete->tiempo_compactacion);
+	log_info(logger, "CREATE:\nNombre tabla       : %s\nConsistencia       : %s\nParticiones        : %d\nTiempo compactacion: %d", paquete->nombre_tabla, paquete->consistencia, paquete->particiones, paquete->tiempo_compactacion);
 }

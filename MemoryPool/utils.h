@@ -40,4 +40,7 @@ void loggear_paquete_select(t_paquete_select* paquete, t_log* logger);
 void loggear_paquete_insert(t_paquete_insert* paquete, t_log* logger);
 void loggear_paquete_create(t_paquete_create* paquete, t_log* logger);
 
+
+
+
 #endif /* UTILS_H_ */

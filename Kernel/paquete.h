@@ -89,8 +89,8 @@ t_paquete_create* crear_paquete_create(char* nombre_tabla, char* consistencia, i
 //---------------------ARMAR PAQUETE
 t_paquete_select* selectf(char* parametros);
 t_paquete_insert* insert(char* parametros);
-t_paquete_create* create(char* parametros);
 long long get_timestamp(char* parametros);
+t_paquete_create* create(char* parametros);
 
 //---------------------LOGGEAR PAQUETE
 void loggear_paquete_select(t_paquete_select* paquete);

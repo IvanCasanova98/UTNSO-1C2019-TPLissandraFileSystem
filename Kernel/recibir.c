@@ -16,7 +16,12 @@ void recibir_mensaje(int socket_cliente)
 {
 	int size;
 	char* buffer = recibir_buffer(&size, socket_cliente);
-	printf("\nValue Recibido:  %s", buffer);
+//	printf("\nValue Recibido:  %s", buffer);
+
+	t_log* logger = iniciar_logger();
+	log_info(logger, "Value recibido: %s\n", buffer);
+    log_destroy(logger);
+
 	free(buffer);
 }
 

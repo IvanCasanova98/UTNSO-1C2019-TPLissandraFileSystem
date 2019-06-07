@@ -111,14 +111,15 @@ bool condicion_select(char* nombre_tabla, uint16_t valor_key) //Verifica la exis
 
 bool condicion_insert(char* nombre_tabla)
 {
-	return existe_tabla_paginas(nombre_tabla) && verificar_particiones(nombre_tabla);
+	return verificar_particiones(nombre_tabla);
 }
 
 bool verificar_particiones(char* nombre_tabla)
 {
 	int cantidad_paginas = cant_paginas(nombre_tabla);
 	uint16_t particion_max = buscar_particion(nombre_tabla);
-	return particion_max>cantidad_paginas ;
+//	printf("CANT MAXIMA: %d", particion_max);
+	return particion_max>cantidad_paginas;
 }
 
 uint16_t buscar_particion(char* nombre_tabla)
@@ -131,9 +132,65 @@ uint16_t buscar_particion(char* nombre_tabla)
 
 bool tabla_buscada(t_particiones* particion, char* nombre_tabla)
 {
-	return strcmp(particion->nombre_tabla, nombre_tabla);
+	return !strcmp(particion->nombre_tabla, nombre_tabla);
+//	if (!strcmp(particion->nombre_tabla, nombre_tabla))
+//	{
+//		printf("NOMBRE TABLA ELEGIDA: %s ", particion->nombre_tabla);
+//		return 1;
+//	}
+//	else
+//	{
+//		return 0;
+//	}
 }
 
+bool puede_reemplazar(char* nombre_tabla)
+{
+	return list_size(paginas_sin_modificar(nombre_tabla))>0;
+}
+
+t_list* paginas_sin_modificar(char* nombre_tabla)
+{
+	bool _sin_modificar(t_pagina_completa* elemento){return elemento->flag == 0;}
+
+	t_list* tabla_paginas = buscar_tabla_paginas(nombre_tabla);
+	t_list* lista_pagina_sin_modificar = list_filter(tabla_paginas, _sin_modificar);
+
+	return lista_pagina_sin_modificar;
+}
+
+bool comparar_timestamp(t_pagina_completa* pagina1, t_pagina_completa* pagina2)
+{
+	return (pagina1->pagina->timestamp)<(pagina2->pagina->timestamp);
+}
+
+void ordenar_lista(t_list* lista_paginas)//Ordena lista de paginas completas, por timestamp, de menor a mayor
+{
+	list_sort(lista_paginas, comparar_timestamp);
+}
+
+t_pagina_completa* pagina_menor_timestamp(t_list* lista_paginas)
+{
+	ordenar_lista(lista_paginas);
+	return list_get(lista_paginas, 0);
+}
+
+void reemplazar_pagina(char* nombre_tabla, t_pagina_completa* pagina_completa)
+{
+	t_list* lista_paginas_sin_modificar = paginas_sin_modificar(nombre_tabla);
+	t_pagina_completa* pagina_con_menor_timestamp = pagina_menor_timestamp(lista_paginas_sin_modificar);
+
+	t_list* tabla_paginas= buscar_tabla_paginas(nombre_tabla);
+
+
+	int i = 0;
+	t_pagina_completa* pagina_A_Reemplazar = list_get(tabla_paginas,i);
+	while(pagina_con_menor_timestamp->pagina->timestamp != pagina_A_Reemplazar->pagina->timestamp){
+		i++;
+		pagina_A_Reemplazar = list_get(tabla_paginas,i);
+	}
+	list_replace(tabla_paginas,i,pagina_completa);
+}
 //-----------------------MOSTRAR ELEMENTOS
 
 void mostrar_pagina(t_pagina* pagina)
@@ -143,7 +200,7 @@ void mostrar_pagina(t_pagina* pagina)
 
 void mostrar_pagina_completa(t_pagina_completa* pagina_completa)
 {
-	printf("%d   %s  %lld %d", pagina_completa -> pagina -> valor_key, pagina_completa -> pagina -> value, pagina_completa -> pagina -> timestamp, pagina_completa -> flag);
+	printf("%d   %s  %lld %d. ", pagina_completa -> pagina -> valor_key, pagina_completa -> pagina -> value, pagina_completa -> pagina -> timestamp, pagina_completa -> flag);
 }
 
 void mostrar_tabla_paginas(t_tabla_paginas* tabla_paginas)//mostrar todas las paginas de la tabla
@@ -166,13 +223,13 @@ void startup_memoria()
 
 
 	t_list* tabla_paginas0 = crear_tabla_paginas("TABLA0",4);
-	t_list* tabla_paginas1 = crear_tabla_paginas("TABLA1",5);
-	t_list* tabla_paginas2 = crear_tabla_paginas("TABLA2",5);
+	t_list* tabla_paginas1 = crear_tabla_paginas("TABLA1",4);
+	t_list* tabla_paginas2 = crear_tabla_paginas("TABLA2",7);
 
 	t_pagina* pagina0 = crear_pagina(0, "cero", 12);
 	t_pagina* pagina1 = crear_pagina(1, "uno", 34);
 	t_pagina* pagina2 = crear_pagina(2, "dos", 56);
-	t_pagina* pagina3 = crear_pagina(3, "tres", 78);
+	t_pagina* pagina3 = crear_pagina(3, "tres", 178);
 	t_pagina* pagina4 = crear_pagina(4, "cuatro", 90);
 
 	t_pagina_completa* pagina_completa0 = crear_pagina_completa(pagina0);
@@ -182,8 +239,9 @@ void startup_memoria()
 	t_pagina_completa* pagina_completa4 = crear_pagina_completa(pagina4);
 
 	agregar_pagina("TABLA0", pagina_completa0);
-	agregar_pagina("TABLA1", pagina_completa1);
-	agregar_pagina("TABLA2", pagina_completa2);
 	agregar_pagina("TABLA0", pagina_completa3);
 	agregar_pagina("TABLA0", pagina_completa4);
+	agregar_pagina("TABLA1", pagina_completa1);
+	agregar_pagina("TABLA2", pagina_completa2);
+
 }

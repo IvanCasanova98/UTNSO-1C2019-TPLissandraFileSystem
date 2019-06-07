@@ -1,15 +1,5 @@
 #include "envio.h"
 
-//----------------------------ARCHIVOS LOGGER Y CONFIG
-
-t_log* iniciar_logger() {
-	return log_create("Kernel.log", "Kernel", 1, LOG_LEVEL_INFO);
-}
-
-t_config* leer_config() {
-	return config_create("Kernel.config");
-}
-
 //----------------------------SERIALIZAR PAQUETES
 
 void* serializar_paquete_select(t_paquete_select* paquete)
@@ -98,7 +88,7 @@ void enviar_paquete_select(t_paquete_select* paquete, int socket_cliente) //DEBE
 	if ( send(socket_cliente, a_enviar, bytes, 0) <= 0) puts("Error en envio de PAQUETE SELECT.");
 	else {
 			t_log* logger = iniciar_logger();
-			log_info(logger, "PAQUETE SELECT ENVIADO");
+			log_info(logger, "SELECT ENVIADO");
 		    log_destroy(logger);
 
 	}
@@ -112,7 +102,7 @@ void enviar_paquete_insert(t_paquete_insert* paquete, int socket_cliente)
 	if ( send(socket_cliente, a_enviar, bytes, 0) <= 0) puts("Error en envio de PAQUETE INSERT.");
 	else {
 			t_log* logger = iniciar_logger();
-			log_info(logger, "PAQUETE INSERT ENVIADO");
+			log_info(logger, "INSERT ENVIADO\n");
 		    log_destroy(logger);
 	}
 
@@ -127,7 +117,7 @@ void enviar_paquete_create(t_paquete_create* paquete, int socket_cliente)
 	if ( send(socket_cliente, a_enviar, bytes, 0) <= 0) puts("Error en envio de PAQUETE CREATE.");
 	else {
 			t_log* logger = iniciar_logger();
-			log_info(logger, "PAQUETE CREATE ENVIADO");
+			log_info(logger, "CREATE ENVIADO\n");
 		    log_destroy(logger);
 	}
 

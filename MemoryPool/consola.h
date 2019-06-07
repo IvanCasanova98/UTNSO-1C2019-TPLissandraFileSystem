@@ -21,6 +21,7 @@
 #include "conexion.h"
 #include "paquete.h"
 #include "utils.h"
+#include "API.h"
 
 //---------------------INGRESO DE PAQUETE
 void ingresar_paquete(void * arg);

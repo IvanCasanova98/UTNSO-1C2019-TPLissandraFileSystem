@@ -1,3 +1,5 @@
+//NO REVISAR EXISTENCIAS DE TABLAS PARA INSERT Y SELECT
+
 #include "MemoryPool.h"
 
 int main(int argc, char* archivo[])

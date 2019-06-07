@@ -26,6 +26,7 @@ void seleccionar_paquete(char* lineaRequest, int conexion){
 			if (send(conexion, &cod_ingresado, sizeof(int), 0) <= 0) puts("Error en envio de CODIGO DE OPERACION.");
 			else
 			{
+				enviar_paquete_create(paquete_create,conexion);
 			}
 
 			free(paquete_create);
@@ -57,16 +58,12 @@ void seleccionar_paquete(char* lineaRequest, int conexion){
 			break;
 
 		case 8:;
-			funcion_LQL(parametros, conexion);
-
-			break;
-
-		case 9:
 			return;
+		case 9:
+			funcion_LQL(parametros, conexion);
+			break;
 		default:
-
-			printf("Operacion desconocida.");
+			printf("Operacion desconocida.\n\n");
 			break;
 	}
-
 }

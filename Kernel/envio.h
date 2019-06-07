@@ -13,10 +13,8 @@
 #include<commons/config.h>
 
 #include "paquete.h"
+#include "utils.h"
 
-//----------------------------ARCHIVOS LOGGER/CONFIG
-t_log* iniciar_logger(void);
-t_config* leer_config(void);
 
 //----------------------------SERIALIZAR PAQUETES
 void* serializar_paquete_select(t_paquete_select* paquete);

@@ -1,55 +1,2370 @@
-[INFO] 10:46:32:599 Kernel/(4570:4570): CONECTANDO CON MEMORY POOL
-[INFO] 10:46:40:172 Kernel/(4570:4570): NUEVO PAQUETE SELECT CREADO
-Nombre tabla: TABLA0
-Valor KEY   : 0
-[INFO] 10:46:40:173 Kernel/(4570:4570): PAQUETE SELECT ENVIADO
-[INFO] 10:46:52:411 Kernel/(4570:4570): NUEVO PAQUETE INSERT CREADO
-Nombre tabla: TABLA0
-Valor KEY   : 2
-Value       : value
-[INFO] 10:46:52:411 Kernel/(4570:4570): PAQUETE INSERT ENVIADO
-[INFO] 10:47:01:236 Kernel/(4570:4570): NUEVO PAQUETE SELECT CREADO
-Nombre tabla: TABLA0
-Valor KEY   : 2
-[INFO] 10:47:01:236 Kernel/(4570:4570): PAQUETE SELECT ENVIADO
-[INFO] 10:47:25:498 Kernel/(4570:4570): NUEVO PAQUETE INSERT CREADO
-Nombre tabla: TABLA0
-Valor KEY   : 3
-Value       : valor2
-[INFO] 10:47:25:498 Kernel/(4570:4570): PAQUETE INSERT ENVIADO
-[INFO] 10:47:39:418 Kernel/(4570:4570): NUEVO PAQUETE INSERT CREADO
-Nombre tabla: TABLA0
-Valor KEY   : 3
-Value       : valor2
-[INFO] 10:47:39:418 Kernel/(4570:4570): PAQUETE INSERT ENVIADO
-[INFO] 10:47:54:918 Kernel/(4570:4570): NUEVO PAQUETE CREATE CREADO
-Nombre tabla: TABLA4
-Consistencia   : SC
-Particiones       : 5
-Tiempo de Compactacion       : 4000
-[INFO] 10:47:54:919 Kernel/(4570:4570): PAQUETE CREATE ENVIADO
-[INFO] 10:48:26:529 Kernel/(4570:4570): NUEVO PAQUETE INSERT CREADO
-Nombre tabla: TABLA4
-Valor KEY   : 0
-Value       : value
-[INFO] 10:48:26:529 Kernel/(4570:4570): PAQUETE INSERT ENVIADO
-[INFO] 10:48:52:106 Kernel/(4570:4570): NUEVO PAQUETE SELECT CREADO
-Nombre tabla: TABLA4
-Valor KEY   : 0
-[INFO] 10:48:52:107 Kernel/(4570:4570): PAQUETE SELECT ENVIADO
-[INFO] 10:49:17:584 Kernel/(4570:4570): NUEVO PAQUETE CREATE CREADO
-Nombre tabla: TABLA5
+[INFO] 16:09:50:567 Kernel/(4444:4444): CREATE
+Nombre tabla: POSTRES
 Consistencia   : SC
 Particiones       : 3
-Tiempo de Compactacion       : 4000
-[INFO] 10:49:17:584 Kernel/(4570:4570): PAQUETE CREATE ENVIADO
-[INFO] 10:49:29:950 Kernel/(4570:4570): NUEVO PAQUETE INSERT CREADO
-Nombre tabla: TABLA5
-Valor KEY   : 2
-Value       : svalor
-[INFO] 10:49:29:950 Kernel/(4570:4570): PAQUETE INSERT ENVIADO
-[INFO] 10:49:36:151 Kernel/(4570:4570): NUEVO PAQUETE SELECT CREADO
-Nombre tabla: TABLA5
-Valor KEY   : 2
-[INFO] 10:49:36:151 Kernel/(4570:4570): PAQUETE SELECT ENVIADO
-[INFO] 10:52:53:704 Kernel/(4673:4673): CONECTANDO CON MEMORY POOL
+Tiempo de Compactacion       : 60000
+[INFO] 16:09:50:567 Kernel/(4444:4444): CREATE ENVIADO
+
+[INFO] 16:09:50:567 Kernel/(4444:4444): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 100
+Value       : Flan
+[INFO] 16:09:50:568 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:09:50:568 Kernel/(4444:4444): CREATE
+Nombre tabla: FRUTAS
+Consistencia   : SC
+Particiones       : 2
+Tiempo de Compactacion       : 50000
+[INFO] 16:09:50:568 Kernel/(4444:4444): CREATE ENVIADO
+
+[INFO] 16:09:50:568 Kernel/(4444:4444): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 222
+Value       : Manzana
+[INFO] 16:09:50:568 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:09:50:569 Kernel/(4444:4444): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+Value       : Chocotorta
+[INFO] 16:09:50:569 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:09:50:569 Kernel/(4444:4444): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 34
+Value       : Banana
+[INFO] 16:09:50:569 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:09:50:569 Kernel/(4444:4444): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 4000
+Value       : Tiramisu
+[INFO] 16:09:50:569 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:09:50:569 Kernel/(4444:4444): CREATE
+Nombre tabla: BEBIDAS
+Consistencia   : SC
+Particiones       : 6
+Tiempo de Compactacion       : 10000
+[INFO] 16:09:50:570 Kernel/(4444:4444): CREATE ENVIADO
+
+[INFO] 16:09:50:570 Kernel/(4444:4444): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 10245
+Value       : Pera
+[INFO] 16:09:50:570 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:09:50:570 Kernel/(4444:4444): SELECT
+Nombre tabla: FRUTAS
+Valor KEY   : 34
+[INFO] 16:09:50:570 Kernel/(4444:4444): SELECT ENVIADO
+[INFO] 16:09:50:606 Kernel/(4444:4444): Value recibido: Banana
+
+[INFO] 16:09:50:606 Kernel/(4444:4444): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+Value       : Helado
+[INFO] 16:09:50:606 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:09:50:606 Kernel/(4444:4444): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+[INFO] 16:09:50:606 Kernel/(4444:4444): SELECT ENVIADO
+[INFO] 16:09:50:645 Kernel/(4444:4444): Value recibido: Chocotorta
+
+[INFO] 16:09:50:645 Kernel/(4444:4444): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+Value       : Almendrado
+[INFO] 16:09:50:645 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:09:50:645 Kernel/(4444:4444): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 621
+Value       : Uva
+[INFO] 16:09:50:645 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:09:50:645 Kernel/(4444:4444): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 10
+Value       : Pepsi
+[INFO] 16:09:50:645 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:09:50:645 Kernel/(4444:4444): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+Value       : Coca Cola
+[INFO] 16:09:50:645 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:09:50:645 Kernel/(4444:4444): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+[INFO] 16:09:50:646 Kernel/(4444:4444): SELECT ENVIADO
+[INFO] 16:09:50:685 Kernel/(4444:4444): Value recibido: Coca Cola
+
+[INFO] 16:09:50:685 Kernel/(4444:4444): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+Value       : Sprite
+[INFO] 16:09:50:685 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:09:50:685 Kernel/(4444:4444): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+[INFO] 16:09:50:685 Kernel/(4444:4444): SELECT ENVIADO
+[INFO] 16:09:50:725 Kernel/(4444:4444): Value recibido: Chocotorta
+
+[INFO] 16:09:50:725 Kernel/(4444:4444): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 80
+Value       : Bizcochuelo
+[INFO] 16:09:50:725 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:09:50:725 Kernel/(4444:4444): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 7338
+Value       : Limonada
+[INFO] 16:09:50:726 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:09:50:726 Kernel/(4444:4444): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 621
+Value       : Melon
+[INFO] 16:09:50:726 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:09:50:726 Kernel/(4444:4444): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 34
+Value       : Manzana
+[INFO] 16:09:50:726 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:09:50:726 Kernel/(4444:4444): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+[INFO] 16:09:50:726 Kernel/(4444:4444): SELECT ENVIADO
+[INFO] 16:09:50:765 Kernel/(4444:4444): Value recibido: Coca Cola
+
+[INFO] 16:09:50:765 Kernel/(4444:4444): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 8927
+Value       : Budin de pan
+[INFO] 16:09:50:765 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:09:50:765 Kernel/(4444:4444): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 222
+Value       : Sandia
+[INFO] 16:09:50:765 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:09:50:765 Kernel/(4444:4444): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 44
+Value       : Exprimido
+[INFO] 16:09:50:765 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:09:50:765 Kernel/(4444:4444): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 7338
+Value       : Agua con gas
+[INFO] 16:09:50:765 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:09:50:765 Kernel/(4444:4444): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 222
+Value       : Manzana
+[INFO] 16:09:50:765 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:09:50:766 Kernel/(4444:4444): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 34
+Value       : Cereza
+[INFO] 16:09:50:766 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:09:50:766 Kernel/(4444:4444): SELECT
+Nombre tabla: FRUTAS
+Valor KEY   : 34
+[INFO] 16:09:50:766 Kernel/(4444:4444): SELECT ENVIADO
+[INFO] 16:09:50:805 Kernel/(4444:4444): Value recibido: Banana
+
+[INFO] 16:09:50:805 Kernel/(4444:4444): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 44
+[INFO] 16:09:50:805 Kernel/(4444:4444): SELECT ENVIADO
+[INFO] 16:09:50:845 Kernel/(4444:4444): Value recibido: Exprimido
+
+[INFO] 16:09:50:845 Kernel/(4444:4444): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 10245
+Value       : Frutilla
+[INFO] 16:09:50:845 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:09:50:845 Kernel/(4444:4444): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 4000
+Value       : Gelatina
+[INFO] 16:09:50:845 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:09:50:845 Kernel/(4444:4444): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 100
+Value       : Helado
+[INFO] 16:09:50:845 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:09:50:845 Kernel/(4444:4444): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+Value       : Almendrado
+[INFO] 16:09:50:846 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:09:50:846 Kernel/(4444:4444): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+[INFO] 16:09:50:846 Kernel/(4444:4444): SELECT ENVIADO
+[INFO] 16:09:50:885 Kernel/(4444:4444): Value recibido: Coca Cola
+
+[INFO] 16:09:50:885 Kernel/(4444:4444): CREATE
+Nombre tabla: PLATOS_PRINCIPALES
+Consistencia   : SC
+Particiones       : 2
+Tiempo de Compactacion       : 60000
+[INFO] 16:09:50:885 Kernel/(4444:4444): CREATE ENVIADO
+
+[INFO] 16:09:50:885 Kernel/(4444:4444): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 231
+Value       : Flan
+[INFO] 16:09:50:885 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:09:50:885 Kernel/(4444:4444): INSERT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 271
+Value       : Milanesa
+[INFO] 16:09:50:886 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:09:50:886 Kernel/(4444:4444): INSERT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 32
+Value       : Omelette
+[INFO] 16:09:50:886 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:09:50:886 Kernel/(4444:4444): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 80
+Value       : Tiramisu
+[INFO] 16:09:50:886 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:09:50:886 Kernel/(4444:4444): SELECT
+Nombre tabla: FRUTAS
+Valor KEY   : 222
+[INFO] 16:09:50:886 Kernel/(4444:4444): SELECT ENVIADO
+[INFO] 16:09:50:925 Kernel/(4444:4444): Value recibido: Manzana
+
+[INFO] 16:09:50:925 Kernel/(4444:4444): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 231
+[INFO] 16:09:50:925 Kernel/(4444:4444): SELECT ENVIADO
+[INFO] 16:09:50:965 Kernel/(4444:4444): Value recibido: Key no encontrada
+
+[INFO] 16:09:50:965 Kernel/(4444:4444): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 44
+[INFO] 16:09:50:965 Kernel/(4444:4444): SELECT ENVIADO
+[INFO] 16:09:51:5 Kernel/(4444:4444): Value recibido: Exprimido
+
+[INFO] 16:09:51:5 Kernel/(4444:4444): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 80
+[INFO] 16:09:51:5 Kernel/(4444:4444): SELECT ENVIADO
+[INFO] 16:09:51:45 Kernel/(4444:4444): Value recibido: Key no encontrada
+
+[INFO] 16:09:51:45 Kernel/(4444:4444): INSERT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 54
+Value       : Hamburguesa
+[INFO] 16:09:51:45 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:09:51:45 Kernel/(4444:4444): SELECT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 271
+[INFO] 16:09:51:45 Kernel/(4444:4444): SELECT ENVIADO
+[INFO] 16:09:51:85 Kernel/(4444:4444): Value recibido: Milanesa
+
+[INFO] 16:09:51:85 Kernel/(4444:4444): INSERT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 271
+Value       : Pizza
+[INFO] 16:09:51:85 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:09:51:85 Kernel/(4444:4444): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 10
+Value       : Fanta
+[INFO] 16:09:51:85 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:09:51:85 Kernel/(4444:4444): INSERT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 32
+Value       : Empanadas
+[INFO] 16:09:51:85 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:09:51:85 Kernel/(4444:4444): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 8927
+Value       : Helado
+[INFO] 16:09:51:85 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:09:51:85 Kernel/(4444:4444): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 100
+Value       : Chocotorta
+[INFO] 16:09:51:85 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:09:51:85 Kernel/(4444:4444): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+Value       : Mate
+[INFO] 16:09:51:85 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:09:51:85 Kernel/(4444:4444): SELECT
+Nombre tabla: FRUTAS
+Valor KEY   : 10245
+[INFO] 16:09:51:86 Kernel/(4444:4444): SELECT ENVIADO
+[INFO] 16:09:51:125 Kernel/(4444:4444): Value recibido: Key no encontrada
+
+[INFO] 16:09:51:125 Kernel/(4444:4444): SELECT
+Nombre tabla: FRUTAS
+Valor KEY   : 22
+[INFO] 16:09:51:125 Kernel/(4444:4444): SELECT ENVIADO
+[INFO] 16:09:51:165 Kernel/(4444:4444): Value recibido: Key no encontrada
+
+[INFO] 16:09:51:165 Kernel/(4444:4444): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 100
+Value       : Helado
+[INFO] 16:09:51:165 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:09:51:165 Kernel/(4444:4444): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 100
+[INFO] 16:09:51:165 Kernel/(4444:4444): SELECT ENVIADO
+[INFO] 16:09:51:205 Kernel/(4444:4444): Value recibido: Flan
+
+[INFO] 16:09:51:205 Kernel/(4444:4444): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+Value       : Muffin
+[INFO] 16:09:51:205 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:09:51:205 Kernel/(4444:4444): SELECT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 54
+[INFO] 16:09:51:205 Kernel/(4444:4444): SELECT ENVIADO
+[INFO] 16:09:51:245 Kernel/(4444:4444): Value recibido: Key no encontrada
+
+[INFO] 16:09:51:245 Kernel/(4444:4444): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 10245
+[INFO] 16:09:51:245 Kernel/(4444:4444): SELECT ENVIADO
+[INFO] 16:09:51:285 Kernel/(4444:4444): Value recibido: Key no encontrada
+
+[INFO] 16:09:51:285 Kernel/(4444:4444): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+[INFO] 16:09:51:285 Kernel/(4444:4444): SELECT ENVIADO
+[INFO] 16:09:51:325 Kernel/(4444:4444): Value recibido: Chocotorta
+
+[INFO] 16:09:51:325 Kernel/(4444:4444): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 10
+[INFO] 16:09:51:325 Kernel/(4444:4444): SELECT ENVIADO
+[INFO] 16:09:51:365 Kernel/(4444:4444): Value recibido: Pepsi
+
+[INFO] 16:09:51:365 Kernel/(4444:4444): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 8927
+[INFO] 16:09:51:365 Kernel/(4444:4444): SELECT ENVIADO
+[INFO] 16:09:51:405 Kernel/(4444:4444): Value recibido: Key no encontrada
+
+[INFO] 16:09:51:405 Kernel/(4444:4444): SELECT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 271
+[INFO] 16:09:51:405 Kernel/(4444:4444): SELECT ENVIADO
+[INFO] 16:09:51:446 Kernel/(4444:4444): Value recibido: Milanesa
+
+[INFO] 16:14:39:399 Kernel/(4444:4444): CREATE
+Nombre tabla: POSTRES
+Consistencia   : SC
+Particiones       : 3
+Tiempo de Compactacion       : 60000
+[INFO] 16:14:39:399 Kernel/(4444:4444): CREATE ENVIADO
+
+[INFO] 16:14:39:399 Kernel/(4444:4444): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 100
+Value       : Flan
+[INFO] 16:14:39:400 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:14:39:400 Kernel/(4444:4444): CREATE
+Nombre tabla: FRUTAS
+Consistencia   : SC
+Particiones       : 2
+Tiempo de Compactacion       : 50000
+[INFO] 16:14:39:400 Kernel/(4444:4444): CREATE ENVIADO
+
+[INFO] 16:14:39:400 Kernel/(4444:4444): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 222
+Value       : Manzana
+[INFO] 16:14:39:400 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:14:39:400 Kernel/(4444:4444): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+Value       : Chocotorta
+[INFO] 16:14:39:401 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:14:39:401 Kernel/(4444:4444): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 34
+Value       : Banana
+[INFO] 16:14:39:401 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:14:39:401 Kernel/(4444:4444): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 4000
+Value       : Tiramisu
+[INFO] 16:14:39:401 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:14:39:401 Kernel/(4444:4444): CREATE
+Nombre tabla: BEBIDAS
+Consistencia   : SC
+Particiones       : 6
+Tiempo de Compactacion       : 10000
+[INFO] 16:14:39:401 Kernel/(4444:4444): CREATE ENVIADO
+
+[INFO] 16:14:39:402 Kernel/(4444:4444): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 10245
+Value       : Pera
+[INFO] 16:14:39:402 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:14:39:402 Kernel/(4444:4444): SELECT
+Nombre tabla: FRUTAS
+Valor KEY   : 34
+[INFO] 16:14:39:402 Kernel/(4444:4444): SELECT ENVIADO
+[INFO] 16:14:39:437 Kernel/(4444:4444): Value recibido: Banana
+
+[INFO] 16:14:39:437 Kernel/(4444:4444): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+Value       : Helado
+[INFO] 16:14:39:437 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:14:39:437 Kernel/(4444:4444): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+[INFO] 16:14:39:437 Kernel/(4444:4444): SELECT ENVIADO
+[INFO] 16:14:39:477 Kernel/(4444:4444): Value recibido: Chocotorta
+
+[INFO] 16:14:39:477 Kernel/(4444:4444): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+Value       : Almendrado
+[INFO] 16:14:39:477 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:14:39:478 Kernel/(4444:4444): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 621
+Value       : Uva
+[INFO] 16:14:39:478 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:14:39:478 Kernel/(4444:4444): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 10
+Value       : Pepsi
+[INFO] 16:14:39:478 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:14:39:478 Kernel/(4444:4444): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+Value       : Coca Cola
+[INFO] 16:14:39:478 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:14:39:478 Kernel/(4444:4444): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+[INFO] 16:14:39:478 Kernel/(4444:4444): SELECT ENVIADO
+[INFO] 16:14:39:517 Kernel/(4444:4444): Value recibido: Coca Cola
+
+[INFO] 16:14:39:517 Kernel/(4444:4444): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+Value       : Sprite
+[INFO] 16:14:39:517 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:14:39:517 Kernel/(4444:4444): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+[INFO] 16:14:39:517 Kernel/(4444:4444): SELECT ENVIADO
+[INFO] 16:14:39:557 Kernel/(4444:4444): Value recibido: Chocotorta
+
+[INFO] 16:14:39:557 Kernel/(4444:4444): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 80
+Value       : Bizcochuelo
+[INFO] 16:14:39:557 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:14:39:557 Kernel/(4444:4444): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 7338
+Value       : Limonada
+[INFO] 16:14:39:557 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:14:39:557 Kernel/(4444:4444): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 621
+Value       : Melon
+[INFO] 16:14:39:557 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:14:39:557 Kernel/(4444:4444): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 34
+Value       : Manzana
+[INFO] 16:14:39:558 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:14:39:558 Kernel/(4444:4444): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+[INFO] 16:14:39:558 Kernel/(4444:4444): SELECT ENVIADO
+[INFO] 16:14:39:597 Kernel/(4444:4444): Value recibido: Coca Cola
+
+[INFO] 16:14:39:597 Kernel/(4444:4444): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 8927
+Value       : Budin de pan
+[INFO] 16:14:39:597 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:14:39:597 Kernel/(4444:4444): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 222
+Value       : Sandia
+[INFO] 16:14:39:597 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:14:39:597 Kernel/(4444:4444): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 44
+Value       : Exprimido
+[INFO] 16:14:39:597 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:14:39:597 Kernel/(4444:4444): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 7338
+Value       : Agua con gas
+[INFO] 16:14:39:597 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:14:39:597 Kernel/(4444:4444): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 222
+Value       : Manzana
+[INFO] 16:14:39:598 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:14:39:598 Kernel/(4444:4444): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 34
+Value       : Cereza
+[INFO] 16:14:39:598 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:14:39:598 Kernel/(4444:4444): SELECT
+Nombre tabla: FRUTAS
+Valor KEY   : 34
+[INFO] 16:14:39:598 Kernel/(4444:4444): SELECT ENVIADO
+[INFO] 16:14:39:638 Kernel/(4444:4444): Value recibido: Banana
+
+[INFO] 16:14:39:638 Kernel/(4444:4444): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 44
+[INFO] 16:14:39:638 Kernel/(4444:4444): SELECT ENVIADO
+[INFO] 16:14:39:677 Kernel/(4444:4444): Value recibido: Exprimido
+
+[INFO] 16:14:39:677 Kernel/(4444:4444): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 10245
+Value       : Frutilla
+[INFO] 16:14:39:677 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:14:39:677 Kernel/(4444:4444): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 4000
+Value       : Gelatina
+[INFO] 16:14:39:677 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:14:39:677 Kernel/(4444:4444): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 100
+Value       : Helado
+[INFO] 16:14:39:677 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:14:39:677 Kernel/(4444:4444): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+Value       : Almendrado
+[INFO] 16:14:39:677 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:14:39:677 Kernel/(4444:4444): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+[INFO] 16:14:39:677 Kernel/(4444:4444): SELECT ENVIADO
+[INFO] 16:14:39:717 Kernel/(4444:4444): Value recibido: Coca Cola
+
+[INFO] 16:14:39:717 Kernel/(4444:4444): CREATE
+Nombre tabla: PLATOS_PRINCIPALES
+Consistencia   : SC
+Particiones       : 2
+Tiempo de Compactacion       : 60000
+[INFO] 16:14:39:717 Kernel/(4444:4444): CREATE ENVIADO
+
+[INFO] 16:14:39:717 Kernel/(4444:4444): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 231
+Value       : Flan
+[INFO] 16:14:39:717 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:14:39:718 Kernel/(4444:4444): INSERT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 271
+Value       : Milanesa
+[INFO] 16:14:39:718 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:14:39:718 Kernel/(4444:4444): INSERT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 32
+Value       : Omelette
+[INFO] 16:14:39:718 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:14:39:718 Kernel/(4444:4444): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 80
+Value       : Tiramisu
+[INFO] 16:14:39:718 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:14:39:718 Kernel/(4444:4444): SELECT
+Nombre tabla: FRUTAS
+Valor KEY   : 222
+[INFO] 16:14:39:718 Kernel/(4444:4444): SELECT ENVIADO
+[INFO] 16:14:39:757 Kernel/(4444:4444): Value recibido: Manzana
+
+[INFO] 16:14:39:757 Kernel/(4444:4444): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 231
+[INFO] 16:14:39:757 Kernel/(4444:4444): SELECT ENVIADO
+[INFO] 16:14:39:797 Kernel/(4444:4444): Value recibido: Key no encontrada
+
+[INFO] 16:14:39:797 Kernel/(4444:4444): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 44
+[INFO] 16:14:39:797 Kernel/(4444:4444): SELECT ENVIADO
+[INFO] 16:14:39:837 Kernel/(4444:4444): Value recibido: Exprimido
+
+[INFO] 16:14:39:837 Kernel/(4444:4444): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 80
+[INFO] 16:14:39:837 Kernel/(4444:4444): SELECT ENVIADO
+[INFO] 16:14:39:877 Kernel/(4444:4444): Value recibido: Key no encontrada
+
+[INFO] 16:14:39:877 Kernel/(4444:4444): INSERT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 54
+Value       : Hamburguesa
+[INFO] 16:14:39:877 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:14:39:877 Kernel/(4444:4444): SELECT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 271
+[INFO] 16:14:39:877 Kernel/(4444:4444): SELECT ENVIADO
+[INFO] 16:14:39:917 Kernel/(4444:4444): Value recibido: Milanesa
+
+[INFO] 16:14:39:917 Kernel/(4444:4444): INSERT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 271
+Value       : Pizza
+[INFO] 16:14:39:917 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:14:39:917 Kernel/(4444:4444): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 10
+Value       : Fanta
+[INFO] 16:14:39:918 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:14:39:918 Kernel/(4444:4444): INSERT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 32
+Value       : Empanadas
+[INFO] 16:14:39:918 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:14:39:918 Kernel/(4444:4444): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 8927
+Value       : Helado
+[INFO] 16:14:39:918 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:14:39:918 Kernel/(4444:4444): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 100
+Value       : Chocotorta
+[INFO] 16:14:39:918 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:14:39:918 Kernel/(4444:4444): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+Value       : Mate
+[INFO] 16:14:39:918 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:14:39:918 Kernel/(4444:4444): SELECT
+Nombre tabla: FRUTAS
+Valor KEY   : 10245
+[INFO] 16:14:39:918 Kernel/(4444:4444): SELECT ENVIADO
+[INFO] 16:14:39:958 Kernel/(4444:4444): Value recibido: Key no encontrada
+
+[INFO] 16:14:39:958 Kernel/(4444:4444): SELECT
+Nombre tabla: FRUTAS
+Valor KEY   : 22
+[INFO] 16:14:39:958 Kernel/(4444:4444): SELECT ENVIADO
+[INFO] 16:14:39:997 Kernel/(4444:4444): Value recibido: Key no encontrada
+
+[INFO] 16:14:39:997 Kernel/(4444:4444): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 100
+Value       : Helado
+[INFO] 16:14:39:997 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:14:39:997 Kernel/(4444:4444): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 100
+[INFO] 16:14:39:997 Kernel/(4444:4444): SELECT ENVIADO
+[INFO] 16:14:40:37 Kernel/(4444:4444): Value recibido: Flan
+
+[INFO] 16:14:40:37 Kernel/(4444:4444): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+Value       : Muffin
+[INFO] 16:14:40:37 Kernel/(4444:4444): INSERT ENVIADO
+
+[INFO] 16:14:40:37 Kernel/(4444:4444): SELECT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 54
+[INFO] 16:14:40:37 Kernel/(4444:4444): SELECT ENVIADO
+[INFO] 16:14:40:77 Kernel/(4444:4444): Value recibido: Key no encontrada
+
+[INFO] 16:14:40:77 Kernel/(4444:4444): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 10245
+[INFO] 16:14:40:77 Kernel/(4444:4444): SELECT ENVIADO
+[INFO] 16:14:40:117 Kernel/(4444:4444): Value recibido: Key no encontrada
+
+[INFO] 16:14:40:117 Kernel/(4444:4444): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+[INFO] 16:14:40:118 Kernel/(4444:4444): SELECT ENVIADO
+[INFO] 16:14:40:157 Kernel/(4444:4444): Value recibido: Chocotorta
+
+[INFO] 16:14:40:157 Kernel/(4444:4444): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 10
+[INFO] 16:14:40:157 Kernel/(4444:4444): SELECT ENVIADO
+[INFO] 16:14:40:197 Kernel/(4444:4444): Value recibido: Pepsi
+
+[INFO] 16:14:40:197 Kernel/(4444:4444): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 8927
+[INFO] 16:14:40:197 Kernel/(4444:4444): SELECT ENVIADO
+[INFO] 16:14:40:237 Kernel/(4444:4444): Value recibido: Key no encontrada
+
+[INFO] 16:14:40:237 Kernel/(4444:4444): SELECT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 271
+[INFO] 16:14:40:237 Kernel/(4444:4444): SELECT ENVIADO
+[INFO] 16:14:40:277 Kernel/(4444:4444): Value recibido: Milanesa
+
+[INFO] 16:24:14:838 Kernel/(4773:4773): CONECTANDO CON MEMORY POOL
+[INFO] 16:24:26:281 Kernel/(4775:4775): CONECTANDO CON MEMORY POOL
+[INFO] 16:24:58:49 Kernel/(4792:4792): CONECTANDO CON MEMORY POOL
+[INFO] 16:25:02:183 Kernel/(4792:4792): CREATE
+Nombre tabla: POSTRES
+Consistencia   : SC
+Particiones       : 3
+Tiempo de Compactacion       : 60000
+[INFO] 16:25:02:185 Kernel/(4792:4792): CREATE ENVIADO
+
+[INFO] 16:25:02:185 Kernel/(4792:4792): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 100
+Value       : Flan
+[INFO] 16:25:02:185 Kernel/(4792:4792): INSERT ENVIADO
+
+[INFO] 16:25:02:185 Kernel/(4792:4792): CREATE
+Nombre tabla: FRUTAS
+Consistencia   : SC
+Particiones       : 2
+Tiempo de Compactacion       : 50000
+[INFO] 16:25:02:185 Kernel/(4792:4792): CREATE ENVIADO
+
+[INFO] 16:25:02:185 Kernel/(4792:4792): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 222
+Value       : Manzana
+[INFO] 16:25:02:185 Kernel/(4792:4792): INSERT ENVIADO
+
+[INFO] 16:25:02:186 Kernel/(4792:4792): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+Value       : Chocotorta
+[INFO] 16:25:02:186 Kernel/(4792:4792): INSERT ENVIADO
+
+[INFO] 16:25:02:186 Kernel/(4792:4792): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 34
+Value       : Banana
+[INFO] 16:25:02:186 Kernel/(4792:4792): INSERT ENVIADO
+
+[INFO] 16:25:02:186 Kernel/(4792:4792): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 4000
+Value       : Tiramisu
+[INFO] 16:25:02:186 Kernel/(4792:4792): INSERT ENVIADO
+
+[INFO] 16:25:02:186 Kernel/(4792:4792): CREATE
+Nombre tabla: BEBIDAS
+Consistencia   : SC
+Particiones       : 6
+Tiempo de Compactacion       : 10000
+[INFO] 16:25:02:186 Kernel/(4792:4792): CREATE ENVIADO
+
+[INFO] 16:25:02:186 Kernel/(4792:4792): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 10245
+Value       : Pera
+[INFO] 16:25:02:187 Kernel/(4792:4792): INSERT ENVIADO
+
+[INFO] 16:25:02:187 Kernel/(4792:4792): SELECT
+Nombre tabla: FRUTAS
+Valor KEY   : 34
+[INFO] 16:25:02:187 Kernel/(4792:4792): SELECT ENVIADO
+[INFO] 16:25:02:187 Kernel/(4792:4792): Value recibido: Banana
+
+[INFO] 16:25:02:187 Kernel/(4792:4792): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+Value       : Helado
+[INFO] 16:25:02:187 Kernel/(4792:4792): INSERT ENVIADO
+
+[INFO] 16:25:02:187 Kernel/(4792:4792): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+[INFO] 16:25:02:188 Kernel/(4792:4792): SELECT ENVIADO
+[INFO] 16:25:02:225 Kernel/(4792:4792): Value recibido: Chocotorta
+
+[INFO] 16:25:02:225 Kernel/(4792:4792): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+Value       : Almendrado
+[INFO] 16:25:02:225 Kernel/(4792:4792): INSERT ENVIADO
+
+[INFO] 16:25:02:225 Kernel/(4792:4792): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 621
+Value       : Uva
+[INFO] 16:25:02:225 Kernel/(4792:4792): INSERT ENVIADO
+
+[INFO] 16:25:02:225 Kernel/(4792:4792): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 10
+Value       : Pepsi
+[INFO] 16:25:02:225 Kernel/(4792:4792): INSERT ENVIADO
+
+[INFO] 16:25:02:225 Kernel/(4792:4792): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+Value       : Coca Cola
+[INFO] 16:25:02:225 Kernel/(4792:4792): INSERT ENVIADO
+
+[INFO] 16:25:02:226 Kernel/(4792:4792): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+[INFO] 16:25:02:226 Kernel/(4792:4792): SELECT ENVIADO
+[INFO] 16:25:02:265 Kernel/(4792:4792): Value recibido: Coca Cola
+
+[INFO] 16:25:02:265 Kernel/(4792:4792): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+Value       : Sprite
+[INFO] 16:25:02:269 Kernel/(4792:4792): INSERT ENVIADO
+
+[INFO] 16:25:02:269 Kernel/(4792:4792): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+[INFO] 16:25:02:269 Kernel/(4792:4792): SELECT ENVIADO
+[INFO] 16:25:02:309 Kernel/(4792:4792): Value recibido: Chocotorta
+
+[INFO] 16:25:02:309 Kernel/(4792:4792): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 80
+Value       : Bizcochuelo
+[INFO] 16:25:02:309 Kernel/(4792:4792): INSERT ENVIADO
+
+[INFO] 16:25:02:309 Kernel/(4792:4792): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 7338
+Value       : Limonada
+[INFO] 16:25:02:309 Kernel/(4792:4792): INSERT ENVIADO
+
+[INFO] 16:25:02:309 Kernel/(4792:4792): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 621
+Value       : Melon
+[INFO] 16:25:02:309 Kernel/(4792:4792): INSERT ENVIADO
+
+[INFO] 16:25:02:309 Kernel/(4792:4792): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 34
+Value       : Manzana
+[INFO] 16:25:02:309 Kernel/(4792:4792): INSERT ENVIADO
+
+[INFO] 16:25:02:310 Kernel/(4792:4792): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+[INFO] 16:25:02:310 Kernel/(4792:4792): SELECT ENVIADO
+[INFO] 16:25:02:349 Kernel/(4792:4792): Value recibido: Coca Cola
+
+[INFO] 16:25:02:349 Kernel/(4792:4792): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 8927
+Value       : Budin de pan
+[INFO] 16:25:02:349 Kernel/(4792:4792): INSERT ENVIADO
+
+[INFO] 16:25:02:349 Kernel/(4792:4792): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 222
+Value       : Sandia
+[INFO] 16:25:02:349 Kernel/(4792:4792): INSERT ENVIADO
+
+[INFO] 16:25:02:349 Kernel/(4792:4792): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 44
+Value       : Exprimido
+[INFO] 16:25:02:349 Kernel/(4792:4792): INSERT ENVIADO
+
+[INFO] 16:25:02:349 Kernel/(4792:4792): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 7338
+Value       : Agua con gas
+[INFO] 16:25:02:349 Kernel/(4792:4792): INSERT ENVIADO
+
+[INFO] 16:25:02:349 Kernel/(4792:4792): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 222
+Value       : Manzana
+[INFO] 16:25:02:350 Kernel/(4792:4792): INSERT ENVIADO
+
+[INFO] 16:25:02:350 Kernel/(4792:4792): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 34
+Value       : Cereza
+[INFO] 16:25:02:350 Kernel/(4792:4792): INSERT ENVIADO
+
+[INFO] 16:25:02:350 Kernel/(4792:4792): SELECT
+Nombre tabla: FRUTAS
+Valor KEY   : 34
+[INFO] 16:25:02:350 Kernel/(4792:4792): SELECT ENVIADO
+[INFO] 16:25:02:389 Kernel/(4792:4792): Value recibido: Banana
+
+[INFO] 16:25:02:389 Kernel/(4792:4792): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 44
+[INFO] 16:25:02:389 Kernel/(4792:4792): SELECT ENVIADO
+[INFO] 16:25:02:429 Kernel/(4792:4792): Value recibido: Exprimido
+
+[INFO] 16:25:02:429 Kernel/(4792:4792): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 10245
+Value       : Frutilla
+[INFO] 16:25:02:429 Kernel/(4792:4792): INSERT ENVIADO
+
+[INFO] 16:25:02:429 Kernel/(4792:4792): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 4000
+Value       : Gelatina
+[INFO] 16:25:02:429 Kernel/(4792:4792): INSERT ENVIADO
+
+[INFO] 16:25:02:429 Kernel/(4792:4792): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 100
+Value       : Helado
+[INFO] 16:25:02:429 Kernel/(4792:4792): INSERT ENVIADO
+
+[INFO] 16:25:02:429 Kernel/(4792:4792): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+Value       : Almendrado
+[INFO] 16:25:02:429 Kernel/(4792:4792): INSERT ENVIADO
+
+[INFO] 16:25:02:429 Kernel/(4792:4792): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+[INFO] 16:25:02:429 Kernel/(4792:4792): SELECT ENVIADO
+[INFO] 16:25:02:469 Kernel/(4792:4792): Value recibido: Coca Cola
+
+[INFO] 16:25:02:469 Kernel/(4792:4792): CREATE
+Nombre tabla: PLATOS_PRINCIPALES
+Consistencia   : SC
+Particiones       : 2
+Tiempo de Compactacion       : 60000
+[INFO] 16:25:02:469 Kernel/(4792:4792): CREATE ENVIADO
+
+[INFO] 16:25:02:469 Kernel/(4792:4792): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 231
+Value       : Flan
+[INFO] 16:25:02:469 Kernel/(4792:4792): INSERT ENVIADO
+
+[INFO] 16:25:02:469 Kernel/(4792:4792): INSERT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 271
+Value       : Milanesa
+[INFO] 16:25:02:469 Kernel/(4792:4792): INSERT ENVIADO
+
+[INFO] 16:25:02:470 Kernel/(4792:4792): INSERT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 32
+Value       : Omelette
+[INFO] 16:25:02:470 Kernel/(4792:4792): INSERT ENVIADO
+
+[INFO] 16:25:02:470 Kernel/(4792:4792): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 80
+Value       : Tiramisu
+[INFO] 16:25:02:470 Kernel/(4792:4792): INSERT ENVIADO
+
+[INFO] 16:25:02:470 Kernel/(4792:4792): SELECT
+Nombre tabla: FRUTAS
+Valor KEY   : 222
+[INFO] 16:25:02:470 Kernel/(4792:4792): SELECT ENVIADO
+[INFO] 16:25:02:509 Kernel/(4792:4792): Value recibido: Manzana
+
+[INFO] 16:25:02:510 Kernel/(4792:4792): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 231
+[INFO] 16:25:02:510 Kernel/(4792:4792): SELECT ENVIADO
+[INFO] 16:25:02:549 Kernel/(4792:4792): Value recibido: Key no encontrada
+
+[INFO] 16:25:02:549 Kernel/(4792:4792): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 44
+[INFO] 16:25:02:549 Kernel/(4792:4792): SELECT ENVIADO
+[INFO] 16:25:02:589 Kernel/(4792:4792): Value recibido: Exprimido
+
+[INFO] 16:25:02:589 Kernel/(4792:4792): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 80
+[INFO] 16:25:02:589 Kernel/(4792:4792): SELECT ENVIADO
+[INFO] 16:25:02:628 Kernel/(4792:4792): Value recibido: Key no encontrada
+
+[INFO] 16:25:02:629 Kernel/(4792:4792): INSERT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 54
+Value       : Hamburguesa
+[INFO] 16:25:02:629 Kernel/(4792:4792): INSERT ENVIADO
+
+[INFO] 16:25:02:629 Kernel/(4792:4792): SELECT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 271
+[INFO] 16:25:02:629 Kernel/(4792:4792): SELECT ENVIADO
+[INFO] 16:25:02:669 Kernel/(4792:4792): Value recibido: Milanesa
+
+[INFO] 16:25:02:669 Kernel/(4792:4792): INSERT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 271
+Value       : Pizza
+[INFO] 16:25:02:669 Kernel/(4792:4792): INSERT ENVIADO
+
+[INFO] 16:25:02:669 Kernel/(4792:4792): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 10
+Value       : Fanta
+[INFO] 16:25:02:669 Kernel/(4792:4792): INSERT ENVIADO
+
+[INFO] 16:25:02:669 Kernel/(4792:4792): INSERT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 32
+Value       : Empanadas
+[INFO] 16:25:02:669 Kernel/(4792:4792): INSERT ENVIADO
+
+[INFO] 16:25:02:669 Kernel/(4792:4792): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 8927
+Value       : Helado
+[INFO] 16:25:02:669 Kernel/(4792:4792): INSERT ENVIADO
+
+[INFO] 16:25:02:669 Kernel/(4792:4792): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 100
+Value       : Chocotorta
+[INFO] 16:25:02:669 Kernel/(4792:4792): INSERT ENVIADO
+
+[INFO] 16:25:02:669 Kernel/(4792:4792): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+Value       : Mate
+[INFO] 16:25:02:669 Kernel/(4792:4792): INSERT ENVIADO
+
+[INFO] 16:25:02:669 Kernel/(4792:4792): SELECT
+Nombre tabla: FRUTAS
+Valor KEY   : 10245
+[INFO] 16:25:02:670 Kernel/(4792:4792): SELECT ENVIADO
+[INFO] 16:25:02:709 Kernel/(4792:4792): Value recibido: Key no encontrada
+
+[INFO] 16:25:02:709 Kernel/(4792:4792): SELECT
+Nombre tabla: FRUTAS
+Valor KEY   : 22
+[INFO] 16:25:02:709 Kernel/(4792:4792): SELECT ENVIADO
+[INFO] 16:25:02:749 Kernel/(4792:4792): Value recibido: Key no encontrada
+
+[INFO] 16:25:02:749 Kernel/(4792:4792): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 100
+Value       : Helado
+[INFO] 16:25:02:749 Kernel/(4792:4792): INSERT ENVIADO
+
+[INFO] 16:25:02:749 Kernel/(4792:4792): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 100
+[INFO] 16:25:02:749 Kernel/(4792:4792): SELECT ENVIADO
+[INFO] 16:25:02:789 Kernel/(4792:4792): Value recibido: Flan
+
+[INFO] 16:25:02:789 Kernel/(4792:4792): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+Value       : Muffin
+[INFO] 16:25:02:789 Kernel/(4792:4792): INSERT ENVIADO
+
+[INFO] 16:25:02:789 Kernel/(4792:4792): SELECT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 54
+[INFO] 16:25:02:789 Kernel/(4792:4792): SELECT ENVIADO
+[INFO] 16:25:02:829 Kernel/(4792:4792): Value recibido: Key no encontrada
+
+[INFO] 16:25:02:829 Kernel/(4792:4792): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 10245
+[INFO] 16:25:02:829 Kernel/(4792:4792): SELECT ENVIADO
+[INFO] 16:25:02:869 Kernel/(4792:4792): Value recibido: Key no encontrada
+
+[INFO] 16:25:02:869 Kernel/(4792:4792): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+[INFO] 16:25:02:869 Kernel/(4792:4792): SELECT ENVIADO
+[INFO] 16:25:02:908 Kernel/(4792:4792): Value recibido: Chocotorta
+
+[INFO] 16:25:02:909 Kernel/(4792:4792): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 10
+[INFO] 16:25:02:909 Kernel/(4792:4792): SELECT ENVIADO
+[INFO] 16:25:02:949 Kernel/(4792:4792): Value recibido: Pepsi
+
+[INFO] 16:25:02:949 Kernel/(4792:4792): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 8927
+[INFO] 16:25:02:949 Kernel/(4792:4792): SELECT ENVIADO
+[INFO] 16:25:02:988 Kernel/(4792:4792): Value recibido: Key no encontrada
+
+[INFO] 16:25:02:989 Kernel/(4792:4792): SELECT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 271
+[INFO] 16:25:02:989 Kernel/(4792:4792): SELECT ENVIADO
+[INFO] 16:25:03:29 Kernel/(4792:4792): Value recibido: Milanesa
+
+[INFO] 16:37:19:33 Kernel/(5011:5011): CONECTANDO CON MEMORY POOL
+[INFO] 16:37:23:415 Kernel/(5011:5011): CREATE
+Nombre tabla: POSTRES
+Consistencia   : SC
+Particiones       : 3
+Tiempo de Compactacion       : 60000
+[INFO] 16:37:23:417 Kernel/(5011:5011): CREATE ENVIADO
+
+[INFO] 16:37:23:417 Kernel/(5011:5011): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 100
+Value       : Flan
+[INFO] 16:37:23:417 Kernel/(5011:5011): INSERT ENVIADO
+
+[INFO] 16:37:23:417 Kernel/(5011:5011): CREATE
+Nombre tabla: FRUTAS
+Consistencia   : SC
+Particiones       : 2
+Tiempo de Compactacion       : 50000
+[INFO] 16:37:23:417 Kernel/(5011:5011): CREATE ENVIADO
+
+[INFO] 16:37:23:418 Kernel/(5011:5011): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 222
+Value       : Manzana
+[INFO] 16:37:23:418 Kernel/(5011:5011): INSERT ENVIADO
+
+[INFO] 16:37:23:418 Kernel/(5011:5011): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+Value       : Chocotorta
+[INFO] 16:37:23:418 Kernel/(5011:5011): INSERT ENVIADO
+
+[INFO] 16:37:23:418 Kernel/(5011:5011): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 34
+Value       : Banana
+[INFO] 16:37:23:418 Kernel/(5011:5011): INSERT ENVIADO
+
+[INFO] 16:37:23:418 Kernel/(5011:5011): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 4000
+Value       : Tiramisu
+[INFO] 16:37:23:418 Kernel/(5011:5011): INSERT ENVIADO
+
+[INFO] 16:37:23:419 Kernel/(5011:5011): CREATE
+Nombre tabla: BEBIDAS
+Consistencia   : SC
+Particiones       : 6
+Tiempo de Compactacion       : 10000
+[INFO] 16:37:23:419 Kernel/(5011:5011): CREATE ENVIADO
+
+[INFO] 16:37:23:419 Kernel/(5011:5011): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 10245
+Value       : Pera
+[INFO] 16:37:23:419 Kernel/(5011:5011): INSERT ENVIADO
+
+[INFO] 16:37:23:421 Kernel/(5011:5011): SELECT
+Nombre tabla: FRUTAS
+Valor KEY   : 34
+[INFO] 16:37:23:421 Kernel/(5011:5011): SELECT ENVIADO
+[INFO] 16:37:23:421 Kernel/(5011:5011): Value recibido: Banana
+
+[INFO] 16:37:23:421 Kernel/(5011:5011): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+Value       : Helado
+[INFO] 16:37:23:421 Kernel/(5011:5011): INSERT ENVIADO
+
+[INFO] 16:37:23:421 Kernel/(5011:5011): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+[INFO] 16:37:23:422 Kernel/(5011:5011): SELECT ENVIADO
+[INFO] 16:37:23:461 Kernel/(5011:5011): Value recibido: Chocotorta
+
+[INFO] 16:37:23:461 Kernel/(5011:5011): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+Value       : Almendrado
+[INFO] 16:37:23:461 Kernel/(5011:5011): INSERT ENVIADO
+
+[INFO] 16:37:23:461 Kernel/(5011:5011): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 621
+Value       : Uva
+[INFO] 16:37:23:461 Kernel/(5011:5011): INSERT ENVIADO
+
+[INFO] 16:37:23:461 Kernel/(5011:5011): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 10
+Value       : Pepsi
+[INFO] 16:37:23:461 Kernel/(5011:5011): INSERT ENVIADO
+
+[INFO] 16:37:23:461 Kernel/(5011:5011): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+Value       : Coca Cola
+[INFO] 16:37:23:461 Kernel/(5011:5011): INSERT ENVIADO
+
+[INFO] 16:37:23:461 Kernel/(5011:5011): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+[INFO] 16:37:23:461 Kernel/(5011:5011): SELECT ENVIADO
+[INFO] 16:37:23:501 Kernel/(5011:5011): Value recibido: Coca Cola
+
+[INFO] 16:37:23:502 Kernel/(5011:5011): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+Value       : Sprite
+[INFO] 16:37:23:502 Kernel/(5011:5011): INSERT ENVIADO
+
+[INFO] 16:37:23:502 Kernel/(5011:5011): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+[INFO] 16:37:23:502 Kernel/(5011:5011): SELECT ENVIADO
+[INFO] 16:37:23:541 Kernel/(5011:5011): Value recibido: Chocotorta
+
+[INFO] 16:37:23:541 Kernel/(5011:5011): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 80
+Value       : Bizcochuelo
+[INFO] 16:37:23:541 Kernel/(5011:5011): INSERT ENVIADO
+
+[INFO] 16:37:23:541 Kernel/(5011:5011): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 7338
+Value       : Limonada
+[INFO] 16:37:23:541 Kernel/(5011:5011): INSERT ENVIADO
+
+[INFO] 16:37:23:541 Kernel/(5011:5011): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 621
+Value       : Melon
+[INFO] 16:37:23:541 Kernel/(5011:5011): INSERT ENVIADO
+
+[INFO] 16:37:23:542 Kernel/(5011:5011): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 34
+Value       : Manzana
+[INFO] 16:37:23:542 Kernel/(5011:5011): INSERT ENVIADO
+
+[INFO] 16:37:23:542 Kernel/(5011:5011): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+[INFO] 16:37:23:542 Kernel/(5011:5011): SELECT ENVIADO
+[INFO] 16:37:23:581 Kernel/(5011:5011): Value recibido: Coca Cola
+
+[INFO] 16:37:23:581 Kernel/(5011:5011): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 8927
+Value       : Budin de pan
+[INFO] 16:37:23:581 Kernel/(5011:5011): INSERT ENVIADO
+
+[INFO] 16:37:23:581 Kernel/(5011:5011): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 222
+Value       : Sandia
+[INFO] 16:37:23:581 Kernel/(5011:5011): INSERT ENVIADO
+
+[INFO] 16:37:23:581 Kernel/(5011:5011): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 44
+Value       : Exprimido
+[INFO] 16:37:23:581 Kernel/(5011:5011): INSERT ENVIADO
+
+[INFO] 16:37:23:581 Kernel/(5011:5011): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 7338
+Value       : Agua con gas
+[INFO] 16:37:23:582 Kernel/(5011:5011): INSERT ENVIADO
+
+[INFO] 16:37:23:582 Kernel/(5011:5011): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 222
+Value       : Manzana
+[INFO] 16:37:23:582 Kernel/(5011:5011): INSERT ENVIADO
+
+[INFO] 16:37:23:582 Kernel/(5011:5011): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 34
+Value       : Cereza
+[INFO] 16:37:23:582 Kernel/(5011:5011): INSERT ENVIADO
+
+[INFO] 16:37:23:582 Kernel/(5011:5011): SELECT
+Nombre tabla: FRUTAS
+Valor KEY   : 34
+[INFO] 16:37:23:582 Kernel/(5011:5011): SELECT ENVIADO
+[INFO] 16:37:23:622 Kernel/(5011:5011): Value recibido: Banana
+
+[INFO] 16:37:23:622 Kernel/(5011:5011): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 44
+[INFO] 16:37:23:622 Kernel/(5011:5011): SELECT ENVIADO
+[INFO] 16:37:23:661 Kernel/(5011:5011): Value recibido: Exprimido
+
+[INFO] 16:37:23:661 Kernel/(5011:5011): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 10245
+Value       : Frutilla
+[INFO] 16:37:23:661 Kernel/(5011:5011): INSERT ENVIADO
+
+[INFO] 16:37:23:661 Kernel/(5011:5011): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 4000
+Value       : Gelatina
+[INFO] 16:37:23:661 Kernel/(5011:5011): INSERT ENVIADO
+
+[INFO] 16:37:23:661 Kernel/(5011:5011): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 100
+Value       : Helado
+[INFO] 16:37:23:661 Kernel/(5011:5011): INSERT ENVIADO
+
+[INFO] 16:37:23:661 Kernel/(5011:5011): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+Value       : Almendrado
+[INFO] 16:37:23:661 Kernel/(5011:5011): INSERT ENVIADO
+
+[INFO] 16:37:23:661 Kernel/(5011:5011): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+[INFO] 16:37:23:661 Kernel/(5011:5011): SELECT ENVIADO
+[INFO] 16:37:23:701 Kernel/(5011:5011): Value recibido: Coca Cola
+
+[INFO] 16:37:23:701 Kernel/(5011:5011): CREATE
+Nombre tabla: PLATOS_PRINCIPALES
+Consistencia   : SC
+Particiones       : 2
+Tiempo de Compactacion       : 60000
+[INFO] 16:37:23:701 Kernel/(5011:5011): CREATE ENVIADO
+
+[INFO] 16:37:23:701 Kernel/(5011:5011): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 231
+Value       : Flan
+[INFO] 16:37:23:701 Kernel/(5011:5011): INSERT ENVIADO
+
+[INFO] 16:37:23:701 Kernel/(5011:5011): INSERT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 271
+Value       : Milanesa
+[INFO] 16:37:23:701 Kernel/(5011:5011): INSERT ENVIADO
+
+[INFO] 16:37:23:701 Kernel/(5011:5011): INSERT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 32
+Value       : Omelette
+[INFO] 16:37:23:702 Kernel/(5011:5011): INSERT ENVIADO
+
+[INFO] 16:37:23:702 Kernel/(5011:5011): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 80
+Value       : Tiramisu
+[INFO] 16:37:23:702 Kernel/(5011:5011): INSERT ENVIADO
+
+[INFO] 16:37:23:702 Kernel/(5011:5011): SELECT
+Nombre tabla: FRUTAS
+Valor KEY   : 222
+[INFO] 16:37:23:702 Kernel/(5011:5011): SELECT ENVIADO
+[INFO] 16:37:23:741 Kernel/(5011:5011): Value recibido: Manzana
+
+[INFO] 16:37:23:741 Kernel/(5011:5011): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 231
+[INFO] 16:37:23:741 Kernel/(5011:5011): SELECT ENVIADO
+[INFO] 16:37:23:781 Kernel/(5011:5011): Value recibido: Key no encontrada
+
+[INFO] 16:37:23:781 Kernel/(5011:5011): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 44
+[INFO] 16:37:23:782 Kernel/(5011:5011): SELECT ENVIADO
+[INFO] 16:37:23:821 Kernel/(5011:5011): Value recibido: Exprimido
+
+[INFO] 16:37:23:821 Kernel/(5011:5011): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 80
+[INFO] 16:37:23:821 Kernel/(5011:5011): SELECT ENVIADO
+[INFO] 16:37:23:861 Kernel/(5011:5011): Value recibido: Key no encontrada
+
+[INFO] 16:37:23:861 Kernel/(5011:5011): INSERT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 54
+Value       : Hamburguesa
+[INFO] 16:37:23:861 Kernel/(5011:5011): INSERT ENVIADO
+
+[INFO] 16:37:23:861 Kernel/(5011:5011): SELECT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 271
+[INFO] 16:37:23:861 Kernel/(5011:5011): SELECT ENVIADO
+[INFO] 16:37:23:901 Kernel/(5011:5011): Value recibido: Milanesa
+
+[INFO] 16:37:23:901 Kernel/(5011:5011): INSERT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 271
+Value       : Pizza
+[INFO] 16:37:23:901 Kernel/(5011:5011): INSERT ENVIADO
+
+[INFO] 16:37:23:901 Kernel/(5011:5011): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 10
+Value       : Fanta
+[INFO] 16:37:23:901 Kernel/(5011:5011): INSERT ENVIADO
+
+[INFO] 16:37:23:901 Kernel/(5011:5011): INSERT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 32
+Value       : Empanadas
+[INFO] 16:37:23:901 Kernel/(5011:5011): INSERT ENVIADO
+
+[INFO] 16:37:23:901 Kernel/(5011:5011): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 8927
+Value       : Helado
+[INFO] 16:37:23:902 Kernel/(5011:5011): INSERT ENVIADO
+
+[INFO] 16:37:23:902 Kernel/(5011:5011): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 100
+Value       : Chocotorta
+[INFO] 16:37:23:902 Kernel/(5011:5011): INSERT ENVIADO
+
+[INFO] 16:37:23:902 Kernel/(5011:5011): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+Value       : Mate
+[INFO] 16:37:23:902 Kernel/(5011:5011): INSERT ENVIADO
+
+[INFO] 16:37:23:902 Kernel/(5011:5011): SELECT
+Nombre tabla: FRUTAS
+Valor KEY   : 10245
+[INFO] 16:37:23:902 Kernel/(5011:5011): SELECT ENVIADO
+[INFO] 16:37:23:941 Kernel/(5011:5011): Value recibido: Key no encontrada
+
+[INFO] 16:37:23:941 Kernel/(5011:5011): SELECT
+Nombre tabla: FRUTAS
+Valor KEY   : 22
+[INFO] 16:37:23:941 Kernel/(5011:5011): SELECT ENVIADO
+[INFO] 16:37:23:981 Kernel/(5011:5011): Value recibido: Key no encontrada
+
+[INFO] 16:37:23:981 Kernel/(5011:5011): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 100
+Value       : Helado
+[INFO] 16:37:23:981 Kernel/(5011:5011): INSERT ENVIADO
+
+[INFO] 16:37:23:981 Kernel/(5011:5011): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 100
+[INFO] 16:37:23:981 Kernel/(5011:5011): SELECT ENVIADO
+[INFO] 16:37:24:21 Kernel/(5011:5011): Value recibido: Flan
+
+[INFO] 16:37:24:21 Kernel/(5011:5011): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+Value       : Muffin
+[INFO] 16:37:24:21 Kernel/(5011:5011): INSERT ENVIADO
+
+[INFO] 16:37:24:21 Kernel/(5011:5011): SELECT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 54
+[INFO] 16:37:24:21 Kernel/(5011:5011): SELECT ENVIADO
+[INFO] 16:37:24:61 Kernel/(5011:5011): Value recibido: Key no encontrada
+
+[INFO] 16:37:24:61 Kernel/(5011:5011): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 10245
+[INFO] 16:37:24:61 Kernel/(5011:5011): SELECT ENVIADO
+[INFO] 16:37:24:101 Kernel/(5011:5011): Value recibido: Key no encontrada
+
+[INFO] 16:37:24:101 Kernel/(5011:5011): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+[INFO] 16:37:24:101 Kernel/(5011:5011): SELECT ENVIADO
+[INFO] 16:37:24:141 Kernel/(5011:5011): Value recibido: Chocotorta
+
+[INFO] 16:37:24:141 Kernel/(5011:5011): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 10
+[INFO] 16:37:24:141 Kernel/(5011:5011): SELECT ENVIADO
+[INFO] 16:37:24:181 Kernel/(5011:5011): Value recibido: Pepsi
+
+[INFO] 16:37:24:182 Kernel/(5011:5011): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 8927
+[INFO] 16:37:24:182 Kernel/(5011:5011): SELECT ENVIADO
+[INFO] 16:37:24:221 Kernel/(5011:5011): Value recibido: Key no encontrada
+
+[INFO] 16:37:24:221 Kernel/(5011:5011): SELECT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 271
+[INFO] 16:37:24:221 Kernel/(5011:5011): SELECT ENVIADO
+[INFO] 16:37:24:261 Kernel/(5011:5011): Value recibido: Milanesa
+
+[INFO] 17:09:51:298 Kernel/(5989:5989): CONECTANDO CON MEMORY POOL
+[INFO] 17:09:57:274 Kernel/(5989:5989): CREATE
+Nombre tabla: POSTRES
+Consistencia   : SC
+Particiones       : 3
+Tiempo de Compactacion       : 60000
+[INFO] 17:09:57:277 Kernel/(5989:5989): CREATE ENVIADO
+
+[INFO] 17:09:57:277 Kernel/(5989:5989): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 100
+Value       : Flan
+[INFO] 17:09:57:277 Kernel/(5989:5989): INSERT ENVIADO
+
+[INFO] 17:09:57:277 Kernel/(5989:5989): CREATE
+Nombre tabla: FRUTAS
+Consistencia   : SC
+Particiones       : 2
+Tiempo de Compactacion       : 50000
+[INFO] 17:09:57:277 Kernel/(5989:5989): CREATE ENVIADO
+
+[INFO] 17:09:57:277 Kernel/(5989:5989): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 222
+Value       : Manzana
+[INFO] 17:09:57:277 Kernel/(5989:5989): INSERT ENVIADO
+
+[INFO] 17:09:57:278 Kernel/(5989:5989): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+Value       : Chocotorta
+[INFO] 17:09:57:278 Kernel/(5989:5989): INSERT ENVIADO
+
+[INFO] 17:09:57:278 Kernel/(5989:5989): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 34
+Value       : Banana
+[INFO] 17:09:57:278 Kernel/(5989:5989): INSERT ENVIADO
+
+[INFO] 17:09:57:278 Kernel/(5989:5989): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 4000
+Value       : Tiramisu
+[INFO] 17:09:57:279 Kernel/(5989:5989): INSERT ENVIADO
+
+[INFO] 17:09:57:279 Kernel/(5989:5989): CREATE
+Nombre tabla: BEBIDAS
+Consistencia   : SC
+Particiones       : 6
+Tiempo de Compactacion       : 10000
+[INFO] 17:09:57:280 Kernel/(5989:5989): CREATE ENVIADO
+
+[INFO] 17:09:57:280 Kernel/(5989:5989): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 10245
+Value       : Pera
+[INFO] 17:09:57:280 Kernel/(5989:5989): INSERT ENVIADO
+
+[INFO] 17:09:57:280 Kernel/(5989:5989): SELECT
+Nombre tabla: FRUTAS
+Valor KEY   : 34
+[INFO] 17:09:57:280 Kernel/(5989:5989): SELECT ENVIADO
+[INFO] 17:09:57:280 Kernel/(5989:5989): Value recibido: Banana
+
+[INFO] 17:09:57:280 Kernel/(5989:5989): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+Value       : Helado
+[INFO] 17:09:57:280 Kernel/(5989:5989): INSERT ENVIADO
+
+[INFO] 17:09:57:280 Kernel/(5989:5989): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+[INFO] 17:09:57:281 Kernel/(5989:5989): SELECT ENVIADO
+[INFO] 17:09:57:317 Kernel/(5989:5989): Value recibido: Chocotorta
+
+[INFO] 17:09:57:317 Kernel/(5989:5989): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+Value       : Almendrado
+[INFO] 17:09:57:317 Kernel/(5989:5989): INSERT ENVIADO
+
+[INFO] 17:09:57:317 Kernel/(5989:5989): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 621
+Value       : Uva
+[INFO] 17:09:57:317 Kernel/(5989:5989): INSERT ENVIADO
+
+[INFO] 17:09:57:317 Kernel/(5989:5989): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 10
+Value       : Pepsi
+[INFO] 17:09:57:317 Kernel/(5989:5989): INSERT ENVIADO
+
+[INFO] 17:09:57:317 Kernel/(5989:5989): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+Value       : Coca Cola
+[INFO] 17:09:57:317 Kernel/(5989:5989): INSERT ENVIADO
+
+[INFO] 17:09:57:317 Kernel/(5989:5989): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+[INFO] 17:09:57:317 Kernel/(5989:5989): SELECT ENVIADO
+[INFO] 17:09:57:357 Kernel/(5989:5989): Value recibido: Coca Cola
+
+[INFO] 17:09:57:357 Kernel/(5989:5989): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+Value       : Sprite
+[INFO] 17:09:57:357 Kernel/(5989:5989): INSERT ENVIADO
+
+[INFO] 17:09:57:357 Kernel/(5989:5989): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+[INFO] 17:09:57:357 Kernel/(5989:5989): SELECT ENVIADO
+[INFO] 17:09:57:397 Kernel/(5989:5989): Value recibido: Chocotorta
+
+[INFO] 17:09:57:397 Kernel/(5989:5989): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 80
+Value       : Bizcochuelo
+[INFO] 17:09:57:397 Kernel/(5989:5989): INSERT ENVIADO
+
+[INFO] 17:09:57:397 Kernel/(5989:5989): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 7338
+Value       : Limonada
+[INFO] 17:09:57:397 Kernel/(5989:5989): INSERT ENVIADO
+
+[INFO] 17:09:57:397 Kernel/(5989:5989): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 621
+Value       : Melon
+[INFO] 17:09:57:397 Kernel/(5989:5989): INSERT ENVIADO
+
+[INFO] 17:09:57:397 Kernel/(5989:5989): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 34
+Value       : Manzana
+[INFO] 17:09:57:397 Kernel/(5989:5989): INSERT ENVIADO
+
+[INFO] 17:09:57:397 Kernel/(5989:5989): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+[INFO] 17:09:57:397 Kernel/(5989:5989): SELECT ENVIADO
+[INFO] 17:09:57:437 Kernel/(5989:5989): Value recibido: Coca Cola
+
+[INFO] 17:09:57:437 Kernel/(5989:5989): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 8927
+Value       : Budin de pan
+[INFO] 17:09:57:437 Kernel/(5989:5989): INSERT ENVIADO
+
+[INFO] 17:09:57:437 Kernel/(5989:5989): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 222
+Value       : Sandia
+[INFO] 17:09:57:437 Kernel/(5989:5989): INSERT ENVIADO
+
+[INFO] 17:09:57:437 Kernel/(5989:5989): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 44
+Value       : Exprimido
+[INFO] 17:09:57:437 Kernel/(5989:5989): INSERT ENVIADO
+
+[INFO] 17:09:57:438 Kernel/(5989:5989): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 7338
+Value       : Agua con gas
+[INFO] 17:09:57:438 Kernel/(5989:5989): INSERT ENVIADO
+
+[INFO] 17:09:57:438 Kernel/(5989:5989): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 222
+Value       : Manzana
+[INFO] 17:09:57:438 Kernel/(5989:5989): INSERT ENVIADO
+
+[INFO] 17:09:57:438 Kernel/(5989:5989): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 34
+Value       : Cereza
+[INFO] 17:09:57:438 Kernel/(5989:5989): INSERT ENVIADO
+
+[INFO] 17:09:57:438 Kernel/(5989:5989): SELECT
+Nombre tabla: FRUTAS
+Valor KEY   : 34
+[INFO] 17:09:57:438 Kernel/(5989:5989): SELECT ENVIADO
+[INFO] 17:09:57:477 Kernel/(5989:5989): Value recibido: Banana
+
+[INFO] 17:09:57:477 Kernel/(5989:5989): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 44
+[INFO] 17:09:57:477 Kernel/(5989:5989): SELECT ENVIADO
+[INFO] 17:09:57:517 Kernel/(5989:5989): Value recibido: Exprimido
+
+[INFO] 17:09:57:517 Kernel/(5989:5989): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 10245
+Value       : Frutilla
+[INFO] 17:09:57:517 Kernel/(5989:5989): INSERT ENVIADO
+
+[INFO] 17:09:57:517 Kernel/(5989:5989): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 4000
+Value       : Gelatina
+[INFO] 17:09:57:517 Kernel/(5989:5989): INSERT ENVIADO
+
+[INFO] 17:09:57:517 Kernel/(5989:5989): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 100
+Value       : Helado
+[INFO] 17:09:57:517 Kernel/(5989:5989): INSERT ENVIADO
+
+[INFO] 17:09:57:517 Kernel/(5989:5989): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+Value       : Almendrado
+[INFO] 17:09:57:517 Kernel/(5989:5989): INSERT ENVIADO
+
+[INFO] 17:09:57:518 Kernel/(5989:5989): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+[INFO] 17:09:57:518 Kernel/(5989:5989): SELECT ENVIADO
+[INFO] 17:09:57:557 Kernel/(5989:5989): Value recibido: Coca Cola
+
+[INFO] 17:09:57:557 Kernel/(5989:5989): CREATE
+Nombre tabla: PLATOS_PRINCIPALES
+Consistencia   : SC
+Particiones       : 2
+Tiempo de Compactacion       : 60000
+[INFO] 17:09:57:557 Kernel/(5989:5989): CREATE ENVIADO
+
+[INFO] 17:09:57:557 Kernel/(5989:5989): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 231
+Value       : Flan
+[INFO] 17:09:57:557 Kernel/(5989:5989): INSERT ENVIADO
+
+[INFO] 17:09:57:558 Kernel/(5989:5989): INSERT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 271
+Value       : Milanesa
+[INFO] 17:09:57:558 Kernel/(5989:5989): INSERT ENVIADO
+
+[INFO] 17:09:57:558 Kernel/(5989:5989): INSERT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 32
+Value       : Omelette
+[INFO] 17:09:57:558 Kernel/(5989:5989): INSERT ENVIADO
+
+[INFO] 17:09:57:558 Kernel/(5989:5989): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 80
+Value       : Tiramisu
+[INFO] 17:09:57:558 Kernel/(5989:5989): INSERT ENVIADO
+
+[INFO] 17:09:57:558 Kernel/(5989:5989): SELECT
+Nombre tabla: FRUTAS
+Valor KEY   : 222
+[INFO] 17:09:57:558 Kernel/(5989:5989): SELECT ENVIADO
+[INFO] 17:09:57:597 Kernel/(5989:5989): Value recibido: Manzana
+
+[INFO] 17:09:57:597 Kernel/(5989:5989): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 231
+[INFO] 17:09:57:597 Kernel/(5989:5989): SELECT ENVIADO
+[INFO] 17:09:57:637 Kernel/(5989:5989): Value recibido: Key no encontrada
+
+[INFO] 17:09:57:637 Kernel/(5989:5989): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 44
+[INFO] 17:09:57:637 Kernel/(5989:5989): SELECT ENVIADO
+[INFO] 17:09:57:677 Kernel/(5989:5989): Value recibido: Exprimido
+
+[INFO] 17:09:57:677 Kernel/(5989:5989): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 80
+[INFO] 17:09:57:677 Kernel/(5989:5989): SELECT ENVIADO
+[INFO] 17:09:57:717 Kernel/(5989:5989): Value recibido: Key no encontrada
+
+[INFO] 17:09:57:717 Kernel/(5989:5989): INSERT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 54
+Value       : Hamburguesa
+[INFO] 17:09:57:717 Kernel/(5989:5989): INSERT ENVIADO
+
+[INFO] 17:09:57:717 Kernel/(5989:5989): SELECT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 271
+[INFO] 17:09:57:717 Kernel/(5989:5989): SELECT ENVIADO
+[INFO] 17:09:57:757 Kernel/(5989:5989): Value recibido: Milanesa
+
+[INFO] 17:09:57:757 Kernel/(5989:5989): INSERT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 271
+Value       : Pizza
+[INFO] 17:09:57:757 Kernel/(5989:5989): INSERT ENVIADO
+
+[INFO] 17:09:57:757 Kernel/(5989:5989): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 10
+Value       : Fanta
+[INFO] 17:09:57:757 Kernel/(5989:5989): INSERT ENVIADO
+
+[INFO] 17:09:57:757 Kernel/(5989:5989): INSERT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 32
+Value       : Empanadas
+[INFO] 17:09:57:757 Kernel/(5989:5989): INSERT ENVIADO
+
+[INFO] 17:09:57:757 Kernel/(5989:5989): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 8927
+Value       : Helado
+[INFO] 17:09:57:757 Kernel/(5989:5989): INSERT ENVIADO
+
+[INFO] 17:09:57:757 Kernel/(5989:5989): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 100
+Value       : Chocotorta
+[INFO] 17:09:57:758 Kernel/(5989:5989): INSERT ENVIADO
+
+[INFO] 17:09:57:758 Kernel/(5989:5989): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+Value       : Mate
+[INFO] 17:09:57:758 Kernel/(5989:5989): INSERT ENVIADO
+
+[INFO] 17:09:57:758 Kernel/(5989:5989): SELECT
+Nombre tabla: FRUTAS
+Valor KEY   : 10245
+[INFO] 17:09:57:758 Kernel/(5989:5989): SELECT ENVIADO
+[INFO] 17:09:57:797 Kernel/(5989:5989): Value recibido: Key no encontrada
+
+[INFO] 17:09:57:797 Kernel/(5989:5989): SELECT
+Nombre tabla: FRUTAS
+Valor KEY   : 22
+[INFO] 17:09:57:797 Kernel/(5989:5989): SELECT ENVIADO
+[INFO] 17:09:57:837 Kernel/(5989:5989): Value recibido: Key no encontrada
+
+[INFO] 17:09:57:837 Kernel/(5989:5989): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 100
+Value       : Helado
+[INFO] 17:09:57:837 Kernel/(5989:5989): INSERT ENVIADO
+
+[INFO] 17:09:57:837 Kernel/(5989:5989): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 100
+[INFO] 17:09:57:837 Kernel/(5989:5989): SELECT ENVIADO
+[INFO] 17:09:57:877 Kernel/(5989:5989): Value recibido: Flan
+
+[INFO] 17:09:57:877 Kernel/(5989:5989): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+Value       : Muffin
+[INFO] 17:09:57:877 Kernel/(5989:5989): INSERT ENVIADO
+
+[INFO] 17:09:57:877 Kernel/(5989:5989): SELECT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 54
+[INFO] 17:09:57:877 Kernel/(5989:5989): SELECT ENVIADO
+[INFO] 17:09:57:917 Kernel/(5989:5989): Value recibido: Key no encontrada
+
+[INFO] 17:09:57:917 Kernel/(5989:5989): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 10245
+[INFO] 17:09:57:917 Kernel/(5989:5989): SELECT ENVIADO
+[INFO] 17:09:57:956 Kernel/(5989:5989): Value recibido: Key no encontrada
+
+[INFO] 17:09:57:957 Kernel/(5989:5989): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+[INFO] 17:09:57:957 Kernel/(5989:5989): SELECT ENVIADO
+[INFO] 17:09:57:997 Kernel/(5989:5989): Value recibido: Chocotorta
+
+[INFO] 17:09:57:997 Kernel/(5989:5989): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 10
+[INFO] 17:09:57:997 Kernel/(5989:5989): SELECT ENVIADO
+[INFO] 17:09:58:37 Kernel/(5989:5989): Value recibido: Pepsi
+
+[INFO] 17:09:58:37 Kernel/(5989:5989): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 8927
+[INFO] 17:09:58:37 Kernel/(5989:5989): SELECT ENVIADO
+[INFO] 17:09:58:77 Kernel/(5989:5989): Value recibido: Key no encontrada
+
+[INFO] 17:09:58:77 Kernel/(5989:5989): SELECT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 271
+[INFO] 17:09:58:77 Kernel/(5989:5989): SELECT ENVIADO
+[INFO] 17:09:58:117 Kernel/(5989:5989): Value recibido: Milanesa
+
+[INFO] 17:26:59:930 Kernel/(6389:6389): CONECTANDO CON MEMORY POOL
+[INFO] 17:27:08:584 Kernel/(6389:6389): CREATE
+Nombre tabla: POSTRES
+Consistencia   : SC
+Particiones       : 3
+Tiempo de Compactacion       : 60000
+[INFO] 17:27:08:585 Kernel/(6389:6389): CREATE ENVIADO
+
+[INFO] 17:27:08:585 Kernel/(6389:6389): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 100
+Value       : Flan
+[INFO] 17:27:08:585 Kernel/(6389:6389): INSERT ENVIADO
+
+[INFO] 17:27:08:586 Kernel/(6389:6389): CREATE
+Nombre tabla: FRUTAS
+Consistencia   : SC
+Particiones       : 2
+Tiempo de Compactacion       : 50000
+[INFO] 17:27:08:589 Kernel/(6389:6389): CREATE ENVIADO
+
+[INFO] 17:27:08:589 Kernel/(6389:6389): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 222
+Value       : Manzana
+[INFO] 17:27:08:589 Kernel/(6389:6389): INSERT ENVIADO
+
+[INFO] 17:27:08:589 Kernel/(6389:6389): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+Value       : Chocotorta
+[INFO] 17:27:08:589 Kernel/(6389:6389): INSERT ENVIADO
+
+[INFO] 17:27:08:590 Kernel/(6389:6389): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 34
+Value       : Banana
+[INFO] 17:27:08:590 Kernel/(6389:6389): INSERT ENVIADO
+
+[INFO] 17:27:08:590 Kernel/(6389:6389): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 4000
+Value       : Tiramisu
+[INFO] 17:27:08:590 Kernel/(6389:6389): INSERT ENVIADO
+
+[INFO] 17:27:08:590 Kernel/(6389:6389): CREATE
+Nombre tabla: BEBIDAS
+Consistencia   : SC
+Particiones       : 6
+Tiempo de Compactacion       : 10000
+[INFO] 17:27:08:590 Kernel/(6389:6389): CREATE ENVIADO
+
+[INFO] 17:27:08:591 Kernel/(6389:6389): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 10245
+Value       : Pera
+[INFO] 17:27:08:591 Kernel/(6389:6389): INSERT ENVIADO
+
+[INFO] 17:27:08:591 Kernel/(6389:6389): SELECT
+Nombre tabla: FRUTAS
+Valor KEY   : 34
+[INFO] 17:27:08:591 Kernel/(6389:6389): SELECT ENVIADO
+[INFO] 17:27:08:591 Kernel/(6389:6389): Value recibido: Banana
+
+[INFO] 17:27:08:591 Kernel/(6389:6389): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+Value       : Helado
+[INFO] 17:27:08:591 Kernel/(6389:6389): INSERT ENVIADO
+
+[INFO] 17:27:08:591 Kernel/(6389:6389): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+[INFO] 17:27:08:592 Kernel/(6389:6389): SELECT ENVIADO
+[INFO] 17:27:08:629 Kernel/(6389:6389): Value recibido: Chocotorta
+
+[INFO] 17:27:08:630 Kernel/(6389:6389): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+Value       : Almendrado
+[INFO] 17:27:08:630 Kernel/(6389:6389): INSERT ENVIADO
+
+[INFO] 17:27:08:630 Kernel/(6389:6389): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 621
+Value       : Uva
+[INFO] 17:27:08:630 Kernel/(6389:6389): INSERT ENVIADO
+
+[INFO] 17:27:08:630 Kernel/(6389:6389): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 10
+Value       : Pepsi
+[INFO] 17:27:08:630 Kernel/(6389:6389): INSERT ENVIADO
+
+[INFO] 17:27:08:630 Kernel/(6389:6389): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+Value       : Coca Cola
+[INFO] 17:27:08:630 Kernel/(6389:6389): INSERT ENVIADO
+
+[INFO] 17:27:08:630 Kernel/(6389:6389): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+[INFO] 17:27:08:631 Kernel/(6389:6389): SELECT ENVIADO
+[INFO] 17:27:08:669 Kernel/(6389:6389): Value recibido: Coca Cola
+
+[INFO] 17:27:08:669 Kernel/(6389:6389): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+Value       : Sprite
+[INFO] 17:27:08:669 Kernel/(6389:6389): INSERT ENVIADO
+
+[INFO] 17:27:08:669 Kernel/(6389:6389): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+[INFO] 17:27:08:669 Kernel/(6389:6389): SELECT ENVIADO
+[INFO] 17:27:08:709 Kernel/(6389:6389): Value recibido: Chocotorta
+
+[INFO] 17:27:08:709 Kernel/(6389:6389): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 80
+Value       : Bizcochuelo
+[INFO] 17:27:08:709 Kernel/(6389:6389): INSERT ENVIADO
+
+[INFO] 17:27:08:709 Kernel/(6389:6389): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 7338
+Value       : Limonada
+[INFO] 17:27:08:709 Kernel/(6389:6389): INSERT ENVIADO
+
+[INFO] 17:27:08:709 Kernel/(6389:6389): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 621
+Value       : Melon
+[INFO] 17:27:08:709 Kernel/(6389:6389): INSERT ENVIADO
+
+[INFO] 17:27:08:710 Kernel/(6389:6389): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 34
+Value       : Manzana
+[INFO] 17:27:08:710 Kernel/(6389:6389): INSERT ENVIADO
+
+[INFO] 17:27:08:710 Kernel/(6389:6389): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+[INFO] 17:27:08:710 Kernel/(6389:6389): SELECT ENVIADO
+[INFO] 17:27:08:749 Kernel/(6389:6389): Value recibido: Coca Cola
+
+[INFO] 17:27:08:749 Kernel/(6389:6389): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 8927
+Value       : Budin de pan
+[INFO] 17:27:08:749 Kernel/(6389:6389): INSERT ENVIADO
+
+[INFO] 17:27:08:749 Kernel/(6389:6389): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 222
+Value       : Sandia
+[INFO] 17:27:08:749 Kernel/(6389:6389): INSERT ENVIADO
+
+[INFO] 17:27:08:749 Kernel/(6389:6389): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 44
+Value       : Exprimido
+[INFO] 17:27:08:749 Kernel/(6389:6389): INSERT ENVIADO
+
+[INFO] 17:27:08:749 Kernel/(6389:6389): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 7338
+Value       : Agua con gas
+[INFO] 17:27:08:749 Kernel/(6389:6389): INSERT ENVIADO
+
+[INFO] 17:27:08:749 Kernel/(6389:6389): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 222
+Value       : Manzana
+[INFO] 17:27:08:749 Kernel/(6389:6389): INSERT ENVIADO
+
+[INFO] 17:27:08:750 Kernel/(6389:6389): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 34
+Value       : Cereza
+[INFO] 17:27:08:750 Kernel/(6389:6389): INSERT ENVIADO
+
+[INFO] 17:27:08:750 Kernel/(6389:6389): SELECT
+Nombre tabla: FRUTAS
+Valor KEY   : 34
+[INFO] 17:27:08:750 Kernel/(6389:6389): SELECT ENVIADO
+[INFO] 17:27:08:789 Kernel/(6389:6389): Value recibido: Banana
+
+[INFO] 17:27:08:789 Kernel/(6389:6389): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 44
+[INFO] 17:27:08:789 Kernel/(6389:6389): SELECT ENVIADO
+[INFO] 17:27:08:829 Kernel/(6389:6389): Value recibido: Exprimido
+
+[INFO] 17:27:08:829 Kernel/(6389:6389): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 10245
+Value       : Frutilla
+[INFO] 17:27:08:829 Kernel/(6389:6389): INSERT ENVIADO
+
+[INFO] 17:27:08:829 Kernel/(6389:6389): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 4000
+Value       : Gelatina
+[INFO] 17:27:08:829 Kernel/(6389:6389): INSERT ENVIADO
+
+[INFO] 17:27:08:829 Kernel/(6389:6389): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 100
+Value       : Helado
+[INFO] 17:27:08:829 Kernel/(6389:6389): INSERT ENVIADO
+
+[INFO] 17:27:08:829 Kernel/(6389:6389): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+Value       : Almendrado
+[INFO] 17:27:08:829 Kernel/(6389:6389): INSERT ENVIADO
+
+[INFO] 17:27:08:829 Kernel/(6389:6389): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+[INFO] 17:27:08:829 Kernel/(6389:6389): SELECT ENVIADO
+[INFO] 17:27:08:869 Kernel/(6389:6389): Value recibido: Coca Cola
+
+[INFO] 17:27:08:869 Kernel/(6389:6389): CREATE
+Nombre tabla: PLATOS_PRINCIPALES
+Consistencia   : SC
+Particiones       : 2
+Tiempo de Compactacion       : 60000
+[INFO] 17:27:08:869 Kernel/(6389:6389): CREATE ENVIADO
+
+[INFO] 17:27:08:869 Kernel/(6389:6389): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 231
+Value       : Flan
+[INFO] 17:27:08:869 Kernel/(6389:6389): INSERT ENVIADO
+
+[INFO] 17:27:08:869 Kernel/(6389:6389): INSERT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 271
+Value       : Milanesa
+[INFO] 17:27:08:869 Kernel/(6389:6389): INSERT ENVIADO
+
+[INFO] 17:27:08:869 Kernel/(6389:6389): INSERT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 32
+Value       : Omelette
+[INFO] 17:27:08:870 Kernel/(6389:6389): INSERT ENVIADO
+
+[INFO] 17:27:08:870 Kernel/(6389:6389): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 80
+Value       : Tiramisu
+[INFO] 17:27:08:870 Kernel/(6389:6389): INSERT ENVIADO
+
+[INFO] 17:27:08:870 Kernel/(6389:6389): SELECT
+Nombre tabla: FRUTAS
+Valor KEY   : 222
+[INFO] 17:27:08:870 Kernel/(6389:6389): SELECT ENVIADO
+[INFO] 17:27:08:909 Kernel/(6389:6389): Value recibido: Manzana
+
+[INFO] 17:27:08:909 Kernel/(6389:6389): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 231
+[INFO] 17:27:08:909 Kernel/(6389:6389): SELECT ENVIADO
+[INFO] 17:27:08:949 Kernel/(6389:6389): Value recibido: Key no encontrada
+
+[INFO] 17:27:08:949 Kernel/(6389:6389): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 44
+[INFO] 17:27:08:949 Kernel/(6389:6389): SELECT ENVIADO
+[INFO] 17:27:08:988 Kernel/(6389:6389): Value recibido: Exprimido
+
+[INFO] 17:27:08:989 Kernel/(6389:6389): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 80
+[INFO] 17:27:08:989 Kernel/(6389:6389): SELECT ENVIADO
+[INFO] 17:27:09:29 Kernel/(6389:6389): Value recibido: Key no encontrada
+
+[INFO] 17:27:09:29 Kernel/(6389:6389): INSERT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 54
+Value       : Hamburguesa
+[INFO] 17:27:09:30 Kernel/(6389:6389): INSERT ENVIADO
+
+[INFO] 17:27:09:30 Kernel/(6389:6389): SELECT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 271
+[INFO] 17:27:09:30 Kernel/(6389:6389): SELECT ENVIADO
+[INFO] 17:27:09:69 Kernel/(6389:6389): Value recibido: Milanesa
+
+[INFO] 17:27:09:69 Kernel/(6389:6389): INSERT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 271
+Value       : Pizza
+[INFO] 17:27:09:69 Kernel/(6389:6389): INSERT ENVIADO
+
+[INFO] 17:27:09:69 Kernel/(6389:6389): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 10
+Value       : Fanta
+[INFO] 17:27:09:69 Kernel/(6389:6389): INSERT ENVIADO
+
+[INFO] 17:27:09:69 Kernel/(6389:6389): INSERT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 32
+Value       : Empanadas
+[INFO] 17:27:09:69 Kernel/(6389:6389): INSERT ENVIADO
+
+[INFO] 17:27:09:69 Kernel/(6389:6389): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 8927
+Value       : Helado
+[INFO] 17:27:09:69 Kernel/(6389:6389): INSERT ENVIADO
+
+[INFO] 17:27:09:69 Kernel/(6389:6389): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 100
+Value       : Chocotorta
+[INFO] 17:27:09:70 Kernel/(6389:6389): INSERT ENVIADO
+
+[INFO] 17:27:09:70 Kernel/(6389:6389): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+Value       : Mate
+[INFO] 17:27:09:70 Kernel/(6389:6389): INSERT ENVIADO
+
+[INFO] 17:27:09:70 Kernel/(6389:6389): SELECT
+Nombre tabla: FRUTAS
+Valor KEY   : 10245
+[INFO] 17:27:09:70 Kernel/(6389:6389): SELECT ENVIADO
+[INFO] 17:27:09:109 Kernel/(6389:6389): Value recibido: Key no encontrada
+
+[INFO] 17:27:09:109 Kernel/(6389:6389): SELECT
+Nombre tabla: FRUTAS
+Valor KEY   : 22
+[INFO] 17:27:09:109 Kernel/(6389:6389): SELECT ENVIADO
+[INFO] 17:27:09:149 Kernel/(6389:6389): Value recibido: Key no encontrada
+
+[INFO] 17:27:09:149 Kernel/(6389:6389): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 100
+Value       : Helado
+[INFO] 17:27:09:149 Kernel/(6389:6389): INSERT ENVIADO
+
+[INFO] 17:27:09:149 Kernel/(6389:6389): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 100
+[INFO] 17:27:09:149 Kernel/(6389:6389): SELECT ENVIADO
+[INFO] 17:27:09:189 Kernel/(6389:6389): Value recibido: Flan
+
+[INFO] 17:27:09:189 Kernel/(6389:6389): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+Value       : Muffin
+[INFO] 17:27:09:189 Kernel/(6389:6389): INSERT ENVIADO
+
+[INFO] 17:27:09:190 Kernel/(6389:6389): SELECT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 54
+[INFO] 17:27:09:190 Kernel/(6389:6389): SELECT ENVIADO
+[INFO] 17:27:09:229 Kernel/(6389:6389): Value recibido: Key no encontrada
+
+[INFO] 17:27:09:229 Kernel/(6389:6389): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 10245
+[INFO] 17:27:09:229 Kernel/(6389:6389): SELECT ENVIADO
+[INFO] 17:27:09:269 Kernel/(6389:6389): Value recibido: Key no encontrada
+
+[INFO] 17:27:09:269 Kernel/(6389:6389): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+[INFO] 17:27:09:269 Kernel/(6389:6389): SELECT ENVIADO
+[INFO] 17:27:09:309 Kernel/(6389:6389): Value recibido: Chocotorta
+
+[INFO] 17:27:09:309 Kernel/(6389:6389): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 10
+[INFO] 17:27:09:309 Kernel/(6389:6389): SELECT ENVIADO
+[INFO] 17:27:09:349 Kernel/(6389:6389): Value recibido: Pepsi
+
+[INFO] 17:27:09:349 Kernel/(6389:6389): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 8927
+[INFO] 17:27:09:349 Kernel/(6389:6389): SELECT ENVIADO
+[INFO] 17:27:09:389 Kernel/(6389:6389): Value recibido: Key no encontrada
+
+[INFO] 17:27:09:389 Kernel/(6389:6389): SELECT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 271
+[INFO] 17:27:09:389 Kernel/(6389:6389): SELECT ENVIADO
+[INFO] 17:27:09:429 Kernel/(6389:6389): Value recibido: Milanesa
+

@@ -2,7 +2,7 @@
 
 //------------------------------INGRESO DE PAQUETES------------------------------------
 
-void ingresar_paquete(int conexion){
+void ingresar_paquete(int conexion){ //RECIBIR LOGGER
 
 	char* lineaRequest = ingresar_request();
 	char* parametros = strtok(lineaRequest, " ");
@@ -56,7 +56,7 @@ void ingresar_paquete(int conexion){
 				funcion_LQL(parametros, conexion);
 				break;
 			default:
-				printf("Operacion desconocida.");
+				printf("Operacion desconocida.\n\n");
 				break;
 			}
 
@@ -176,7 +176,6 @@ t_paquete_insert* insert(char* parametros){
 	return paquete;
 }
 
-
 long long get_timestamp(char* parametros){
 	long long valor;
 	if (parametros==NULL) {
@@ -215,21 +214,21 @@ t_paquete_create* create(char* parametros)
 void loggear_paquete_select(t_paquete_select* paquete){ //FALTA PASAR LOOGER
 
 	t_log* logger = iniciar_logger();
-	log_info(logger, "NUEVO PAQUETE SELECT CREADO\nNombre tabla: %s\nValor KEY   : %d", paquete->nombre_tabla,paquete->valor_key);
+	log_info(logger, "SELECT\nNombre tabla: %s\nValor KEY   : %d", paquete->nombre_tabla,paquete->valor_key);
     log_destroy(logger);
 }
 
 void loggear_paquete_insert(t_paquete_insert* paquete){
 
 	t_log* logger = iniciar_logger();
-	log_info(logger, "NUEVO PAQUETE INSERT CREADO\nNombre tabla: %s\nValor KEY   : %d\nValue       : %s", paquete->nombre_tabla, paquete->valor_key, paquete->value);
+	log_info(logger, "INSERT\nNombre tabla: %s\nValor KEY   : %d\nValue       : %s", paquete->nombre_tabla, paquete->valor_key, paquete->value);
     log_destroy(logger);
 }
 
 void loggear_paquete_create(t_paquete_create* paquete)
 {
 	t_log* logger = iniciar_logger();
-	log_info(logger, "NUEVO PAQUETE CREATE CREADO\nNombre tabla: %s\nConsistencia   : %s\nParticiones       : %d\nTiempo de Compactacion       : %d", paquete->nombre_tabla, paquete->consistencia, paquete->particiones, paquete->tiempo_compactacion);
+	log_info(logger, "CREATE\nNombre tabla: %s\nConsistencia   : %s\nParticiones       : %d\nTiempo de Compactacion       : %d", paquete->nombre_tabla, paquete->consistencia, paquete->particiones, paquete->tiempo_compactacion);
     log_destroy(logger);
 }
 
