@@ -6,6 +6,7 @@
  */
 #include"Consola.h"
 
+
 void* prenderConsola(void* arg){
 
 
@@ -72,6 +73,7 @@ void* prenderConsola(void* arg){
 			}
 		//free(lineaRequest);
 		free(parametros);
+		chekearDumpeo();
 		//free(lineaRequest);
 		lineaRequest=ingresar_request();
 		while(string_is_empty(lineaRequest)){

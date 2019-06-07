@@ -855,30 +855,30 @@ void liberarPaqueteCreate(t_paquete_create* paquete_create){
 
 t_registro* buscarEnTemporales(char* nombreTabla,int key){
 
-int temporales=1;
-char* directorioTemporal= DirectorioDeTemporal(nombreTabla,temporales);
-char* registrosCompletos=string_new();
-while(existe_temporal(directorioTemporal)){
-	int i=0;
-	t_config* config = config_create(directorioTemporal);
-	char** arrayBloques = config_get_array_value(config, "BLOCKS");
-	while(arrayBloques[i]){
-		int nroBloque = atoi(arrayBloques[i]);
-		char* registrosDeBloque= ObtenerContenidoBloque(nroBloque);
-		string_append(&registrosCompletos,registrosDeBloque);
-		free(registrosDeBloque);
-		i++;
-}
-config_destroy(config);
-free(directorioTemporal);
-temporales++;
-directorioTemporal= DirectorioDeTemporal(nombreTabla,temporales);
-}
+	int temporales=1;
+	char* directorioTemporal= DirectorioDeTemporal(nombreTabla,temporales);
+	char* registrosCompletos=string_new();
+	while(existe_temporal(directorioTemporal)){
+		int i=0;
+		t_config* config = config_create(directorioTemporal);
+		char** arrayBloques = config_get_array_value(config, "BLOCKS");
+		while(arrayBloques[i]){
+			int nroBloque = atoi(arrayBloques[i]);
+			char* registrosDeBloque= ObtenerContenidoBloque(nroBloque);
+			string_append(&registrosCompletos,registrosDeBloque);
+			free(registrosDeBloque);
+			i++;
+		}
+	config_destroy(config);
+	free(directorioTemporal);
+	temporales++;
+	directorioTemporal= DirectorioDeTemporal(nombreTabla,temporales);
+	}
 
-free(directorioTemporal);
-if(temporales==1) {return NULL;}
+	free(directorioTemporal);
+	if(temporales==1) {return NULL;}
 
-return buscarRegistroTemporalMasReciente(registrosCompletos,key);
+	return buscarRegistroTemporalMasReciente(registrosCompletos,key);
 }
 
 t_registro* buscarRegistroTemporalMasReciente(char* todosLosRegistrosTemporales,int key){
