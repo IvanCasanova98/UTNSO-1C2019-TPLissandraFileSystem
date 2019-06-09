@@ -47,6 +47,56 @@ void valueExiste(char*nombreTabla,uint16_t key,char* value){
 	log_destroy(logger);
 }
 
+// WARNINGS DE FALTAN DATOS
+void faltaTabla(){
+
+	t_log* logger=iniciar_logger();
+	log_warning(logger, "ERROR NO SE INGRESO PARAMETRO NOMBRETABLA CORRECTAMENTE");
+	log_destroy(logger);
+}
+
+void faltaKey(){
+
+	t_log* logger=iniciar_logger();
+	log_warning(logger, "ERROR NO SE INGRESO PARAMETRO KEY CORRECTAMENTE");
+	log_destroy(logger);
+}
+
+void faltaValue(){
+
+	t_log* logger=iniciar_logger();
+	log_warning(logger, "ERROR NO SE INGRESO PARAMETRO VALUE CORRECTAMENTE");
+	log_destroy(logger);
+}
+
+void faltaTimestamp(){
+
+	t_log* logger=iniciar_logger();
+	log_warning(logger, "ERROR NO SE INGRESO PARAMETRO TIMESTAMP CORRECTAMENTE");
+	log_destroy(logger);
+}
+
+void faltaConsistencia(){
+
+	t_log* logger=iniciar_logger();
+	log_warning(logger, "ERROR NO SE INGRESO PARAMETRO CONSISTENCIA CORRECTAMENTE");
+	log_destroy(logger);
+}
+
+void faltaParticiones(){
+
+	t_log* logger=iniciar_logger();
+	log_warning(logger, "ERROR NO SE INGRESO PARAMETRO PARTICIONES CORRECTAMENTE");
+	log_destroy(logger);
+}
+
+void faltaTiempo_Compactacion(){
+
+	t_log* logger=iniciar_logger();
+	log_warning(logger, "ERROR NO SE INGRESO PARAMETRO TIEMPO_COMPACTACION CORRECTAMENTE");
+	log_destroy(logger);
+}
+
 
 // WARNINGS DE ERRORES
 

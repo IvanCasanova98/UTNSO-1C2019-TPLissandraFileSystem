@@ -71,15 +71,14 @@ t_registro* buscarMemTable(char* nombreTabla,int key){
 	if(memTable==NULL) return NULL;
 	if(dictionary_has_key(memTable,nombreTabla)){
 		if(list_any_satisfy(dictionary_get(memTable,nombreTabla),_filtradoKey)){
-	t_list* listaRegistrosKey = list_sorted(
-								list_filter(
-								dictionary_get(memTable,nombreTabla),_filtradoKey),mayorTimeStamp);
+			t_list* listaRegistrosKey=list_create();
+	list_add_all(listaRegistrosKey, list_sorted(list_filter(dictionary_get(memTable,nombreTabla),_filtradoKey),mayorTimeStamp));
 	if(!listaVacia(listaRegistrosKey)){
-	nodoRegistroMemTable* registroEncontrado =(nodoRegistroMemTable*) list_remove(listaRegistrosKey, 0); // 0 es el primero
+	nodoRegistroMemTable* registroEncontrado =(nodoRegistroMemTable*) list_get(listaRegistrosKey, 0); // 0 es el primero
 	t_registro* registroKey = crearRegistro(registroEncontrado->value,registroEncontrado->key,registroEncontrado->timestamp);
-	list_clean_and_destroy_elements(listaRegistrosKey,liberarNodo);
+	//list_clean_and_destroy_elements(listaRegistrosKey,liberarNodo);
 	list_destroy(listaRegistrosKey);
-	liberarNodo(registroEncontrado);
+	//liberarNodo(registroEncontrado);
 	return registroKey;
 			}
 		}
@@ -143,7 +142,7 @@ void* crearTemporal(char* nombreTabla,t_list* registros){  //dictionary_iterator
 	while(i<cantidadTotalRegistros){
 		nodoRegistroMemTable* nodoASerializar= list_get(registros, i);
 		char * nodoSerializado= serializarRegistro(((nodoRegistroMemTable*) nodoASerializar)->value,((nodoRegistroMemTable*) nodoASerializar)->key,((nodoRegistroMemTable*) nodoASerializar)->timestamp);
-		printf("%s\n",nodoSerializado);
+		//printf("%s\n",nodoSerializado);
 		list_add(listaDeRegistros, nodoSerializado);
 
 		i++;
@@ -198,7 +197,7 @@ void* crearTemporal(char* nombreTabla,t_list* registros){  //dictionary_iterator
 		int bytesEnBloque=tamanioBloque(bloquesDisponibles[bloquesEnUso]);
 
 
-		printf("%d\n",bytesEnBloque);
+		//printf("%d\n",bytesEnBloque);
 
 		char* registroActual= list_get(listaDeRegistros, registrosCargados);
 		//printf("%s\n",registroActual);
@@ -208,8 +207,8 @@ void* crearTemporal(char* nombreTabla,t_list* registros){  //dictionary_iterator
 
 		bloquesEnUso = bloquesEnUso + desplazamiento;
 
-		bytesEnBloque=tamanioBloque(bloquesDisponibles[bloquesEnUso]);
-		printf("%d\n",bytesEnBloque);
+		//bytesEnBloque=tamanioBloque(bloquesDisponibles[bloquesEnUso]);
+		//printf("%d\n",bytesEnBloque);
 
 		registrosCargados++;
 
@@ -299,13 +298,17 @@ void chekearDumpeo(){
 			struct timeval verificar;
 			gettimeofday(&verificar,NULL);
 			int tiempoTranscurrido = ((double)(verificar.tv_sec - tiempoHastaDump.tv_sec) + (double)(verificar.tv_usec - tiempoHastaDump.tv_usec)/1000000)*1000;
-			printf("%d",tiempoTranscurrido);
+
 //			gettimeofday(&tiempoHastaDump,NULL);
-			if(!estaDump && (tiempoDump<tiempoTranscurrido && !(memTable==NULL))){
+			while(1){
+			sleep(tiempoDump/1000);
+			if(!estaDump  && !(memTable==NULL)){
 				estaDump=1;
 				pthread_create(&dumpeo,NULL,dump,NULL);
 				pthread_join(dumpeo, (void**)NULL);
 				gettimeofday(&tiempoHastaDump,NULL);
+				deployMenu();
+			}
 			}
 //			else{
 //			gettimeofday(&tiempoHastaDump,NULL);}

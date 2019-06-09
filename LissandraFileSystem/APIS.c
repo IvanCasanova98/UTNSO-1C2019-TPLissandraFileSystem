@@ -46,7 +46,7 @@ void APIcreate(t_paquete_create* paquete_create){ //0 memory leak
 		crearParticion(nombreTablaMayuscula,particionesCargadas);
 
 		liberarPaqueteCreate(paquete_create);
-	} else if (EEXIST==errno) LaTablaYaExiste(nombreTablaMayuscula);
+	} else LaTablaYaExiste(nombreTablaMayuscula);
 
 }
 
@@ -193,7 +193,7 @@ void listarTablas(){ //0 ml
 }
 
 void imprimirMetadata(t_metadata* metadataDeTablaPedida){
-	printf("%s%s ",BLUE,pasarAConsistenciaChar(metadataDeTablaPedida->consistencia));
+	printf("%s%s ",GREEN,pasarAConsistenciaChar(metadataDeTablaPedida->consistencia));
 	printf(" %d ",metadataDeTablaPedida->particiones);
 	printf(" %d\n",metadataDeTablaPedida->tiempo_de_compactacion);
 	printf("%s",NORMAL_COLOR);
@@ -308,6 +308,21 @@ t_metadata* crearMetadata(consistency consistencia, int particiones,int tiempo_c
 	return metadata;
 
 }
+bool validarConsistencia(char* consistencia){ //0 ml
+
+	if (strcmp(consistencia, "SC")==0) {
+		return true;
+	}
+	else if (strcmp(consistencia, "SHC")==0) {
+		return true;
+	}
+	else if (strcmp(consistencia, "EC")==0) {
+		return true;
+
+	}
+	return false;
+
+}
 
 //PASAR CONSISTENCIAS
 int pasarAConsistenciaINT(char* consistencia){ //0 ml
@@ -419,11 +434,11 @@ void RemoverTemporalesDeTablaYSusBloques(char* nombretabla){
 	t_config* config = config_create("Lissandra.config");
 	char* NombreTmp = string_substring_until(string_reverse(nombretabla), 1);
 
-	char buffer [3];
+
 	char* Montaje= config_get_string_value(config,"PUNTO_MONTAJE");
-	config_destroy(config); //AGREGADO
-	char* directorioAux= malloc(strlen(Montaje) + strlen(".tmp") +strlen("Tables/") +sizeof(buffer)+ strlen(nombretabla)+strlen(NombreTmp)+1);
-	char* directorioTablas = malloc(strlen(Montaje) + strlen(".tmp") +strlen("Tables/") +sizeof(buffer)+ strlen(nombretabla)+strlen(NombreTmp)+1);
+
+	char* directorioAux= malloc(strlen(Montaje) + strlen(".tmp") +strlen("Tables/") +sizeof(int)+ strlen(nombretabla)+strlen(NombreTmp)+1);
+	char* directorioTablas = malloc(strlen(Montaje) + strlen(".tmp") +strlen("Tables/") +sizeof(int)+ strlen(nombretabla)+strlen(NombreTmp)+1);
 	strcpy(directorioTablas,Montaje);
 	strcat(directorioTablas,"Tables/");
 	strcat(directorioTablas,nombretabla);
@@ -431,11 +446,9 @@ void RemoverTemporalesDeTablaYSusBloques(char* nombretabla){
 	strcat(directorioTablas,NombreTmp);
 	int i =1;
 	strcpy(directorioAux,directorioTablas);
-	sprintf(buffer,"%d",i);
-	strcat(directorioAux,buffer);
+	strcat(directorioAux,string_itoa(i));
 	strcat(directorioAux,".tmp");
 	while(existe_temporal(directorioAux)){
-
 		t_config* directorioTemporal= config_create(directorioAux);
 		char **arrayBloques = string_get_string_as_array(config_get_string_value(directorioTemporal,"BLOCKS"));
 		string_iterate_lines(arrayBloques,removerBloque);
@@ -444,14 +457,11 @@ void RemoverTemporalesDeTablaYSusBloques(char* nombretabla){
 
 		i++;
 		strcpy(directorioAux,directorioTablas);
-		sprintf(buffer,"%d",i);
-		strcat(directorioAux,buffer);
+		strcat(directorioAux,string_itoa(i));
 		strcat(directorioAux,".tmp");
 	}
 
-
-	strcat(directorioTablas,buffer);
-	strcat(directorioTablas,".tmp");
+	config_destroy(config); //AGREGADO
 	free(directorioTablas); //AGREGADO
 	free(directorioAux);
 	free(NombreTmp); //AGREGADO

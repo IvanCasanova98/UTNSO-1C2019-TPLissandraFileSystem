@@ -19,17 +19,20 @@ void* prenderConsola(void* arg){
 	}
 
 	char* parametros = strtok(lineaRequest, " ");
-	int cod_ingresado = codigo_ingresado(parametros);
+	string_to_upper(parametros);
+	int cod_ingresado = codigo_ingresado((parametros));
 	//free(lineaRequest);
 	while(1)
 	{
 		switch(cod_ingresado){
 			case 0:;
 				t_paquete_create* paquete_create =LeerCreate(parametros) ;
+				if(paquete_create==NULL) break;
 				APIcreate(paquete_create);
 				break;
 			case 1:;
 				t_paquete_drop* paquete_drop =LeerDrop(parametros);
+				if(paquete_drop==NULL) break;
 				APIdrop(paquete_drop);
 				free(paquete_drop);
 				break;
@@ -47,6 +50,7 @@ void* prenderConsola(void* arg){
 			case 3:;
 
 				t_paquete_select* paquete_select =LeerSelect(parametros) ;
+				if(paquete_select==NULL) break;
 				void* value=APIselect(paquete_select);
 				if(value!=NULL){
 					//tendria que hacer el send aca
@@ -57,6 +61,7 @@ void* prenderConsola(void* arg){
 			case 4:;
 
 				t_paquete_insert* paquete_insert=LeerInsert(parametros);
+				if(paquete_insert==NULL) break;
 				APIinsert(paquete_insert);
 				//en recibir.h tendria que hacer un send aca
 
@@ -71,16 +76,18 @@ void* prenderConsola(void* arg){
 				printf("Operacion desconocida.");
 				break;
 			}
-		//free(lineaRequest);
+
+		retardo();
+
 		free(parametros);
-		chekearDumpeo();
-		//free(lineaRequest);
+
 		lineaRequest=ingresar_request();
 		while(string_is_empty(lineaRequest)){
 			free(lineaRequest);
 			lineaRequest = ingresar_request();
 		}
 		parametros = strtok(lineaRequest, " ");
+		string_to_upper(parametros);
 		cod_ingresado = codigo_ingresado(parametros);
 
 	}
@@ -89,16 +96,15 @@ void* prenderConsola(void* arg){
 
 void imprimirMetadataDeTabla(char* nombre_tabla){
 	t_metadata* metadata = obtenerMetadataTabla(nombre_tabla);
+	printf("%s\t",nombre_tabla);
 	imprimirMetadata(metadata);
 	free(metadata);
 
 }
 
 void deployMenu(){
-	printf("\n\nCREATE NOMBRETABLA CONSISTENCIA PARTICIONES TIEMPO_COMPACTACION \nDROP\nDESCRIBE\nSELECT    NOMBRETABLA KEY\nINSERT    NOMBRETABLA KEY \"VALUE\" TIMESTAMP (OPCIONAL) \nDESCRIBE NOMBRETABLA\nDROP\t NOMBRETABLA\n");
+	printf("\n\nCREATE NOMBRETABLA CONSISTENCIA PARTICIONES TIEMPO_COMPACTACION \nDROP NOMBRETABLA\nDESCRIBE NOMBRETABLA (OPCIONAL)\nSELECT    NOMBRETABLA KEY\nINSERT    NOMBRETABLA KEY \"VALUE\" TIMESTAMP (OPCIONAL) \n");
 	printf("\nIngrese REQUEST\n");
-
-	listarTablas();
 
 
 }
@@ -144,8 +150,11 @@ int codigo_ingresado(char* codOp){
 t_paquete_drop* LeerDrop(char *parametros){
 	char* nombre_tabla;
 	parametros= strtok(NULL, " ");
+	if(parametros==NULL){
+		faltaTabla();
+		return NULL;
+	}
 	nombre_tabla = parametros;
-
 	t_paquete_drop* paquete = crear_paquete_drop(nombre_tabla);
 	loggear_request_drop(paquete);
 
@@ -157,7 +166,6 @@ t_paquete_describe* LeerDescribe(char *parametros){
 	char* nombre_tabla;
 	parametros= strtok(NULL, " ");
 	if(parametros == NULL){
-		printf("DESCRIBE SOLO\n");
 		loggear_request_describe_sin_tabla();
 		return NULL;
 	}
@@ -178,8 +186,16 @@ t_paquete_select* LeerSelect(char* parametros){
 	char* nombre_tabla;
 
 	parametros= strtok(NULL, " ");
+	if(parametros==NULL){
+		faltaTabla();
+		return NULL;
+	}
 	nombre_tabla = parametros;
 	parametros = strtok(NULL, " ");
+	if(parametros==NULL || !validarNumero(parametros)){
+		faltaKey();
+		return NULL;
+	}
 	valor_key = atoi(parametros);
 
 	t_paquete_select* paquete = crear_paquete_select(nombre_tabla, valor_key);
@@ -197,18 +213,45 @@ t_paquete_insert* LeerInsert(char* parametros){
 	long long timestamp;
 
 	parametros= strtok(NULL, " ");
+	if(parametros==NULL){
+		faltaTabla();
+		return NULL;
+	}
 	nombre_tabla = parametros;
+
 	parametros = strtok(NULL, " ");
+	if(parametros==NULL || !validarNumero(parametros)){
+		faltaKey();
+		return NULL;
+	}
 	valor_key = atoi(parametros);
+
+
+
 	parametros = strtok(NULL, "\"");
+	t_config* config =leer_config();
+	int maxValue = config_get_int_value(config,"TAMAÑO_VALUE");
+	if(parametros==NULL || string_length(parametros)>maxValue){
+		faltaValue();
+		return NULL;
+	}
+	config_destroy(config);
 	value=parametros;
+
+
 	parametros = strtok(NULL, " ");
 
 	if (parametros==NULL) {
 	struct timeval te;
 	gettimeofday(&te, NULL); // get current time
 	timestamp = te.tv_sec*1000LL + te.tv_usec/1000;
-	} else {timestamp = atoll(parametros);}
+	} else {
+		if(!validarNumero(parametros)){
+		faltaTimestamp();
+		return NULL;
+		}
+		timestamp = atoll(parametros);
+	}
 
 	t_paquete_insert* paquete = crear_paquete_insert(nombre_tabla, valor_key, value, timestamp);
 
@@ -226,12 +269,28 @@ t_paquete_create* LeerCreate(char* parametros){
 	int compactacion;
 
 	parametros= strtok(NULL, " ");
+	if(parametros==NULL){
+		faltaTabla();
+		return NULL;
+	}
 	nombre_tabla = parametros;
 	parametros = strtok(NULL, " ");
+	if(parametros==NULL || !validarConsistencia(parametros)){
+		faltaConsistencia();
+		return NULL;
+	}
 	consistencia = pasarAConsistenciaINT(parametros);
 	parametros = strtok(NULL, " ");
+	if(parametros==NULL || !validarNumero(parametros) || !strcmp(parametros,"0")){
+		faltaParticiones();
+		return NULL;
+	}
 	particiones = atoi(parametros);
 	parametros = strtok(NULL, " ");
+	if(parametros==NULL || !validarNumero(parametros)){
+		faltaTiempo_Compactacion();
+		return NULL;
+	}
 	compactacion = atoi(parametros);
 
 	t_paquete_create* paquete = crear_paquete_create(nombre_tabla, consistencia,particiones,compactacion);
@@ -239,6 +298,13 @@ t_paquete_create* LeerCreate(char* parametros){
 	loggear_request_create(paquete);
 
 	return paquete;
+}
+
+bool validarNumero(char* parametro){
+	for(int i=0;i<string_length(parametro);i++){
+		if(!isdigit(parametro[i])) return false;
+	}
+	return true;
 }
 
 
@@ -351,6 +417,14 @@ t_paquete_create* crear_paquete_create(char* nombretabla, consistency consistenc
 	return paquete;
 
 }
+
+void retardo(){
+	t_config* config =leer_config();
+	int retardo = config_get_int_value(config,"RETARDO");
+	float retardoConComas= retardo/1000;
+	sleep(retardoConComas);
+}
+
 
 
 

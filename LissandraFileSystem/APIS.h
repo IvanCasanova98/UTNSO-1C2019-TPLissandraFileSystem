@@ -55,7 +55,7 @@ void  APIcreate(t_paquete_create*);
 t_metadata*  APIdescribe(t_paquete_describe*);
 void  APIdescribeTodasLasTablas();
 //*************************************
-
+bool validarConsistencia(char* consistencia);
 void liberarRegistro(void* elemento);
 void liberarPaqueteCreate(t_paquete_create* paquete_create);
 bool mayorTimeStampRegistro(void*elemento1,void*elemento2);

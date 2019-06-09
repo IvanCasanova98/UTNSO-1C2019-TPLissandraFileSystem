@@ -10,11 +10,12 @@ int main(void)
 	t_config* config = leer_config();
 	//crearArchivoBitmap();
 	crearBitMap();
-	pthread_t consola,dumpeo;
+	pthread_t consola,dumpeo,dump;
 	logger = iniciar_logger();
 	int tiempoEntreDump = atoi(config_get_string_value(config, "TIEMPO_DUMP"));
 
 	gettimeofday(&tiempoHastaDump,NULL);
+	pthread_create(&dump,NULL,chekearDumpeo,NULL);
 	pthread_create(&consola,NULL,prenderConsola,NULL);
 
 
@@ -78,5 +79,6 @@ int main(void)
 	config_destroy(config);
 	log_info(logger, "FIN CONEXION");
 	pthread_join(consola, (void**)NULL);
+	pthread_join(dump, (void**)NULL);
 	return EXIT_SUCCESS;
 }

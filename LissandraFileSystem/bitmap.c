@@ -63,11 +63,11 @@ void crearBitMap(){
 	//bitmap=malloc(mystat.st_size);
 	bitmap=bitarray_create_with_mode(archivoBitmap , mystat.st_size ,0);
 
-
-	for (int i = 0; i<blockNum;i++){
-		printf("%d",bitarray_test_bit(bitmap,i));
-
-}
+//
+//	for (int i = 0; i<blockNum;i++){
+//		printf("%d",bitarray_test_bit(bitmap,i));
+//
+//}
 
 
 

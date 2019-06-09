@@ -8,6 +8,7 @@
 #ifndef CONSOLA_H_
 #define CONSOLA_H_
 
+#include <ctype.h>
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
@@ -43,7 +44,7 @@ t_paquete_insert* 	crear_paquete_insert(char* nombretabla,uint16_t valor_key, ch
 t_paquete_create* 	crear_paquete_create(char* nombretabla, consistency consistencia, int particiones,int tiempo_de_compactacion);
 t_paquete_drop*   	crear_paquete_drop(char *nombretabla);
 t_paquete_describe* crear_paquete_describe(char *nombre_tabla);
-
+bool validarNumero(char* parametro);
 
 //---------------------ARMAR PAQUETE
 t_paquete_select* 	LeerSelect(char* parametros);
