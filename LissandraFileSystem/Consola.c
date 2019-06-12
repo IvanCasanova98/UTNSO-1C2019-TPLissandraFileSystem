@@ -78,7 +78,6 @@ void* prenderConsola(void* arg){
 			}
 
 		retardo();
-
 		free(parametros);
 
 		lineaRequest=ingresar_request();
@@ -103,7 +102,7 @@ void imprimirMetadataDeTabla(char* nombre_tabla){
 }
 
 void deployMenu(){
-	printf("\n\nCREATE NOMBRETABLA CONSISTENCIA PARTICIONES TIEMPO_COMPACTACION \nDROP NOMBRETABLA\nDESCRIBE NOMBRETABLA (OPCIONAL)\nSELECT    NOMBRETABLA KEY\nINSERT    NOMBRETABLA KEY \"VALUE\" TIMESTAMP (OPCIONAL) \n");
+	printf("\n\nCREATE    NOMBRETABLA CONSISTENCIA PARTICIONES TIEMPO_COMPACTACION \nDROP      NOMBRETABLA\nDESCRIBE  NOMBRETABLA (OPCIONAL)\nSELECT    NOMBRETABLA KEY\nINSERT    NOMBRETABLA KEY \"VALUE\" TIMESTAMP (OPCIONAL) \n");
 	printf("\nIngrese REQUEST\n");
 
 
@@ -228,7 +227,7 @@ t_paquete_insert* LeerInsert(char* parametros){
 
 
 
-	parametros = strtok(NULL, "\"");
+	parametros = strtok(NULL, " \"");
 	t_config* config =leer_config();
 	int maxValue = config_get_int_value(config,"TAMAÑO_VALUE");
 	if(parametros==NULL || string_length(parametros)>maxValue){
@@ -421,8 +420,12 @@ t_paquete_create* crear_paquete_create(char* nombretabla, consistency consistenc
 void retardo(){
 	t_config* config =leer_config();
 	int retardo = config_get_int_value(config,"RETARDO");
-	float retardoConComas= retardo/1000;
-	sleep(retardoConComas);
+//	struct timespec tim,tim2;
+//	tim.tv_sec = 0;
+//	tim.tv_nsec = retardo*1000000;
+//	nanosleep(&tim,&tim2);
+	int retardoEnMicroSegundos= retardo*1000;
+	usleep(retardoEnMicroSegundos);
 }
 
 

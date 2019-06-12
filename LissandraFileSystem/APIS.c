@@ -964,3 +964,23 @@ void liberarRegistro(void* elemento){
 	free(((t_registro*)elemento)->value);
 	free(((t_registro*)elemento));
 }
+
+
+//void notificarCambioRetardo(){
+//
+//	char buffer [2*sizeof(struct inotify_event )+24];
+//	int file_descriptor = inotify_init();
+//
+//	int watch_descriptor = inotify_add_watch(file_descriptor, "Lissandra.config", IN_MODIFY | IN_CREATE | IN_DELETE);
+//	int length = read(file_descriptor, buffer, sizeof(struct inotify_event )+24);
+//	int offset = 0;
+//	while (offset < length) {
+//	struct inotify_event *event = (struct inotify_event *) &buffer[offset];
+//	if (event->len) {
+//
+//	}
+//	}
+//}
+
+
+

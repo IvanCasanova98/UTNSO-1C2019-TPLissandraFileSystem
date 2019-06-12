@@ -296,8 +296,8 @@ void chekearDumpeo(){
 			t_config* config = leer_config();
 			int tiempoDump = atoi(config_get_string_value(config, "TIEMPO_DUMP"));
 			struct timeval verificar;
-			gettimeofday(&verificar,NULL);
-			int tiempoTranscurrido = ((double)(verificar.tv_sec - tiempoHastaDump.tv_sec) + (double)(verificar.tv_usec - tiempoHastaDump.tv_usec)/1000000)*1000;
+			//gettimeofday(&verificar,NULL);
+			//int tiempoTranscurrido = ((double)(verificar.tv_sec - tiempoHastaDump.tv_sec) + (double)(verificar.tv_usec - tiempoHastaDump.tv_usec)/1000000)*1000;
 
 //			gettimeofday(&tiempoHastaDump,NULL);
 			while(1){
@@ -306,7 +306,7 @@ void chekearDumpeo(){
 				estaDump=1;
 				pthread_create(&dumpeo,NULL,dump,NULL);
 				pthread_join(dumpeo, (void**)NULL);
-				gettimeofday(&tiempoHastaDump,NULL);
+				//gettimeofday(&tiempoHastaDump,NULL);
 				deployMenu();
 			}
 			}

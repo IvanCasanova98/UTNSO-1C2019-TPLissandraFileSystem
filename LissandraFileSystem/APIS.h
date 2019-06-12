@@ -32,6 +32,7 @@
 #include <dirent.h>
 #include <errno.h>
 #include <sys/stat.h>
+#include <sys/inotify.h>
 #include <unistd.h>
 #include"recibir.h"
 #include"memTable.h"
