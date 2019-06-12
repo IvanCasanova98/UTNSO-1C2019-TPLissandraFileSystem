@@ -39,11 +39,21 @@ void* prenderConsola(void* arg){
 			case 2:;
 				t_paquete_describe* paquete_describe = LeerDescribe(parametros);
 				if(paquete_describe == NULL){
-					APIdescribeTodasLasTablas();
+
+					t_dictionary* metadatasDeTablasPedidas = APIdescribeTodasLasTablas();
+					if(metadatasDeTablasPedidas != NULL)
+						imprimirListaMetadatas(metadatasDeTablasPedidas);
+					dictionary_destroy_and_destroy_elements(metadatasDeTablasPedidas,free);
+//					free(metadatasDeTablasPedidas);
+
 				} else{
-					t_metadata* metadataDeTablaPedida = APIdescribe(paquete_describe);
-					if(metadataDeTablaPedida != NULL) imprimirMetadata(metadataDeTablaPedida);
-					free(metadataDeTablaPedida);
+
+					t_dictionary* metadataDeTablaPedida = APIdescribe(paquete_describe);
+					if(metadataDeTablaPedida != NULL)
+						imprimirListaMetadatas(metadataDeTablaPedida);
+					dictionary_destroy(metadataDeTablaPedida);
+//					free(metadataDeTablaPedida);
+
 				}
 				free(paquete_describe);
 				break;
@@ -425,6 +435,7 @@ void retardo(){
 //	tim.tv_nsec = retardo*1000000;
 //	nanosleep(&tim,&tim2);
 	int retardoEnMicroSegundos= retardo*1000;
+	config_destroy(config);
 	usleep(retardoEnMicroSegundos);
 }
 

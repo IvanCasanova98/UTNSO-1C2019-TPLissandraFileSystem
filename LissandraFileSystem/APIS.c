@@ -52,15 +52,6 @@ void APIcreate(t_paquete_create* paquete_create){ //0 memory leak
 
 
 void APIinsert(t_paquete_insert* paquete_insert){ // 0 memory leak
-	/*
-		 *1. Verificar que la tabla exista en el file system. En caso que no exista, informa el error y continúa su ejecución.
-		 *2. Obtener la metadata asociada a dicha tabla.
-		 *3. Verificar si existe en memoria una lista de datos a dumpear. De no existir, alocar dicha memoria.
-		 *4. El parámetro Timestamp es opcional. En caso que un request no lo provea (por ejemplo insertando un valor desde la consola), se usará el valor actual del Epoch UNIX.
-		 *5. Insertar en la memoria temporal del punto anterior una nueva entrada que contenga los datos enviados en la request.
-
-		 * En los request solo se utilizarán las comillas (“”) para enmascarar el Value que se envíe. No se proveerán request con comillas en otros puntos.
-	 */
 
 	char* nombreTablaMayuscula=malloc(strlen(paquete_insert->nombre_tabla)+1);
 
@@ -84,14 +75,6 @@ void APIinsert(t_paquete_insert* paquete_insert){ // 0 memory leak
 }
 
 char* APIselect(t_paquete_select* paquete_select){ // bastante ml revisar
-	/*
-	 *1. Verificar que la tabla exista en el file system.
-	 *2. Obtener la metadata asociada a dicha tabla.
-	 *3. Calcular cual es la partición que contiene dicho KEY.
-	 *4. Escanear la partición objetivo, todos los archivos temporales y la memoria temporal de dicha tabla (si existe) buscando la key deseada.
-	 *5. Encontradas las entradas para dicha Key, se retorna el valor con el Timestamp más grande.
-	 *
-	 */
 
 
 	char* nombreTablaMayuscula=malloc(strlen(paquete_select->nombre_tabla)+1);
@@ -150,15 +133,21 @@ char* APIselect(t_paquete_select* paquete_select){ // bastante ml revisar
 		return NULL;}
 }
 
-t_metadata* APIdescribe (t_paquete_describe* paquete_describe){
+
+t_dictionary* APIdescribe (t_paquete_describe* paquete_describe){
 	char nombreTablaMayuscula [strlen(paquete_describe->nombre_tabla)+1];
 	strcpy(nombreTablaMayuscula,paquete_describe->nombre_tabla);
 	string_to_upper(nombreTablaMayuscula);
 
 	if(existeTabla(nombreTablaMayuscula)){
 		t_metadata* metadataDeTabla = obtenerMetadataTabla(nombreTablaMayuscula);
-		return metadataDeTabla;
+		t_dictionary* metadataParticularSolicitada = dictionary_create();
+
+		dictionary_put(metadataParticularSolicitada,nombreTablaMayuscula,metadataDeTabla);
 		free(metadataDeTabla);
+
+		return metadataParticularSolicitada;
+
 	} else {
 		error_show("NO EXISTE %s\n",nombreTablaMayuscula);
 		return NULL;
@@ -166,15 +155,54 @@ t_metadata* APIdescribe (t_paquete_describe* paquete_describe){
 
 }
 
-void APIdescribeTodasLasTablas(){
-	void* eliminarNombreTablaHallada(void *elemento){
-		free((char*) elemento);
-	}
-	t_list* listaDeTablas = listarTablasExistentes();
-		if(listaDeTablas != NULL){
-			list_iterate(listaDeTablas,imprimirMetadataDeTabla);
-		}
-		list_destroy_and_destroy_elements(listaDeTablas,eliminarNombreTablaHallada);
+
+
+void imprimirListaMetadatas(t_dictionary * metadatas){
+	dictionary_iterator(metadatas,mostrarMetadataTablas);
+}
+
+
+void mostrarMetadataTablas(char*nombreTabla,void* elemento){
+
+	printf("%s%s  ",GREEN,nombreTabla);
+	imprimirMetadata((t_metadata*)elemento);
+	printf("%s\n",NORMAL_COLOR);
+
+
+}
+
+
+t_dictionary* APIdescribeTodasLasTablas(){
+//	void* eliminarNombreTablaHallada(void *elemento){
+//		free((char*) elemento);
+//	}
+	  DIR *d;
+	  struct dirent *dir;
+	  char *directorioTablas= DirectorioDeTabla("");
+	  d = opendir(directorioTablas);
+	  t_dictionary *diccionarioDeTablas = dictionary_create();
+	  if (d != NULL)
+	  {
+		free(directorioTablas);
+	    while ((dir = readdir(d)) != NULL) {
+	    	if (!string_contains(dir->d_name,".")){
+	    	char* nombreTabla = malloc(sizeof(dir->d_name)+1);
+	    	strcpy(nombreTabla,dir->d_name);
+	    	t_metadata* metadataDeTabla = obtenerMetadataTabla(nombreTabla);
+
+	    	dictionary_put(diccionarioDeTablas,nombreTabla,metadataDeTabla);
+	    	free(nombreTabla);
+	    	}
+
+	    }
+
+	    closedir(dir);
+	    closedir(d);
+
+	    return diccionarioDeTablas;
+	  } else return diccionarioDeTablas;
+
+
 }
 
 
@@ -227,6 +255,7 @@ t_list* listarTablasExistentes() {
   } else return listaDeTablas;
 
 }
+
 
 char* elegirMayorTimeStamp(t_list* RegistrosEncontrados){
 	list_sort(RegistrosEncontrados,mayorTimeStamp);

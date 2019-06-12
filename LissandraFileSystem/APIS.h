@@ -53,8 +53,8 @@ void  APIdrop(t_paquete_drop*);
 char* APIselect(t_paquete_select*);
 void  APIinsert(t_paquete_insert*);
 void  APIcreate(t_paquete_create*);
-t_metadata*  APIdescribe(t_paquete_describe*);
-void  APIdescribeTodasLasTablas();
+t_dictionary*  APIdescribe(t_paquete_describe*);
+t_dictionary*  APIdescribeTodasLasTablas();
 //*************************************
 bool validarConsistencia(char* consistencia);
 void liberarRegistro(void* elemento);
@@ -68,7 +68,8 @@ t_registro* buscarKey(char* registrosDeBloque,int key);
 t_registro* buscarEnParticion(char* nombreTabla, int nroParticion,int key);
 char* DirectorioDeTemporalNuevo(char* nombretabla);
 
-
+void mostrarMetadataTablas(char*nombreTabla,void* elemento);
+void imprimirListaMetadatas(t_dictionary * metadatas);
 void imprimirMetadataDeTabla(char* nombre_tabla);
 void imprimirMetadata(t_metadata* metadataDeTablaPedida);
 void listarTablas(); //ESTA FUNCION NO SIRVE PARA NADA, SOLO POR SI QUEREMOS LISTARLAS.
@@ -103,4 +104,6 @@ void RemoverMetadataDeTabla(char *nombreTabla);
 void RemoverCarpetaVaciaDeTabla(char *nombreTabla);
 void RemoverDeLaMemtable(char *nombreTabla);
 void RemoverParticionesDeTablaYSusBloques(char* nombreTabla);
+
+
 #endif /* APIS_H_ */
