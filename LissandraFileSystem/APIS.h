@@ -42,6 +42,8 @@
 #include"logs.h"
 t_config config;
 
+#define MAGENTA "\x1b[35m"
+#define CYAN "\x1b[36m"
 #define GREEN  "\x1B[32m"
 #define BLUE  "\x1B[34m"
 #define NORMAL_COLOR  "\x1B[0m"
@@ -53,8 +55,8 @@ void  APIdrop(t_paquete_drop*);
 char* APIselect(t_paquete_select*);
 void  APIinsert(t_paquete_insert*);
 void  APIcreate(t_paquete_create*);
-t_metadata*  APIdescribe(t_paquete_describe*);
-void  APIdescribeTodasLasTablas();
+t_dictionary*  APIdescribe(t_paquete_describe*);
+t_dictionary*  APIdescribeTodasLasTablas();
 //*************************************
 bool validarConsistencia(char* consistencia);
 void liberarRegistro(void* elemento);
@@ -68,12 +70,13 @@ t_registro* buscarKey(char* registrosDeBloque,int key);
 t_registro* buscarEnParticion(char* nombreTabla, int nroParticion,int key);
 char* DirectorioDeTemporalNuevo(char* nombretabla);
 
-
+void mostrarMetadataTablas(char*nombreTabla,void* elemento);
+void imprimirListaMetadatas(t_dictionary * metadatas);
 void imprimirMetadataDeTabla(char* nombre_tabla);
 void imprimirMetadata(t_metadata* metadataDeTablaPedida);
 void listarTablas(); //ESTA FUNCION NO SIRVE PARA NADA, SOLO POR SI QUEREMOS LISTARLAS.
 t_list* listarTablasExistentes();
-
+char* DirectorioDeTemporalCompactacion(char* nombretabla,int nroTemporal);
 char* DirectorioDeTemporalNuevo(char* nombretabla);
 
 int existe_temporal(char* path);
@@ -97,10 +100,13 @@ char* DirectorioBitMap();
 void crearParticiones(char*nombreTabla ,int particiones);
 char* DirectorioDeParticion(char* ,int numeroParticion);
 void crearParticion(char*nombreTabla ,int particiones);
+
 void removerBloque(char* nroBloque);
 void RemoverTemporalesDeTablaYSusBloques(char* nombretabla);
 void RemoverMetadataDeTabla(char *nombreTabla);
 void RemoverCarpetaVaciaDeTabla(char *nombreTabla);
 void RemoverDeLaMemtable(char *nombreTabla);
 void RemoverParticionesDeTablaYSusBloques(char* nombreTabla);
+void RemoverParticionDeTablaEspecificaYSusBloques(char* nombreTabla,int nroParticionABorrar);
+
 #endif /* APIS_H_ */

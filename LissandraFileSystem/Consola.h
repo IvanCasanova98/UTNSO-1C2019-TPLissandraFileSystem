@@ -25,6 +25,7 @@
 #include"recibir.h"
 #include"memTable.h"
 #include"bloque.h"
+#include"compactador.h"
 #include"Lissandra.h"
 #include"bitmap.h"
 #include"APIS.h"

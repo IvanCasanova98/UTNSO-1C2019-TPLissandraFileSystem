@@ -7,7 +7,7 @@ int main(void)
 {
 
 	t_config* config = leer_config();
-	//crearArchivoBitmap();
+//	crearArchivoBitmap();
 	crearBitMap();
 	pthread_t consola,dumpeo,dump;
 	logger = iniciar_logger();

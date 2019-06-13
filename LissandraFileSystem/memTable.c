@@ -35,9 +35,11 @@ void imprimirListaTablas(){
 
 
 void mostrarTablas(char*key,void* elemento){
-	printf("%s  ",key);
+
+	printf("%s%s  ",GREEN,key);
 	list_iterate((t_list*) elemento,mostrarRegistros);
-	printf("\n");
+	printf("%s\n",NORMAL_COLOR);
+
 
 }
 
@@ -307,7 +309,7 @@ void chekearDumpeo(){
 				pthread_create(&dumpeo,NULL,dump,NULL);
 				pthread_join(dumpeo, (void**)NULL);
 				//gettimeofday(&tiempoHastaDump,NULL);
-				deployMenu();
+				//deployMenu();
 			}
 			}
 //			else{

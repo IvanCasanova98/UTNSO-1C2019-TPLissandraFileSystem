@@ -31,6 +31,7 @@ void* prenderConsola(void* arg){
 				APIcreate(paquete_create);
 				break;
 			case 1:;
+
 				t_paquete_drop* paquete_drop =LeerDrop(parametros);
 				if(paquete_drop==NULL) break;
 				APIdrop(paquete_drop);
@@ -39,11 +40,21 @@ void* prenderConsola(void* arg){
 			case 2:;
 				t_paquete_describe* paquete_describe = LeerDescribe(parametros);
 				if(paquete_describe == NULL){
-					APIdescribeTodasLasTablas();
+
+					t_dictionary* metadatasDeTablasPedidas = APIdescribeTodasLasTablas();
+					if(metadatasDeTablasPedidas != NULL)
+						imprimirListaMetadatas(metadatasDeTablasPedidas);
+					dictionary_destroy_and_destroy_elements(metadatasDeTablasPedidas,free);
+//					free(metadatasDeTablasPedidas);
+
 				} else{
-					t_metadata* metadataDeTablaPedida = APIdescribe(paquete_describe);
-					if(metadataDeTablaPedida != NULL) imprimirMetadata(metadataDeTablaPedida);
-					free(metadataDeTablaPedida);
+
+					t_dictionary* metadataDeTablaPedida = APIdescribe(paquete_describe);
+					if(metadataDeTablaPedida != NULL)
+						imprimirListaMetadatas(metadataDeTablaPedida);
+					dictionary_destroy(metadataDeTablaPedida);
+//					free(metadataDeTablaPedida);
+
 				}
 				free(paquete_describe);
 				break;
@@ -104,6 +115,9 @@ void imprimirMetadataDeTabla(char* nombre_tabla){
 void deployMenu(){
 	printf("\n\nCREATE    NOMBRETABLA CONSISTENCIA PARTICIONES TIEMPO_COMPACTACION \nDROP      NOMBRETABLA\nDESCRIBE  NOMBRETABLA (OPCIONAL)\nSELECT    NOMBRETABLA KEY\nINSERT    NOMBRETABLA KEY \"VALUE\" TIMESTAMP (OPCIONAL) \n");
 	printf("\nIngrese REQUEST\n");
+	//printf("%s",DirectorioDeTemporalCompactacion("ANIMALES",1));
+	compactar("ANIMALES");
+
 
 
 }
@@ -227,7 +241,7 @@ t_paquete_insert* LeerInsert(char* parametros){
 
 
 
-	parametros = strtok(NULL, " \"");
+	parametros = strtok(NULL, "\"");
 	t_config* config =leer_config();
 	int maxValue = config_get_int_value(config,"TAMAÑO_VALUE");
 	if(parametros==NULL || string_length(parametros)>maxValue){
