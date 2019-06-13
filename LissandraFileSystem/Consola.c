@@ -426,6 +426,7 @@ void retardo(){
 //	nanosleep(&tim,&tim2);
 	int retardoEnMicroSegundos= retardo*1000;
 	usleep(retardoEnMicroSegundos);
+	config_destroy(config);
 }
 
 

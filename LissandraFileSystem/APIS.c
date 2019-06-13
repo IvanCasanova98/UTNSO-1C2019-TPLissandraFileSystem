@@ -106,6 +106,7 @@ char* APIselect(t_paquete_select* paquete_select){ // bastante ml revisar
 			void* RegistroParticion= buscarEnParticion(nombreTablaMayuscula,particionKey,paquete_select->valor_key);
 			void* RegistroMemTable = buscarMemTable(nombreTablaMayuscula,paquete_select->valor_key); // 8 bytes ml
 			void* RegistroTemporal= buscarEnTemporales(nombreTablaMayuscula,paquete_select->valor_key);
+
 			if(RegistroMemTable!=NULL){
 			list_add(RegistrosEncontrados,RegistroMemTable);
 			}
@@ -903,13 +904,15 @@ t_registro* buscarEnTemporales(char* nombreTabla,int key){
 			i++;
 		}
 	config_destroy(config);
+	string_iterate_lines(arrayBloques,free);
+	free(arrayBloques);
 	free(directorioTemporal);
 	temporales++;
 	directorioTemporal= DirectorioDeTemporal(nombreTabla,temporales);
 	}
-
 	free(directorioTemporal);
 	if(temporales==1) {return NULL;}
+
 
 	return buscarRegistroTemporalMasReciente(registrosCompletos,key);
 }
@@ -922,6 +925,8 @@ t_registro* buscarRegistroTemporalMasReciente(char* todosLosRegistrosTemporales,
 		char** RegistroActual =string_split(arrayRegistros[registrosRecorridos],";");
 		list_add(listaDeRegistros,crearRegistro(RegistroActual[2],atoi(RegistroActual[1]),atoll(RegistroActual[0])));
 		registrosRecorridos++;
+		string_iterate_lines(RegistroActual,free);
+		free(RegistroActual);
 		}
 		bool _filtradoKey(void* elemento){
 			return filtrarPorKeyRegistro(elemento,key);
@@ -931,20 +936,34 @@ t_registro* buscarRegistroTemporalMasReciente(char* todosLosRegistrosTemporales,
 		if(!listaVacia(listaRegistrosKey)){
 		list_sort(listaRegistrosKey,mayorTimeStampRegistro);
 
-		t_registro* AuxregistroEncontrado = list_remove(listaRegistrosKey, 0); // 0 es el primero
+		t_registro* AuxregistroEncontrado = list_get(listaRegistrosKey, 0); // 0 es el primero
 		t_registro* registroEncontrado = crearRegistro(AuxregistroEncontrado->value,AuxregistroEncontrado->key,AuxregistroEncontrado->timestamp);
-		list_clean_and_destroy_elements(listaRegistrosKey,liberarBloque);
+
+
 		list_clean_and_destroy_elements(listaDeRegistros,liberarBloque);
-		free(todosLosRegistrosTemporales);
+
+		string_iterate_lines(arrayRegistros,free);
+
 		free(arrayRegistros);
-		//free(AuxregistroEncontrado);
+
+		free(todosLosRegistrosTemporales);
+
+
+
+		list_destroy(listaRegistrosKey);
+
+		list_destroy(listaDeRegistros);
+
 		return registroEncontrado;
 		}
 		list_destroy(listaRegistrosKey);
 		}
+		string_iterate_lines(arrayRegistros,free);
+		free(arrayRegistros);
+		list_clean_and_destroy_elements(listaDeRegistros,liberarBloque);
 		list_destroy(listaDeRegistros);
 		free(todosLosRegistrosTemporales);
-		free(arrayRegistros);
+		//free(arrayRegistros);
 		return NULL;
 }
 
