@@ -39,6 +39,14 @@
 #include "Lissandra.h"
 #include "bitmap.h"
 #include"logs.h"
+#include <semaphore.h>
+
+void* compactar(char * arg);
+void levantarHilosCompactacion();
+
+int cantidadDeTablasExistentes();
+void* funcionCompactar(void* arg);
+void levantarHilosCompactacion();
 void* concatenar(char*registrosCompletos,char* registrosDeBloque);
 void* crearParticionNueva(char* nombreTabla,char* registros,int nroParticion);
 void cargarRegistros(char* registroActual, int* bloquesDisponibles);
@@ -54,7 +62,6 @@ bool EstaLaKey(void* registro ,t_registro* registroTemporalCasteado);
 bool filtrarPorMismaKey(void* registro,int nroParticion,int NumeroParticiones);
 void RemoverTemporalesCompactadosDeTablaYSusBloques(char* nombretabla);
 void cambiarNombreTmpATmpc(char* nombretabla);
-void* compactar(char* nombreTabla);
 void* imprimirRegistro(void*registro);
 char* serializarRegistroBarraN(char* value,uint16_t key,long long timestamp);
 t_list* LiberarTmpc(char *nombreTabla);

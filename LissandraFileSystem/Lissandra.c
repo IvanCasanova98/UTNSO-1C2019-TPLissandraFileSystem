@@ -1,5 +1,7 @@
 #include "Lissandra.h"
 
+
+t_dictionary* TablasCompactacion=NULL;
 t_dictionary* memTable=NULL;
 t_bitarray* bitmap;
 bool estaDump =0;
@@ -9,11 +11,12 @@ int main(void)
 	t_config* config = leer_config();
 //	crearArchivoBitmap();
 	crearBitMap();
-	pthread_t consola,dumpeo,dump;
+	pthread_t consola,dumpeo,dump,compactar;
+
 	logger = iniciar_logger();
 	int tiempoEntreDump = atoi(config_get_string_value(config, "TIEMPO_DUMP"));
-
 	//gettimeofday(&tiempoHastaDump,NULL);
+	pthread_create(&compactar,NULL,levantarHilosCompactacion,NULL);
 	pthread_create(&dump,NULL,chekearDumpeo,NULL);
 	pthread_create(&consola,NULL,prenderConsola,NULL);
 

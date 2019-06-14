@@ -115,9 +115,12 @@ void imprimirMetadataDeTabla(char* nombre_tabla){
 void deployMenu(){
 	printf("\n\nCREATE    NOMBRETABLA CONSISTENCIA PARTICIONES TIEMPO_COMPACTACION \nDROP      NOMBRETABLA\nDESCRIBE  NOMBRETABLA (OPCIONAL)\nSELECT    NOMBRETABLA KEY\nINSERT    NOMBRETABLA KEY \"VALUE\" TIMESTAMP (OPCIONAL) \n");
 	printf("\nIngrese REQUEST\n");
-	//printf("%s",DirectorioDeTemporalCompactacion("ANIMALES",1));
-	compactar("ANIMALES");
+	//int holi=cantidadDeTablasExistentes();
+	//printf("%d",holi);
 
+	//printf("%s",DirectorioDeTemporalCompactacion("ANIMALES",1));
+	//compactar("PELICULAS");
+	//listarTablas();
 
 
 }

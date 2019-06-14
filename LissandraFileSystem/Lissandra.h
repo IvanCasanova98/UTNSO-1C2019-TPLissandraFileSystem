@@ -17,7 +17,10 @@
 #include<commons/collections/dictionary.h>
 #include"bitmap.h"
 #include<time.h>
+#include <semaphore.h>
 
+
+extern t_dictionary* TablasCompactacion;
 extern t_dictionary* memTable;
 extern t_bitarray* bitmap;
 extern struct timeval tiempoHastaDump;

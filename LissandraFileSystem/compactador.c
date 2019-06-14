@@ -6,21 +6,43 @@
  */
 #include"compactador.h"
 
-void* compactar(char* nombreTabla){
+
+
+void* funcionCompactar(void* arg){
+	char* nombreTabla = (char*) arg;
+	pthread_t compactador;
+	char* DireccionmetaDataTabla = DirectorioDeMetadataTabla(nombreTabla);
+	t_config* config = config_create(DireccionmetaDataTabla);
+	int TiempoCompactacion = config_get_int_value(config, "COMPACTION_TIME");
+	while(1){
+				sleep(TiempoCompactacion/1000);
+					pthread_create(&compactador,NULL,compactar,arg);
+					pthread_join(compactador, (void**)NULL);
+
+				}
+}
+
+
+void* compactar(char * nombreTabla){
 
 	char* primerTemporal = DirectorioDeTemporal(nombreTabla,1);
 	char* DireccionmetaDataTabla = DirectorioDeMetadataTabla(nombreTabla);
 	t_config* config = config_create(DireccionmetaDataTabla);
 	int NumeroParticiones = config_get_int_value(config, "PARTITIONS");
+	int TiempoCompactacion = config_get_int_value(config, "COMPACTION_TIME");
+
 
 	if(existe_temporal(primerTemporal))
 	{
+		struct timeval tiempoAntesDeCompactar , tiempoDespuesDeCompactar;
+		LogCompactacion(nombreTabla);
 		cambiarNombreTmpATmpc(nombreTabla);
 		t_list* ListaRegistrosTemporales= LiberarTmpc(nombreTabla);
     	//list_iterate(ListaRegistrosTemporales,imprimirRegistro);
+		gettimeofday(&tiempoAntesDeCompactar,NULL);
 		for(int i =0; i<NumeroParticiones;i++)
 		{
-			//printf("CAMBIO PARTICION %d:\n",i);
+
 
 
 			bool _filtradoMismaKey(void* elemento){
@@ -38,24 +60,33 @@ void* compactar(char* nombreTabla){
 			RemoverParticionDeTablaEspecificaYSusBloques(nombreTabla,i);
 
 
+
 			crearParticionNueva(nombreTabla,TodosLosRegistrosActualizados,i);
 
-			free(TodosLosRegistrosActualizados);
 
-//			list_destroy(ListaRegistrosParticion);
-//			list_destroy(ListaRegistrosTemporalCompactados);
+
+
+
+			//free(TodosLosRegistrosActualizados);
+
+			list_destroy(ListaRegistrosParticion);
+			list_destroy(ListaRegistrosTemporalCompactados);
 //			list_destroy(RegistrosACargar);
-		list_destroy_and_destroy_elements(ListaRegistrosTemporalCompactados,liberarRegistro);
 //		list_destroy_and_destroy_elements(ListaRegistrosParticion,liberarRegistro); //Rompe
-		}
 
-		printf("Compactacion Terminada");
+
+		}
+		list_destroy_and_destroy_elements(ListaRegistrosTemporales,liberarRegistro);
+		gettimeofday(&tiempoDespuesDeCompactar,NULL);
+		int tiempoTranscurrido = ((double)(tiempoDespuesDeCompactar.tv_sec - tiempoAntesDeCompactar.tv_sec) + (double)(tiempoDespuesDeCompactar.tv_usec - tiempoAntesDeCompactar.tv_usec)/1000000)*1000;
+		LogCompactacionTerminada(nombreTabla,tiempoTranscurrido);
+
 	}
+
 	config_destroy(config);
 	free(DireccionmetaDataTabla);
 	free(primerTemporal);
 }
-
 void cambiarNombreTmpATmpc(char* nombretabla){ // 9ml
 		t_config* config = config_create("Lissandra.config");
 		char* NombreTmp = string_substring_until(string_reverse(nombretabla), 1);
@@ -484,6 +515,96 @@ void crearArchivobin(char* nombreTabla, int size, int*bloques,int cantBloques,in
 
 
 }
+
+
+
+void levantarHilosCompactacion(){
+
+	DIR *d;
+  struct dirent *dir;
+  char *directorioTablas= DirectorioDeTabla("");
+  d = opendir(directorioTablas);
+  int TablasYaExistentes=cantidadDeTablasExistentes();
+  pthread_t compactador[TablasYaExistentes];
+  int i=0;
+  if (d != NULL)
+  {
+
+	while ((dir = readdir(d)) != NULL)
+	{
+		if (!string_contains(dir->d_name,".")) {
+
+//			if(TablasCompactacion==NULL){
+//				TablasCompactacion = dictionary_create();
+//			}
+
+
+
+			char* nombreTabla = malloc(sizeof(dir->d_name)+1);
+
+			strcpy(nombreTabla,dir->d_name);
+
+
+			pthread_create(&compactador[i],NULL,funcionCompactar,(void*)nombreTabla);
+			i++;
+			//pthread_join(compactador[i], (void**)NULL);
+		}
+	}
+	closedir(d);
+  }
+}
+
+
+
+int cantidadDeTablasExistentes(){
+
+	DIR *d;
+	 struct dirent *dir;
+	  char *directorioTablas= DirectorioDeTabla("");
+	  d = opendir(directorioTablas);
+	  int i =0;
+	  if (d != NULL)
+	  {
+		while ((dir = readdir(d)) != NULL)
+		{
+			if (!string_contains(dir->d_name,"."))
+			i++;
+		}
+
+
+}
+	  return i;
+}
+//
+//t_list* listarTablasExistentes() {
+//	DIR *d;
+//	struct dirent *dir;
+//	char *directorioTablas= DirectorioDeTabla("");
+//	d = opendir(directorioTablas);
+//	t_list *listaDeTablas = list_create();
+//
+//	if (d != NULL)
+//		  {
+//			free(directorioTablas);
+//			while ((dir = readdir(d)) != NULL) {
+//				if (!string_contains(dir->d_name,"."))
+//				{
+//
+//				char* nombreTabla = malloc(sizeof(strlen(dir->d_name)+1));
+//				strcpy(nombreTabla,dir->d_name);
+//				list_add(listaDeTablas,nombreTabla);
+//
+//				}
+//
+//			}
+//		closedir(dir);
+//		closedir(d);
+//		return listaDeTablas;
+//		  } else return listaDeTablas;
+//}
+//
+//
+
 
 
 

@@ -210,18 +210,22 @@ void mostrarMetadataTablas(char*nombreTabla,void* elemento){
 
 
 
-void listarTablas(){ //0 ml
-	DIR *d;
-	  struct dirent *dir;
-	  d = opendir("/home/utnso/LISSANDRA_FS/Tables");
-	  if (d != NULL)
-	  {
-		while ((dir = readdir(d)) != NULL) {
-			if (!string_contains(dir->d_name,".")) printf("%s ", dir->d_name);
-		}
-		closedir(d);
-	  }
-}
+//void listarTablas(){ //0 ml
+//		DIR *d;
+//	  struct dirent *dir;
+//	  char *directorioTablas= DirectorioDeTabla("");
+//	  d = opendir(directorioTablas);
+//	  if (d != NULL)
+//	  {
+//		while ((dir = readdir(d)) != NULL) {
+//			if (!string_contains(dir->d_name,".")) {
+//
+//
+//			}
+//		}
+//		closedir(d);
+//	  }
+//}
 
 void imprimirMetadata(t_metadata* metadataDeTablaPedida){
 	printf("%s%s ",GREEN,pasarAConsistenciaChar(metadataDeTablaPedida->consistencia));

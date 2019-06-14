@@ -135,3 +135,20 @@ void LogDumpeo(){
 	log_info(logger,"REALIZANDO DUMP");
 	log_destroy(logger);
 }
+
+void LogCompactacion(char* nombreTabla){
+	t_log* logger=iniciar_logger();
+	log_info(logger,"REALIZANDO COMPACTACION %s",nombreTabla);
+	log_destroy(logger);
+}
+
+
+void LogCompactacionTerminada(char* nombreTabla,int TiempoTranscurrido){
+	t_log* logger=iniciar_logger();
+	log_info(logger,"SE REALIZO COMPACTACION %s \n TIEMPO TRANSCURRIDO: %d",nombreTabla,TiempoTranscurrido);
+	log_destroy(logger);
+}
+
+
+
+
