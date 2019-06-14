@@ -9,14 +9,32 @@
 void LogearInsert(long long timestamp,uint16_t key,char* value,char*nombreTabla){
 
 	t_log* logger=iniciar_logger();
-	log_info(logger,"INSERTANDO %lli;%d;%s en %s\n",timestamp,key,value,nombreTabla);
+	log_info(logger,"INSERTANDO %lli;%d;%s en %s",timestamp,key,value,nombreTabla);
+	log_destroy(logger);
+}
+
+void logearDescribeTablaEnParticular(char* nombreTablaMayuscula){
+	t_log* logger=iniciar_logger();
+	log_info(logger,"DESCRIBE DE %s",nombreTablaMayuscula);
+	log_destroy(logger);
+}
+
+void logearDescribeTodasLasTablas(){
+	t_log* logger=iniciar_logger();
+	log_info(logger,"DESCRIBE DE TODAS LAS TABLAS");
+	log_destroy(logger);
+}
+
+void logearDescribeTablaInexistente(char *nombreTablaMayuscula){
+	t_log* logger=iniciar_logger();
+	log_info(logger,"LA TABLA A DESCRIBIR %s NO EXISTE\n",nombreTablaMayuscula);
 	log_destroy(logger);
 }
 
 void LogearDropCorrecto(char* nombreTabla)
 {
 	t_log* logger=iniciar_logger();
-	log_info(logger,"BORRANDO %s\n",nombreTabla);
+	log_info(logger,"SE BORRO %s\n",nombreTabla);
 	log_destroy(logger);
 }
 
@@ -43,7 +61,7 @@ void LogearSelect(long long timestamp,uint16_t key,char* value,char*nombreTabla)
 void valueExiste(char*nombreTabla,uint16_t key,char* value){
 
 	t_log* logger=iniciar_logger();
-	log_info(logger,"EL VALOR DE LA KEY %d en la TABLA %s ES %s",key,nombreTabla,value);
+	log_info(logger,"EL VALOR DE LA KEY %d en la TABLA %s ES: %s",key,nombreTabla,value);
 	log_destroy(logger);
 }
 
@@ -145,7 +163,7 @@ void LogCompactacion(char* nombreTabla){
 
 void LogCompactacionTerminada(char* nombreTabla,int TiempoTranscurrido){
 	t_log* logger=iniciar_logger();
-	log_info(logger,"SE REALIZO COMPACTACION %s \n TIEMPO TRANSCURRIDO: %d",nombreTabla,TiempoTranscurrido);
+	log_info(logger,"SE REALIZO COMPACTACION %s \n TIEMPO TRANSCURRIDO: %d MILISEGUNDOS",nombreTabla,TiempoTranscurrido);
 	log_destroy(logger);
 }
 

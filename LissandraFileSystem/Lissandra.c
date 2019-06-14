@@ -9,14 +9,16 @@ int main(void)
 {
 
 	t_config* config = leer_config();
-//	crearArchivoBitmap();
+	//crearArchivoBitmap();
 	crearBitMap();
 	pthread_t consola,dumpeo,dump,compactar;
 
 	logger = iniciar_logger();
 	int tiempoEntreDump = atoi(config_get_string_value(config, "TIEMPO_DUMP"));
 	//gettimeofday(&tiempoHastaDump,NULL);
-	pthread_create(&compactar,NULL,levantarHilosCompactacion,NULL);
+
+
+	levantarHilosTablasExistentesCompactacion();
 	pthread_create(&dump,NULL,chekearDumpeo,NULL);
 	pthread_create(&consola,NULL,prenderConsola,NULL);
 

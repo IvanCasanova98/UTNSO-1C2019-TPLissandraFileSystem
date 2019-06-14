@@ -41,9 +41,9 @@
 #include"logs.h"
 #include <semaphore.h>
 
-void* compactar(char * arg);
-void levantarHilosCompactacion();
-
+void* compactar(void * arg);
+void levantarHilosTablasExistentesCompactacion();
+void* levantarHiloCompactacion(char* nombreTablaNueva,void* compactador);
 int cantidadDeTablasExistentes();
 void* funcionCompactar(void* arg);
 void levantarHilosCompactacion();

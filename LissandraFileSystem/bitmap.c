@@ -20,15 +20,29 @@ void crearArchivoBitmap(){
 
 	FILE *fp;
 	t_bitarray* arrayCreador = bitarray_create_with_mode(bitsVacios,bytes,0);
-	for (int i = 0; i<blockNum;i++){
-		printf("%d",bitarray_test_bit(arrayCreador,i));
-	}
+
+//	imprimirBITARRAY(arrayCreador);
+
 	printf("\n");
 	fp=fopen(directorioBitmap,"w");
 	fwrite(arrayCreador->bitarray,1,bytes,fp);
 	fclose(fp);
 	free(directorioMetadata);
 	free(directorioBitmap);
+	config_destroy(config);
+}
+
+void imprimirBITARRAY(t_bitarray* bitarray){
+
+	char* directorioMetadata=DirectorioDeMetadata();
+	t_config* config = config_create(directorioMetadata);
+	int blockNum = atoi(config_get_string_value(config,"BLOCKS"));
+
+	for (int i = 0; i<blockNum;i++){
+		printf("%d",bitarray_test_bit(bitarray,i));
+	}
+	printf("\n");
+	free(directorioMetadata);
 	config_destroy(config);
 }
 

@@ -14,23 +14,32 @@ void* funcionCompactar(void* arg){
 	char* DireccionmetaDataTabla = DirectorioDeMetadataTabla(nombreTabla);
 	t_config* config = config_create(DireccionmetaDataTabla);
 	int TiempoCompactacion = config_get_int_value(config, "COMPACTION_TIME");
+	char * DirectorioTabla = DirectorioDeTabla(nombreTabla);
 	while(1){
 				sleep(TiempoCompactacion/1000);
+				if(existe_temporal(DirectorioTabla)){
 					pthread_create(&compactador,NULL,compactar,arg);
 					pthread_join(compactador, (void**)NULL);
+				}else{
+					pthread_cancel(compactador);
 
+				}
 				}
 }
 
 
-void* compactar(char * nombreTabla){
-
+void* compactar(void * arg){
+	char* nombreTabla= (char*) arg;
+	char * DirectorioTabla = DirectorioDeTabla(nombreTabla);
 	char* primerTemporal = DirectorioDeTemporal(nombreTabla,1);
 	char* DireccionmetaDataTabla = DirectorioDeMetadataTabla(nombreTabla);
 	t_config* config = config_create(DireccionmetaDataTabla);
 	int NumeroParticiones = config_get_int_value(config, "PARTITIONS");
 	int TiempoCompactacion = config_get_int_value(config, "COMPACTION_TIME");
 
+	while(1){
+		sleep(TiempoCompactacion/1000);
+	if(!existe_temporal(DirectorioTabla)) break; //POR SI SE HACE UN DROP existe_temporal ES LO MISMO QUE EXISTE TABLA
 
 	if(existe_temporal(primerTemporal))
 	{
@@ -82,10 +91,11 @@ void* compactar(char * nombreTabla){
 		LogCompactacionTerminada(nombreTabla,tiempoTranscurrido);
 
 	}
-
+	}
 	config_destroy(config);
 	free(DireccionmetaDataTabla);
 	free(primerTemporal);
+	free(DirectorioTabla);
 }
 void cambiarNombreTmpATmpc(char* nombretabla){ // 9ml
 		t_config* config = config_create("Lissandra.config");
@@ -422,6 +432,7 @@ void* crearParticionNueva(char* nombreTabla,char* registros,int nroParticion){
 		nroBloques = sizeTotal/sizeBloque;
 	}else{nroBloques = trunc((sizeTotal/sizeBloque)) +1;}
 
+	if(sizeTotal==0) nroBloques=1;
 
 	int bloquesDisponibles[nroBloques];
 	int i=0;
@@ -518,42 +529,57 @@ void crearArchivobin(char* nombreTabla, int size, int*bloques,int cantBloques,in
 
 
 
-void levantarHilosCompactacion(){
+void levantarHilosTablasExistentesCompactacion(){
 
 	DIR *d;
-  struct dirent *dir;
-  char *directorioTablas= DirectorioDeTabla("");
-  d = opendir(directorioTablas);
-  int TablasYaExistentes=cantidadDeTablasExistentes();
-  pthread_t compactador[TablasYaExistentes];
-  int i=0;
-  if (d != NULL)
-  {
-
-	while ((dir = readdir(d)) != NULL)
+	struct dirent *dir;
+	char *directorioTablas= DirectorioDeTabla("");
+	d = opendir(directorioTablas);
+	int TablasYaExistentes=cantidadDeTablasExistentes();
+	pthread_t compactador[TablasYaExistentes];
+	int i=0;
+	if (d != NULL)
+		TablasCompactacion=dictionary_create();
 	{
-		if (!string_contains(dir->d_name,".")) {
 
-//			if(TablasCompactacion==NULL){
-//				TablasCompactacion = dictionary_create();
-//			}
+		while ((dir = readdir(d)) != NULL)
+		{
+			if (!string_contains(dir->d_name,"."))
+			{
+
+//				if(TablasCompactacion==NULL){
+//					TablasCompactacion = dictionary_create();
+//				}
+
+				char* nombreTabla = malloc(sizeof(dir->d_name)+1);
+
+				strcpy(nombreTabla,dir->d_name);
+
+				dictionary_put(TablasCompactacion,nombreTabla,compactador[i]);
 
 
+				i++;
+				//pthread_join(compactador[i], (void**)NULL);
+			}
+			dictionary_iterator(TablasCompactacion,levantarHiloCompactacion);
 
-			char* nombreTabla = malloc(sizeof(dir->d_name)+1);
-
-			strcpy(nombreTabla,dir->d_name);
-
-
-			pthread_create(&compactador[i],NULL,funcionCompactar,(void*)nombreTabla);
-			i++;
-			//pthread_join(compactador[i], (void**)NULL);
 		}
-	}
+
 	closedir(d);
-  }
+	}
 }
 
+
+
+
+void* levantarHiloCompactacion(char* nombreTablaNueva,void* compactador){
+	pthread_t _compactador = (pthread_t) compactador;
+
+	pthread_create(&_compactador,NULL,compactar,(void*)nombreTablaNueva);
+
+
+
+}
 
 
 int cantidadDeTablasExistentes(){
@@ -574,6 +600,26 @@ int cantidadDeTablasExistentes(){
 
 }
 	  return i;
+}
+
+
+void crearHiloCompactacion(char* nombreTabla){
+	pthread_t compactador;
+	if(TablasCompactacion!=NULL){
+
+		levantarHiloCompactacion(nombreTabla,compactador);
+		dictionary_put(TablasCompactacion,nombreTabla,compactador);
+
+	}
+	else{
+		TablasCompactacion=dictionary_create();
+
+		levantarHiloCompactacion(nombreTabla,compactador);
+		dictionary_put(TablasCompactacion,nombreTabla,compactador);
+
+	}
+
+
 }
 //
 //t_list* listarTablasExistentes() {

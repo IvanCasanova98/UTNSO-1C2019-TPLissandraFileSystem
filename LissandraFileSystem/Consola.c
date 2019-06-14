@@ -82,6 +82,12 @@ void* prenderConsola(void* arg){
 
 				return EXIT_SUCCESS;
 				break;
+			case 9:
+				listarTablas();
+				break;
+			case 10:
+				imprimirBITARRAY(bitmap);
+				break;
 			default:
 
 				printf("Operacion desconocida.");
@@ -104,6 +110,17 @@ void* prenderConsola(void* arg){
 
 }
 
+
+void deployMenu(){
+	printf("\n\nCREATE    NOMBRETABLA CONSISTENCIA PARTICIONES TIEMPO_COMPACTACION \nDROP      NOMBRETABLA\nDESCRIBE  NOMBRETABLA (OPCIONAL)\nSELECT    NOMBRETABLA KEY\nINSERT    NOMBRETABLA KEY \"VALUE\" TIMESTAMP (OPCIONAL) \n");
+	printf("\nIngrese REQUEST\n");
+
+//	imprimirBITARRAY(bitmap);
+
+
+}
+
+
 void imprimirMetadataDeTabla(char* nombre_tabla){
 	t_metadata* metadata = obtenerMetadataTabla(nombre_tabla);
 	printf("%s\t",nombre_tabla);
@@ -112,18 +129,7 @@ void imprimirMetadataDeTabla(char* nombre_tabla){
 
 }
 
-void deployMenu(){
-	printf("\n\nCREATE    NOMBRETABLA CONSISTENCIA PARTICIONES TIEMPO_COMPACTACION \nDROP      NOMBRETABLA\nDESCRIBE  NOMBRETABLA (OPCIONAL)\nSELECT    NOMBRETABLA KEY\nINSERT    NOMBRETABLA KEY \"VALUE\" TIMESTAMP (OPCIONAL) \n");
-	printf("\nIngrese REQUEST\n");
-	//int holi=cantidadDeTablasExistentes();
-	//printf("%d",holi);
 
-	//printf("%s",DirectorioDeTemporalCompactacion("ANIMALES",1));
-	//compactar("PELICULAS");
-	//listarTablas();
-
-
-}
 char* ingresar_request()
 {
 
@@ -156,9 +162,16 @@ int codigo_ingresado(char* codOp){
 	}
 	else if (strcmp(codOp, "INSERT")==0) {
 		return 4;
-
-	}if (strcmp(codOp, "EXIT")==0)
-	{return 5;}
+	}
+	else if (strcmp(codOp, "LS")==0) {
+		return 9;
+	}
+	else if (strcmp(codOp, "BA")==0) {
+			return 10;
+	}
+	else if (strcmp(codOp, "EXIT")==0){
+		return 5;
+	}
 
 	return 6;
 }

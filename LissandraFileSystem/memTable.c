@@ -36,7 +36,7 @@ void imprimirListaTablas(){
 
 void mostrarTablas(char*key,void* elemento){
 
-	printf("%s%s  ",GREEN,key);
+	printf("%s%s%s  ",CYAN,key,MAGENTA);
 	list_iterate((t_list*) elemento,mostrarRegistros);
 	printf("%s\n",NORMAL_COLOR);
 

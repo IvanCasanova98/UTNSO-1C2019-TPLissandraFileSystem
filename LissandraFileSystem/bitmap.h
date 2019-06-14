@@ -38,6 +38,7 @@
 #include <sys/mman.h>
 
 
+void imprimirBITARRAY(t_bitarray* bitarray);
 char* eliminarBarra0(char* nuevoChar);
 int existeBitmap();
 void crearBitMap();

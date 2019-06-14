@@ -78,7 +78,7 @@ void listarTablas(); //ESTA FUNCION NO SIRVE PARA NADA, SOLO POR SI QUEREMOS LIS
 t_list* listarTablasExistentes();
 char* DirectorioDeTemporalCompactacion(char* nombretabla,int nroTemporal);
 char* DirectorioDeTemporalNuevo(char* nombretabla);
-
+t_registro* buscarEnTemporalesCompactando(char* nombreTabla,int key);
 int existe_temporal(char* path);
 char* DirectorioDeBloque(int numeroBloque);
 void crearParticiones(char*nombreTabla ,int nroParticiones);

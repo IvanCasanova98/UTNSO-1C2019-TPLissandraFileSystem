@@ -10,7 +10,6 @@ void APIdrop(t_paquete_drop* paquete_drop){ //ml 20bytes
 
 	if(existeTabla(nombreTablaMayuscula))
 	{
-		LogearDropCorrecto(nombreTablaMayuscula);
 
 		RemoverDeLaMemtable(nombreTablaMayuscula); //0 ml
 		RemoverParticionesDeTablaYSusBloques(nombreTablaMayuscula); //0 ml
@@ -18,24 +17,23 @@ void APIdrop(t_paquete_drop* paquete_drop){ //ml 20bytes
 		RemoverMetadataDeTabla(nombreTablaMayuscula);
 		RemoverCarpetaVaciaDeTabla(nombreTablaMayuscula); //ESTA FUNCION SIRVE SOLO SI LA CARPETA ESTA VACIA.
 
-		printf("%s BORRADA.\n",nombreTablaMayuscula);
+		LogearDropCorrecto(nombreTablaMayuscula);
+
 
 	} else
 	{
 		LogearDropFallido(nombreTablaMayuscula);
-		error_show("No existe esa tabla.\n");
 	}
 
-//	liberarPaqueteDrop(paquete_drop); lo hace romper.
 }
 
 
 
 void APIcreate(t_paquete_create* paquete_create){ //0 memory leak
 	char nombreTablaMayuscula [strlen(paquete_create->nombre_tabla)+1];
-	string_to_upper(nombreTablaMayuscula);
-	strcpy(nombreTablaMayuscula,paquete_create->nombre_tabla);
 
+	strcpy(nombreTablaMayuscula,paquete_create->nombre_tabla);
+	string_to_upper(nombreTablaMayuscula);
 	if(!existeTabla(nombreTablaMayuscula)){
 		crearTabla(nombreTablaMayuscula);
 		crearMetadataConfig(nombreTablaMayuscula,paquete_create->metadata.consistencia,paquete_create->metadata.particiones,paquete_create->metadata.tiempo_de_compactacion);
@@ -45,7 +43,16 @@ void APIcreate(t_paquete_create* paquete_create){ //0 memory leak
 		for(int particionesCargadas=0;particionesCargadas<paquete_create->metadata.particiones;particionesCargadas++)
 		crearParticion(nombreTablaMayuscula,particionesCargadas);
 
+
+
+
+		char* nombreTabla= malloc(strlen (nombreTablaMayuscula)+1);
+		strcpy(nombreTabla,nombreTablaMayuscula);
+		crearHiloCompactacion(nombreTabla);
+
 		liberarPaqueteCreate(paquete_create);
+
+
 	} else LaTablaYaExiste(nombreTablaMayuscula);
 
 }
@@ -86,9 +93,11 @@ char* APIselect(t_paquete_select* paquete_select){ // bastante ml revisar
 			int particionKey;
 			particionKey =	particionDeKey(paquete_select->valor_key,metadataDeTabla->particiones);
 			t_list* RegistrosEncontrados=list_create();
-			void* RegistroParticion= buscarEnParticion(nombreTablaMayuscula,particionKey,paquete_select->valor_key);
-			void* RegistroMemTable = buscarMemTable(nombreTablaMayuscula,paquete_select->valor_key); // 8 bytes ml
-			void* RegistroTemporal= buscarEnTemporales(nombreTablaMayuscula,paquete_select->valor_key);
+
+			void* RegistroParticion 		  = buscarEnParticion(nombreTablaMayuscula,particionKey,paquete_select->valor_key);
+			void* RegistroMemTable  		  = buscarMemTable(nombreTablaMayuscula,paquete_select->valor_key); // 8 bytes ml
+			void* RegistroTemporal  		  = buscarEnTemporales(nombreTablaMayuscula,paquete_select->valor_key);
+			void* RegistroTemporalCompactando = buscarEnTemporalesCompactando(nombreTablaMayuscula,paquete_select->valor_key);
 
 			if(RegistroMemTable!=NULL){
 			list_add(RegistrosEncontrados,RegistroMemTable);
@@ -101,6 +110,10 @@ char* APIselect(t_paquete_select* paquete_select){ // bastante ml revisar
 			list_add(RegistrosEncontrados,RegistroTemporal);
 
 			}
+			if(RegistroTemporalCompactando!=NULL){
+			list_add(RegistrosEncontrados,RegistroMemTable);
+			}
+
 			if(!list_is_empty(RegistrosEncontrados)){
 			char* valueEncontrado = elegirMayorTimeStamp(RegistrosEncontrados);
 			list_clean_and_destroy_elements(RegistrosEncontrados,liberarRegistro);
@@ -147,10 +160,11 @@ t_dictionary* APIdescribe (t_paquete_describe* paquete_describe){
 		dictionary_put(metadataParticularSolicitada,nombreTablaMayuscula,metadataDeTabla);
 		free(metadataDeTabla);
 
+		logearDescribeTablaEnParticular(nombreTablaMayuscula);
 		return metadataParticularSolicitada;
 
 	} else {
-		error_show("NO EXISTE %s\n",nombreTablaMayuscula);
+		logearDescribeTablaInexistente(nombreTablaMayuscula);
 		return NULL;
 	}
 
@@ -183,6 +197,7 @@ t_dictionary* APIdescribeTodasLasTablas(){
 	    closedir(dir);
 	    closedir(d);
 
+	    logearDescribeTodasLasTablas();
 	    return diccionarioDeTablas;
 	  } else return diccionarioDeTablas;
 
@@ -198,7 +213,7 @@ void imprimirListaMetadatas(t_dictionary * metadatas){
 
 void mostrarMetadataTablas(char*nombreTabla,void* elemento){
 
-	printf("%s%s  ",GREEN,nombreTabla);
+	printf("%s%s%s  ",CYAN,nombreTabla,MAGENTA);
 	imprimirMetadata((t_metadata*)elemento);
 	printf("%s\n",NORMAL_COLOR);
 
@@ -228,7 +243,7 @@ void mostrarMetadataTablas(char*nombreTabla,void* elemento){
 //}
 
 void imprimirMetadata(t_metadata* metadataDeTablaPedida){
-	printf("%s%s ",GREEN,pasarAConsistenciaChar(metadataDeTablaPedida->consistencia));
+	printf("%s ",pasarAConsistenciaChar(metadataDeTablaPedida->consistencia));
 	printf(" %d ",metadataDeTablaPedida->particiones);
 	printf(" %d\n",metadataDeTablaPedida->tiempo_de_compactacion);
 	printf("%s",NORMAL_COLOR);
@@ -711,11 +726,9 @@ void RemoverDeLaMemtable(char *nombreTabla){
 	if(memTable != NULL)
 	{
 		if(dictionary_has_key(memTable,nombreTabla))
-		{ //BORRAR DE LA MEMTABLE.
+		{
 		dictionary_remove_and_destroy(memTable,nombreTabla,liberarNodo);
-		printf("Se eliminaron los registros de %s de la memTable.\n",nombreTabla);
-		} else {printf("No se hallaron registros en la memTable de %s\n",nombreTabla);}
-
+		}
 	}
 }
 
@@ -994,6 +1007,38 @@ t_registro* buscarEnTemporales(char* nombreTabla,int key){
 	return buscarRegistroTemporalMasReciente(registrosCompletos,key);
 }
 
+t_registro* buscarEnTemporalesCompactando(char* nombreTabla,int key){
+
+
+	int temporales=1;
+	char* directorioTemporalcompactando= DirectorioDeTemporalCompactacion(nombreTabla,temporales);
+	char* registrosCompletos=string_new();
+	while(existe_temporal(directorioTemporalcompactando)){
+		int i=0;
+		t_config* config = config_create(directorioTemporalcompactando);
+		char** arrayBloques = config_get_array_value(config, "BLOCKS");
+		while(arrayBloques[i]){
+			int nroBloque = atoi(arrayBloques[i]);
+			char* registrosDeBloque= ObtenerContenidoBloque(nroBloque);
+			string_append(&registrosCompletos,registrosDeBloque);
+			free(registrosDeBloque);
+			i++;
+		}
+	config_destroy(config);
+	string_iterate_lines(arrayBloques,free);
+	free(arrayBloques);
+	free(directorioTemporalcompactando);
+	temporales++;
+	directorioTemporalcompactando= DirectorioDeTemporalCompactacion(nombreTabla,temporales);
+	}
+	free(directorioTemporalcompactando);
+	if(temporales==1) {return NULL;}
+
+
+	return buscarRegistroTemporalMasReciente(registrosCompletos,key);
+}
+
+
 t_registro* buscarRegistroTemporalMasReciente(char* todosLosRegistrosTemporales,int key){
 	t_list* listaDeRegistros=list_create();
 	int registrosRecorridos=0;
@@ -1061,6 +1106,22 @@ void liberarRegistro(void* elemento){
 	free(((t_registro*)elemento));
 }
 
+void listarTablas(){ //0 ml
+		DIR *d;
+	  struct dirent *dir;
+	  char *directorioTablas= DirectorioDeTabla("");
+	  d = opendir(directorioTablas);
+	  if (d != NULL)
+	  {
+		while ((dir = readdir(d)) != NULL) {
+			if (!string_contains(dir->d_name,".")) {
+
+				printf("%s%s%s  ",CYAN,dir->d_name,NORMAL_COLOR);
+			}
+		}
+		closedir(d);
+	  }
+}
 
 //void notificarCambioRetardo(){
 //
