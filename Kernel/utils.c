@@ -37,10 +37,7 @@ int codigo_ingresado(char* parametros)
 	else if (strcmp(parametros, "ADD")==0) {
 		return 7;
 	}
-	else if (strcmp(parametros, "LQL")==0) {
-		return 9;
-	}
-	else {return 10;}
+	else {return 8;}
 }
 
 int numero_random(int max)

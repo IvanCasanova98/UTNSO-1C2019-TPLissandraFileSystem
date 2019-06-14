@@ -111,6 +111,48 @@ void* serializar_paquete_insert(t_paquete_insert* paquete)
 	//free(buffer);
 }
 
+void* serializar_enviar_paquete_describe(int socket_cliente, t_list* metadata)
+{
+	int cant_elementos = list_size(metadata);
+
+	int i=0;
+
+	send(socket_cliente,&cant_elementos, sizeof(int), MSG_WAITALL);
+
+	while(i<cant_elementos)
+	{
+		int desplazamiento = 0;
+		t_metadata* nodo_metadata = list_get(metadata,i);
+		char* nombre_tabla = (nodo_metadata->nombre_tabla);
+		char* consistencia = (nodo_metadata->consistencia);
+
+		int tamanio_nombre_tabla = strlen(nombre_tabla) + 1;
+		int tamanio_consistencia = strlen(consistencia) + 1;
+		int tamanio_total = tamanio_nombre_tabla + tamanio_consistencia+2*sizeof(int);
+
+
+		void* buffer = malloc(tamanio_nombre_tabla+tamanio_consistencia+2*sizeof(int));
+
+		memcpy(buffer + desplazamiento, &tamanio_nombre_tabla, sizeof(int));
+		desplazamiento+= sizeof(int);
+
+		memcpy(buffer + desplazamiento, nombre_tabla, tamanio_nombre_tabla);
+		desplazamiento+= tamanio_nombre_tabla;
+
+		memcpy(buffer + desplazamiento, &tamanio_consistencia, sizeof(int));
+		desplazamiento+= sizeof(int);
+
+		memcpy(buffer + desplazamiento, consistencia, tamanio_consistencia);
+		desplazamiento+= tamanio_consistencia;
+
+		send(socket_cliente,&tamanio_total,sizeof(int),MSG_WAITALL);
+		send(socket_cliente,buffer,tamanio_total,MSG_WAITALL);
+
+		i++;
+		free(buffer);
+	}
+
+}
 //---------------------------ENVIOS DE MEMORIAS
 
 void enviar_memorias(int socket_cliente, t_config* config)

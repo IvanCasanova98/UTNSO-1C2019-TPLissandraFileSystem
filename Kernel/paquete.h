@@ -19,6 +19,7 @@
 
 #include"recibir.h"
 #include"criterio.h"
+#include "memorias.h"
 //---------------------ESTRUCTURA PAQUETES
 typedef struct
 {
@@ -95,6 +96,10 @@ t_paquete_create* create(char* parametros);
 //---------------------LOGGEAR PAQUETE
 void loggear_paquete_select(t_paquete_select* paquete);
 void loggear_paquete_insert(t_paquete_insert* paquete);
+void loggear_paquete_create(t_paquete_create* paquete);
+
+void logger_describe_tabla(char* nombre_tabla);
+void logger_describe_all();
 
 //----------------------------------------------------ELIMINAR PAQUETE
 //void eliminar_paquete_select(t_paquete_select* paquete);

@@ -1,9 +1,12 @@
 //REVISAR BYTES PARA LOS MALLOCS CUANDO EJECUTAS LA FUNCION SERIALIZAR, ESTRUCTURA REPETIDA
 //ENVIAR TAMANIO COMPLETO DEL PAQUETE, Y LUEGO BUFFER
 //REVISAR EXISTENCIA DE TABLA ANTES DE ENVIAR INSERT O SELECT
+
 #include "kernel.h"
 
 int main(void){
+
+	startup();
 
 	t_log* logger = iniciar_logger();
 	t_config* config = leer_config();

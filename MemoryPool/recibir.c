@@ -39,8 +39,6 @@ void recibir_paquetes(int cliente_fd, int server_fd, t_config* config, t_log* lo
 		case CREATE:;
 			t_paquete_create* paquete_create = deserializar_paquete_create(cliente_fd);
 
-			//printf("%s   %s   %d   %d\n",paquete_create->nombre_tabla, paquete_create->consistencia, paquete_create->particiones, paquete_create->tiempo_compactacion);
-
 			loggear_paquete_create(paquete_create, logger);
 
 			create(paquete_create, config, logger);
@@ -48,7 +46,23 @@ void recibir_paquetes(int cliente_fd, int server_fd, t_config* config, t_log* lo
 			break;
 		case DROP:
 			break;
-		case DESCRIBE:
+		case DESCRIBE:;
+			int tamanio;
+			char* buffer = recibir_buffer(&tamanio, cliente_fd);
+			if(!strcmp(buffer,"ALL"))
+			{
+				t_list* tabla_particiones = get_tabla_particiones();
+				serializar_enviar_paquete_describe(cliente_fd, tabla_particiones);
+			}
+			else
+			{
+				t_list* nodo_metadata = get_nodo_metadata(buffer);
+				serializar_enviar_paquete_describe(cliente_fd, nodo_metadata);
+			}
+
+
+
+
 			break;
 		case SELECT:;
 			t_paquete_select *paquete_select = deserializar_paquete_select(cliente_fd);
@@ -198,4 +212,17 @@ t_paquete_create* deserializar_paquete_create(int socket_cliente)
 	free(buffer_para_longitudes);
 	free(buffer);
 	return paquete_create;
+}
+
+//------------------RECIBIR MENSAJES------------------
+void* recibir_buffer(int* size, int socket_cliente)
+{
+	void * buffer;
+
+	recv(socket_cliente, size, sizeof(int), 0);
+	buffer = malloc(*size);
+	recv(socket_cliente, buffer, *size, 0);
+
+	return buffer;
+	free(buffer);
 }

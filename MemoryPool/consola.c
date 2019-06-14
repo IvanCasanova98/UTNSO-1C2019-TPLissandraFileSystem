@@ -27,8 +27,6 @@ void ingresar_paquete(void * arg)
 				t_paquete_insert* paquete_i = paquete_insert(parametros_paquete, parametro->logger);
 				insert(paquete_i, parametro->config,  parametro->logger);
 				break;
-			case 8:
-				return;
 			default:
 				printf("Operacion desconocida.");
 				break;
@@ -42,7 +40,7 @@ void ingresar_paquete(void * arg)
 
 char* ingresar_request()
 {
-	printf("\n\nCREATE    NOMBRETABLA CONSISTENCIA PARTICIONES T_COMPACTACION\nDROP\nDESCRIBE\nSELECT    NOMBRETABLA KEY\nINSERT    NOMBRETABLA KEY VALUE \nJOURNAL\nRUN\nADD\nLQL    PATH\nEXIT\n");
+	printf("\n\nCREATE    NOMBRETABLA CONSISTENCIA PARTICIONES T_COMPACTACION\nDROP\nDESCRIBE\nSELECT    NOMBRETABLA KEY\nINSERT    NOMBRETABLA KEY VALUE \nJOURNAL\nEXIT\n");
 
 	printf("\nIngrese REQUEST ");
 
@@ -83,15 +81,7 @@ int codigo_ingresado(char* parametros)
 	{
 		return 5;
 	}
-	else if (strcmp(parametros, "RUN")==0)
-	{
-		return 6;
-	}
-	else if (strcmp(parametros, "ADD")==0)
-	{
-		return 7;
-	}
-	else {return 8;}
+	else {return 6;}
 }
 
 

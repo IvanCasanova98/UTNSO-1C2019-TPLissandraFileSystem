@@ -26,6 +26,30 @@ void ingresar_paquete(int conexion){ //RECIBIR LOGGER
 
 				break;
 
+			case 2:;
+				parametros= strtok(NULL, " ");
+				send(conexion, &cod_ingresado, sizeof(int), 0);
+
+				if (parametros==NULL)
+				{
+					int tamanio = strlen("ALL")+1;
+					char* buffer = "ALL";
+					send(conexion, &tamanio, sizeof(int), 0);
+					send(conexion, buffer, tamanio, 0);
+					logger_describe_all();
+				}
+				else
+				{
+					int tamanio = strlen(parametros)+1;
+					send(conexion, &tamanio, sizeof(int), 0);
+					send(conexion, parametros, tamanio, 0);
+					logger_describe_tabla(parametros);
+				}
+
+				deserealizar_metadata(conexion);
+
+				break;
+
 			case 3:;
 
 				t_paquete_select* paquete_select = selectf(parametros);
@@ -43,16 +67,22 @@ void ingresar_paquete(int conexion){ //RECIBIR LOGGER
 			case 4:;
 
 				t_paquete_insert* paquete_insert = insert(parametros);
+				if(existe_tabla(paquete_insert->nombre_tabla))
+				{
+					if (send(conexion, &cod_ingresado, sizeof(int), 0) <= 0) puts("Error en envio de CODIGO DE OPERACION.");
+					else{enviar_paquete_insert(paquete_insert, conexion);}
+					free(paquete_insert);
+				}
+				else
+				{
+					t_log* logger = iniciar_logger();
+					log_error(logger, "Error: no existe la tabla\n");
+					log_destroy(logger);
+				}
 
-				if (send(conexion, &cod_ingresado, sizeof(int), 0) <= 0) puts("Error en envio de CODIGO DE OPERACION.");
-				else{enviar_paquete_insert(paquete_insert, conexion);}
-				free(paquete_insert);
 
 				break;
-
-			case 8:;
-				return;
-			case 9:
+			case 6:
 				funcion_LQL(parametros, conexion);
 				break;
 			default:
@@ -70,7 +100,7 @@ void ingresar_paquete(int conexion){ //RECIBIR LOGGER
 
 char* ingresar_request()
 {
-	printf("\n\nCREATE    NOMBRETABLA CONSISTENCIA PARTICIONES T_COMPACTACION\nDROP\nDESCRIBE\nSELECT    NOMBRETABLA KEY\nINSERT    NOMBRETABLA KEY VALUE \nJOURNAL\nRUN\nADD\nLQL    PATH\nEXIT\n");
+	printf("\n\nCREATE    NOMBRETABLA CONSISTENCIA PARTICIONES T_COMPACTACION\nDROP\nDESCRIBE\nSELECT    NOMBRETABLA KEY\nINSERT    NOMBRETABLA KEY VALUE \nJOURNAL\nRUN    PATH\nADD\nEXIT\n");
 
 	printf("\nIngrese REQUEST ");
 
@@ -229,6 +259,16 @@ void loggear_paquete_create(t_paquete_create* paquete)
 {
 	t_log* logger = iniciar_logger();
 	log_info(logger, "CREATE\nNombre tabla: %s\nConsistencia   : %s\nParticiones       : %d\nTiempo de Compactacion       : %d", paquete->nombre_tabla, paquete->consistencia, paquete->particiones, paquete->tiempo_compactacion);
+    log_destroy(logger);
+}
+void logger_describe_all(){
+	t_log* logger = iniciar_logger();
+	log_info(logger, "DESCRIBE ALL\n");
+    log_destroy(logger);
+}
+void logger_describe_tabla(char* nombre_tabla){
+	t_log* logger = iniciar_logger();
+	log_info(logger, "DESCRIBE %s \n", nombre_tabla);
     log_destroy(logger);
 }
 

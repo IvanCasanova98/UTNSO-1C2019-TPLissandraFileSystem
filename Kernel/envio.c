@@ -44,13 +44,14 @@ void* serializar_paquete_insert(t_paquete_insert* paquete)
 	memcpy(buffer + desplazamiento, &(paquete->valor_key), sizeof(uint16_t));
 	desplazamiento+=  sizeof(uint16_t);
 
-	memcpy(buffer + desplazamiento, &(paquete->timestamp), sizeof(long long));
+	memcpy(buffer + desplazamiento,  &(paquete->timestamp), sizeof(long long));
 	desplazamiento+=  sizeof(long long);
 
 	return buffer;
 	free(buffer);
 
 }
+
 
 void* serializar_paquete_create(t_paquete_create* paquete)
 {

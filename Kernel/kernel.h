@@ -10,5 +10,8 @@
 #include "recibir.h"
 #include "criterio.h"
 #include "utils.h"
+#include "memorias.h"
+
+
 
 #endif /* KERNEL_H_ */

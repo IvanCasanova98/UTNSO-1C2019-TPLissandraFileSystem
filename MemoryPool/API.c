@@ -30,13 +30,11 @@ void insert(t_paquete_insert* paquete, t_config* config, t_log* logger)
 
 	if(existe_tabla_paginas(paquete->nombre_tabla))
 	{
-		if(condicion_insert(paquete -> nombre_tabla))
-		{
-			pagina_completa->flag=1;
-			agregar_pagina(paquete -> nombre_tabla, pagina_completa);
-			log_info(logger,"Pagina agregada en: %s\n", paquete->nombre_tabla);
-		}
-		else if(puede_reemplazar(paquete -> nombre_tabla))
+		pagina_completa->flag=1;
+		agregar_pagina(paquete -> nombre_tabla, pagina_completa);
+		log_info(logger,"Pagina agregada en: %s\n", paquete->nombre_tabla);
+
+		if(puede_reemplazar(paquete -> nombre_tabla))
 		{
 			pagina_completa->flag=1;
 			reemplazar_pagina(paquete->nombre_tabla, pagina_completa);
@@ -63,7 +61,7 @@ void create(t_paquete_create* paquete, t_config* config, t_log* logger)
 	}
 	else
 	{
-		crear_tabla_paginas(paquete->nombre_tabla, paquete->particiones);
+		crear_tabla_paginas(paquete->nombre_tabla,paquete->consistencia,paquete->particiones);
 		log_info(logger,"Tabla creada: %s\n", paquete->nombre_tabla);
 	}
 }

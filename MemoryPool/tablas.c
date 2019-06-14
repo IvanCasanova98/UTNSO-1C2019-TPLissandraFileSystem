@@ -5,6 +5,18 @@
 t_dictionary* tabla_segmentos;
 t_list* tabla_particiones;
 
+t_list* get_tabla_particiones(){return tabla_particiones;}
+
+t_list* get_nodo_metadata(char* nombre_tabla)
+{
+	t_list* nodo_metadata=list_create();
+	bool _tabla_buscada(void* elemento){return tabla_buscada(elemento, nombre_tabla);}
+	t_metadata* nodo = list_find(tabla_particiones, _tabla_buscada);
+	list_add(nodo_metadata,nodo);
+
+	return nodo_metadata;
+	list_destroy(nodo_metadata);
+}
 
 void agregar_tabla( char* nombre_tabla, t_list* tabla_paginas)//no debe recibir tabla_segmentos (variable global)
 {
@@ -22,18 +34,19 @@ t_list* buscar_tabla_paginas(char* nombre_tabla_paginas){
 
 //----------------TABLA DE PAGINAS
 
-t_list* crear_tabla_paginas(char* nombre_tabla, uint16_t particiones)
+t_list* crear_tabla_paginas(char* nombre_tabla,char* consistencia, uint16_t particiones)
 {
 	t_list* tabla_paginas = list_create();
 
-	t_particiones* particion = malloc(strlen(nombre_tabla)+1+sizeof(uint16_t));
-	particion->nombre_tabla = nombre_tabla;
-	particion->particiones = particiones;
-	list_add(tabla_particiones, particion);
+	t_metadata* metadata = malloc(strlen(nombre_tabla)+1+sizeof(uint16_t));
+	metadata->nombre_tabla = nombre_tabla;
+	metadata->particiones = particiones;
+	metadata->consistencia = consistencia;
+	list_add(tabla_particiones, metadata);
 
 	agregar_tabla(nombre_tabla, tabla_paginas); //la agrega a la tabla de segmentos
 	return tabla_paginas;
-	free(particion);
+	free(metadata);
 }
 
 void agregar_pagina(char* nombre_tabla, t_pagina_completa* pagina_completa) //a tabla de paginas
@@ -118,30 +131,21 @@ bool verificar_particiones(char* nombre_tabla)
 {
 	int cantidad_paginas = cant_paginas(nombre_tabla);
 	uint16_t particion_max = buscar_particion(nombre_tabla);
-//	printf("CANT MAXIMA: %d", particion_max);
 	return particion_max>cantidad_paginas;
 }
 
 uint16_t buscar_particion(char* nombre_tabla)
 {
 	bool _tabla_buscada(void* elemento){return tabla_buscada(elemento, nombre_tabla);}
-	t_particiones* particion = list_find(tabla_particiones, _tabla_buscada);
+	t_metadata* particion = list_find(tabla_particiones, _tabla_buscada);
 
 	return  particion->particiones;
 }
 
-bool tabla_buscada(t_particiones* particion, char* nombre_tabla)
+bool tabla_buscada(t_metadata* nodo, char* nombre_tabla)
 {
-	return !strcmp(particion->nombre_tabla, nombre_tabla);
-//	if (!strcmp(particion->nombre_tabla, nombre_tabla))
-//	{
-//		printf("NOMBRE TABLA ELEGIDA: %s ", particion->nombre_tabla);
-//		return 1;
-//	}
-//	else
-//	{
-//		return 0;
-//	}
+	return !strcmp(nodo->nombre_tabla, nombre_tabla);
+
 }
 
 bool puede_reemplazar(char* nombre_tabla)
@@ -222,9 +226,9 @@ void startup_memoria()
 	tabla_particiones = list_create();
 
 
-	t_list* tabla_paginas0 = crear_tabla_paginas("TABLA0",4);
-	t_list* tabla_paginas1 = crear_tabla_paginas("TABLA1",4);
-	t_list* tabla_paginas2 = crear_tabla_paginas("TABLA2",7);
+	t_list* tabla_paginas0 = crear_tabla_paginas("TABLA0","SC",4);
+	t_list* tabla_paginas1 = crear_tabla_paginas("TABLA1","SC",4);
+	t_list* tabla_paginas2 = crear_tabla_paginas("TABLA2","SC",7);
 
 	t_pagina* pagina0 = crear_pagina(0, "cero", 12);
 	t_pagina* pagina1 = crear_pagina(1, "uno", 34);

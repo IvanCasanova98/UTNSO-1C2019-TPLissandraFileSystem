@@ -16,7 +16,6 @@ void recibir_mensaje(int socket_cliente)
 {
 	int size;
 	char* buffer = recibir_buffer(&size, socket_cliente);
-//	printf("\nValue Recibido:  %s", buffer);
 
 	t_log* logger = iniciar_logger();
 	log_info(logger, "Value recibido: %s\n", buffer);
@@ -57,4 +56,42 @@ void recibir_seed(int socket_cliente)
 
 		j++;
 	}
+}
+
+t_metadata* deserealizar_nodo(int socket){
+
+	int desplazamiento = 0;
+	int tamanio_total;
+	int nombre_tabla_long;
+	int consistencia_long;
+
+	recv(socket, &tamanio_total, sizeof(int), MSG_WAITALL);
+
+	t_metadata* nodo_metadata = malloc(tamanio_total - (2*sizeof(int)));
+
+	void* buffer = malloc(tamanio_total);
+
+	recv(socket, buffer, tamanio_total, MSG_WAITALL);
+
+	memcpy(&(nombre_tabla_long), buffer + desplazamiento,sizeof(int));
+	desplazamiento+=sizeof(int);
+
+	nodo_metadata->nombre_tabla = malloc(nombre_tabla_long);
+
+	memcpy(nodo_metadata->nombre_tabla, buffer+desplazamiento,nombre_tabla_long);
+	desplazamiento+=nombre_tabla_long;
+
+	memcpy(&(consistencia_long), buffer + desplazamiento,sizeof(int));
+	desplazamiento+=sizeof(int);
+
+	nodo_metadata->consistencia = malloc(consistencia_long);
+
+	memcpy(nodo_metadata->consistencia, buffer+desplazamiento,consistencia_long);
+	desplazamiento+=consistencia_long;
+
+
+
+	free(buffer);
+	return nodo_metadata;
+
 }
