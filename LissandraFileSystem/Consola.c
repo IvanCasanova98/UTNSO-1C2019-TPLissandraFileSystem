@@ -255,17 +255,32 @@ t_paquete_insert* LeerInsert(char* parametros){
 	}
 	valor_key = atoi(parametros);
 
+	parametros = strtok(NULL, " ");
+	if(parametros==NULL || !(string_starts_with(parametros, "\"") && string_ends_with(parametros, "\""))){
+		faltaEnmascararValue();
+		return NULL;
+	}
+	char* valueSinPrimeraComilla = string_substring_from(parametros,1);
+	char* valueDadoVuelta =string_reverse(valueSinPrimeraComilla);
+	char* valueSinComillaFinal=	string_substring_from(valueDadoVuelta,1);
+
+	value=valueSinComillaFinal;
 
 
-	parametros = strtok(NULL, "\"");
+
+	//parametros = strtok(NULL, "\"");
+
 	t_config* config =leer_config();
 	int maxValue = config_get_int_value(config,"TAMAÑO_VALUE");
-	if(parametros==NULL || string_length(parametros)>maxValue){
+	if(value=="" || string_length(value)>maxValue){
 		faltaValue();
+		free(valueSinPrimeraComilla);
+		free(valueDadoVuelta);
+		free(valueSinComillaFinal);
 		return NULL;
 	}
 	config_destroy(config);
-	value=parametros;
+
 
 
 	parametros = strtok(NULL, " ");
@@ -277,13 +292,18 @@ t_paquete_insert* LeerInsert(char* parametros){
 	} else {
 		if(!validarNumero(parametros)){
 		faltaTimestamp();
+		free(valueSinPrimeraComilla);
+		free(valueDadoVuelta);
+		free(valueSinComillaFinal);
 		return NULL;
 		}
 		timestamp = atoll(parametros);
 	}
 
 	t_paquete_insert* paquete = crear_paquete_insert(nombre_tabla, valor_key, value, timestamp);
-
+	free(valueSinPrimeraComilla);
+	free(valueDadoVuelta);
+	free(valueSinComillaFinal);
 
 	return paquete;
 }

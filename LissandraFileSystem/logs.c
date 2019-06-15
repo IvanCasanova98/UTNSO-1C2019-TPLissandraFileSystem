@@ -87,6 +87,14 @@ void faltaValue(){
 	log_destroy(logger);
 }
 
+void faltaEnmascararValue(){
+
+	t_log* logger=iniciar_logger();
+	log_warning(logger, "ERROR EL PARAMETRO VALUE NO ESTA ENMASCARADO. AGREGAR COMILLAS");
+	log_destroy(logger);
+}
+
+
 void faltaTimestamp(){
 
 	t_log* logger=iniciar_logger();
