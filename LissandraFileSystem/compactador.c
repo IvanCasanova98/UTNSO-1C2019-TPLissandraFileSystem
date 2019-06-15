@@ -92,6 +92,7 @@ void* compactar(void * arg){
 
 	}
 	}
+	//free(nombreTabla);
 	config_destroy(config);
 	free(DireccionmetaDataTabla);
 	free(primerTemporal);
@@ -559,12 +560,14 @@ void levantarHilosTablasExistentesCompactacion(){
 
 
 				i++;
+				free(nombreTabla);
 				//pthread_join(compactador[i], (void**)NULL);
 			}
 			dictionary_iterator(TablasCompactacion,levantarHiloCompactacion);
 
 		}
-
+		free(directorioTablas);
+		closedir(dir);
 	closedir(d);
 	}
 }
@@ -596,7 +599,9 @@ int cantidadDeTablasExistentes(){
 			if (!string_contains(dir->d_name,"."))
 			i++;
 		}
-
+		free(directorioTablas);
+		closedir(dir);
+		closedir(d);
 
 }
 	  return i;

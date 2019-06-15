@@ -729,6 +729,12 @@ void RemoverDeLaMemtable(char *nombreTabla){
 		{
 		dictionary_remove_and_destroy(memTable,nombreTabla,liberarNodo);
 		}
+
+		if(dictionary_is_empty(memTable)){
+			dictionary_destroy(memTable);
+			memTable=NULL;
+		}
+
 	}
 }
 
