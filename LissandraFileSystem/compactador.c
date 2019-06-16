@@ -15,89 +15,113 @@ void* funcionCompactar(void* arg){
 	t_config* config = config_create(DireccionmetaDataTabla);
 	int TiempoCompactacion = config_get_int_value(config, "COMPACTION_TIME");
 	char * DirectorioTabla = DirectorioDeTabla(nombreTabla);
+	bool estaCompactando=0;
 	while(1){
 				sleep(TiempoCompactacion/1000);
+
 				if(existe_temporal(DirectorioTabla)){
+					if(!estaCompactando){
+					estaCompactando=1;
 					pthread_create(&compactador,NULL,compactar,arg);
 					pthread_join(compactador, (void**)NULL);
+					estaCompactando=0;
+					}
 				}else{
 					pthread_cancel(compactador);
 
 				}
 				}
+	free(DirectorioTabla);
+	free(DireccionmetaDataTabla);
 }
 
 
 void* compactar(void * arg){
 	char* nombreTabla= (char*) arg;
+
 	char * DirectorioTabla = DirectorioDeTabla(nombreTabla);
 	char* primerTemporal = DirectorioDeTemporal(nombreTabla,1);
 	char* DireccionmetaDataTabla = DirectorioDeMetadataTabla(nombreTabla);
 	t_config* config = config_create(DireccionmetaDataTabla);
 	int NumeroParticiones = config_get_int_value(config, "PARTITIONS");
 	int TiempoCompactacion = config_get_int_value(config, "COMPACTION_TIME");
-
-	while(1){
-		sleep(TiempoCompactacion/1000);
-	if(!existe_temporal(DirectorioTabla)) break; //POR SI SE HACE UN DROP existe_temporal ES LO MISMO QUE EXISTE TABLA
+//	bool estaCompactando=0;
+//	while(1){
+//		sleep(TiempoCompactacion/1000);
+//	if(!existe_temporal(DirectorioTabla)) break; //POR SI SE HACE UN DROP existe_temporal ES LO MISMO QUE EXISTE TABLA
 
 	if(existe_temporal(primerTemporal))
 	{
+		//estaCompactando=1;
 		struct timeval tiempoAntesDeCompactar , tiempoDespuesDeCompactar;
-		LogCompactacion(nombreTabla);
+
 		cambiarNombreTmpATmpc(nombreTabla);
 		t_list* ListaRegistrosTemporales= LiberarTmpc(nombreTabla);
-    	//list_iterate(ListaRegistrosTemporales,imprimirRegistro);
-		gettimeofday(&tiempoAntesDeCompactar,NULL);
+
+
+		LogCompactacion(nombreTabla);
+		t_list* ListaRegistrosTemporalCompactados[NumeroParticiones];
+		t_list* RegistrosACargar[NumeroParticiones];
+		t_list* ListaRegistrosParticion[NumeroParticiones];
+
+
 		for(int i =0; i<NumeroParticiones;i++)
 		{
-
-
 
 			bool _filtradoMismaKey(void* elemento){
 					return filtrarPorMismaKey(elemento,i,NumeroParticiones);
 			}
 
-			t_list* ListaRegistrosParticion = LiberarBin(nombreTabla,i);
-			t_list* ListaRegistrosTemporalCompactados= list_filter(ListaRegistrosTemporales, _filtradoMismaKey);
-			t_list* RegistrosACargar =ActualizarRegistrosParticion(ListaRegistrosParticion,ListaRegistrosTemporalCompactados);
+			ListaRegistrosParticion[i] = LiberarBin(nombreTabla,i);
+			ListaRegistrosTemporalCompactados[i]= list_filter(ListaRegistrosTemporales, _filtradoMismaKey);
+			RegistrosACargar[i] =ActualizarRegistrosParticion(ListaRegistrosParticion[i],ListaRegistrosTemporalCompactados[i]);
 
-			char* TodosLosRegistrosActualizados= crearRegistroACargar(RegistrosACargar);
-
-
-
-			RemoverParticionDeTablaEspecificaYSusBloques(nombreTabla,i);
+			}
 
 
 
-			crearParticionNueva(nombreTabla,TodosLosRegistrosActualizados,i);
+		gettimeofday(&tiempoAntesDeCompactar,NULL);
+		// ACA COMPACTA
+		for(int i =0; i<NumeroParticiones;i++){
+			if(!list_is_empty(RegistrosACargar[i])){
+				char* TodosLosRegistrosActualizados= crearRegistroACargar(RegistrosACargar[i]);
+
+				RemoverParticionDeTablaEspecificaYSusBloques(nombreTabla,i);
+
+				crearParticionNueva(nombreTabla,TodosLosRegistrosActualizados,i);
+
+				free(TodosLosRegistrosActualizados);
+				}
+
+			//list_destroy(RegistrosACargar[i]);
 
 
-
-
+			}
 
 			//free(TodosLosRegistrosActualizados);
 
-			list_destroy(ListaRegistrosParticion);
-			list_destroy(ListaRegistrosTemporalCompactados);
+//			list_destroy(ListaRegistrosParticion);
+//			list_destroy(ListaRegistrosTemporalCompactados);
 //			list_destroy(RegistrosACargar);
-//		list_destroy_and_destroy_elements(ListaRegistrosParticion,liberarRegistro); //Rompe
+//			list_destroy_and_destroy_elements(ListaRegistrosParticion,liberarRegistro); //Rompe
+		// list_destroy_and_destroy_elements(ListaRegistrosParticion,liberarRegistro);
+		//list_destroy_and_destroy_elements(ListaRegistrosParticion,liberarRegistro);
 
 
-		}
-		list_destroy_and_destroy_elements(ListaRegistrosTemporales,liberarRegistro);
+		//list_destroy_and_destroy_elements(ListaRegistrosTemporales,liberarRegistro);
 		gettimeofday(&tiempoDespuesDeCompactar,NULL);
 		int tiempoTranscurrido = ((double)(tiempoDespuesDeCompactar.tv_sec - tiempoAntesDeCompactar.tv_sec) + (double)(tiempoDespuesDeCompactar.tv_usec - tiempoAntesDeCompactar.tv_usec)/1000000)*1000;
 		LogCompactacionTerminada(nombreTabla,tiempoTranscurrido);
+		//estaCompactando=0;
+	}
 
-	}
-	}
 	//free(nombreTabla);
 	config_destroy(config);
 	free(DireccionmetaDataTabla);
 	free(primerTemporal);
 	free(DirectorioTabla);
 }
+
 void cambiarNombreTmpATmpc(char* nombretabla){ // 9ml
 		t_config* config = config_create("Lissandra.config");
 		char* NombreTmp = string_substring_until(string_reverse(nombretabla), 1);
@@ -192,7 +216,7 @@ void* CompararRegistros(void*registroTemporal,t_list* ListaRegistrosParticion){
 		int sizeNuevo=list_size(ListaRegistrosParticion);
 		if(sizeNuevo != sizeActual){
 			list_add(ListaRegistrosParticion,registroTemporal);
-		}
+		}else liberarRegistro(registroTemporalCasteado);
 
 
 	}else
@@ -207,8 +231,13 @@ bool CambiarRegistro(void*registroParticion,void*registroTemporal){
 	t_registro* RegistroParticionCasteado = (t_registro*)registroParticion;
 
 	if(RegistroParticionCasteado->key==RegistroTemporalCasteado->key){
-		return RegistroParticionCasteado->timestamp < RegistroTemporalCasteado->timestamp;
+		if(RegistroParticionCasteado->timestamp < RegistroTemporalCasteado->timestamp){
+			liberarRegistro(registroParticion);
+			return 1;
+		}
+
 	}
+	liberarRegistro(registroTemporal);
 	return 0;
 }
 
@@ -557,7 +586,7 @@ void levantarHilosTablasExistentesCompactacion(){
 				strcpy(nombreTabla,dir->d_name);
 
 				dictionary_put(TablasCompactacion,nombreTabla,compactador[i]);
-
+				//printf("%d",i);
 
 				i++;
 				free(nombreTabla);
@@ -578,7 +607,7 @@ void levantarHilosTablasExistentesCompactacion(){
 void* levantarHiloCompactacion(char* nombreTablaNueva,void* compactador){
 	pthread_t _compactador = (pthread_t) compactador;
 
-	pthread_create(&_compactador,NULL,compactar,(void*)nombreTablaNueva);
+	pthread_create(&_compactador,NULL,funcionCompactar,(void*)nombreTablaNueva);
 
 
 

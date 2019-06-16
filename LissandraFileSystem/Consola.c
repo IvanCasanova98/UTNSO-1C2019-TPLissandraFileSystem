@@ -114,7 +114,7 @@ void* prenderConsola(void* arg){
 void deployMenu(){
 	printf("\n\nCREATE    NOMBRETABLA CONSISTENCIA PARTICIONES TIEMPO_COMPACTACION \nDROP      NOMBRETABLA\nDESCRIBE  NOMBRETABLA (OPCIONAL)\nSELECT    NOMBRETABLA KEY\nINSERT    NOMBRETABLA KEY \"VALUE\" TIMESTAMP (OPCIONAL) \n");
 	printf("\nIngrese REQUEST\n");
-
+	compactar("WALSON");
 //	imprimirBITARRAY(bitmap);
 
 
@@ -255,16 +255,19 @@ t_paquete_insert* LeerInsert(char* parametros){
 	}
 	valor_key = atoi(parametros);
 
-	parametros = strtok(NULL, " ");
-	if(parametros==NULL || !(string_starts_with(parametros, "\"") && string_ends_with(parametros, "\""))){
-		faltaEnmascararValue();
-		return NULL;
-	}
-	char* valueSinPrimeraComilla = string_substring_from(parametros,1);
-	char* valueDadoVuelta =string_reverse(valueSinPrimeraComilla);
-	char* valueSinComillaFinal=	string_substring_from(valueDadoVuelta,1);
+	parametros = strtok(NULL, "\"");
 
-	value=valueSinComillaFinal;
+
+//	printf("%s",parametros);
+//	if(parametros==NULL || !(string_starts_with(parametros, "\"") && string_ends_with(parametros, "\""))){
+//		faltaEnmascararValue();
+//		return NULL;
+//	}
+//	char* valueSinPrimeraComilla = string_substring_from(parametros,1);
+//	char* valueDadoVuelta =string_reverse(valueSinPrimeraComilla);
+//	char* valueSinComillaFinal=	string_substring_from(valueDadoVuelta,1);
+////
+//	value=valueSinComillaFinal;
 
 
 
@@ -272,19 +275,18 @@ t_paquete_insert* LeerInsert(char* parametros){
 
 	t_config* config =leer_config();
 	int maxValue = config_get_int_value(config,"TAMAÑO_VALUE");
-	if(value=="" || string_length(value)>maxValue){
+	if(parametros==NULL || string_length(parametros)>maxValue){
 		faltaValue();
-		free(valueSinPrimeraComilla);
-		free(valueDadoVuelta);
-		free(valueSinComillaFinal);
+//		free(valueSinPrimeraComilla);
+//		free(valueDadoVuelta);
+//		free(valueSinComillaFinal);
 		return NULL;
 	}
 	config_destroy(config);
 
-
+	value=parametros;
 
 	parametros = strtok(NULL, " ");
-
 	if (parametros==NULL) {
 	struct timeval te;
 	gettimeofday(&te, NULL); // get current time
@@ -292,21 +294,102 @@ t_paquete_insert* LeerInsert(char* parametros){
 	} else {
 		if(!validarNumero(parametros)){
 		faltaTimestamp();
-		free(valueSinPrimeraComilla);
-		free(valueDadoVuelta);
-		free(valueSinComillaFinal);
+//		free(valueSinPrimeraComilla);
+//		free(valueDadoVuelta);
+//		free(valueSinComillaFinal);
 		return NULL;
 		}
 		timestamp = atoll(parametros);
 	}
 
 	t_paquete_insert* paquete = crear_paquete_insert(nombre_tabla, valor_key, value, timestamp);
-	free(valueSinPrimeraComilla);
-	free(valueDadoVuelta);
-	free(valueSinComillaFinal);
+//	free(valueSinPrimeraComilla);
+//	free(valueDadoVuelta);
+//	free(valueSinComillaFinal);
 
 	return paquete;
 }
+
+t_paquete_insert* LeerInsert2(char* parametros){
+
+	uint16_t valor_key;
+	char* nombre_tabla;
+	char* value;
+	long long timestamp;
+
+	char** TodosLosParametros= string_split(parametros," ");
+
+
+	parametros= strtok(NULL, " ");
+	if(TodosLosParametros[0]==NULL){
+		faltaTabla();
+		return NULL;
+	}
+	nombre_tabla = TodosLosParametros[0];
+
+	parametros = strtok(NULL, " ");
+	if(TodosLosParametros[1]==NULL || !validarNumero(TodosLosParametros[1])){
+		faltaKey();
+		return NULL;
+	}
+	valor_key = atoi(TodosLosParametros[1]);
+
+	parametros = strtok(NULL, "\"");
+	printf("%s",parametros);
+
+//	printf("%s",parametros);
+//	if(parametros==NULL || !(string_starts_with(parametros, "\"") && string_ends_with(parametros, "\""))){
+//		faltaEnmascararValue();
+//		return NULL;
+//	}
+//	char* valueSinPrimeraComilla = string_substring_from(parametros,1);
+//	char* valueDadoVuelta =string_reverse(valueSinPrimeraComilla);
+//	char* valueSinComillaFinal=	string_substring_from(valueDadoVuelta,1);
+////
+//	value=valueSinComillaFinal;
+
+
+
+	//parametros = strtok(NULL, "\"");
+
+	t_config* config =leer_config();
+	int maxValue = config_get_int_value(config,"TAMAÑO_VALUE");
+	if(parametros==NULL || string_length(parametros)>maxValue){
+		faltaValue();
+//		free(valueSinPrimeraComilla);
+//		free(valueDadoVuelta);
+//		free(valueSinComillaFinal);
+		return NULL;
+	}
+	config_destroy(config);
+
+
+
+	parametros = strtok(NULL, " ");
+	printf("%s",parametros);
+	if (parametros==NULL) {
+	struct timeval te;
+	gettimeofday(&te, NULL); // get current time
+	timestamp = te.tv_sec*1000LL + te.tv_usec/1000;
+	} else {
+		if(!validarNumero(parametros)){
+		faltaTimestamp();
+//		free(valueSinPrimeraComilla);
+//		free(valueDadoVuelta);
+//		free(valueSinComillaFinal);
+		return NULL;
+		}
+		timestamp = atoll(parametros);
+	}
+
+	t_paquete_insert* paquete = crear_paquete_insert(nombre_tabla, valor_key, value, timestamp);
+//	free(valueSinPrimeraComilla);
+//	free(valueDadoVuelta);
+//	free(valueSinComillaFinal);
+
+	return paquete;
+}
+
 
 t_paquete_create* LeerCreate(char* parametros){
 
