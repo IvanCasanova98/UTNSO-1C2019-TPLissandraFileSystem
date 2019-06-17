@@ -261,7 +261,7 @@ t_paquete_insert* LeerInsert(char* parametros){
 
 	char* valueCompleto =string_new();
 
-	string_append(&valueCompleto, string_duplicate(parametros));
+	string_append(&valueCompleto, parametros);
 	if(parametros!=NULL && (string_starts_with(parametros, "\"") && !string_ends_with(parametros, "\""))){
 
 		while(!string_ends_with(valueCompleto, "\"")){
@@ -272,7 +272,7 @@ t_paquete_insert* LeerInsert(char* parametros){
 
 			}
 			string_append(&valueCompleto, " ");
-			string_append(&valueCompleto, string_duplicate(parametros));
+			string_append(&valueCompleto, parametros);
 
 		}
 
@@ -294,7 +294,7 @@ t_paquete_insert* LeerInsert(char* parametros){
 
 	t_config* config =leer_config();
 	int maxValue = config_get_int_value(config,"TAMAÑO_VALUE");
-	if(parametros==NULL || string_length(parametros)>maxValue){
+	if(value=="" || string_length(value)>maxValue){
 		faltaValue();
 		free(valueCompleto);
 		free(valueSinPrimeraComilla);
