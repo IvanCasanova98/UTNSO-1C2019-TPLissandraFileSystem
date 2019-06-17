@@ -114,7 +114,7 @@ void* prenderConsola(void* arg){
 void deployMenu(){
 	printf("\n\nCREATE    NOMBRETABLA CONSISTENCIA PARTICIONES TIEMPO_COMPACTACION \nDROP      NOMBRETABLA\nDESCRIBE  NOMBRETABLA (OPCIONAL)\nSELECT    NOMBRETABLA KEY\nINSERT    NOMBRETABLA KEY \"VALUE\" TIMESTAMP (OPCIONAL) \n");
 	printf("\nIngrese REQUEST\n");
-	compactar("WALSON");
+	//compactar("WALSON");
 //	imprimirBITARRAY(bitmap);
 
 
@@ -255,19 +255,38 @@ t_paquete_insert* LeerInsert(char* parametros){
 	}
 	valor_key = atoi(parametros);
 
-	parametros = strtok(NULL, "\"");
+	parametros = strtok(NULL, " ");
 
 
-//	printf("%s",parametros);
-//	if(parametros==NULL || !(string_starts_with(parametros, "\"") && string_ends_with(parametros, "\""))){
-//		faltaEnmascararValue();
-//		return NULL;
-//	}
-//	char* valueSinPrimeraComilla = string_substring_from(parametros,1);
-//	char* valueDadoVuelta =string_reverse(valueSinPrimeraComilla);
-//	char* valueSinComillaFinal=	string_substring_from(valueDadoVuelta,1);
-////
-//	value=valueSinComillaFinal;
+
+	char* valueCompleto =string_new();
+
+	string_append(&valueCompleto, string_duplicate(parametros));
+	if(parametros!=NULL && (string_starts_with(parametros, "\"") && !string_ends_with(parametros, "\""))){
+
+		while(!string_ends_with(valueCompleto, "\"")){
+			parametros = strtok(NULL, " ");
+			if(parametros==NULL){
+				faltaEnmascararValue();
+				return NULL;
+
+			}
+			string_append(&valueCompleto, " ");
+			string_append(&valueCompleto, string_duplicate(parametros));
+
+		}
+
+
+	}else if(parametros==NULL || !(string_starts_with(parametros, "\"")) || !(string_ends_with(parametros, "\""))){
+		faltaEnmascararValue();
+		return NULL;
+	}
+
+	char* valueSinPrimeraComilla = string_substring_from(valueCompleto,1);
+	char* valueDadoVuelta =string_reverse(valueSinPrimeraComilla);
+	char* valueSinComillaFinal=	string_substring_from(valueDadoVuelta,1);
+	char* valueFinal = string_reverse(valueSinComillaFinal);
+	value=valueFinal;
 
 
 
@@ -277,14 +296,17 @@ t_paquete_insert* LeerInsert(char* parametros){
 	int maxValue = config_get_int_value(config,"TAMAÑO_VALUE");
 	if(parametros==NULL || string_length(parametros)>maxValue){
 		faltaValue();
-//		free(valueSinPrimeraComilla);
-//		free(valueDadoVuelta);
-//		free(valueSinComillaFinal);
+		free(valueCompleto);
+		free(valueSinPrimeraComilla);
+		free(valueDadoVuelta);
+		free(valueSinComillaFinal);
+		free(valueFinal);
+		config_destroy(config);
 		return NULL;
 	}
 	config_destroy(config);
 
-	value=parametros;
+
 
 	parametros = strtok(NULL, " ");
 	if (parametros==NULL) {
@@ -294,19 +316,22 @@ t_paquete_insert* LeerInsert(char* parametros){
 	} else {
 		if(!validarNumero(parametros)){
 		faltaTimestamp();
-//		free(valueSinPrimeraComilla);
-//		free(valueDadoVuelta);
-//		free(valueSinComillaFinal);
+		free(valueCompleto);
+		free(valueSinPrimeraComilla);
+		free(valueDadoVuelta);
+		free(valueSinComillaFinal);
+		free(valueFinal);
 		return NULL;
 		}
 		timestamp = atoll(parametros);
 	}
 
 	t_paquete_insert* paquete = crear_paquete_insert(nombre_tabla, valor_key, value, timestamp);
-//	free(valueSinPrimeraComilla);
-//	free(valueDadoVuelta);
-//	free(valueSinComillaFinal);
-
+	free(valueCompleto);
+	free(valueSinPrimeraComilla);
+	free(valueDadoVuelta);
+	free(valueSinComillaFinal);
+	free(valueFinal);
 	return paquete;
 }
 
@@ -317,36 +342,42 @@ t_paquete_insert* LeerInsert2(char* parametros){
 	char* value;
 	long long timestamp;
 
-	char** TodosLosParametros= string_split(parametros," ");
+	char** TodosLosParametros= string_n_split(parametros, 4, " ");
+	printf("%s\n",TodosLosParametros[1]);
+//	printf("%s\n",TodosLosParametros[1]);
+//	printf("%s\n",TodosLosParametros[2]);
 
 
-	parametros= strtok(NULL, " ");
-	if(TodosLosParametros[0]==NULL){
+
+	if(TodosLosParametros[1]==NULL){
 		faltaTabla();
 		return NULL;
 	}
-	nombre_tabla = TodosLosParametros[0];
+	nombre_tabla = TodosLosParametros[1];
 
-	parametros = strtok(NULL, " ");
-	if(TodosLosParametros[1]==NULL || !validarNumero(TodosLosParametros[1])){
+//	parametros = strtok(NULL, " ");
+	if(TodosLosParametros[2]==NULL || !validarNumero(TodosLosParametros[2])){
 		faltaKey();
 		return NULL;
 	}
-	valor_key = atoi(TodosLosParametros[1]);
+	valor_key = atoi(TodosLosParametros[2]);
 
-	parametros = strtok(NULL, "\"");
-	printf("%s",parametros);
+//	parametros = strtok(NULL, "\"");
 
-//	printf("%s",parametros);
-//	if(parametros==NULL || !(string_starts_with(parametros, "\"") && string_ends_with(parametros, "\""))){
-//		faltaEnmascararValue();
-//		return NULL;
-//	}
-//	char* valueSinPrimeraComilla = string_substring_from(parametros,1);
-//	char* valueDadoVuelta =string_reverse(valueSinPrimeraComilla);
-//	char* valueSinComillaFinal=	string_substring_from(valueDadoVuelta,1);
-////
-//	value=valueSinComillaFinal;
+
+
+	char** valueYTime =string_split(TodosLosParametros[3], " ");
+
+
+	if(valueYTime[0]==NULL || !(string_starts_with(valueYTime[0], "\"") && string_ends_with(valueYTime[0], "\""))){
+		faltaEnmascararValue();
+		return NULL;
+	}
+	char* valueSinPrimeraComilla = string_substring_from(valueYTime[0],1);
+	char* valueDadoVuelta =string_reverse(valueSinPrimeraComilla);
+	char* valueSinComillaFinal=	string_substring_from(valueDadoVuelta,1);
+//
+	value=valueSinComillaFinal;
 
 
 
@@ -354,7 +385,7 @@ t_paquete_insert* LeerInsert2(char* parametros){
 
 	t_config* config =leer_config();
 	int maxValue = config_get_int_value(config,"TAMAÑO_VALUE");
-	if(parametros==NULL || string_length(parametros)>maxValue){
+	if(value=="" || string_length(value)>maxValue){
 		faltaValue();
 //		free(valueSinPrimeraComilla);
 //		free(valueDadoVuelta);
@@ -365,21 +396,22 @@ t_paquete_insert* LeerInsert2(char* parametros){
 
 
 
-	parametros = strtok(NULL, " ");
-	printf("%s",parametros);
-	if (parametros==NULL) {
+//	parametros = strtok(NULL, " ");
+//	printf("%s",parametros);
+
+	if (valueYTime[1]==NULL) {
 	struct timeval te;
 	gettimeofday(&te, NULL); // get current time
 	timestamp = te.tv_sec*1000LL + te.tv_usec/1000;
 	} else {
-		if(!validarNumero(parametros)){
+		if(!validarNumero(valueYTime[1])){
 		faltaTimestamp();
 //		free(valueSinPrimeraComilla);
 //		free(valueDadoVuelta);
 //		free(valueSinComillaFinal);
 		return NULL;
 		}
-		timestamp = atoll(parametros);
+		timestamp = atoll(valueYTime[1]);
 	}
 
 	t_paquete_insert* paquete = crear_paquete_insert(nombre_tabla, valor_key, value, timestamp);

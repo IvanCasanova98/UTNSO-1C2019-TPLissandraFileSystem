@@ -53,7 +53,7 @@ t_paquete_insert* 	LeerInsert(char* parametros);
 t_paquete_create* 	LeerCreate(char* parametros);
 t_paquete_drop*   	LeerDrop(char *parametros);
 t_paquete_describe* LeerDescribe(char *parametros);
-
+t_paquete_insert* LeerInsert2(char* parametros);
 //---------------------LOGGEAR PAQUETE
 void loggear_request_select(t_paquete_select* paquete);
 void loggear_request_insert(t_paquete_insert* paquete);
