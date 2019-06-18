@@ -1,6 +1,7 @@
 #ifndef PAQUETE_H_
 #define PAQUETE_H_
 
+#include <stdio.h>
 #include<stdlib.h>
 #include<string.h>
 #include<stdint.h>

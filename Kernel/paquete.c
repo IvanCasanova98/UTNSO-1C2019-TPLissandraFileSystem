@@ -9,9 +9,8 @@ void ingresar_paquete(int conexion,t_config* config){ //RECIBIR LOGGER
 
 	char* lineaRequest = ingresar_request();
 
-	string_to_upper(lineaRequest);
 	char* parametros = strtok(lineaRequest, " ");
-
+	string_to_upper(parametros);
 	int cod_ingresado = codigo_ingresado(parametros);
 	retardo_ejecucion(config);
 	while(1)
@@ -83,6 +82,7 @@ void ingresar_paquete(int conexion,t_config* config){ //RECIBIR LOGGER
 
 				break;
 			case 6:
+
 				funcion_LQL(parametros, conexion,config);
 				break;
 			default:

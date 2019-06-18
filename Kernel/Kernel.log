@@ -7750,3 +7750,2084 @@ Valor KEY   : 2
 [INFO] 16:18:00:230 Kernel/(5850:5850): SELECT ENVIADO
 [INFO] 16:18:00:230 Kernel/(5850:5850): Value recibido: CARLITOS
 
+[INFO] 16:24:52:211 Kernel/(6023:6023): CONECTANDO CON MEMORY POOL
+[INFO] 16:24:52:212 Kernel/(6023:6023): DESCRIBE ALL
+
+[INFO] 16:28:18:932 Kernel/(6090:6090): CONECTANDO CON MEMORY POOL
+[INFO] 16:28:18:932 Kernel/(6090:6090): DESCRIBE ALL
+
+[INFO] 16:30:22:527 Kernel/(6154:6154): CONECTANDO CON MEMORY POOL
+[INFO] 16:30:22:528 Kernel/(6154:6154): DESCRIBE ALL
+
+[INFO] 16:36:23:619 Kernel/(6211:6211): CONECTANDO CON MEMORY POOL
+[INFO] 16:36:23:619 Kernel/(6211:6211): DESCRIBE ALL
+
+[INFO] 16:37:07:578 Kernel/(6264:6264): CONECTANDO CON MEMORY POOL
+[INFO] 16:37:07:578 Kernel/(6264:6264): DESCRIBE ALL
+
+[INFO] 16:39:44:437 Kernel/(6299:6299): CONECTANDO CON MEMORY POOL
+[INFO] 16:39:44:437 Kernel/(6299:6299): DESCRIBE ALL
+
+[INFO] 16:40:12:395 Kernel/(6319:6319): CONECTANDO CON MEMORY POOL
+[INFO] 16:40:12:395 Kernel/(6319:6319): DESCRIBE ALL
+
+[INFO] 16:40:42:685 Kernel/(6329:6329): CONECTANDO CON MEMORY POOL
+[INFO] 16:40:42:685 Kernel/(6329:6329): DESCRIBE ALL
+
+[INFO] 16:40:58:296 Kernel/(6342:6342): CONECTANDO CON MEMORY POOL
+[INFO] 16:40:58:296 Kernel/(6342:6342): DESCRIBE ALL
+
+[INFO] 16:41:22:57 Kernel/(6364:6364): CONECTANDO CON MEMORY POOL
+[INFO] 16:41:22:58 Kernel/(6364:6364): DESCRIBE ALL
+
+[INFO] 16:41:54:219 Kernel/(6381:6381): CONECTANDO CON MEMORY POOL
+[INFO] 16:41:54:219 Kernel/(6381:6381): DESCRIBE ALL
+
+[INFO] 16:42:22:39 Kernel/(6404:6404): CONECTANDO CON MEMORY POOL
+[INFO] 16:42:22:39 Kernel/(6404:6404): DESCRIBE ALL
+
+[INFO] 16:51:17:129 Kernel/(6499:6499): CONECTANDO CON MEMORY POOL
+[INFO] 16:51:17:129 Kernel/(6499:6499): DESCRIBE ALL
+
+[INFO] 16:52:31:330 Kernel/(6532:6532): CONECTANDO CON MEMORY POOL
+[INFO] 16:52:31:330 Kernel/(6532:6532): DESCRIBE ALL
+
+[INFO] 16:52:34:391 Kernel/(6532:6532): CREATE
+Nombre tabla: POSTRES
+Consistencia   : SC
+Particiones       : 3
+Tiempo de Compactacion       : 60000
+[INFO] 16:52:34:391 Kernel/(6532:6532): CREATE ENVIADO
+
+[INFO] 16:52:34:391 Kernel/(6532:6532): DESCRIBE ALL
+
+[INFO] 16:52:34:428 Kernel/(6532:6532): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 100
+Value       : Flan
+[INFO] 16:52:34:428 Kernel/(6532:6532): INSERT ENVIADO
+
+[INFO] 16:52:34:428 Kernel/(6532:6532): CREATE
+Nombre tabla: FRUTAS
+Consistencia   : SC
+Particiones       : 2
+Tiempo de Compactacion       : 50000
+[INFO] 16:52:34:428 Kernel/(6532:6532): CREATE ENVIADO
+
+[INFO] 16:52:34:428 Kernel/(6532:6532): DESCRIBE ALL
+
+[INFO] 16:52:34:508 Kernel/(6532:6532): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 222
+Value       : Manzana
+[INFO] 16:52:34:508 Kernel/(6532:6532): INSERT ENVIADO
+
+[INFO] 16:52:34:509 Kernel/(6532:6532): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+Value       : Chocotorta
+[INFO] 16:52:34:509 Kernel/(6532:6532): INSERT ENVIADO
+
+[INFO] 16:52:34:509 Kernel/(6532:6532): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 34
+Value       : Banana
+[INFO] 16:52:34:509 Kernel/(6532:6532): INSERT ENVIADO
+
+[INFO] 16:52:34:509 Kernel/(6532:6532): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 4000
+Value       : Tiramisu
+[INFO] 16:52:34:509 Kernel/(6532:6532): INSERT ENVIADO
+
+[INFO] 16:52:34:509 Kernel/(6532:6532): CREATE
+Nombre tabla: BEBIDAS
+Consistencia   : SC
+Particiones       : 6
+Tiempo de Compactacion       : 10000
+[INFO] 16:52:34:509 Kernel/(6532:6532): CREATE ENVIADO
+
+[INFO] 16:52:34:509 Kernel/(6532:6532): DESCRIBE ALL
+
+[INFO] 16:52:34:588 Kernel/(6532:6532): DESCRIBE POSTRES 
+
+[INFO] 16:52:34:668 Kernel/(6532:6532): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 10245
+Value       : Pera
+[INFO] 16:52:34:668 Kernel/(6532:6532): INSERT ENVIADO
+
+[INFO] 16:52:34:668 Kernel/(6532:6532): SELECT
+Nombre tabla: FRUTAS
+Valor KEY   : 34
+[INFO] 16:52:34:668 Kernel/(6532:6532): SELECT ENVIADO
+[INFO] 16:52:34:709 Kernel/(6532:6532): Value recibido: Banana
+
+[INFO] 16:52:34:709 Kernel/(6532:6532): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+Value       : Helado
+[INFO] 16:52:34:709 Kernel/(6532:6532): INSERT ENVIADO
+
+[INFO] 16:52:34:709 Kernel/(6532:6532): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+[INFO] 16:52:34:709 Kernel/(6532:6532): SELECT ENVIADO
+[INFO] 16:52:34:748 Kernel/(6532:6532): Value recibido: Chocotorta
+
+[INFO] 16:52:34:748 Kernel/(6532:6532): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+Value       : Almendrado
+[INFO] 16:52:34:748 Kernel/(6532:6532): INSERT ENVIADO
+
+[INFO] 16:52:34:748 Kernel/(6532:6532): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 621
+Value       : Uva
+[INFO] 16:52:34:749 Kernel/(6532:6532): INSERT ENVIADO
+
+[INFO] 16:52:34:749 Kernel/(6532:6532): DESCRIBE FRUTAS 
+
+[INFO] 16:52:34:828 Kernel/(6532:6532): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 10
+Value       : Pepsi
+[INFO] 16:52:34:828 Kernel/(6532:6532): INSERT ENVIADO
+
+[INFO] 16:52:34:828 Kernel/(6532:6532): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+Value       : Coca Cola
+[INFO] 16:52:34:828 Kernel/(6532:6532): INSERT ENVIADO
+
+[INFO] 16:52:34:828 Kernel/(6532:6532): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+[INFO] 16:52:34:828 Kernel/(6532:6532): SELECT ENVIADO
+[INFO] 16:52:34:868 Kernel/(6532:6532): Value recibido: Coca Cola
+
+[INFO] 16:52:34:868 Kernel/(6532:6532): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+Value       : Sprite
+[INFO] 16:52:34:868 Kernel/(6532:6532): INSERT ENVIADO
+
+[INFO] 16:52:34:868 Kernel/(6532:6532): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+[INFO] 16:52:34:868 Kernel/(6532:6532): SELECT ENVIADO
+[INFO] 16:52:34:908 Kernel/(6532:6532): Value recibido: Chocotorta
+
+[INFO] 16:52:34:908 Kernel/(6532:6532): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 80
+Value       : Bizcochuelo
+[INFO] 16:52:34:908 Kernel/(6532:6532): INSERT ENVIADO
+
+[INFO] 16:52:34:908 Kernel/(6532:6532): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 7338
+Value       : Limonada
+[INFO] 16:52:34:908 Kernel/(6532:6532): INSERT ENVIADO
+
+[INFO] 16:52:34:908 Kernel/(6532:6532): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 621
+Value       : Melon
+[INFO] 16:52:34:908 Kernel/(6532:6532): INSERT ENVIADO
+
+[INFO] 16:52:34:908 Kernel/(6532:6532): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 34
+Value       : Manzana
+[INFO] 16:52:34:908 Kernel/(6532:6532): INSERT ENVIADO
+
+[INFO] 16:52:34:908 Kernel/(6532:6532): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+[INFO] 16:52:34:909 Kernel/(6532:6532): SELECT ENVIADO
+[INFO] 16:52:34:949 Kernel/(6532:6532): Value recibido: Coca Cola
+
+[INFO] 16:52:34:949 Kernel/(6532:6532): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 8927
+Value       : Budin de pan
+[INFO] 16:52:34:949 Kernel/(6532:6532): INSERT ENVIADO
+
+[INFO] 16:52:34:949 Kernel/(6532:6532): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 222
+Value       : Sandia
+[INFO] 16:52:34:949 Kernel/(6532:6532): INSERT ENVIADO
+
+[INFO] 16:52:34:949 Kernel/(6532:6532): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 44
+Value       : Exprimido
+[INFO] 16:52:34:949 Kernel/(6532:6532): INSERT ENVIADO
+
+[INFO] 16:52:34:949 Kernel/(6532:6532): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 7338
+Value       : Agua con gas
+[INFO] 16:52:34:949 Kernel/(6532:6532): INSERT ENVIADO
+
+[INFO] 16:52:34:949 Kernel/(6532:6532): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 222
+Value       : Manzana
+[INFO] 16:52:34:949 Kernel/(6532:6532): INSERT ENVIADO
+
+[INFO] 16:52:34:949 Kernel/(6532:6532): DESCRIBE BEBIDAS 
+
+[INFO] 16:52:35:29 Kernel/(6532:6532): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 34
+Value       : Cereza
+[INFO] 16:52:35:29 Kernel/(6532:6532): INSERT ENVIADO
+
+[INFO] 16:52:35:29 Kernel/(6532:6532): SELECT
+Nombre tabla: FRUTAS
+Valor KEY   : 34
+[INFO] 16:52:35:29 Kernel/(6532:6532): SELECT ENVIADO
+[INFO] 16:52:35:68 Kernel/(6532:6532): Value recibido: Banana
+
+[INFO] 16:52:35:68 Kernel/(6532:6532): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 44
+[INFO] 16:52:35:68 Kernel/(6532:6532): SELECT ENVIADO
+[INFO] 16:52:35:109 Kernel/(6532:6532): Value recibido: Exprimido
+
+[INFO] 16:52:35:109 Kernel/(6532:6532): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 10245
+Value       : Frutilla
+[INFO] 16:52:35:109 Kernel/(6532:6532): INSERT ENVIADO
+
+[INFO] 16:52:35:109 Kernel/(6532:6532): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 4000
+Value       : Gelatina
+[INFO] 16:52:35:109 Kernel/(6532:6532): INSERT ENVIADO
+
+[INFO] 16:52:35:109 Kernel/(6532:6532): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 100
+Value       : Helado
+[INFO] 16:52:35:109 Kernel/(6532:6532): INSERT ENVIADO
+
+[INFO] 16:52:35:109 Kernel/(6532:6532): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+Value       : Almendrado
+[INFO] 16:52:35:109 Kernel/(6532:6532): INSERT ENVIADO
+
+[INFO] 16:52:35:109 Kernel/(6532:6532): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+[INFO] 16:52:35:109 Kernel/(6532:6532): SELECT ENVIADO
+[INFO] 16:52:35:149 Kernel/(6532:6532): Value recibido: Coca Cola
+
+[INFO] 16:52:35:149 Kernel/(6532:6532): CREATE
+Nombre tabla: PLATOS_PRINCIPALES
+Consistencia   : SC
+Particiones       : 2
+Tiempo de Compactacion       : 60000
+[INFO] 16:52:35:149 Kernel/(6532:6532): CREATE ENVIADO
+
+[INFO] 16:52:35:149 Kernel/(6532:6532): DESCRIBE ALL
+
+[INFO] 16:52:35:230 Kernel/(6532:6532): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 231
+Value       : Flan
+[INFO] 16:52:35:230 Kernel/(6532:6532): INSERT ENVIADO
+
+[INFO] 16:52:35:230 Kernel/(6532:6532): INSERT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 271
+Value       : Milanesa
+[INFO] 16:52:35:230 Kernel/(6532:6532): INSERT ENVIADO
+
+[INFO] 16:52:35:230 Kernel/(6532:6532): INSERT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 32
+Value       : Omelette
+[INFO] 16:52:35:230 Kernel/(6532:6532): INSERT ENVIADO
+
+[INFO] 16:52:35:230 Kernel/(6532:6532): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 80
+Value       : Tiramisu
+[INFO] 16:52:35:230 Kernel/(6532:6532): INSERT ENVIADO
+
+[INFO] 16:52:35:230 Kernel/(6532:6532): SELECT
+Nombre tabla: FRUTAS
+Valor KEY   : 222
+[INFO] 16:52:35:230 Kernel/(6532:6532): SELECT ENVIADO
+[INFO] 16:52:35:268 Kernel/(6532:6532): Value recibido: Manzana
+
+[INFO] 16:52:35:268 Kernel/(6532:6532): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 231
+[INFO] 16:52:35:269 Kernel/(6532:6532): SELECT ENVIADO
+[INFO] 16:52:35:309 Kernel/(6532:6532): Value recibido: Key no encontrada
+
+[INFO] 16:52:35:309 Kernel/(6532:6532): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 44
+[INFO] 16:52:35:309 Kernel/(6532:6532): SELECT ENVIADO
+[INFO] 16:52:35:348 Kernel/(6532:6532): Value recibido: Exprimido
+
+[INFO] 16:52:35:348 Kernel/(6532:6532): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 80
+[INFO] 16:52:35:348 Kernel/(6532:6532): SELECT ENVIADO
+[INFO] 16:52:35:388 Kernel/(6532:6532): Value recibido: Key no encontrada
+
+[INFO] 16:52:35:388 Kernel/(6532:6532): INSERT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 54
+Value       : Hamburguesa
+[INFO] 16:52:35:388 Kernel/(6532:6532): INSERT ENVIADO
+
+[INFO] 16:52:35:388 Kernel/(6532:6532): SELECT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 271
+[INFO] 16:52:35:388 Kernel/(6532:6532): SELECT ENVIADO
+[INFO] 16:52:35:429 Kernel/(6532:6532): Value recibido: Milanesa
+
+[INFO] 16:52:35:429 Kernel/(6532:6532): INSERT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 271
+Value       : Pizza
+[INFO] 16:52:35:429 Kernel/(6532:6532): INSERT ENVIADO
+
+[INFO] 16:52:35:429 Kernel/(6532:6532): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 10
+Value       : Fanta
+[INFO] 16:52:35:429 Kernel/(6532:6532): INSERT ENVIADO
+
+[INFO] 16:52:35:429 Kernel/(6532:6532): INSERT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 32
+Value       : Empanadas
+[INFO] 16:52:35:429 Kernel/(6532:6532): INSERT ENVIADO
+
+[INFO] 16:52:35:429 Kernel/(6532:6532): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 8927
+Value       : Helado
+[INFO] 16:52:35:429 Kernel/(6532:6532): INSERT ENVIADO
+
+[INFO] 16:52:35:429 Kernel/(6532:6532): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 100
+Value       : Chocotorta
+[INFO] 16:52:35:429 Kernel/(6532:6532): INSERT ENVIADO
+
+[INFO] 16:52:35:429 Kernel/(6532:6532): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+Value       : Mate
+[INFO] 16:52:35:429 Kernel/(6532:6532): INSERT ENVIADO
+
+[INFO] 16:52:35:429 Kernel/(6532:6532): SELECT
+Nombre tabla: FRUTAS
+Valor KEY   : 10245
+[INFO] 16:52:35:429 Kernel/(6532:6532): SELECT ENVIADO
+[INFO] 16:52:35:468 Kernel/(6532:6532): Value recibido: Key no encontrada
+
+[INFO] 16:52:35:468 Kernel/(6532:6532): SELECT
+Nombre tabla: FRUTAS
+Valor KEY   : 22
+[INFO] 16:52:35:468 Kernel/(6532:6532): SELECT ENVIADO
+[INFO] 16:52:35:508 Kernel/(6532:6532): Value recibido: Key no encontrada
+
+[INFO] 16:52:35:508 Kernel/(6532:6532): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 100
+Value       : Helado
+[INFO] 16:52:35:508 Kernel/(6532:6532): INSERT ENVIADO
+
+[INFO] 16:52:35:508 Kernel/(6532:6532): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 100
+[INFO] 16:52:35:508 Kernel/(6532:6532): SELECT ENVIADO
+[INFO] 16:52:35:549 Kernel/(6532:6532): Value recibido: Flan
+
+[INFO] 16:52:35:549 Kernel/(6532:6532): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+Value       : Muffin
+[INFO] 16:52:35:549 Kernel/(6532:6532): INSERT ENVIADO
+
+[INFO] 16:52:35:549 Kernel/(6532:6532): SELECT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 54
+[INFO] 16:52:35:549 Kernel/(6532:6532): SELECT ENVIADO
+[INFO] 16:52:35:591 Kernel/(6532:6532): Value recibido: Key no encontrada
+
+[INFO] 16:52:35:591 Kernel/(6532:6532): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 10245
+[INFO] 16:52:35:591 Kernel/(6532:6532): SELECT ENVIADO
+[INFO] 16:52:35:629 Kernel/(6532:6532): Value recibido: Key no encontrada
+
+[INFO] 16:52:35:629 Kernel/(6532:6532): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+[INFO] 16:52:35:629 Kernel/(6532:6532): SELECT ENVIADO
+[INFO] 16:52:35:668 Kernel/(6532:6532): Value recibido: Chocotorta
+
+[INFO] 16:52:35:668 Kernel/(6532:6532): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 10
+[INFO] 16:52:35:668 Kernel/(6532:6532): SELECT ENVIADO
+[INFO] 16:52:35:708 Kernel/(6532:6532): Value recibido: Pepsi
+
+[INFO] 16:52:35:708 Kernel/(6532:6532): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 8927
+[INFO] 16:52:35:708 Kernel/(6532:6532): SELECT ENVIADO
+[INFO] 16:52:35:749 Kernel/(6532:6532): Value recibido: Key no encontrada
+
+[INFO] 16:52:35:749 Kernel/(6532:6532): SELECT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 271
+[INFO] 16:52:35:749 Kernel/(6532:6532): SELECT ENVIADO
+[INFO] 16:52:35:790 Kernel/(6532:6532): Value recibido: Milanesa
+
+[INFO] 17:04:36:802 Kernel/(6688:6688): CONECTANDO CON MEMORY POOL
+[INFO] 17:04:36:802 Kernel/(6688:6688): DESCRIBE ALL
+
+[INFO] 17:05:03:592 Kernel/(6693:6693): CONECTANDO CON MEMORY POOL
+[INFO] 17:05:03:592 Kernel/(6693:6693): DESCRIBE ALL
+
+[INFO] 17:05:31:58 Kernel/(6697:6697): CONECTANDO CON MEMORY POOL
+[INFO] 17:05:31:59 Kernel/(6697:6697): DESCRIBE ALL
+
+[INFO] 17:05:33:740 Kernel/(6697:6697): CREATE
+Nombre tabla: POSTRES
+Consistencia   : SC
+Particiones       : 3
+Tiempo de Compactacion       : 60000
+[INFO] 17:05:33:740 Kernel/(6697:6697): CREATE ENVIADO
+
+[INFO] 17:05:33:740 Kernel/(6697:6697): DESCRIBE ALL
+
+[INFO] 17:05:33:780 Kernel/(6697:6697): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 100
+Value       : Flan
+[INFO] 17:05:33:780 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:33:780 Kernel/(6697:6697): CREATE
+Nombre tabla: FRUTAS
+Consistencia   : SC
+Particiones       : 2
+Tiempo de Compactacion       : 50000
+[INFO] 17:05:33:780 Kernel/(6697:6697): CREATE ENVIADO
+
+[INFO] 17:05:33:780 Kernel/(6697:6697): DESCRIBE ALL
+
+[INFO] 17:05:33:860 Kernel/(6697:6697): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 222
+Value       : Manzana
+[INFO] 17:05:33:860 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:33:860 Kernel/(6697:6697): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+Value       : Chocotorta
+[INFO] 17:05:33:860 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:33:860 Kernel/(6697:6697): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 34
+Value       : Banana
+[INFO] 17:05:33:861 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:33:861 Kernel/(6697:6697): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 4000
+Value       : Tiramisu
+[INFO] 17:05:33:861 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:33:861 Kernel/(6697:6697): CREATE
+Nombre tabla: BEBIDAS
+Consistencia   : SC
+Particiones       : 6
+Tiempo de Compactacion       : 10000
+[INFO] 17:05:33:861 Kernel/(6697:6697): CREATE ENVIADO
+
+[INFO] 17:05:33:861 Kernel/(6697:6697): DESCRIBE ALL
+
+[INFO] 17:05:33:940 Kernel/(6697:6697): DESCRIBE POSTRES 
+
+[INFO] 17:05:34:21 Kernel/(6697:6697): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 10245
+Value       : Pera
+[INFO] 17:05:34:21 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:34:21 Kernel/(6697:6697): SELECT
+Nombre tabla: FRUTAS
+Valor KEY   : 34
+[INFO] 17:05:34:22 Kernel/(6697:6697): SELECT ENVIADO
+[INFO] 17:05:34:60 Kernel/(6697:6697): Value recibido: Banana
+
+[INFO] 17:05:34:61 Kernel/(6697:6697): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+Value       : Helado
+[INFO] 17:05:34:61 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:34:61 Kernel/(6697:6697): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+[INFO] 17:05:34:61 Kernel/(6697:6697): SELECT ENVIADO
+[INFO] 17:05:34:100 Kernel/(6697:6697): Value recibido: Chocotorta
+
+[INFO] 17:05:34:101 Kernel/(6697:6697): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+Value       : Almendrado
+[INFO] 17:05:34:101 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:34:101 Kernel/(6697:6697): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 621
+Value       : Uva
+[INFO] 17:05:34:101 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:34:101 Kernel/(6697:6697): DESCRIBE FRUTAS 
+
+[INFO] 17:05:34:180 Kernel/(6697:6697): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 10
+Value       : Pepsi
+[INFO] 17:05:34:180 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:34:180 Kernel/(6697:6697): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+Value       : Coca Cola
+[INFO] 17:05:34:180 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:34:180 Kernel/(6697:6697): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+[INFO] 17:05:34:180 Kernel/(6697:6697): SELECT ENVIADO
+[INFO] 17:05:34:220 Kernel/(6697:6697): Value recibido: Coca Cola
+
+[INFO] 17:05:34:220 Kernel/(6697:6697): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+Value       : Sprite
+[INFO] 17:05:34:221 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:34:221 Kernel/(6697:6697): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+[INFO] 17:05:34:221 Kernel/(6697:6697): SELECT ENVIADO
+[INFO] 17:05:34:260 Kernel/(6697:6697): Value recibido: Chocotorta
+
+[INFO] 17:05:34:260 Kernel/(6697:6697): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 80
+Value       : Bizcochuelo
+[INFO] 17:05:34:260 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:34:260 Kernel/(6697:6697): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 7338
+Value       : Limonada
+[INFO] 17:05:34:260 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:34:260 Kernel/(6697:6697): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 621
+Value       : Melon
+[INFO] 17:05:34:260 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:34:261 Kernel/(6697:6697): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 34
+Value       : Manzana
+[INFO] 17:05:34:261 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:34:261 Kernel/(6697:6697): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+[INFO] 17:05:34:261 Kernel/(6697:6697): SELECT ENVIADO
+[INFO] 17:05:34:300 Kernel/(6697:6697): Value recibido: Coca Cola
+
+[INFO] 17:05:34:300 Kernel/(6697:6697): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 8927
+Value       : Budin de pan
+[INFO] 17:05:34:300 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:34:300 Kernel/(6697:6697): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 222
+Value       : Sandia
+[INFO] 17:05:34:300 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:34:300 Kernel/(6697:6697): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 44
+Value       : Exprimido
+[INFO] 17:05:34:300 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:34:300 Kernel/(6697:6697): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 7338
+Value       : Agua con gas
+[INFO] 17:05:34:301 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:34:301 Kernel/(6697:6697): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 222
+Value       : Manzana
+[INFO] 17:05:34:301 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:34:301 Kernel/(6697:6697): DESCRIBE BEBIDAS 
+
+[INFO] 17:05:34:380 Kernel/(6697:6697): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 34
+Value       : Cereza
+[INFO] 17:05:34:380 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:34:380 Kernel/(6697:6697): SELECT
+Nombre tabla: FRUTAS
+Valor KEY   : 34
+[INFO] 17:05:34:380 Kernel/(6697:6697): SELECT ENVIADO
+[INFO] 17:05:34:420 Kernel/(6697:6697): Value recibido: Banana
+
+[INFO] 17:05:34:421 Kernel/(6697:6697): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 44
+[INFO] 17:05:34:421 Kernel/(6697:6697): SELECT ENVIADO
+[INFO] 17:05:34:460 Kernel/(6697:6697): Value recibido: Exprimido
+
+[INFO] 17:05:34:460 Kernel/(6697:6697): INSERT
+Nombre tabla: FRUTAS
+Valor KEY   : 10245
+Value       : Frutilla
+[INFO] 17:05:34:460 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:34:461 Kernel/(6697:6697): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 4000
+Value       : Gelatina
+[INFO] 17:05:34:461 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:34:461 Kernel/(6697:6697): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 100
+Value       : Helado
+[INFO] 17:05:34:461 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:34:461 Kernel/(6697:6697): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+Value       : Almendrado
+[INFO] 17:05:34:461 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:34:461 Kernel/(6697:6697): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+[INFO] 17:05:34:461 Kernel/(6697:6697): SELECT ENVIADO
+[INFO] 17:05:34:500 Kernel/(6697:6697): Value recibido: Coca Cola
+
+[INFO] 17:05:34:501 Kernel/(6697:6697): CREATE
+Nombre tabla: PLATOS_PRINCIPALES
+Consistencia   : SC
+Particiones       : 2
+Tiempo de Compactacion       : 60000
+[INFO] 17:05:34:501 Kernel/(6697:6697): CREATE ENVIADO
+
+[INFO] 17:05:34:501 Kernel/(6697:6697): DESCRIBE ALL
+
+[INFO] 17:05:34:581 Kernel/(6697:6697): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 231
+Value       : Flan
+[INFO] 17:05:34:581 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:34:581 Kernel/(6697:6697): INSERT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 271
+Value       : Milanesa
+[INFO] 17:05:34:581 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:34:581 Kernel/(6697:6697): INSERT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 32
+Value       : Omelette
+[INFO] 17:05:34:581 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:34:581 Kernel/(6697:6697): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 80
+Value       : Tiramisu
+[INFO] 17:05:34:581 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:34:581 Kernel/(6697:6697): SELECT
+Nombre tabla: FRUTAS
+Valor KEY   : 222
+[INFO] 17:05:34:581 Kernel/(6697:6697): SELECT ENVIADO
+[INFO] 17:05:34:620 Kernel/(6697:6697): Value recibido: Manzana
+
+[INFO] 17:05:34:620 Kernel/(6697:6697): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 231
+[INFO] 17:05:34:620 Kernel/(6697:6697): SELECT ENVIADO
+[INFO] 17:05:34:660 Kernel/(6697:6697): Value recibido: Key no encontrada
+
+[INFO] 17:05:34:660 Kernel/(6697:6697): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 44
+[INFO] 17:05:34:660 Kernel/(6697:6697): SELECT ENVIADO
+[INFO] 17:05:34:701 Kernel/(6697:6697): Value recibido: Exprimido
+
+[INFO] 17:05:34:701 Kernel/(6697:6697): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 80
+[INFO] 17:05:34:701 Kernel/(6697:6697): SELECT ENVIADO
+[INFO] 17:05:34:740 Kernel/(6697:6697): Value recibido: Key no encontrada
+
+[INFO] 17:05:34:740 Kernel/(6697:6697): INSERT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 54
+Value       : Hamburguesa
+[INFO] 17:05:34:740 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:34:740 Kernel/(6697:6697): SELECT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 271
+[INFO] 17:05:34:741 Kernel/(6697:6697): SELECT ENVIADO
+[INFO] 17:05:34:782 Kernel/(6697:6697): Value recibido: Milanesa
+
+[INFO] 17:05:34:782 Kernel/(6697:6697): INSERT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 271
+Value       : Pizza
+[INFO] 17:05:34:782 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:34:782 Kernel/(6697:6697): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 10
+Value       : Fanta
+[INFO] 17:05:34:782 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:34:782 Kernel/(6697:6697): INSERT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 32
+Value       : Empanadas
+[INFO] 17:05:34:782 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:34:782 Kernel/(6697:6697): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 8927
+Value       : Helado
+[INFO] 17:05:34:782 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:34:782 Kernel/(6697:6697): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 100
+Value       : Chocotorta
+[INFO] 17:05:34:782 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:34:782 Kernel/(6697:6697): INSERT
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+Value       : Mate
+[INFO] 17:05:34:782 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:34:782 Kernel/(6697:6697): SELECT
+Nombre tabla: FRUTAS
+Valor KEY   : 10245
+[INFO] 17:05:34:782 Kernel/(6697:6697): SELECT ENVIADO
+[INFO] 17:05:34:821 Kernel/(6697:6697): Value recibido: Key no encontrada
+
+[INFO] 17:05:34:821 Kernel/(6697:6697): SELECT
+Nombre tabla: FRUTAS
+Valor KEY   : 22
+[INFO] 17:05:34:821 Kernel/(6697:6697): SELECT ENVIADO
+[INFO] 17:05:34:860 Kernel/(6697:6697): Value recibido: Key no encontrada
+
+[INFO] 17:05:34:860 Kernel/(6697:6697): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 100
+Value       : Helado
+[INFO] 17:05:34:860 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:34:860 Kernel/(6697:6697): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 100
+[INFO] 17:05:34:860 Kernel/(6697:6697): SELECT ENVIADO
+[INFO] 17:05:34:901 Kernel/(6697:6697): Value recibido: Flan
+
+[INFO] 17:05:34:901 Kernel/(6697:6697): INSERT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+Value       : Muffin
+[INFO] 17:05:34:901 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:34:901 Kernel/(6697:6697): SELECT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 54
+[INFO] 17:05:34:901 Kernel/(6697:6697): SELECT ENVIADO
+[INFO] 17:05:34:941 Kernel/(6697:6697): Value recibido: Key no encontrada
+
+[INFO] 17:05:34:941 Kernel/(6697:6697): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 10245
+[INFO] 17:05:34:941 Kernel/(6697:6697): SELECT ENVIADO
+[INFO] 17:05:34:981 Kernel/(6697:6697): Value recibido: Key no encontrada
+
+[INFO] 17:05:34:981 Kernel/(6697:6697): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 101
+[INFO] 17:05:34:981 Kernel/(6697:6697): SELECT ENVIADO
+[INFO] 17:05:35:20 Kernel/(6697:6697): Value recibido: Chocotorta
+
+[INFO] 17:05:35:20 Kernel/(6697:6697): SELECT
+Nombre tabla: BEBIDAS
+Valor KEY   : 10
+[INFO] 17:05:35:20 Kernel/(6697:6697): SELECT ENVIADO
+[INFO] 17:05:35:60 Kernel/(6697:6697): Value recibido: Pepsi
+
+[INFO] 17:05:35:60 Kernel/(6697:6697): SELECT
+Nombre tabla: POSTRES
+Valor KEY   : 8927
+[INFO] 17:05:35:60 Kernel/(6697:6697): SELECT ENVIADO
+[INFO] 17:05:35:101 Kernel/(6697:6697): Value recibido: Key no encontrada
+
+[INFO] 17:05:35:101 Kernel/(6697:6697): SELECT
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 271
+[INFO] 17:05:35:101 Kernel/(6697:6697): SELECT ENVIADO
+[INFO] 17:05:35:141 Kernel/(6697:6697): Value recibido: Milanesa
+
+[INFO] 17:05:54:85 Kernel/(6697:6697): CREATE
+Nombre tabla: MARINOS
+Consistencia   : SC
+Particiones       : 1
+Tiempo de Compactacion       : 10000
+[INFO] 17:05:54:85 Kernel/(6697:6697): CREATE ENVIADO
+
+[INFO] 17:05:54:85 Kernel/(6697:6697): DESCRIBE ALL
+
+[INFO] 17:05:54:124 Kernel/(6697:6697): DESCRIBE MARINOS 
+
+[INFO] 17:05:54:205 Kernel/(6697:6697): INSERT
+Nombre tabla: MARINOS
+Valor KEY   : 983
+Value       : Ballena
+[INFO] 17:05:54:205 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:54:205 Kernel/(6697:6697): CREATE
+Nombre tabla: AVES
+Consistencia   : SC
+Particiones       : 5
+Tiempo de Compactacion       : 50000
+[INFO] 17:05:54:205 Kernel/(6697:6697): CREATE ENVIADO
+
+[INFO] 17:05:54:205 Kernel/(6697:6697): DESCRIBE ALL
+
+[INFO] 17:05:54:285 Kernel/(6697:6697): CREATE
+Nombre tabla: MAMIFEROS
+Consistencia   : SC
+Particiones       : 3
+Tiempo de Compactacion       : 60000
+[INFO] 17:05:54:285 Kernel/(6697:6697): CREATE ENVIADO
+
+[INFO] 17:05:54:285 Kernel/(6697:6697): DESCRIBE ALL
+
+[INFO] 17:05:54:364 Kernel/(6697:6697): DESCRIBE AVES 
+
+[INFO] 17:05:54:444 Kernel/(6697:6697): INSERT
+Nombre tabla: MARINOS
+Valor KEY   : 33
+Value       : Pulpo
+[INFO] 17:05:54:444 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:54:444 Kernel/(6697:6697): INSERT
+Nombre tabla: AVES
+Valor KEY   : 11
+Value       : Paloma
+[INFO] 17:05:54:444 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:54:444 Kernel/(6697:6697): INSERT
+Nombre tabla: MAMIFEROS
+Valor KEY   : 2222
+Value       : Gato
+[INFO] 17:05:54:444 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:54:444 Kernel/(6697:6697): INSERT
+Nombre tabla: MAMIFEROS
+Valor KEY   : 239
+Value       : Perro
+[INFO] 17:05:54:444 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:54:444 Kernel/(6697:6697): INSERT
+Nombre tabla: MARINOS
+Valor KEY   : 22
+Value       : Delfin
+[INFO] 17:05:54:444 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:54:444 Kernel/(6697:6697): INSERT
+Nombre tabla: AVES
+Valor KEY   : 11
+Value       : Halcon
+[INFO] 17:05:54:445 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:54:445 Kernel/(6697:6697): SELECT
+Nombre tabla: AVES
+Valor KEY   : 11
+[INFO] 17:05:54:445 Kernel/(6697:6697): SELECT ENVIADO
+[INFO] 17:05:54:485 Kernel/(6697:6697): Value recibido: Paloma
+
+[INFO] 17:05:54:485 Kernel/(6697:6697): INSERT
+Nombre tabla: MARINOS
+Valor KEY   : 983
+Value       : Orca
+[INFO] 17:05:54:486 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:54:486 Kernel/(6697:6697): DESCRIBE AVES 
+
+[INFO] 17:05:54:564 Kernel/(6697:6697): INSERT
+Nombre tabla: MARINOS
+Valor KEY   : 310
+Value       : Calamar
+[INFO] 17:05:54:564 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:54:565 Kernel/(6697:6697): INSERT
+Nombre tabla: AVES
+Valor KEY   : 1102
+Value       : Buho
+[INFO] 17:05:54:565 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:54:565 Kernel/(6697:6697): SELECT
+Nombre tabla: MARINOS
+Valor KEY   : 310
+[INFO] 17:05:54:565 Kernel/(6697:6697): SELECT ENVIADO
+[INFO] 17:05:54:605 Kernel/(6697:6697): Value recibido: Key no encontrada
+
+[INFO] 17:05:54:605 Kernel/(6697:6697): INSERT
+Nombre tabla: AVES
+Valor KEY   : 333
+Value       : Colibri
+[INFO] 17:05:54:605 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:54:605 Kernel/(6697:6697): INSERT
+Nombre tabla: MAMIFEROS
+Valor KEY   : 2222
+Value       : Elefante
+[INFO] 17:05:54:605 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:54:605 Kernel/(6697:6697): INSERT
+Nombre tabla: MAMIFEROS
+Valor KEY   : 349
+Value       : Jirafa
+[INFO] 17:05:54:605 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:54:605 Kernel/(6697:6697): INSERT
+Nombre tabla: MARINOS
+Valor KEY   : 983
+Value       : Pez globo
+[INFO] 17:05:54:605 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:54:605 Kernel/(6697:6697): INSERT
+Nombre tabla: AVES
+Valor KEY   : 6262
+Value       : Loro
+[INFO] 17:05:54:606 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:54:606 Kernel/(6697:6697): INSERT
+Nombre tabla: AVES
+Valor KEY   : 888
+Value       : Pelicano
+[INFO] 17:05:54:606 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:54:606 Kernel/(6697:6697): DESCRIBE MAMIFEROS 
+
+[INFO] 17:05:54:685 Kernel/(6697:6697): INSERT
+Nombre tabla: MAMIFEROS
+Valor KEY   : 349
+Value       : Cebra
+[INFO] 17:05:54:685 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:54:685 Kernel/(6697:6697): INSERT
+Nombre tabla: MAMIFEROS
+Valor KEY   : 721
+Value       : Caballo
+[INFO] 17:05:54:685 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:54:685 Kernel/(6697:6697): INSERT
+Nombre tabla: AVES
+Valor KEY   : 11
+Value       : Pinguino
+[INFO] 17:05:54:685 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:54:685 Kernel/(6697:6697): INSERT
+Nombre tabla: MAMIFEROS
+Valor KEY   : 721
+Value       : Oveja
+[INFO] 17:05:54:685 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:54:686 Kernel/(6697:6697): SELECT
+Nombre tabla: MARINOS
+Valor KEY   : 983
+[INFO] 17:05:54:686 Kernel/(6697:6697): SELECT ENVIADO
+[INFO] 17:05:54:725 Kernel/(6697:6697): Value recibido: Ballena
+
+[INFO] 17:05:54:725 Kernel/(6697:6697): DESCRIBE MAMIFEROS 
+
+[INFO] 17:05:54:804 Kernel/(6697:6697): INSERT
+Nombre tabla: MARINOS
+Valor KEY   : 983
+Value       : Tiburon
+[INFO] 17:05:54:804 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:54:804 Kernel/(6697:6697): INSERT
+Nombre tabla: MARINOS
+Valor KEY   : 33
+Value       : Raya
+[INFO] 17:05:54:804 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:54:804 Kernel/(6697:6697): SELECT
+Nombre tabla: AVES
+Valor KEY   : 11
+[INFO] 17:05:54:804 Kernel/(6697:6697): SELECT ENVIADO
+[INFO] 17:05:54:845 Kernel/(6697:6697): Value recibido: Paloma
+
+[INFO] 17:05:54:845 Kernel/(6697:6697): SELECT
+Nombre tabla: AVES
+Valor KEY   : 6262
+[INFO] 17:05:54:845 Kernel/(6697:6697): SELECT ENVIADO
+[INFO] 17:05:54:884 Kernel/(6697:6697): Value recibido: Loro
+
+[INFO] 17:05:54:884 Kernel/(6697:6697): INSERT
+Nombre tabla: MAMIFEROS
+Valor KEY   : 272
+Value       : Vaca
+[INFO] 17:05:54:884 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:54:884 Kernel/(6697:6697): SELECT
+Nombre tabla: MAMIFEROS
+Valor KEY   : 272
+[INFO] 17:05:54:885 Kernel/(6697:6697): SELECT ENVIADO
+[INFO] 17:05:54:924 Kernel/(6697:6697): Value recibido: Key no encontrada
+
+[INFO] 17:05:54:924 Kernel/(6697:6697): DESCRIBE MAMIFEROS 
+
+[INFO] 17:05:55:4 Kernel/(6697:6697): SELECT
+Nombre tabla: MARINOS
+Valor KEY   : 310
+[INFO] 17:05:55:4 Kernel/(6697:6697): SELECT ENVIADO
+[INFO] 17:05:55:49 Kernel/(6697:6697): Value recibido: Key no encontrada
+
+[INFO] 17:05:55:50 Kernel/(6697:6697): INSERT
+Nombre tabla: MARINOS
+Valor KEY   : 983
+Value       : Pez globo
+[INFO] 17:05:55:50 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:55:51 Kernel/(6697:6697): INSERT
+Nombre tabla: MAMIFEROS
+Valor KEY   : 209
+Value       : Hipopotamo
+[INFO] 17:05:55:51 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:55:51 Kernel/(6697:6697): INSERT
+Nombre tabla: MARINOS
+Valor KEY   : 3103
+Value       : Delfin
+[INFO] 17:05:55:51 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:55:51 Kernel/(6697:6697): INSERT
+Nombre tabla: MARINOS
+Valor KEY   : 3104
+Value       : Delfin
+[INFO] 17:05:55:51 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:55:51 Kernel/(6697:6697): INSERT
+Nombre tabla: MAMIFEROS
+Valor KEY   : 239
+Value       : Burro
+[INFO] 17:05:55:51 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:55:51 Kernel/(6697:6697): INSERT
+Nombre tabla: MAMIFEROS
+Valor KEY   : 21
+Value       : Caballo
+[INFO] 17:05:55:51 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:55:51 Kernel/(6697:6697): SELECT
+Nombre tabla: AVES
+Valor KEY   : 11
+[INFO] 17:05:55:51 Kernel/(6697:6697): SELECT ENVIADO
+[INFO] 17:05:55:90 Kernel/(6697:6697): Value recibido: Paloma
+
+[INFO] 17:05:55:90 Kernel/(6697:6697): SELECT
+Nombre tabla: MARINOS
+Valor KEY   : 3105
+[INFO] 17:05:55:91 Kernel/(6697:6697): SELECT ENVIADO
+[INFO] 17:05:55:128 Kernel/(6697:6697): Value recibido: Key no encontrada
+
+[INFO] 17:05:55:128 Kernel/(6697:6697): SELECT
+Nombre tabla: AVES
+Valor KEY   : 1102
+[INFO] 17:05:55:128 Kernel/(6697:6697): SELECT ENVIADO
+[INFO] 17:05:55:168 Kernel/(6697:6697): Value recibido: Buho
+
+[INFO] 17:05:55:168 Kernel/(6697:6697): DESCRIBE AVES 
+
+[INFO] 17:05:55:248 Kernel/(6697:6697): INSERT
+Nombre tabla: MARINOS
+Valor KEY   : 3105
+Value       : Delfin
+[INFO] 17:05:55:248 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:05:55:248 Kernel/(6697:6697): SELECT
+Nombre tabla: MARINOS
+Valor KEY   : 33
+[INFO] 17:05:55:248 Kernel/(6697:6697): SELECT ENVIADO
+[INFO] 17:05:55:288 Kernel/(6697:6697): Value recibido: Key no encontrada
+
+[INFO] 17:05:55:288 Kernel/(6697:6697): SELECT
+Nombre tabla: MAMIFEROS
+Valor KEY   : 239
+[INFO] 17:05:55:288 Kernel/(6697:6697): SELECT ENVIADO
+[INFO] 17:05:55:328 Kernel/(6697:6697): Value recibido: Perro
+
+[INFO] 17:05:55:328 Kernel/(6697:6697): SELECT
+Nombre tabla: MARINOS
+Valor KEY   : 3103
+[INFO] 17:05:55:329 Kernel/(6697:6697): SELECT ENVIADO
+[INFO] 17:05:55:368 Kernel/(6697:6697): Value recibido: Key no encontrada
+
+[ERROR] 17:05:55:369 Kernel/(6697:6697): ERROR NO SE INGRESO PARAMETRO NOMBRETABLA CORRECTAMENTE
+
+[INFO] 17:06:16:901 Kernel/(6697:6697): CREATE
+Nombre tabla: MARINOS
+Consistencia   : SC
+Particiones       : 1
+Tiempo de Compactacion       : 10000
+[INFO] 17:06:16:901 Kernel/(6697:6697): CREATE ENVIADO
+
+[INFO] 17:06:16:901 Kernel/(6697:6697): DESCRIBE ALL
+
+[INFO] 17:06:16:940 Kernel/(6697:6697): DESCRIBE MARINOS 
+
+[INFO] 17:06:17:20 Kernel/(6697:6697): INSERT
+Nombre tabla: MARINOS
+Valor KEY   : 983
+Value       : Ballena
+[INFO] 17:06:17:20 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:06:17:20 Kernel/(6697:6697): CREATE
+Nombre tabla: AVES
+Consistencia   : SC
+Particiones       : 5
+Tiempo de Compactacion       : 50000
+[INFO] 17:06:17:20 Kernel/(6697:6697): CREATE ENVIADO
+
+[INFO] 17:06:17:20 Kernel/(6697:6697): DESCRIBE ALL
+
+[INFO] 17:06:17:105 Kernel/(6697:6697): CREATE
+Nombre tabla: MAMIFEROS
+Consistencia   : SC
+Particiones       : 3
+Tiempo de Compactacion       : 60000
+[INFO] 17:06:17:105 Kernel/(6697:6697): CREATE ENVIADO
+
+[INFO] 17:06:17:105 Kernel/(6697:6697): DESCRIBE ALL
+
+[INFO] 17:06:17:184 Kernel/(6697:6697): DESCRIBE AVES 
+
+[INFO] 17:06:17:266 Kernel/(6697:6697): INSERT
+Nombre tabla: MARINOS
+Valor KEY   : 33
+Value       : Pulpo
+[INFO] 17:06:17:266 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:06:17:266 Kernel/(6697:6697): INSERT
+Nombre tabla: AVES
+Valor KEY   : 11
+Value       : Paloma
+[INFO] 17:06:17:266 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:06:17:266 Kernel/(6697:6697): INSERT
+Nombre tabla: MAMIFEROS
+Valor KEY   : 2222
+Value       : Gato
+[INFO] 17:06:17:266 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:06:17:266 Kernel/(6697:6697): INSERT
+Nombre tabla: MAMIFEROS
+Valor KEY   : 239
+Value       : Perro
+[INFO] 17:06:17:266 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:06:17:266 Kernel/(6697:6697): INSERT
+Nombre tabla: MARINOS
+Valor KEY   : 22
+Value       : Delfin
+[INFO] 17:06:17:266 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:06:17:266 Kernel/(6697:6697): INSERT
+Nombre tabla: AVES
+Valor KEY   : 11
+Value       : Halcon
+[INFO] 17:06:17:266 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:06:17:266 Kernel/(6697:6697): SELECT
+Nombre tabla: AVES
+Valor KEY   : 11
+[INFO] 17:06:17:266 Kernel/(6697:6697): SELECT ENVIADO
+[INFO] 17:06:17:305 Kernel/(6697:6697): Value recibido: Paloma
+
+[INFO] 17:06:17:305 Kernel/(6697:6697): INSERT
+Nombre tabla: MARINOS
+Valor KEY   : 983
+Value       : Orca
+[INFO] 17:06:17:305 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:06:17:306 Kernel/(6697:6697): DESCRIBE AVES 
+
+[INFO] 17:06:17:384 Kernel/(6697:6697): INSERT
+Nombre tabla: MARINOS
+Valor KEY   : 310
+Value       : Calamar
+[INFO] 17:06:17:384 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:06:17:384 Kernel/(6697:6697): INSERT
+Nombre tabla: AVES
+Valor KEY   : 1102
+Value       : Buho
+[INFO] 17:06:17:384 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:06:17:384 Kernel/(6697:6697): SELECT
+Nombre tabla: MARINOS
+Valor KEY   : 310
+[INFO] 17:06:17:384 Kernel/(6697:6697): SELECT ENVIADO
+[INFO] 17:06:17:424 Kernel/(6697:6697): Value recibido: Key no encontrada
+
+[INFO] 17:06:17:424 Kernel/(6697:6697): INSERT
+Nombre tabla: AVES
+Valor KEY   : 333
+Value       : Colibri
+[INFO] 17:06:17:424 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:06:17:424 Kernel/(6697:6697): INSERT
+Nombre tabla: MAMIFEROS
+Valor KEY   : 2222
+Value       : Elefante
+[INFO] 17:06:17:424 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:06:17:424 Kernel/(6697:6697): INSERT
+Nombre tabla: MAMIFEROS
+Valor KEY   : 349
+Value       : Jirafa
+[INFO] 17:06:17:424 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:06:17:424 Kernel/(6697:6697): INSERT
+Nombre tabla: MARINOS
+Valor KEY   : 983
+Value       : Pez globo
+[INFO] 17:06:17:425 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:06:17:425 Kernel/(6697:6697): INSERT
+Nombre tabla: AVES
+Valor KEY   : 6262
+Value       : Loro
+[INFO] 17:06:17:425 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:06:17:425 Kernel/(6697:6697): INSERT
+Nombre tabla: AVES
+Valor KEY   : 888
+Value       : Pelicano
+[INFO] 17:06:17:425 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:06:17:425 Kernel/(6697:6697): DESCRIBE MAMIFEROS 
+
+[INFO] 17:06:17:504 Kernel/(6697:6697): INSERT
+Nombre tabla: MAMIFEROS
+Valor KEY   : 349
+Value       : Cebra
+[INFO] 17:06:17:504 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:06:17:505 Kernel/(6697:6697): INSERT
+Nombre tabla: MAMIFEROS
+Valor KEY   : 721
+Value       : Caballo
+[INFO] 17:06:17:505 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:06:17:505 Kernel/(6697:6697): INSERT
+Nombre tabla: AVES
+Valor KEY   : 11
+Value       : Pinguino
+[INFO] 17:06:17:505 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:06:17:505 Kernel/(6697:6697): INSERT
+Nombre tabla: MAMIFEROS
+Valor KEY   : 721
+Value       : Oveja
+[INFO] 17:06:17:505 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:06:17:505 Kernel/(6697:6697): SELECT
+Nombre tabla: MARINOS
+Valor KEY   : 983
+[INFO] 17:06:17:505 Kernel/(6697:6697): SELECT ENVIADO
+[INFO] 17:06:17:544 Kernel/(6697:6697): Value recibido: Ballena
+
+[INFO] 17:06:17:544 Kernel/(6697:6697): DESCRIBE MAMIFEROS 
+
+[INFO] 17:06:17:625 Kernel/(6697:6697): INSERT
+Nombre tabla: MARINOS
+Valor KEY   : 983
+Value       : Tiburon
+[INFO] 17:06:17:625 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:06:17:625 Kernel/(6697:6697): INSERT
+Nombre tabla: MARINOS
+Valor KEY   : 33
+Value       : Raya
+[INFO] 17:06:17:625 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:06:17:625 Kernel/(6697:6697): SELECT
+Nombre tabla: AVES
+Valor KEY   : 11
+[INFO] 17:06:17:625 Kernel/(6697:6697): SELECT ENVIADO
+[INFO] 17:06:17:665 Kernel/(6697:6697): Value recibido: Paloma
+
+[INFO] 17:06:17:665 Kernel/(6697:6697): SELECT
+Nombre tabla: AVES
+Valor KEY   : 6262
+[INFO] 17:06:17:665 Kernel/(6697:6697): SELECT ENVIADO
+[INFO] 17:06:17:706 Kernel/(6697:6697): Value recibido: Loro
+
+[INFO] 17:06:17:706 Kernel/(6697:6697): INSERT
+Nombre tabla: MAMIFEROS
+Valor KEY   : 272
+Value       : Vaca
+[INFO] 17:06:17:706 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:06:17:706 Kernel/(6697:6697): SELECT
+Nombre tabla: MAMIFEROS
+Valor KEY   : 272
+[INFO] 17:06:17:706 Kernel/(6697:6697): SELECT ENVIADO
+[INFO] 17:06:17:744 Kernel/(6697:6697): Value recibido: Key no encontrada
+
+[INFO] 17:06:17:744 Kernel/(6697:6697): DESCRIBE MAMIFEROS 
+
+[INFO] 17:06:17:825 Kernel/(6697:6697): SELECT
+Nombre tabla: MARINOS
+Valor KEY   : 310
+[INFO] 17:06:17:825 Kernel/(6697:6697): SELECT ENVIADO
+[INFO] 17:06:17:864 Kernel/(6697:6697): Value recibido: Key no encontrada
+
+[INFO] 17:06:17:864 Kernel/(6697:6697): INSERT
+Nombre tabla: MARINOS
+Valor KEY   : 983
+Value       : Pez globo
+[INFO] 17:06:17:864 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:06:17:864 Kernel/(6697:6697): INSERT
+Nombre tabla: MAMIFEROS
+Valor KEY   : 209
+Value       : Hipopotamo
+[INFO] 17:06:17:864 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:06:17:864 Kernel/(6697:6697): INSERT
+Nombre tabla: MARINOS
+Valor KEY   : 3103
+Value       : Delfin
+[INFO] 17:06:17:865 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:06:17:865 Kernel/(6697:6697): INSERT
+Nombre tabla: MARINOS
+Valor KEY   : 3104
+Value       : Delfin
+[INFO] 17:06:17:865 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:06:17:865 Kernel/(6697:6697): INSERT
+Nombre tabla: MAMIFEROS
+Valor KEY   : 239
+Value       : Burro
+[INFO] 17:06:17:865 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:06:17:865 Kernel/(6697:6697): INSERT
+Nombre tabla: MAMIFEROS
+Valor KEY   : 21
+Value       : Caballo
+[INFO] 17:06:17:865 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:06:17:865 Kernel/(6697:6697): SELECT
+Nombre tabla: AVES
+Valor KEY   : 11
+[INFO] 17:06:17:865 Kernel/(6697:6697): SELECT ENVIADO
+[INFO] 17:06:17:905 Kernel/(6697:6697): Value recibido: Paloma
+
+[INFO] 17:06:17:905 Kernel/(6697:6697): SELECT
+Nombre tabla: MARINOS
+Valor KEY   : 3105
+[INFO] 17:06:17:905 Kernel/(6697:6697): SELECT ENVIADO
+[INFO] 17:06:17:944 Kernel/(6697:6697): Value recibido: Key no encontrada
+
+[INFO] 17:06:17:944 Kernel/(6697:6697): SELECT
+Nombre tabla: AVES
+Valor KEY   : 1102
+[INFO] 17:06:17:944 Kernel/(6697:6697): SELECT ENVIADO
+[INFO] 17:06:17:984 Kernel/(6697:6697): Value recibido: Buho
+
+[INFO] 17:06:17:984 Kernel/(6697:6697): DESCRIBE AVES 
+
+[INFO] 17:06:18:65 Kernel/(6697:6697): INSERT
+Nombre tabla: MARINOS
+Valor KEY   : 3105
+Value       : Delfin
+[INFO] 17:06:18:65 Kernel/(6697:6697): INSERT ENVIADO
+
+[INFO] 17:06:18:65 Kernel/(6697:6697): SELECT
+Nombre tabla: MARINOS
+Valor KEY   : 33
+[INFO] 17:06:18:65 Kernel/(6697:6697): SELECT ENVIADO
+[INFO] 17:06:18:104 Kernel/(6697:6697): Value recibido: Key no encontrada
+
+[INFO] 17:06:18:104 Kernel/(6697:6697): SELECT
+Nombre tabla: MAMIFEROS
+Valor KEY   : 239
+[INFO] 17:06:18:104 Kernel/(6697:6697): SELECT ENVIADO
+[INFO] 17:06:18:145 Kernel/(6697:6697): Value recibido: Perro
+
+[INFO] 17:06:18:145 Kernel/(6697:6697): SELECT
+Nombre tabla: MARINOS
+Valor KEY   : 3103
+[INFO] 17:06:18:145 Kernel/(6697:6697): SELECT ENVIADO
+[INFO] 17:06:18:184 Kernel/(6697:6697): Value recibido: Key no encontrada
+
+[ERROR] 17:06:18:184 Kernel/(6697:6697): ERROR NO SE INGRESO PARAMETRO NOMBRETABLA CORRECTAMENTE
+
+[INFO] 17:09:56:762 Kernel/(6723:6723): CONECTANDO CON MEMORY POOL
+[INFO] 17:09:56:762 Kernel/(6723:6723): DESCRIBE ALL
+
+[INFO] 17:10:05:166 Kernel/(6723:6723): CREATE
+Nombre tabla: MARINOS
+Consistencia   : SC
+Particiones       : 1
+Tiempo de Compactacion       : 10000
+[INFO] 17:10:05:167 Kernel/(6723:6723): CREATE ENVIADO
+
+[INFO] 17:10:05:167 Kernel/(6723:6723): DESCRIBE ALL
+
+[INFO] 17:10:05:206 Kernel/(6723:6723): DESCRIBE MARINOS 
+
+[INFO] 17:10:05:284 Kernel/(6723:6723): INSERT
+Nombre tabla: MARINOS
+Valor KEY   : 983
+Value       : Ballena
+[INFO] 17:10:05:284 Kernel/(6723:6723): INSERT ENVIADO
+
+[INFO] 17:10:05:284 Kernel/(6723:6723): CREATE
+Nombre tabla: AVES
+Consistencia   : SC
+Particiones       : 5
+Tiempo de Compactacion       : 50000
+[INFO] 17:10:05:284 Kernel/(6723:6723): CREATE ENVIADO
+
+[INFO] 17:10:05:284 Kernel/(6723:6723): DESCRIBE ALL
+
+[INFO] 17:10:05:365 Kernel/(6723:6723): CREATE
+Nombre tabla: MAMIFEROS
+Consistencia   : SC
+Particiones       : 3
+Tiempo de Compactacion       : 60000
+[INFO] 17:10:05:365 Kernel/(6723:6723): CREATE ENVIADO
+
+[INFO] 17:10:05:365 Kernel/(6723:6723): DESCRIBE ALL
+
+[INFO] 17:10:05:444 Kernel/(6723:6723): DESCRIBE AVES 
+
+[INFO] 17:10:05:525 Kernel/(6723:6723): INSERT
+Nombre tabla: MARINOS
+Valor KEY   : 33
+Value       : Pulpo
+[INFO] 17:10:05:525 Kernel/(6723:6723): INSERT ENVIADO
+
+[INFO] 17:10:05:525 Kernel/(6723:6723): INSERT
+Nombre tabla: AVES
+Valor KEY   : 11
+Value       : Paloma
+[INFO] 17:10:05:525 Kernel/(6723:6723): INSERT ENVIADO
+
+[INFO] 17:10:05:525 Kernel/(6723:6723): INSERT
+Nombre tabla: MAMIFEROS
+Valor KEY   : 2222
+Value       : Gato
+[INFO] 17:10:05:525 Kernel/(6723:6723): INSERT ENVIADO
+
+[INFO] 17:10:05:525 Kernel/(6723:6723): INSERT
+Nombre tabla: MAMIFEROS
+Valor KEY   : 239
+Value       : Perro
+[INFO] 17:10:05:525 Kernel/(6723:6723): INSERT ENVIADO
+
+[INFO] 17:10:05:525 Kernel/(6723:6723): INSERT
+Nombre tabla: MARINOS
+Valor KEY   : 22
+Value       : Delfin
+[INFO] 17:10:05:525 Kernel/(6723:6723): INSERT ENVIADO
+
+[INFO] 17:10:05:525 Kernel/(6723:6723): INSERT
+Nombre tabla: AVES
+Valor KEY   : 11
+Value       : Halcon
+[INFO] 17:10:05:525 Kernel/(6723:6723): INSERT ENVIADO
+
+[INFO] 17:10:05:525 Kernel/(6723:6723): SELECT
+Nombre tabla: AVES
+Valor KEY   : 11
+[INFO] 17:10:05:525 Kernel/(6723:6723): SELECT ENVIADO
+[INFO] 17:10:05:564 Kernel/(6723:6723): Value recibido: Paloma
+
+[INFO] 17:10:05:564 Kernel/(6723:6723): INSERT
+Nombre tabla: MARINOS
+Valor KEY   : 983
+Value       : Orca
+[INFO] 17:10:05:564 Kernel/(6723:6723): INSERT ENVIADO
+
+[INFO] 17:10:05:564 Kernel/(6723:6723): DESCRIBE AVES 
+
+[INFO] 17:10:05:645 Kernel/(6723:6723): INSERT
+Nombre tabla: MARINOS
+Valor KEY   : 310
+Value       : Calamar
+[INFO] 17:10:05:645 Kernel/(6723:6723): INSERT ENVIADO
+
+[INFO] 17:10:05:645 Kernel/(6723:6723): INSERT
+Nombre tabla: AVES
+Valor KEY   : 1102
+Value       : Buho
+[INFO] 17:10:05:645 Kernel/(6723:6723): INSERT ENVIADO
+
+[INFO] 17:10:05:645 Kernel/(6723:6723): SELECT
+Nombre tabla: MARINOS
+Valor KEY   : 310
+[INFO] 17:10:05:645 Kernel/(6723:6723): SELECT ENVIADO
+[INFO] 17:10:05:685 Kernel/(6723:6723): Value recibido: Key no encontrada
+
+[INFO] 17:10:05:685 Kernel/(6723:6723): INSERT
+Nombre tabla: AVES
+Valor KEY   : 333
+Value       : Colibri
+[INFO] 17:10:05:685 Kernel/(6723:6723): INSERT ENVIADO
+
+[INFO] 17:10:05:685 Kernel/(6723:6723): INSERT
+Nombre tabla: MAMIFEROS
+Valor KEY   : 2222
+Value       : Elefante
+[INFO] 17:10:05:685 Kernel/(6723:6723): INSERT ENVIADO
+
+[INFO] 17:10:05:685 Kernel/(6723:6723): INSERT
+Nombre tabla: MAMIFEROS
+Valor KEY   : 349
+Value       : Jirafa
+[INFO] 17:10:05:685 Kernel/(6723:6723): INSERT ENVIADO
+
+[INFO] 17:10:05:685 Kernel/(6723:6723): INSERT
+Nombre tabla: MARINOS
+Valor KEY   : 983
+Value       : Pez globo
+[INFO] 17:10:05:685 Kernel/(6723:6723): INSERT ENVIADO
+
+[INFO] 17:10:05:685 Kernel/(6723:6723): INSERT
+Nombre tabla: AVES
+Valor KEY   : 6262
+Value       : Loro
+[INFO] 17:10:05:685 Kernel/(6723:6723): INSERT ENVIADO
+
+[INFO] 17:10:05:685 Kernel/(6723:6723): INSERT
+Nombre tabla: AVES
+Valor KEY   : 888
+Value       : Pelicano
+[INFO] 17:10:05:685 Kernel/(6723:6723): INSERT ENVIADO
+
+[INFO] 17:10:05:685 Kernel/(6723:6723): DESCRIBE MAMIFEROS 
+
+[INFO] 17:10:05:765 Kernel/(6723:6723): INSERT
+Nombre tabla: MAMIFEROS
+Valor KEY   : 349
+Value       : Cebra
+[INFO] 17:10:05:765 Kernel/(6723:6723): INSERT ENVIADO
+
+[INFO] 17:10:05:765 Kernel/(6723:6723): INSERT
+Nombre tabla: MAMIFEROS
+Valor KEY   : 721
+Value       : Caballo
+[INFO] 17:10:05:765 Kernel/(6723:6723): INSERT ENVIADO
+
+[INFO] 17:10:05:765 Kernel/(6723:6723): INSERT
+Nombre tabla: AVES
+Valor KEY   : 11
+Value       : Pinguino
+[INFO] 17:10:05:765 Kernel/(6723:6723): INSERT ENVIADO
+
+[INFO] 17:10:05:765 Kernel/(6723:6723): INSERT
+Nombre tabla: MAMIFEROS
+Valor KEY   : 721
+Value       : Oveja
+[INFO] 17:10:05:765 Kernel/(6723:6723): INSERT ENVIADO
+
+[INFO] 17:10:05:765 Kernel/(6723:6723): SELECT
+Nombre tabla: MARINOS
+Valor KEY   : 983
+[INFO] 17:10:05:765 Kernel/(6723:6723): SELECT ENVIADO
+[INFO] 17:10:05:804 Kernel/(6723:6723): Value recibido: Ballena
+
+[INFO] 17:10:05:804 Kernel/(6723:6723): DESCRIBE MAMIFEROS 
+
+[INFO] 17:10:05:884 Kernel/(6723:6723): INSERT
+Nombre tabla: MARINOS
+Valor KEY   : 983
+Value       : Tiburon
+[INFO] 17:10:05:884 Kernel/(6723:6723): INSERT ENVIADO
+
+[INFO] 17:10:05:884 Kernel/(6723:6723): INSERT
+Nombre tabla: MARINOS
+Valor KEY   : 33
+Value       : Raya
+[INFO] 17:10:05:884 Kernel/(6723:6723): INSERT ENVIADO
+
+[INFO] 17:10:05:884 Kernel/(6723:6723): SELECT
+Nombre tabla: AVES
+Valor KEY   : 11
+[INFO] 17:10:05:884 Kernel/(6723:6723): SELECT ENVIADO
+[INFO] 17:10:05:924 Kernel/(6723:6723): Value recibido: Paloma
+
+[INFO] 17:10:05:924 Kernel/(6723:6723): SELECT
+Nombre tabla: AVES
+Valor KEY   : 6262
+[INFO] 17:10:05:925 Kernel/(6723:6723): SELECT ENVIADO
+[INFO] 17:10:05:964 Kernel/(6723:6723): Value recibido: Loro
+
+[INFO] 17:10:05:964 Kernel/(6723:6723): INSERT
+Nombre tabla: MAMIFEROS
+Valor KEY   : 272
+Value       : Vaca
+[INFO] 17:10:05:964 Kernel/(6723:6723): INSERT ENVIADO
+
+[INFO] 17:10:05:965 Kernel/(6723:6723): SELECT
+Nombre tabla: MAMIFEROS
+Valor KEY   : 272
+[INFO] 17:10:05:965 Kernel/(6723:6723): SELECT ENVIADO
+[INFO] 17:10:06:4 Kernel/(6723:6723): Value recibido: Key no encontrada
+
+[INFO] 17:10:06:5 Kernel/(6723:6723): DESCRIBE MAMIFEROS 
+
+[INFO] 17:10:06:85 Kernel/(6723:6723): SELECT
+Nombre tabla: MARINOS
+Valor KEY   : 310
+[INFO] 17:10:06:85 Kernel/(6723:6723): SELECT ENVIADO
+[INFO] 17:10:06:125 Kernel/(6723:6723): Value recibido: Key no encontrada
+
+[INFO] 17:10:06:125 Kernel/(6723:6723): INSERT
+Nombre tabla: MARINOS
+Valor KEY   : 983
+Value       : Pez globo
+[INFO] 17:10:06:125 Kernel/(6723:6723): INSERT ENVIADO
+
+[INFO] 17:10:06:125 Kernel/(6723:6723): INSERT
+Nombre tabla: MAMIFEROS
+Valor KEY   : 209
+Value       : Hipopotamo
+[INFO] 17:10:06:125 Kernel/(6723:6723): INSERT ENVIADO
+
+[INFO] 17:10:06:125 Kernel/(6723:6723): INSERT
+Nombre tabla: MARINOS
+Valor KEY   : 3103
+Value       : Delfin
+[INFO] 17:10:06:125 Kernel/(6723:6723): INSERT ENVIADO
+
+[INFO] 17:10:06:125 Kernel/(6723:6723): INSERT
+Nombre tabla: MARINOS
+Valor KEY   : 3104
+Value       : Delfin
+[INFO] 17:10:06:125 Kernel/(6723:6723): INSERT ENVIADO
+
+[INFO] 17:10:06:125 Kernel/(6723:6723): INSERT
+Nombre tabla: MAMIFEROS
+Valor KEY   : 239
+Value       : Burro
+[INFO] 17:10:06:125 Kernel/(6723:6723): INSERT ENVIADO
+
+[INFO] 17:10:06:125 Kernel/(6723:6723): INSERT
+Nombre tabla: MAMIFEROS
+Valor KEY   : 21
+Value       : Caballo
+[INFO] 17:10:06:125 Kernel/(6723:6723): INSERT ENVIADO
+
+[INFO] 17:10:06:125 Kernel/(6723:6723): SELECT
+Nombre tabla: AVES
+Valor KEY   : 11
+[INFO] 17:10:06:125 Kernel/(6723:6723): SELECT ENVIADO
+[INFO] 17:10:06:164 Kernel/(6723:6723): Value recibido: Paloma
+
+[INFO] 17:10:06:164 Kernel/(6723:6723): SELECT
+Nombre tabla: MARINOS
+Valor KEY   : 3105
+[INFO] 17:10:06:164 Kernel/(6723:6723): SELECT ENVIADO
+[INFO] 17:10:06:205 Kernel/(6723:6723): Value recibido: Key no encontrada
+
+[INFO] 17:10:06:205 Kernel/(6723:6723): SELECT
+Nombre tabla: AVES
+Valor KEY   : 1102
+[INFO] 17:10:06:205 Kernel/(6723:6723): SELECT ENVIADO
+[INFO] 17:10:06:244 Kernel/(6723:6723): Value recibido: Buho
+
+[INFO] 17:10:06:244 Kernel/(6723:6723): DESCRIBE AVES 
+
+[INFO] 17:10:06:324 Kernel/(6723:6723): INSERT
+Nombre tabla: MARINOS
+Valor KEY   : 3105
+Value       : Delfin
+[INFO] 17:10:06:324 Kernel/(6723:6723): INSERT ENVIADO
+
+[INFO] 17:10:06:324 Kernel/(6723:6723): SELECT
+Nombre tabla: MARINOS
+Valor KEY   : 33
+[INFO] 17:10:06:324 Kernel/(6723:6723): SELECT ENVIADO
+[INFO] 17:10:06:364 Kernel/(6723:6723): Value recibido: Key no encontrada
+
+[INFO] 17:10:06:364 Kernel/(6723:6723): SELECT
+Nombre tabla: MAMIFEROS
+Valor KEY   : 239
+[INFO] 17:10:06:365 Kernel/(6723:6723): SELECT ENVIADO
+[INFO] 17:10:06:404 Kernel/(6723:6723): Value recibido: Perro
+
+[INFO] 17:10:06:404 Kernel/(6723:6723): SELECT
+Nombre tabla: MARINOS
+Valor KEY   : 3103
+[INFO] 17:10:06:404 Kernel/(6723:6723): SELECT ENVIADO
+[INFO] 17:10:06:444 Kernel/(6723:6723): Value recibido: Key no encontrada
+
+[ERROR] 17:10:06:444 Kernel/(6723:6723): ERROR NO SE INGRESO PARAMETRO NOMBRETABLA CORRECTAMENTE
+
+[INFO] 17:10:19:944 Kernel/(6723:6723): SELECT
+Nombre tabla: MARINOS
+Valor KEY   : 3103
+[INFO] 17:10:19:944 Kernel/(6723:6723): SELECT ENVIADO
+[INFO] 17:10:19:984 Kernel/(6723:6723): Value recibido: Key no encontrada
+
+[INFO] 17:10:50:839 Kernel/(6733:6733): CONECTANDO CON MEMORY POOL
+[INFO] 17:10:50:839 Kernel/(6733:6733): DESCRIBE ALL
+
+[INFO] 17:12:14:742 Kernel/(6733:6733): CREATE
+Nombre tabla: MARINOS
+Consistencia   : SC
+Particiones       : 1
+Tiempo de Compactacion       : 10000
+[INFO] 17:12:14:743 Kernel/(6733:6733): CREATE ENVIADO
+
+[INFO] 17:12:14:743 Kernel/(6733:6733): DESCRIBE ALL
+
+[INFO] 17:12:14:781 Kernel/(6733:6733): DESCRIBE MARINOS 
+
+[INFO] 17:12:14:861 Kernel/(6733:6733): INSERT
+Nombre tabla: MARINOS
+Valor KEY   : 983
+Value       : Ballena
+[INFO] 17:12:14:861 Kernel/(6733:6733): INSERT ENVIADO
+
+[INFO] 17:12:14:861 Kernel/(6733:6733): CREATE
+Nombre tabla: AVES
+Consistencia   : SC
+Particiones       : 5
+Tiempo de Compactacion       : 50000
+[INFO] 17:12:14:861 Kernel/(6733:6733): CREATE ENVIADO
+
+[INFO] 17:12:14:861 Kernel/(6733:6733): DESCRIBE ALL
+
+[INFO] 17:12:14:940 Kernel/(6733:6733): CREATE
+Nombre tabla: MAMIFEROS
+Consistencia   : SC
+Particiones       : 3
+Tiempo de Compactacion       : 60000
+[INFO] 17:12:14:940 Kernel/(6733:6733): CREATE ENVIADO
+
+[INFO] 17:12:14:940 Kernel/(6733:6733): DESCRIBE ALL
+
+[INFO] 17:12:15:20 Kernel/(6733:6733): DESCRIBE AVES 
+
+[INFO] 17:12:15:100 Kernel/(6733:6733): INSERT
+Nombre tabla: MARINOS
+Valor KEY   : 33
+Value       : Pulpo
+[INFO] 17:12:15:100 Kernel/(6733:6733): INSERT ENVIADO
+
+[INFO] 17:12:15:100 Kernel/(6733:6733): INSERT
+Nombre tabla: AVES
+Valor KEY   : 11
+Value       : Paloma
+[INFO] 17:12:15:100 Kernel/(6733:6733): INSERT ENVIADO
+
+[INFO] 17:12:15:100 Kernel/(6733:6733): INSERT
+Nombre tabla: MAMIFEROS
+Valor KEY   : 2222
+Value       : Gato
+[INFO] 17:12:15:100 Kernel/(6733:6733): INSERT ENVIADO
+
+[INFO] 17:12:15:100 Kernel/(6733:6733): INSERT
+Nombre tabla: MAMIFEROS
+Valor KEY   : 239
+Value       : Perro
+[INFO] 17:12:15:101 Kernel/(6733:6733): INSERT ENVIADO
+
+[INFO] 17:12:15:101 Kernel/(6733:6733): INSERT
+Nombre tabla: MARINOS
+Valor KEY   : 22
+Value       : Delfin
+[INFO] 17:12:15:101 Kernel/(6733:6733): INSERT ENVIADO
+
+[INFO] 17:12:15:101 Kernel/(6733:6733): INSERT
+Nombre tabla: AVES
+Valor KEY   : 11
+Value       : Halcon
+[INFO] 17:12:15:101 Kernel/(6733:6733): INSERT ENVIADO
+
+[INFO] 17:12:15:101 Kernel/(6733:6733): SELECT
+Nombre tabla: AVES
+Valor KEY   : 11
+[INFO] 17:12:15:101 Kernel/(6733:6733): SELECT ENVIADO
+[INFO] 17:12:15:140 Kernel/(6733:6733): Value recibido: Paloma
+
+[INFO] 17:12:15:140 Kernel/(6733:6733): INSERT
+Nombre tabla: MARINOS
+Valor KEY   : 983
+Value       : Orca
+[INFO] 17:12:15:140 Kernel/(6733:6733): INSERT ENVIADO
+
+[INFO] 17:12:15:140 Kernel/(6733:6733): DESCRIBE AVES 
+
+[INFO] 17:12:15:220 Kernel/(6733:6733): INSERT
+Nombre tabla: MARINOS
+Valor KEY   : 310
+Value       : Calamar
+[INFO] 17:12:15:220 Kernel/(6733:6733): INSERT ENVIADO
+
+[INFO] 17:12:15:220 Kernel/(6733:6733): INSERT
+Nombre tabla: AVES
+Valor KEY   : 1102
+Value       : Buho
+[INFO] 17:12:15:221 Kernel/(6733:6733): INSERT ENVIADO
+
+[INFO] 17:12:15:221 Kernel/(6733:6733): SELECT
+Nombre tabla: MARINOS
+Valor KEY   : 310
+[INFO] 17:12:15:221 Kernel/(6733:6733): SELECT ENVIADO
+[INFO] 17:12:15:260 Kernel/(6733:6733): Value recibido: Key no encontrada
+
+[INFO] 17:12:15:260 Kernel/(6733:6733): INSERT
+Nombre tabla: AVES
+Valor KEY   : 333
+Value       : Colibri
+[INFO] 17:12:15:261 Kernel/(6733:6733): INSERT ENVIADO
+
+[INFO] 17:12:15:261 Kernel/(6733:6733): INSERT
+Nombre tabla: MAMIFEROS
+Valor KEY   : 2222
+Value       : Elefante
+[INFO] 17:12:15:261 Kernel/(6733:6733): INSERT ENVIADO
+
+[INFO] 17:12:15:261 Kernel/(6733:6733): INSERT
+Nombre tabla: MAMIFEROS
+Valor KEY   : 349
+Value       : Jirafa
+[INFO] 17:12:15:261 Kernel/(6733:6733): INSERT ENVIADO
+
+[INFO] 17:12:15:261 Kernel/(6733:6733): INSERT
+Nombre tabla: MARINOS
+Valor KEY   : 983
+Value       : Pez globo
+[INFO] 17:12:15:261 Kernel/(6733:6733): INSERT ENVIADO
+
+[INFO] 17:12:15:261 Kernel/(6733:6733): INSERT
+Nombre tabla: AVES
+Valor KEY   : 6262
+Value       : Loro
+[INFO] 17:12:15:261 Kernel/(6733:6733): INSERT ENVIADO
+
+[INFO] 17:12:15:261 Kernel/(6733:6733): INSERT
+Nombre tabla: AVES
+Valor KEY   : 888
+Value       : Pelicano
+[INFO] 17:12:15:261 Kernel/(6733:6733): INSERT ENVIADO
+
+[INFO] 17:12:15:261 Kernel/(6733:6733): DESCRIBE MAMIFEROS 
+
+[INFO] 17:12:15:341 Kernel/(6733:6733): INSERT
+Nombre tabla: MAMIFEROS
+Valor KEY   : 349
+Value       : Cebra
+[INFO] 17:12:15:341 Kernel/(6733:6733): INSERT ENVIADO
+
+[INFO] 17:12:15:341 Kernel/(6733:6733): INSERT
+Nombre tabla: MAMIFEROS
+Valor KEY   : 721
+Value       : Caballo
+[INFO] 17:12:15:341 Kernel/(6733:6733): INSERT ENVIADO
+
+[INFO] 17:12:15:341 Kernel/(6733:6733): INSERT
+Nombre tabla: AVES
+Valor KEY   : 11
+Value       : Pinguino
+[INFO] 17:12:15:341 Kernel/(6733:6733): INSERT ENVIADO
+
+[INFO] 17:12:15:341 Kernel/(6733:6733): INSERT
+Nombre tabla: MAMIFEROS
+Valor KEY   : 721
+Value       : Oveja
+[INFO] 17:12:15:341 Kernel/(6733:6733): INSERT ENVIADO
+
+[INFO] 17:12:15:341 Kernel/(6733:6733): SELECT
+Nombre tabla: MARINOS
+Valor KEY   : 983
+[INFO] 17:12:15:341 Kernel/(6733:6733): SELECT ENVIADO
+[INFO] 17:12:15:381 Kernel/(6733:6733): Value recibido: Ballena
+
+[INFO] 17:12:15:381 Kernel/(6733:6733): DESCRIBE MAMIFEROS 
+
+[INFO] 17:12:15:460 Kernel/(6733:6733): INSERT
+Nombre tabla: MARINOS
+Valor KEY   : 983
+Value       : Tiburon
+[INFO] 17:12:15:461 Kernel/(6733:6733): INSERT ENVIADO
+
+[INFO] 17:12:15:461 Kernel/(6733:6733): INSERT
+Nombre tabla: MARINOS
+Valor KEY   : 33
+Value       : Raya
+[INFO] 17:12:15:461 Kernel/(6733:6733): INSERT ENVIADO
+
+[INFO] 17:12:15:461 Kernel/(6733:6733): SELECT
+Nombre tabla: AVES
+Valor KEY   : 11
+[INFO] 17:12:15:461 Kernel/(6733:6733): SELECT ENVIADO
+[INFO] 17:12:15:501 Kernel/(6733:6733): Value recibido: Paloma
+
+[INFO] 17:12:15:501 Kernel/(6733:6733): SELECT
+Nombre tabla: AVES
+Valor KEY   : 6262
+[INFO] 17:12:15:501 Kernel/(6733:6733): SELECT ENVIADO
+[INFO] 17:12:15:540 Kernel/(6733:6733): Value recibido: Loro
+
+[INFO] 17:12:15:540 Kernel/(6733:6733): INSERT
+Nombre tabla: MAMIFEROS
+Valor KEY   : 272
+Value       : Vaca
+[INFO] 17:12:15:540 Kernel/(6733:6733): INSERT ENVIADO
+
+[INFO] 17:12:15:540 Kernel/(6733:6733): SELECT
+Nombre tabla: MAMIFEROS
+Valor KEY   : 272
+[INFO] 17:12:15:541 Kernel/(6733:6733): SELECT ENVIADO
+[INFO] 17:12:15:581 Kernel/(6733:6733): Value recibido: Key no encontrada
+
+[INFO] 17:12:15:581 Kernel/(6733:6733): DESCRIBE MAMIFEROS 
+
+[INFO] 17:12:15:660 Kernel/(6733:6733): SELECT
+Nombre tabla: MARINOS
+Valor KEY   : 310
+[INFO] 17:12:15:660 Kernel/(6733:6733): SELECT ENVIADO
+[INFO] 17:12:15:700 Kernel/(6733:6733): Value recibido: Key no encontrada
+
+[INFO] 17:12:15:700 Kernel/(6733:6733): INSERT
+Nombre tabla: MARINOS
+Valor KEY   : 983
+Value       : Pez globo
+[INFO] 17:12:15:700 Kernel/(6733:6733): INSERT ENVIADO
+
+[INFO] 17:12:15:700 Kernel/(6733:6733): INSERT
+Nombre tabla: MAMIFEROS
+Valor KEY   : 209
+Value       : Hipopotamo
+[INFO] 17:12:15:700 Kernel/(6733:6733): INSERT ENVIADO
+
+[INFO] 17:12:15:700 Kernel/(6733:6733): INSERT
+Nombre tabla: MARINOS
+Valor KEY   : 3103
+Value       : Delfin
+[INFO] 17:12:15:700 Kernel/(6733:6733): INSERT ENVIADO
+
+[INFO] 17:12:15:700 Kernel/(6733:6733): INSERT
+Nombre tabla: MARINOS
+Valor KEY   : 3104
+Value       : Delfin
+[INFO] 17:12:15:700 Kernel/(6733:6733): INSERT ENVIADO
+
+[INFO] 17:12:15:701 Kernel/(6733:6733): INSERT
+Nombre tabla: MAMIFEROS
+Valor KEY   : 239
+Value       : Burro
+[INFO] 17:12:15:701 Kernel/(6733:6733): INSERT ENVIADO
+
+[INFO] 17:12:15:701 Kernel/(6733:6733): INSERT
+Nombre tabla: MAMIFEROS
+Valor KEY   : 21
+Value       : Caballo
+[INFO] 17:12:15:701 Kernel/(6733:6733): INSERT ENVIADO
+
+[INFO] 17:12:15:701 Kernel/(6733:6733): SELECT
+Nombre tabla: AVES
+Valor KEY   : 11
+[INFO] 17:12:15:701 Kernel/(6733:6733): SELECT ENVIADO
+[INFO] 17:12:15:741 Kernel/(6733:6733): Value recibido: Paloma
+
+[INFO] 17:12:15:742 Kernel/(6733:6733): SELECT
+Nombre tabla: MARINOS
+Valor KEY   : 3105
+[INFO] 17:12:15:742 Kernel/(6733:6733): SELECT ENVIADO
+[INFO] 17:12:15:783 Kernel/(6733:6733): Value recibido: Key no encontrada
+
+[INFO] 17:12:15:783 Kernel/(6733:6733): SELECT
+Nombre tabla: AVES
+Valor KEY   : 1102
+[INFO] 17:12:15:783 Kernel/(6733:6733): SELECT ENVIADO
+[INFO] 17:12:15:820 Kernel/(6733:6733): Value recibido: Buho
+
+[INFO] 17:12:15:820 Kernel/(6733:6733): DESCRIBE AVES 
+
+[INFO] 17:12:15:900 Kernel/(6733:6733): INSERT
+Nombre tabla: MARINOS
+Valor KEY   : 3105
+Value       : Delfin
+[INFO] 17:12:15:900 Kernel/(6733:6733): INSERT ENVIADO
+
+[INFO] 17:12:15:900 Kernel/(6733:6733): SELECT
+Nombre tabla: MARINOS
+Valor KEY   : 33
+[INFO] 17:12:15:900 Kernel/(6733:6733): SELECT ENVIADO
+[INFO] 17:12:15:941 Kernel/(6733:6733): Value recibido: Key no encontrada
+
+[INFO] 17:12:15:941 Kernel/(6733:6733): SELECT
+Nombre tabla: MAMIFEROS
+Valor KEY   : 239
+[INFO] 17:12:15:941 Kernel/(6733:6733): SELECT ENVIADO
+[INFO] 17:12:15:980 Kernel/(6733:6733): Value recibido: Perro
+
+[INFO] 17:12:15:980 Kernel/(6733:6733): SELECT
+Nombre tabla: MARINOS
+Valor KEY   : 3103
+[INFO] 17:12:15:980 Kernel/(6733:6733): SELECT ENVIADO
+[INFO] 17:12:16:20 Kernel/(6733:6733): Value recibido: Key no encontrada
+
