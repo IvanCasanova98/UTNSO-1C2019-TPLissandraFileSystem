@@ -31,6 +31,9 @@ void ingresar_paquete(int conexion,t_config* config){ //RECIBIR LOGGER
 
 
 				char* nombre_tabla = paquete_create->nombre_tabla;
+
+
+
 				describe(conexion,nombre_tabla);
 
 
@@ -40,7 +43,7 @@ void ingresar_paquete(int conexion,t_config* config){ //RECIBIR LOGGER
 				break;
 
 			case 2:;
-
+				parametros= strtok(NULL, " ");
 				describe(conexion,parametros);
 				break;
 
@@ -296,7 +299,6 @@ t_paquete_create* create(char* parametros)
 }
 
 void describe(int conexion, char* parametros){
-	parametros= strtok(NULL, " ");
 	int cod_ingresado = 2;
 	send(conexion, &cod_ingresado, sizeof(int), 0);
 

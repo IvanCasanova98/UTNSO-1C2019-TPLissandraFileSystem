@@ -46,9 +46,9 @@ void seleccionar_paquete(char* lineaRequest, int conexion, t_config* config){
 
 		case 2:;
 
+			parametros= strtok(NULL, " ");
 			describe(conexion,parametros);
 			break;
-
 		case 3:;
 
 			t_paquete_select* paquete_select = selectf(parametros);
