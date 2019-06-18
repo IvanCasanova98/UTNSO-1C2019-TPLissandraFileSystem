@@ -75,7 +75,7 @@ t_paquete_select* paquete_select(char* parametros, t_log* logger);
 t_paquete_insert* paquete_insert(char* parametros, t_log* logger);
 long long get_timestamp(char* parametros);
 t_paquete_create* paquete_create(char* parametros, t_log* logger);
-
+void describe(int conexion, char* parametros);
 //---------------------LOGGEAR PAQUETE (funciones de utils.c)
 void loggear_paquete_select(t_paquete_select* paquete, t_log* logger);
 void loggear_paquete_insert(t_paquete_insert* paquete, t_log* logger);

@@ -60,9 +60,6 @@ void recibir_paquetes(int cliente_fd, int server_fd, t_config* config, t_log* lo
 				serializar_enviar_paquete_describe(cliente_fd, nodo_metadata);
 			}
 
-
-
-
 			break;
 		case SELECT:;
 			t_paquete_select *paquete_select = deserializar_paquete_select(cliente_fd);
@@ -92,7 +89,7 @@ void recibir_paquetes(int cliente_fd, int server_fd, t_config* config, t_log* lo
 			cliente_fd=0;
 			break;
 		default:
-			printf("operacion desconocidaaaaAAA");
+			printf("operacion desconocidaaaa");
 			break;
 		}
 	}

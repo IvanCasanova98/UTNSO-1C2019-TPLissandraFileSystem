@@ -20,6 +20,8 @@ struct parametros
 	t_log* logger;
 };
 
+//--------------------retardos
+void retardo_ejecucion(t_config* config);
 //----------------------------SERIALIZAR PAQUETES (envio.c)
 void* serializar_mensaje(char* value, int bytes);
 //---------------------------CALCULAR TAMAÑO DE CHAR**

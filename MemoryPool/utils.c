@@ -1,5 +1,13 @@
 #include "utils.h"
 
+//---------------------------RETARDO
+
+void retardo_ejecucion(t_config* config)
+{
+	int retardo_ejecucion = config_get_int_value(config, "SLEEP_EJECUCION");
+	sleep(retardo_ejecucion);
+}
+
 //---------------------------CALCULAR TAMAÑO DE CHAR**------------------
 int tamanio_array(char** array)
 {

@@ -10,6 +10,14 @@ t_config* leer_config() {
 	return config_create("Kernel.config");
 }
 
+//-----------------------------------------RETARDOS
+
+void retardo_ejecucion(t_config* config)
+{
+	int retardo_ejecucion = config_get_int_value(config, "SLEEP_EJECUCION");
+	sleep(retardo_ejecucion);
+}
+
 //-------------------------------------------------------
 int codigo_ingresado(char* parametros)
 {
@@ -46,3 +54,65 @@ int numero_random(int max)
 	int rnd = rand() % max;
 	return rnd;
 }
+
+//---------------------------------------------FUNCIONES PARA VALIDAR
+
+bool validar_numero(char* parametro){
+	for(int i=0;i<string_length(parametro);i++){
+		if(!isdigit(parametro[i])) return false;
+	}
+	return true;
+}
+void falta_tabla(){
+
+	t_log* logger=iniciar_logger();
+	log_error(logger, "ERROR NO SE INGRESO PARAMETRO NOMBRETABLA CORRECTAMENTE\n");
+	log_destroy(logger);
+}
+
+void falta_key(){
+
+	t_log* logger=iniciar_logger();
+	log_error(logger, "ERROR NO SE INGRESO PARAMETRO KEY CORRECTAMENTE\n");
+	log_destroy(logger);
+}
+
+void falta_value(){
+
+	t_log* logger=iniciar_logger();
+	log_error(logger, "ERROR NO SE INGRESO PARAMETRO VALUE CORRECTAMENTE\n");
+	log_destroy(logger);
+}
+
+
+void falta_consistencia(){
+
+	t_log* logger=iniciar_logger();
+	log_error(logger, "ERROR NO SE INGRESO PARAMETRO CONSISTENCIA CORRECTAMENTE\n");
+	log_destroy(logger);
+}
+
+void falta_particiones(){
+
+	t_log* logger=iniciar_logger();
+	log_error(logger, "ERROR NO SE INGRESO PARAMETRO PARTICIONES CORRECTAMENTE\n");
+	log_destroy(logger);
+}
+void falta_tiempo_compactacion(){
+
+	t_log* logger=iniciar_logger();
+	log_error(logger, "ERROR NO SE INGRESO PARAMETRO TIEMPO DE COMPACTACION CORRECTAMENTE\n");
+	log_destroy(logger);
+}
+
+void describe_invalido(){
+
+	t_log* logger=iniciar_logger();
+	log_error(logger, "ERROR NO SE INGRESO EL DESCRIBE CORRECTAMENTE\n");
+	log_destroy(logger);
+}
+
+
+
+
+

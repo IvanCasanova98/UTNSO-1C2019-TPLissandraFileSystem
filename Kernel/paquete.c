@@ -1,20 +1,27 @@
 #include "paquete.h"
 
+//FALTA SLEEPS, AGREGAR QUE SI TOCO ENTER NO ANDE, Y QUE ANDE DESCRIBE POST CREATE BIEN
+//HAGO INSERT Y ENTRA POR EL ELSE, NO EXISTE LA TABLA
+
 //------------------------------INGRESO DE PAQUETES------------------------------------
 
-void ingresar_paquete(int conexion){ //RECIBIR LOGGER
+void ingresar_paquete(int conexion,t_config* config){ //RECIBIR LOGGER
 
 	char* lineaRequest = ingresar_request();
-	char* parametros = strtok(lineaRequest, " ");
-	int cod_ingresado = codigo_ingresado(parametros);
 
+	string_to_upper(lineaRequest);
+	char* parametros = strtok(lineaRequest, " ");
+
+	int cod_ingresado = codigo_ingresado(parametros);
+	retardo_ejecucion(config);
 	while(1)
 	{
 		switch(cod_ingresado){
-
 			case 0:;
 
 				t_paquete_create* paquete_create = create(parametros);
+
+				if(paquete_create==NULL){break;}
 
 				if (send(conexion, &cod_ingresado, sizeof(int), 0) <= 0) puts("Error en envio de CODIGO DE OPERACION.");
 				else
@@ -22,37 +29,27 @@ void ingresar_paquete(int conexion){ //RECIBIR LOGGER
 					enviar_paquete_create(paquete_create,conexion);
 				}
 
+
+
+				char* nombre_tabla = paquete_create->nombre_tabla;
+				describe(conexion,nombre_tabla);
+
+
+
 				free(paquete_create);
 
 				break;
 
 			case 2:;
-				parametros= strtok(NULL, " ");
-				send(conexion, &cod_ingresado, sizeof(int), 0);
 
-				if (parametros==NULL)
-				{
-					int tamanio = strlen("ALL")+1;
-					char* buffer = "ALL";
-					send(conexion, &tamanio, sizeof(int), 0);
-					send(conexion, buffer, tamanio, 0);
-					logger_describe_all();
-				}
-				else
-				{
-					int tamanio = strlen(parametros)+1;
-					send(conexion, &tamanio, sizeof(int), 0);
-					send(conexion, parametros, tamanio, 0);
-					logger_describe_tabla(parametros);
-				}
-
-				deserealizar_metadata(conexion);
-
+				describe(conexion,parametros);
 				break;
 
 			case 3:;
 
 				t_paquete_select* paquete_select = selectf(parametros);
+
+				if(paquete_select==NULL){break;}
 
 				if (send(conexion, &cod_ingresado, sizeof(int), 0) <= 0) puts("Error en envio de CODIGO DE OPERACION.");
 				else
@@ -67,7 +64,10 @@ void ingresar_paquete(int conexion){ //RECIBIR LOGGER
 			case 4:;
 
 				t_paquete_insert* paquete_insert = insert(parametros);
-				if(existe_tabla(paquete_insert->nombre_tabla))
+
+				if(paquete_insert==NULL){break;}
+
+				if(existe_tabla(paquete_insert->nombre_tabla)) //HACER DESCRIBE CON CREATE
 				{
 					if (send(conexion, &cod_ingresado, sizeof(int), 0) <= 0) puts("Error en envio de CODIGO DE OPERACION.");
 					else{enviar_paquete_insert(paquete_insert, conexion);}
@@ -83,7 +83,7 @@ void ingresar_paquete(int conexion){ //RECIBIR LOGGER
 
 				break;
 			case 6:
-				funcion_LQL(parametros, conexion);
+				funcion_LQL(parametros, conexion,config);
 				break;
 			default:
 				printf("Operacion desconocida.\n\n");
@@ -91,9 +91,10 @@ void ingresar_paquete(int conexion){ //RECIBIR LOGGER
 			}
 
 		lineaRequest = ingresar_request();
+		string_to_upper(lineaRequest);
 		parametros = strtok(lineaRequest, " ");
 		cod_ingresado = codigo_ingresado(parametros);
-
+		retardo_ejecucion(config);
 	}
 
 }
@@ -109,7 +110,7 @@ char* ingresar_request()
 	  while(1) {
 		linea = readline(">");
 		if(linea)add_history(linea);
-	    return linea;
+		return linea;
 	    free(linea);
 	  }
 }
@@ -172,8 +173,18 @@ t_paquete_select* selectf(char* parametros){
 	char* nombre_tabla;
 
 	parametros= strtok(NULL, " ");
+	if(parametros==NULL)
+	{
+		falta_tabla();
+		return NULL;
+	}
 	nombre_tabla = parametros;
+
 	parametros = strtok(NULL, " ");
+	if(parametros==NULL || !validar_numero(parametros)){
+		falta_key();
+		return NULL;
+	}
 	valor_key = atoi(parametros);
 
 	t_paquete_select* paquete = crear_paquete_select(nombre_tabla, valor_key);
@@ -191,16 +202,33 @@ t_paquete_insert* insert(char* parametros){
 	long long timestamp=0;
 
 	parametros= strtok(NULL, " ");
+	if(parametros==NULL)
+	{
+		falta_tabla();
+		return NULL;
+	}
 	nombre_tabla = parametros;
+
 	parametros = strtok(NULL, " ");
+	if(parametros==NULL || !validar_numero(parametros))
+	{
+		falta_key();
+		return NULL;
+	}
 	valor_key = atoi(parametros);
+
 	parametros = strtok(NULL, "\"");
+	if(parametros==NULL) //falta verificar que value vaya si o si con comillas
+	{
+		falta_value();
+		return NULL;
+	}
 	value = parametros;
 	parametros = strtok(NULL, " ");
 	timestamp = get_timestamp(parametros);
 
-	t_paquete_insert* paquete = crear_paquete_insert(nombre_tabla, valor_key, value, timestamp);
 
+	t_paquete_insert* paquete = crear_paquete_insert(nombre_tabla, valor_key, value, timestamp);
 	loggear_paquete_insert(paquete);
 
 	return paquete;
@@ -210,7 +238,7 @@ long long get_timestamp(char* parametros){
 	long long valor;
 	if (parametros==NULL) {
 		struct timeval te;
-		gettimeofday(&te, NULL); // get current time
+		gettimeofday(&te, NULL);
 		valor = te.tv_sec*1000LL + te.tv_usec/1000;
 	} else {valor = atoll(parametros);}
 
@@ -225,12 +253,39 @@ t_paquete_create* create(char* parametros)
 	uint16_t tiempo_compactacion;
 
 	parametros= strtok(NULL, " ");
+	if(parametros==NULL)
+	{
+		falta_tabla();
+		return NULL;
+	}
 	nombre_tabla = parametros;
+
 	parametros = strtok(NULL, " ");
-	consistencia = parametros;
+	if(!strcmp(parametros,"SC") || !strcmp(parametros,"SHC") || !strcmp(parametros,"EC"))
+	{
+		consistencia = parametros;
+	}
+	else
+	{
+		falta_consistencia();
+		return NULL;
+	}
+
+
 	parametros = strtok(NULL, " ");
+	if(parametros==NULL || !validar_numero(parametros) || !strcmp(parametros,"0"))
+	{
+		falta_particiones();
+		return NULL;
+	}
 	particiones = atoi(parametros);
+
 	parametros = strtok(NULL, " ");
+	if(parametros==NULL || !validar_numero(parametros) || !strcmp(parametros,"0"))
+	{
+		falta_tiempo_compactacion();
+		return NULL;
+	}
 	tiempo_compactacion = atoi(parametros);
 
 	t_paquete_create* paquete = crear_paquete_create(nombre_tabla, consistencia, particiones, tiempo_compactacion);
@@ -239,7 +294,32 @@ t_paquete_create* create(char* parametros)
 
 	return paquete;
 }
-//----------------------------------------------------LOGGEO DE PAQUETES
+
+void describe(int conexion, char* parametros){
+	parametros= strtok(NULL, " ");
+	int cod_ingresado = 2;
+	send(conexion, &cod_ingresado, sizeof(int), 0);
+
+	if (parametros==NULL)
+	{
+		int tamanio = strlen("ALL")+1;
+		char* buffer = "ALL";
+		send(conexion, &tamanio, sizeof(int), 0);
+		send(conexion, buffer, tamanio, 0);
+		logger_describe_all();
+	}
+	else
+	{
+		int tamanio = strlen(parametros)+1;
+		send(conexion, &tamanio, sizeof(int), 0);
+		send(conexion, parametros, tamanio, 0);
+		logger_describe_tabla(parametros);
+	}
+
+	deserealizar_metadata(conexion);
+}
+
+//-------------------------LOGGERS
 
 void loggear_paquete_select(t_paquete_select* paquete){ //FALTA PASAR LOOGER
 
@@ -271,6 +351,14 @@ void logger_describe_tabla(char* nombre_tabla){
 	log_info(logger, "DESCRIBE %s \n", nombre_tabla);
     log_destroy(logger);
 }
+
+
+
+
+
+
+
+
 
 //----------------------------------------------------ELIMINAR PAQUETE
 

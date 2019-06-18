@@ -1,6 +1,6 @@
 #include "LQL.h"
 
-void funcion_LQL(char* path, int conexion){
+void funcion_LQL(char* path, int conexion, t_config* config){
 	path= strtok(NULL, " ");
 
 	FILE *archivo_LQL = fopen(path,"r");
@@ -8,18 +8,18 @@ void funcion_LQL(char* path, int conexion){
 	while(!feof(archivo_LQL)){
 		fscanf(archivo_LQL," %[^\n]",&lineaRequest);
 
-		seleccionar_paquete(lineaRequest, conexion);
+		seleccionar_paquete(lineaRequest, conexion, config);
 
 	}
 }
 
-void seleccionar_paquete(char* lineaRequest, int conexion){
+void seleccionar_paquete(char* lineaRequest, int conexion, t_config* config){
 
 	char* parametros = strtok(lineaRequest, " ");
 	int cod_ingresado = codigo_ingresado(parametros);
 
 	switch(cod_ingresado){
-
+		retardo_ejecucion(config);
 		case 0:;
 
 			t_paquete_create* paquete_create = create(parametros);
@@ -78,7 +78,7 @@ void seleccionar_paquete(char* lineaRequest, int conexion){
 
 			break;
 		case 9:
-			funcion_LQL(parametros, conexion);
+			funcion_LQL(parametros, conexion,config);
 			break;
 		default:
 			printf("Operacion desconocida.\n\n");

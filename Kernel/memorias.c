@@ -27,7 +27,7 @@ void deserealizar_metadata(int socket){
 		i++;
 	}
 
-	//dictionary_iterator(tabla_metadata,imprimir_diccionario);
+//	dictionary_iterator(tabla_metadata,imprimir_diccionario);
 
 }
 

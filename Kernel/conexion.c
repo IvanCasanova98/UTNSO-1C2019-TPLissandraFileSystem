@@ -29,6 +29,8 @@ int iniciar_conexion(t_log* logger, char* ip, char* puerto) //tiene que llegar l
 
 	int conexion = crear_conexion(ip,puerto);
 
+	describe(conexion,NULL);
+
 	return conexion;
 }
 

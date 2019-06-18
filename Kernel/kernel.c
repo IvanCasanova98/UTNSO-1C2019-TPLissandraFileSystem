@@ -23,7 +23,7 @@ int main(void){
 //	SEED memoria = elegir_memoria();
 //	conexion = iniciar_conexion(logger, memoria.IP, memoria.PUERTO);//conectar a la memoria elegida
 
-	ingresar_paquete(conexion);
+	ingresar_paquete(conexion,config);
 
 	terminar_kernel(logger,config,conexion);
 

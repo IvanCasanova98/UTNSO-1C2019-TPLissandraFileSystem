@@ -8,7 +8,7 @@
 
 #include "paquete.h"
 
-void funcion_LQL(char* path, int conexion);
-void seleccionar_paquete(char* lineaRequest, int conexion);
+void funcion_LQL(char* path, int conexion, t_config* config);
+void seleccionar_paquete(char* lineaRequest, int conexion, t_config* config);
 
 #endif /* LQL_H_ */

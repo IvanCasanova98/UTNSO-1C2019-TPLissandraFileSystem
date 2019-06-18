@@ -3,6 +3,8 @@
 
 #include <commons/log.h>
 #include <commons/config.h>
+#include <stdio.h>
+#include <unistd.h>
 
 typedef struct SEED
 {
@@ -18,5 +20,18 @@ t_config* leer_config(void);
 //--------------------------------------------------
 int codigo_ingresado(char* parametros);
 int numero_random(int max);
+//--------------------------------------------------
+void retardo_ejecucion(t_config* config);
+
+//---------------------------VALIDACIONES
+bool validarNumero(char* parametro);
+void falta_tabla();
+void falta_key();
+void falta_value();
+void falta_consistencia();
+void falta_particiones();
+void falta_tiempo_compactacion();
+void describe_invalido();
+
 
 #endif /* UTILS_H_ */

@@ -20,6 +20,8 @@
 #include"recibir.h"
 #include"criterio.h"
 #include "memorias.h"
+#include "utils.h"
+
 //---------------------ESTRUCTURA PAQUETES
 typedef struct
 {
@@ -77,7 +79,7 @@ void enviar_paquete_select(t_paquete_select* paquete, int socket_cliente);
 void enviar_paquete_insert(t_paquete_insert* paquete, int socket_cliente);
 
 //---------------------INGRESO DE PAQUETE
-void ingresar_paquete(int conexion);
+void ingresar_paquete(int conexion,t_config* config);
 
 //---------------------INGRESO DE PAQUETE(FUNC AUX)
 char* ingresar_request();
