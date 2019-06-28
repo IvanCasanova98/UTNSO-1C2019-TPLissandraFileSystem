@@ -71,7 +71,7 @@ t_pagina* buscar_pagina(char* nombre_tabla, uint16_t valor_key)
 
 	t_list* lista_paginas = list_filter(tabla_paginas, _tiene_key);//devuelve una nueva lista de paginas que tienen esta key. (falta elegir por timestamp)
 
-	t_pagina_completa* pagina_completa = list_get(lista_paginas,0);//en este caso devuelve el primero de la lista, pero debe elegir por timestamp.
+	t_pagina_completa* pagina_completa = pagina_mayor_timestamp(lista_paginas);//en este caso devuelve el primero de la lista, pero debe elegir por timestamp.
 
 	t_pagina* pagina = pagina_completa -> pagina;
 
@@ -178,6 +178,14 @@ t_pagina_completa* pagina_menor_timestamp(t_list* lista_paginas)
 	ordenar_lista(lista_paginas);
 	return list_get(lista_paginas, 0);
 }
+t_pagina_completa* pagina_mayor_timestamp(t_list* lista_paginas)
+{
+	ordenar_lista(lista_paginas);
+	int ultimo = list_size(lista_paginas);
+	ultimo --;
+	return list_get(lista_paginas, ultimo);
+}
+
 
 void reemplazar_pagina(char* nombre_tabla, t_pagina_completa* pagina_completa)
 {

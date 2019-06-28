@@ -23,7 +23,7 @@
 
 void agregar_datos(char* nombre_tabla, char* consistencia);
 bool existe_tabla(char* nombre_tabla);
-void startup();
+void startup_diccionario();
 void deserealizar_metadata(int socket);
 void imprimir_diccionario(char* nombre_tabla,char* consistencia);
 

@@ -8,8 +8,8 @@
 
 #include<sys/socket.h>
 
-#include<readline/readline.h>
-#include<readline/history.h>
+//#include<readline/readline.h>
+//#include<readline/history.h>
 
 #include<commons/log.h>
 #include<commons/string.h>
@@ -77,12 +77,6 @@ t_config* leer_config(void);
 //----------------------------ENVIAR PAQUETES
 void enviar_paquete_select(t_paquete_select* paquete, int socket_cliente);
 void enviar_paquete_insert(t_paquete_insert* paquete, int socket_cliente);
-
-//---------------------INGRESO DE PAQUETE
-void ingresar_paquete(int conexion,t_config* config);
-
-//---------------------INGRESO DE PAQUETE(FUNC AUX)
-char* ingresar_request();
 
 //---------------------CREAR PAQUETE
 t_paquete_select* crear_paquete_select(char *nombretabla,uint16_t valor_key);

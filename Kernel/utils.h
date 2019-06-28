@@ -14,6 +14,14 @@ typedef struct SEED
 
 SEED seed[];
 
+struct parametros
+{
+	int conexion;
+	char* parametros;
+	t_config* config;
+	t_log* logger;
+};
+
 //----------------------------ARCHIVOS LOGGER/CONFIG
 t_log* iniciar_logger(void);
 t_config* leer_config(void);

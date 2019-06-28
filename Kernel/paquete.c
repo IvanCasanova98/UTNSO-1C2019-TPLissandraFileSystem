@@ -3,121 +3,6 @@
 //FALTA SLEEPS, AGREGAR QUE SI TOCO ENTER NO ANDE, Y QUE ANDE DESCRIBE POST CREATE BIEN
 //HAGO INSERT Y ENTRA POR EL ELSE, NO EXISTE LA TABLA
 
-//------------------------------INGRESO DE PAQUETES------------------------------------
-
-void ingresar_paquete(int conexion,t_config* config){ //RECIBIR LOGGER
-
-	char* lineaRequest = ingresar_request();
-
-	char* parametros = strtok(lineaRequest, " ");
-	string_to_upper(parametros);
-	int cod_ingresado = codigo_ingresado(parametros);
-	retardo_ejecucion(config);
-	while(1)
-	{
-		switch(cod_ingresado){
-			case 0:;
-
-				t_paquete_create* paquete_create = create(parametros);
-
-				if(paquete_create==NULL){break;}
-
-				if (send(conexion, &cod_ingresado, sizeof(int), 0) <= 0) puts("Error en envio de CODIGO DE OPERACION.");
-				else
-				{
-					enviar_paquete_create(paquete_create,conexion);
-				}
-
-
-
-				char* nombre_tabla = paquete_create->nombre_tabla;
-
-
-
-				describe(conexion,nombre_tabla);
-
-
-
-				free(paquete_create);
-
-				break;
-
-			case 2:;
-				parametros= strtok(NULL, " ");
-				describe(conexion,parametros);
-				break;
-
-			case 3:;
-
-				t_paquete_select* paquete_select = selectf(parametros);
-
-				if(paquete_select==NULL){break;}
-
-				if (send(conexion, &cod_ingresado, sizeof(int), 0) <= 0) puts("Error en envio de CODIGO DE OPERACION.");
-				else
-				{
-					enviar_paquete_select(paquete_select, conexion);
-					recibir_mensaje(conexion);
-				}
-
-				free(paquete_select);
-				break;
-
-			case 4:;
-
-				t_paquete_insert* paquete_insert = insert(parametros);
-
-				if(paquete_insert==NULL){break;}
-
-				if(existe_tabla(paquete_insert->nombre_tabla)) //HACER DESCRIBE CON CREATE
-				{
-					if (send(conexion, &cod_ingresado, sizeof(int), 0) <= 0) puts("Error en envio de CODIGO DE OPERACION.");
-					else{enviar_paquete_insert(paquete_insert, conexion);}
-					free(paquete_insert);
-				}
-				else
-				{
-					t_log* logger = iniciar_logger();
-					log_error(logger, "Error: no existe la tabla\n");
-					log_destroy(logger);
-				}
-
-
-				break;
-			case 6:
-
-				funcion_LQL(parametros, conexion,config);
-				break;
-			default:
-				printf("Operacion desconocida.\n\n");
-				break;
-			}
-
-		lineaRequest = ingresar_request();
-		string_to_upper(lineaRequest);
-		parametros = strtok(lineaRequest, " ");
-		cod_ingresado = codigo_ingresado(parametros);
-		retardo_ejecucion(config);
-	}
-
-}
-
-char* ingresar_request()
-{
-	printf("\n\nCREATE    NOMBRETABLA CONSISTENCIA PARTICIONES T_COMPACTACION\nDROP\nDESCRIBE\nSELECT    NOMBRETABLA KEY\nINSERT    NOMBRETABLA KEY VALUE \nJOURNAL\nRUN    PATH\nADD\nEXIT\n");
-
-	printf("\nIngrese REQUEST ");
-
-	  char * linea;
-
-	  while(1) {
-		linea = readline(">");
-		if(linea)add_history(linea);
-		return linea;
-	    free(linea);
-	  }
-}
-
 //---------------------CREAR PAQUETES
 
 t_paquete_select* crear_paquete_select(char* nombre_tabla, uint16_t valor_key) //Agregado
@@ -130,13 +15,12 @@ t_paquete_select* crear_paquete_select(char* nombre_tabla, uint16_t valor_key) /
 	paquete->nombre_tabla_long= tamaniotabla;
 
 	return paquete;
+	free(paquete);
 
 }
 
 t_paquete_insert* crear_paquete_insert(char *nombre_tabla, uint16_t valor_key, char *value, long long timestamp) //Agregado
 {
-
-
 	uint32_t tamanio_tabla = strlen(nombre_tabla)+1;
 	uint32_t tamanio_value = strlen(value)+1;
 	t_paquete_insert* paquete = malloc(sizeof(long long) + sizeof(int)*2 + tamanio_tabla + tamanio_value + sizeof(uint16_t));
@@ -149,6 +33,7 @@ t_paquete_insert* crear_paquete_insert(char *nombre_tabla, uint16_t valor_key, c
 	paquete->value_long= tamanio_value;
 
 	return paquete;
+	free(paquete);
 }
 
 t_paquete_create* crear_paquete_create(char* nombre_tabla, char* consistencia, int particiones, int tiempo_compactacion) //Agregado
@@ -165,6 +50,7 @@ t_paquete_create* crear_paquete_create(char* nombre_tabla, char* consistencia, i
 	paquete->consistencia_long = tamanio_consistencia;
 
 	return paquete;
+	free(paquete);
 }
 
 //---------------------ARMAR PAQUETES
@@ -213,6 +99,7 @@ t_paquete_insert* insert(char* parametros){
 	nombre_tabla = parametros;
 
 	parametros = strtok(NULL, " ");
+//	printf("\nvalor key %s",parametros);
 	if(parametros==NULL || !validar_numero(parametros))
 	{
 		falta_key();
@@ -326,21 +213,24 @@ void describe(int conexion, char* parametros){
 void loggear_paquete_select(t_paquete_select* paquete){ //FALTA PASAR LOOGER
 
 	t_log* logger = iniciar_logger();
-	log_info(logger, "SELECT\nNombre tabla: %s\nValor KEY   : %d", paquete->nombre_tabla,paquete->valor_key);
-    log_destroy(logger);
+	//log_info(logger, "SELECT\nNombre tabla: %s\nValor KEY   : %d", paquete->nombre_tabla,paquete->valor_key);
+	log_info(logger, "SELECT  %s  %d", paquete->nombre_tabla,paquete->valor_key);
+
+	log_destroy(logger);
 }
 
 void loggear_paquete_insert(t_paquete_insert* paquete){
 
 	t_log* logger = iniciar_logger();
-	log_info(logger, "INSERT\nNombre tabla: %s\nValor KEY   : %d\nValue       : %s", paquete->nombre_tabla, paquete->valor_key, paquete->value);
-    log_destroy(logger);
+	//log_info(logger, "INSERT\nNombre tabla: %s\nValor KEY   : %d\nValue       : %s", paquete->nombre_tabla, paquete->valor_key, paquete->value);
+    log_info(logger,"INSERT  %s  %d  %s", paquete->nombre_tabla, paquete->valor_key, paquete->value);
+	log_destroy(logger);
 }
 
 void loggear_paquete_create(t_paquete_create* paquete)
 {
 	t_log* logger = iniciar_logger();
-	log_info(logger, "CREATE\nNombre tabla: %s\nConsistencia   : %s\nParticiones       : %d\nTiempo de Compactacion       : %d", paquete->nombre_tabla, paquete->consistencia, paquete->particiones, paquete->tiempo_compactacion);
+	log_info(logger, "CREATE %s %s %d %d", paquete->nombre_tabla, paquete->consistencia, paquete->particiones, paquete->tiempo_compactacion);
     log_destroy(logger);
 }
 void logger_describe_all(){

@@ -61,9 +61,9 @@ void recibir_seed(int socket_cliente)
 t_metadata* deserealizar_nodo(int socket){
 
 	int desplazamiento = 0;
-	int tamanio_total;
-	int nombre_tabla_long;
-	int consistencia_long;
+	int tamanio_total = 0;
+	int nombre_tabla_long = 0;
+	int consistencia_long = 0;
 
 	recv(socket, &tamanio_total, sizeof(int), MSG_WAITALL);
 
@@ -89,9 +89,8 @@ t_metadata* deserealizar_nodo(int socket){
 	memcpy(nodo_metadata->consistencia, buffer+desplazamiento,consistencia_long);
 	desplazamiento+=consistencia_long;
 
-
-
 	free(buffer);
 	return nodo_metadata;
+	free(nodo_metadata);
 
 }

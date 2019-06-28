@@ -72,6 +72,7 @@ t_list* paginas_sin_modificar(char* nombre_tabla);
 bool comparar_timestamp(t_pagina_completa* pagina1, t_pagina_completa* pagina2);
 void ordenar_lista(t_list* lista_paginas);
 t_pagina_completa* pagina_menor_timestamp(t_list* lista_paginas);
+t_pagina_completa* pagina_mayor_timestamp(t_list* lista_paginas);
 void reemplazar_pagina(char* nombre_tabla, t_pagina_completa* pagina_completa);
 
 

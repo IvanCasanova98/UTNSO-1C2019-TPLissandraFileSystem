@@ -2,9 +2,9 @@
 
 t_dictionary* tabla_metadata;
 
-void startup(){
+void startup_diccionario()
+{
 	tabla_metadata = dictionary_create();
-
 }
 
 void agregar_datos(char* nombre_tabla, char* consistencia){

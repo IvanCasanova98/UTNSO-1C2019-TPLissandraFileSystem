@@ -2,11 +2,13 @@
 
 //----------------------------ARCHIVOS LOGGER Y CONFIG
 
-t_log* iniciar_logger() {
-	return log_create("Kernel.log", "Kernel", 1, LOG_LEVEL_INFO);
+t_log* iniciar_logger()
+{
+	return log_create("Kernel.log", "Kernel", 0, LOG_LEVEL_INFO);
 }
 
-t_config* leer_config() {
+t_config* leer_config()
+{
 	return config_create("Kernel.config");
 }
 

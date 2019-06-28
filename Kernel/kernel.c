@@ -6,15 +6,19 @@
 
 int main(void){
 
-	startup();
+	startup_diccionario();
+	startup_cola_ready();
 
-	t_log* logger = iniciar_logger();
-	t_config* config = leer_config();
+	struct parametros parametro;
 
-	char* ip = config_get_string_value(config, "IP_MEMORIA");
-	char* puerto = config_get_string_value(config, "PUERTO_MEMORIA");
+	parametro.config = leer_config();
+	parametro.logger = iniciar_logger();
 
-	int conexion = iniciar_conexion(logger, ip, puerto);
+	char* ip = config_get_string_value(parametro.config, "IP_MEMORIA");
+	char* puerto = config_get_string_value(parametro.config, "PUERTO_MEMORIA");
+
+	int conexion = iniciar_conexion(parametro.logger, ip, puerto);
+	parametro.conexion = conexion;
 
 //	pedir_seed(conexion);
 //
@@ -23,9 +27,17 @@ int main(void){
 //	SEED memoria = elegir_memoria();
 //	conexion = iniciar_conexion(logger, memoria.IP, memoria.PUERTO);//conectar a la memoria elegida
 
-	ingresar_paquete(conexion,config);
+	pthread_t hilo_consola;
+	pthread_t hilo_planificador;
 
-	terminar_kernel(logger,config,conexion);
+	pthread_create(&hilo_consola, NULL, consola, NULL);
+	pthread_create(&hilo_planificador, NULL, planificador, (void *) &parametro);
+
+	pthread_join(hilo_consola,NULL);
+	pthread_join(hilo_planificador,NULL);
+
+
+	terminar_kernel(parametro.logger,parametro.config,conexion);
 
 	return 1;
 }
