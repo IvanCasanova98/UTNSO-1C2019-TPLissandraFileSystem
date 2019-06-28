@@ -303,14 +303,18 @@ void chekearDumpeo(){
 
 //			gettimeofday(&tiempoHastaDump,NULL);
 			while(1){
-			sleep(tiempoDump/1000);
-			if(!estaDump  && !(memTable==NULL)){
-				estaDump=1;
-				pthread_create(&dumpeo,NULL,dump,NULL);
-				pthread_join(dumpeo, (void**)NULL);
-				//gettimeofday(&tiempoHastaDump,NULL);
-				//deployMenu();
-			}
+
+				if((tiempoDump *1000)<1000000)
+					usleep(tiempoDump*1000);
+				else
+					sleep(tiempoDump/1000);
+					if(!estaDump  && !(memTable==NULL)){
+						estaDump=1;
+						pthread_create(&dumpeo,NULL,dump,NULL);
+						pthread_join(dumpeo, (void**)NULL);
+						//gettimeofday(&tiempoHastaDump,NULL);
+						//deployMenu();
+					}
 			}
 //			else{
 //			gettimeofday(&tiempoHastaDump,NULL);}

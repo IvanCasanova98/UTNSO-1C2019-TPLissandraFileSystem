@@ -38,6 +38,7 @@ void* prenderConsola(void* arg){
 				free(paquete_drop);
 				break;
 			case 2:;
+
 				t_paquete_describe* paquete_describe = LeerDescribe(parametros);
 				if(paquete_describe == NULL){
 
@@ -537,7 +538,7 @@ t_paquete_drop* crear_paquete_drop(char *nombre_tabla)
 t_paquete_describe* crear_paquete_describe(char *nombre_tabla)
 {
 	uint32_t tamanio_tabla= strlen(nombre_tabla)+1;
-	t_paquete_describe* paquete= malloc(tamanio_tabla + sizeof(int));
+	t_paquete_describe* paquete= malloc(tamanio_tabla + sizeof(int)+4);
 
 	paquete->nombre_tabla = nombre_tabla;
 	paquete->nombre_tabla_long = tamanio_tabla;

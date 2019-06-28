@@ -149,6 +149,7 @@ char* APIselect(t_paquete_select* paquete_select){ // bastante ml revisar
 
 
 t_dictionary* APIdescribe (t_paquete_describe* paquete_describe){
+
 	char nombreTablaMayuscula [strlen(paquete_describe->nombre_tabla)+1];
 	strcpy(nombreTablaMayuscula,paquete_describe->nombre_tabla);
 	string_to_upper(nombreTablaMayuscula);
@@ -158,7 +159,7 @@ t_dictionary* APIdescribe (t_paquete_describe* paquete_describe){
 		t_dictionary* metadataParticularSolicitada = dictionary_create();
 
 		dictionary_put(metadataParticularSolicitada,nombreTablaMayuscula,metadataDeTabla);
-		free(metadataDeTabla);
+//		free(metadataDeTabla);
 
 		logearDescribeTablaEnParticular(nombreTablaMayuscula);
 		return metadataParticularSolicitada;
@@ -184,12 +185,12 @@ t_dictionary* APIdescribeTodasLasTablas(){
 		free(directorioTablas);
 	    while ((dir = readdir(d)) != NULL) {
 	    	if (!string_contains(dir->d_name,".")){
-	    	char* nombreTabla = malloc(sizeof(dir->d_name)+1);
-	    	strcpy(nombreTabla,dir->d_name);
-	    	t_metadata* metadataDeTabla = obtenerMetadataTabla(nombreTabla);
+				char* nombreTabla = malloc(sizeof(dir->d_name)+1);
+				strcpy(nombreTabla,dir->d_name);
+				t_metadata* metadataDeTabla = obtenerMetadataTabla(nombreTabla);
 
-	    	dictionary_put(diccionarioDeTablas,nombreTabla,metadataDeTabla);
-	    	free(nombreTabla);
+				dictionary_put(diccionarioDeTablas,nombreTabla,metadataDeTabla);
+				free(nombreTabla);
 	    	}
 
 	    }

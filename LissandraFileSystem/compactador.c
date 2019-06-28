@@ -17,8 +17,10 @@ void* funcionCompactar(void* arg){
 	char * DirectorioTabla = DirectorioDeTabla(nombreTabla);
 	bool estaCompactando=0;
 	while(1){
-				sleep(TiempoCompactacion/1000);
-
+			if((TiempoCompactacion *1000)<1000000)
+					usleep(TiempoCompactacion*1000);
+				else
+					sleep(TiempoCompactacion/1000);
 				if(existe_temporal(DirectorioTabla)){
 					if(!estaCompactando){
 					estaCompactando=1;
@@ -27,7 +29,8 @@ void* funcionCompactar(void* arg){
 					estaCompactando=0;
 					}
 				}else{
-					pthread_cancel(compactador);
+					//pthread_cancel(compactador);
+					break;
 
 				}
 				}
