@@ -53,7 +53,7 @@ void* prenderConsola(void* arg){
 					t_dictionary* metadataDeTablaPedida = APIdescribe(paquete_describe);
 					if(metadataDeTablaPedida != NULL)
 						imprimirListaMetadatas(metadataDeTablaPedida);
-					dictionary_destroy(metadataDeTablaPedida);
+					dictionary_destroy_and_destroy_elements(metadataDeTablaPedida,free);
 //					free(metadataDeTablaPedida);
 
 				}
