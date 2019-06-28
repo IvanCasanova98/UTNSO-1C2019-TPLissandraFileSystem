@@ -119,6 +119,15 @@ void ActualizarBitmap(){
 
 }
 
+void crearMetadataDePuntoDeMontaje(){
+	char* directorioMetadata=DirectorioDeMetadata();
+	FILE *metadataBin;
+	metadataBin=fopen(directorioMetadata,"w");
+	fprintf(metadataBin,"BLOCK_SIZE=64\nBLOCKS=5096\nMAGIC_NUMBER=LISSANDRA");
+	free(directorioMetadata);
+	fclose(metadataBin);
+}
+
 //
 //int existeBitmap(){
 //

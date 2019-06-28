@@ -2,6 +2,7 @@
 
 
 t_dictionary* TablasCompactacion=NULL;
+t_dictionary* TablasSem=NULL;
 t_dictionary* memTable=NULL;
 t_bitarray* bitmap;
 bool estaDump =0;
@@ -9,7 +10,8 @@ int main(void)
 {
 
 	t_config* config = leer_config();
-	//crearArchivoBitmap();
+	crearMetadataDePuntoDeMontaje();
+//	crearArchivoBitmap();
 	crearBitMap();
 	pthread_t consola,dumpeo,dump,compactar;
 
