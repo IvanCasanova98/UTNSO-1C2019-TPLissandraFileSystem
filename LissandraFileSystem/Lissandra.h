@@ -19,7 +19,7 @@
 #include<time.h>
 #include <semaphore.h>
 
-void crearMetadataDePuntoDeMontaje();
+
 extern t_dictionary* TablasSem;
 extern t_dictionary* TablasCompactacion;
 extern t_dictionary* memTable;

@@ -29,7 +29,7 @@ void* funcionCompactar(void* arg){
 					estaCompactando=0;
 					}
 				}else{
-					//pthread_cancel(compactador);
+
 					break;
 
 				}
@@ -573,6 +573,7 @@ void levantarHilosTablasExistentesCompactacion(){
 	int i=0;
 	if (d != NULL)
 		TablasCompactacion=dictionary_create();
+		TablasSem=dictionary_create();
 	{
 
 		while ((dir = readdir(d)) != NULL)
@@ -580,15 +581,14 @@ void levantarHilosTablasExistentesCompactacion(){
 			if (!string_contains(dir->d_name,"."))
 			{
 
-//				if(TablasCompactacion==NULL){
-//					TablasCompactacion = dictionary_create();
-//				}
 
 				char* nombreTabla = malloc(sizeof(dir->d_name)+1);
-
+				sem_t semaforoTabla;
+				sem_init(&semaforoTabla,0,1);
 				strcpy(nombreTabla,dir->d_name);
 
 				dictionary_put(TablasCompactacion,nombreTabla,compactador[i]);
+				dictionary_put(TablasSem,nombreTabla,&semaforoTabla);
 				//printf("%d",i);
 
 				i++;
@@ -611,8 +611,8 @@ void* levantarHiloCompactacion(char* nombreTablaNueva,void* compactador){
 	pthread_t _compactador = (pthread_t) compactador;
 
 	pthread_create(&_compactador,NULL,funcionCompactar,(void*)nombreTablaNueva);
-
-
+	pthread_join(&_compactador,NULL);
+	//dictionary_remove(TablasCompactacion,nombreTablaNueva);
 
 }
 
@@ -642,15 +642,20 @@ int cantidadDeTablasExistentes(){
 
 void crearHiloCompactacion(char* nombreTabla){
 	pthread_t compactador;
+	sem_t semaforoTabla;
+	sem_init(&semaforoTabla,0,1);
+	int test;
+	sem_getvalue(&semaforoTabla,&test);
 	if(TablasCompactacion!=NULL){
 
 		levantarHiloCompactacion(nombreTabla,compactador);
 		dictionary_put(TablasCompactacion,nombreTabla,compactador);
-
+		dictionary_put(TablasSem,nombreTabla,&semaforoTabla);
+		printf("semaforo valor: %d",test);
 	}
 	else{
 		TablasCompactacion=dictionary_create();
-
+		TablasSem=dictionary_create();
 		levantarHiloCompactacion(nombreTabla,compactador);
 		dictionary_put(TablasCompactacion,nombreTabla,compactador);
 

@@ -1130,6 +1130,19 @@ void listarTablas(){ //0 ml
 	  }
 }
 
+
+void verificarSemaforoTabla(char* nombreTabla){
+	int valorSemaforo;
+	sem_getvalue(dictionary_get(TablasSem,nombreTabla),valorSemaforo);
+
+	if(valorSemaforo==0){
+		sem_wait(dictionary_get(TablasSem,nombreTabla));
+		sem_post(dictionary_get(TablasSem,nombreTabla));
+
+	}
+
+
+}
 //void notificarCambioRetardo(){
 //
 //	char buffer [2*sizeof(struct inotify_event )+24];
