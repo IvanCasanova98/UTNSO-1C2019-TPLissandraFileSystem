@@ -116,13 +116,15 @@ void deployMenu(){
 	printf("\n\nCREATE    NOMBRETABLA CONSISTENCIA PARTICIONES TIEMPO_COMPACTACION \nDROP      NOMBRETABLA\nDESCRIBE  NOMBRETABLA (OPCIONAL)\nSELECT    NOMBRETABLA KEY\nINSERT    NOMBRETABLA KEY \"VALUE\" TIMESTAMP (OPCIONAL) \n");
 	printf("\nIngrese REQUEST\n");
 
+
 //	bool _buscarSemaforo(void* elemento){
 //			return buscarSemaforo(elemento,"POPI");
 //		}
 //
 //		semaforoTabla* Tablasemaforo = list_find(ListaSem,_buscarSemaforo);
-//		int value1;
-//		int value2;
+//		int value1 = list_size(ListaSem);
+//		printf("%d",value1);
+		//int value2;
 //		sem_getvalue(&Tablasemaforo->semaforoTabla,&value1);
 //		sem_getvalue(&Tablasemaforo->semaforoCompactacion,&value2);
 //		printf("%s %d %d",Tablasemaforo->nombreTabla,value1,value2);
