@@ -6,11 +6,11 @@ void APIdrop(t_paquete_drop* paquete_drop){ //ml 20bytes
 
 	char nombreTablaMayuscula [strlen(paquete_drop->nombre_tabla)+1];
 	strcpy(nombreTablaMayuscula,paquete_drop->nombre_tabla);
-
+	string_to_upper(nombreTablaMayuscula);
 
 	if(existeTabla(nombreTablaMayuscula))
 	{
-
+		verificarSemaforoCompactacion(nombreTablaMayuscula);
 		RemoverDeLaMemtable(nombreTablaMayuscula); //0 ml
 		RemoverParticionesDeTablaYSusBloques(nombreTablaMayuscula); //0 ml
 		RemoverTemporalesDeTablaYSusBloques(nombreTablaMayuscula); //8 bytes ml
@@ -86,9 +86,12 @@ char* APIselect(t_paquete_select* paquete_select){ // bastante ml revisar
 
 	char* nombreTablaMayuscula=malloc(strlen(paquete_select->nombre_tabla)+1);
 	strcpy(nombreTablaMayuscula,paquete_select->nombre_tabla);
+
+
 	string_to_upper(nombreTablaMayuscula);
 
 		if(existeTabla(nombreTablaMayuscula)){
+			verificarSemaforoTabla(nombreTablaMayuscula);
 			t_metadata* metadataDeTabla=obtenerMetadataTabla(nombreTablaMayuscula);
 			int particionKey;
 			particionKey =	particionDeKey(paquete_select->valor_key,metadataDeTabla->particiones);
@@ -1133,16 +1136,39 @@ void listarTablas(){ //0 ml
 
 void verificarSemaforoTabla(char* nombreTabla){
 	int valorSemaforo;
-	sem_getvalue(dictionary_get(TablasSem,nombreTabla),valorSemaforo);
+	bool _buscarSemaforo(void* elemento){
+					return buscarSemaforo(elemento,nombreTabla);
+		}
+	semaforoTabla* Tablasemaforo = list_find(ListaSem,_buscarSemaforo);
+	sem_getvalue(&(Tablasemaforo->semaforoTabla),&valorSemaforo);
 
 	if(valorSemaforo==0){
-		sem_wait(dictionary_get(TablasSem,nombreTabla));
-		sem_post(dictionary_get(TablasSem,nombreTabla));
+		sem_wait(&(Tablasemaforo->semaforoTabla));
+		sem_post(&(Tablasemaforo->semaforoTabla));
 
 	}
 
 
 }
+
+void verificarSemaforoCompactacion(char* nombreTabla){
+	int valorSemaforo;
+	bool _buscarSemaforo(void* elemento){
+					return buscarSemaforo(elemento,nombreTabla);
+	}
+	semaforoTabla* Tablasemaforo = list_find(ListaSem,_buscarSemaforo);
+
+	sem_getvalue(&(Tablasemaforo->semaforoCompactacion),&valorSemaforo);
+
+	if(valorSemaforo==0){
+		sem_wait(&(Tablasemaforo->semaforoCompactacion));
+		sem_post(&(Tablasemaforo->semaforoCompactacion));
+
+	}
+
+
+}
+
 //void notificarCambioRetardo(){
 //
 //	char buffer [2*sizeof(struct inotify_event )+24];

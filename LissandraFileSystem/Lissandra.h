@@ -19,7 +19,7 @@
 #include<time.h>
 #include <semaphore.h>
 
-
+extern t_list* ListaSem;
 extern t_dictionary* TablasSem;
 extern t_dictionary* TablasCompactacion;
 extern t_dictionary* memTable;

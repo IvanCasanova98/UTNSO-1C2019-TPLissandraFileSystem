@@ -29,19 +29,28 @@ void* funcionCompactar(void* arg){
 					estaCompactando=0;
 					}
 				}else{
-
+					printf("cerrando hilo tabla");
+					bool _buscarSemaforo(void* elemento){
+								return buscarSemaforo(elemento,nombreTabla);
+					}
+					list_remove_and_destroy_by_condition(ListaSem,_buscarSemaforo,borrarSemaforo);
+					dictionary_remove(TablasCompactacion,nombreTabla);
 					break;
 
 				}
 				}
 	free(DirectorioTabla);
 	free(DireccionmetaDataTabla);
+	//free(nombreTabla);
 }
 
 
 void* compactar(void * arg){
 	char* nombreTabla= (char*) arg;
-
+	bool _buscarSemaforo(void* elemento){
+				return buscarSemaforo(elemento,nombreTabla);
+	}
+	semaforoTabla* Tablasemaforo = list_find(ListaSem,_buscarSemaforo);
 	char * DirectorioTabla = DirectorioDeTabla(nombreTabla);
 	char* primerTemporal = DirectorioDeTemporal(nombreTabla,1);
 	char* DireccionmetaDataTabla = DirectorioDeMetadataTabla(nombreTabla);
@@ -55,6 +64,7 @@ void* compactar(void * arg){
 
 	if(existe_temporal(primerTemporal))
 	{
+		sem_wait(&(Tablasemaforo->semaforoCompactacion));
 		//estaCompactando=1;
 		struct timeval tiempoAntesDeCompactar , tiempoDespuesDeCompactar;
 
@@ -85,6 +95,13 @@ void* compactar(void * arg){
 
 		gettimeofday(&tiempoAntesDeCompactar,NULL);
 		// ACA COMPACTA
+
+
+
+
+		printf("%s \n",Tablasemaforo->nombreTabla);
+		sem_wait(&(Tablasemaforo->semaforoTabla));
+		//dictionary_get(TablasSem,nombreTabla);
 		for(int i =0; i<NumeroParticiones;i++){
 			if(!list_is_empty(RegistrosACargar[i])){
 				char* TodosLosRegistrosActualizados= crearRegistroACargar(RegistrosACargar[i]);
@@ -101,6 +118,8 @@ void* compactar(void * arg){
 
 			}
 
+		sem_post(&(Tablasemaforo->semaforoTabla));
+
 			//free(TodosLosRegistrosActualizados);
 
 //			list_destroy(ListaRegistrosParticion);
@@ -115,6 +134,7 @@ void* compactar(void * arg){
 		gettimeofday(&tiempoDespuesDeCompactar,NULL);
 		int tiempoTranscurrido = ((double)(tiempoDespuesDeCompactar.tv_sec - tiempoAntesDeCompactar.tv_sec) + (double)(tiempoDespuesDeCompactar.tv_usec - tiempoAntesDeCompactar.tv_usec)/1000000)*1000;
 		LogCompactacionTerminada(nombreTabla,tiempoTranscurrido);
+		sem_post(&(Tablasemaforo->semaforoCompactacion));
 		//estaCompactando=0;
 	}
 
@@ -124,6 +144,11 @@ void* compactar(void * arg){
 	free(primerTemporal);
 	free(DirectorioTabla);
 }
+
+bool buscarSemaforo(void* elemento,char* nombreTabla){
+	return !strcmp((((semaforoTabla*) elemento)->nombreTabla),nombreTabla);
+}
+
 
 void cambiarNombreTmpATmpc(char* nombretabla){ // 9ml
 		t_config* config = config_create("Lissandra.config");
@@ -570,10 +595,12 @@ void levantarHilosTablasExistentesCompactacion(){
 	d = opendir(directorioTablas);
 	int TablasYaExistentes=cantidadDeTablasExistentes();
 	pthread_t compactador[TablasYaExistentes];
+	//pthread_mutex_t mutex[TablasYaExistentes];
+	//sem_t semaforoTabla[TablasYaExistentes];
 	int i=0;
 	if (d != NULL)
 		TablasCompactacion=dictionary_create();
-		TablasSem=dictionary_create();
+
 	{
 
 		while ((dir = readdir(d)) != NULL)
@@ -583,16 +610,18 @@ void levantarHilosTablasExistentesCompactacion(){
 
 
 				char* nombreTabla = malloc(sizeof(dir->d_name)+1);
-				sem_t semaforoTabla;
-				sem_init(&semaforoTabla,0,1);
+				//mutex[i] = PTHREAD_MUTEX_INITIALIZER;
+
+				//pthread_mutex_init(& mutex[i], NULL);
+
 				strcpy(nombreTabla,dir->d_name);
 
 				dictionary_put(TablasCompactacion,nombreTabla,compactador[i]);
-				dictionary_put(TablasSem,nombreTabla,&semaforoTabla);
+
 				//printf("%d",i);
 
 				i++;
-				free(nombreTabla);
+				//free(nombreTabla);
 				//pthread_join(compactador[i], (void**)NULL);
 			}
 			dictionary_iterator(TablasCompactacion,levantarHiloCompactacion);
@@ -609,9 +638,15 @@ void levantarHilosTablasExistentesCompactacion(){
 
 void* levantarHiloCompactacion(char* nombreTablaNueva,void* compactador){
 	pthread_t _compactador = (pthread_t) compactador;
+	//sem_t semaforoTabla;
+	//sem_init(&semaforoTabla,0,1);
+	if(ListaSem==NULL) ListaSem=list_create();
 
+	semaforoTabla* semaforoNuevo= crearSemaforo(nombreTablaNueva);
+	list_add(ListaSem,semaforoNuevo);
+	//dictionary_put(TablasSem,nombreTablaNueva,&semaforoTabla);
 	pthread_create(&_compactador,NULL,funcionCompactar,(void*)nombreTablaNueva);
-	pthread_join(&_compactador,NULL);
+	//pthread_join(&_compactador,NULL);
 	//dictionary_remove(TablasCompactacion,nombreTablaNueva);
 
 }
@@ -642,27 +677,41 @@ int cantidadDeTablasExistentes(){
 
 void crearHiloCompactacion(char* nombreTabla){
 	pthread_t compactador;
-	sem_t semaforoTabla;
-	sem_init(&semaforoTabla,0,1);
-	int test;
-	sem_getvalue(&semaforoTabla,&test);
-	if(TablasCompactacion!=NULL){
 
-		levantarHiloCompactacion(nombreTabla,compactador);
-		dictionary_put(TablasCompactacion,nombreTabla,compactador);
-		dictionary_put(TablasSem,nombreTabla,&semaforoTabla);
-		printf("semaforo valor: %d",test);
-	}
-	else{
+//	int test;
+//	sem_getvalue(semaforoTabla,&test);
+	if(dictionary_is_empty(TablasCompactacion))
 		TablasCompactacion=dictionary_create();
-		TablasSem=dictionary_create();
-		levantarHiloCompactacion(nombreTabla,compactador);
-		dictionary_put(TablasCompactacion,nombreTabla,compactador);
 
-	}
-
+	levantarHiloCompactacion(nombreTabla,compactador);
+	dictionary_put(TablasCompactacion,nombreTabla,compactador);
+	//	dictionary_put(TablasSem,nombreTabla,semaforoTabla);
+//		printf("semaforo valor: %d",test);
 
 }
+
+semaforoTabla* crearSemaforo(char* nombreTabla){
+	char* nombreSemaforo=malloc(strlen (nombreTabla)+1);
+	strcpy(nombreSemaforo,nombreTabla);
+	sem_t semaforo;
+	sem_t semaforo2;
+	sem_init(&semaforo,0,1);
+	sem_init(&semaforo2,0,1);
+	semaforoTabla* semaforoNuevo = malloc(sizeof(semaforoTabla));
+	semaforoNuevo->nombreTabla =nombreSemaforo;
+	semaforoNuevo->semaforoTabla=semaforo;
+	semaforoNuevo->semaforoCompactacion=semaforo2;
+	return semaforoNuevo;
+}
+
+void* borrarSemaforo(void* elemento){
+
+	free(((semaforoTabla*)elemento)->nombreTabla);
+	sem_destroy(&((semaforoTabla*)elemento)->semaforoTabla);
+	sem_destroy(&((semaforoTabla*)elemento)->semaforoCompactacion);
+	free(((semaforoTabla*)elemento));
+}
+
 //
 //t_list* listarTablasExistentes() {
 //	DIR *d;

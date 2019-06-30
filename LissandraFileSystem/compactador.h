@@ -41,6 +41,14 @@
 #include"logs.h"
 #include <semaphore.h>
 
+typedef struct semaforoTabla{
+	char* nombreTabla;
+	sem_t semaforoCompactacion; // bloquea durante TODA la compactacion
+	sem_t semaforoTabla;// bloquea solo cuando elimina archivos de la tabla
+}semaforoTabla;
+void* borrarSemaforo(void* elemento);
+bool buscarSemaforo(void* elemento,char* nombreTabla);
+semaforoTabla* crearSemaforo(char* nombreTabla);
 void* compactar(void * arg);
 void levantarHilosTablasExistentesCompactacion();
 void* levantarHiloCompactacion(char* nombreTablaNueva,void* compactador);

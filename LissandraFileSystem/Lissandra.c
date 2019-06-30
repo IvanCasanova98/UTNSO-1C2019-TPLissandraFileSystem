@@ -5,6 +5,7 @@ t_dictionary* TablasCompactacion=NULL;
 t_dictionary* TablasSem=NULL;
 t_dictionary* memTable=NULL;
 t_bitarray* bitmap;
+t_list* ListaSem=NULL;
 bool estaDump =0;
 int main(void)
 {

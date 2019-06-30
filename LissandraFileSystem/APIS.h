@@ -58,6 +58,8 @@ void  APIcreate(t_paquete_create*);
 t_dictionary*  APIdescribe(t_paquete_describe*);
 t_dictionary*  APIdescribeTodasLasTablas();
 //*************************************
+void verificarSemaforoCompactacion(char* nombreTabla);
+void verificarSemaforoTabla(char* nombreTabla);
 bool validarConsistencia(char* consistencia);
 void liberarRegistro(void* elemento);
 void liberarPaqueteCreate(t_paquete_create* paquete_create);

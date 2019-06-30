@@ -294,6 +294,7 @@ void* dump(){
 }
 
 void chekearDumpeo(){
+	//pthread_mutex_lock(dictionary_get(TablasSem,"PERSONAS"));
 			pthread_t dumpeo;
 			t_config* config = leer_config();
 			int tiempoDump = atoi(config_get_string_value(config, "TIEMPO_DUMP"));
