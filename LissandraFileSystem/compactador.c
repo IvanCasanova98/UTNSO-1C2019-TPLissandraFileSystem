@@ -99,7 +99,7 @@ void* compactar(void * arg){
 
 
 
-		printf("%s \n",Tablasemaforo->nombreTabla);
+		//printf("%s \n",Tablasemaforo->nombreTabla);
 		sem_wait(&(Tablasemaforo->semaforoTabla));
 		//dictionary_get(TablasSem,nombreTabla);
 		for(int i =0; i<NumeroParticiones;i++){
