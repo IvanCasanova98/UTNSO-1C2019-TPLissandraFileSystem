@@ -128,6 +128,7 @@ char* serializarRegistro(char* value,uint16_t key,long long timestamp){
 	strcat(registro,";");
 	strcat(registro,value);
 	//printf("%s",registro);
+	free(keyChar);
 	return registro;
 
 

@@ -531,7 +531,8 @@ void RemoverTemporalesDeTablaYSusBloques(char* nombretabla){
 char* DirectorioDeTemporalNuevo(char* nombretabla){ //0 ml
 
 	t_config* config = config_create("Lissandra.config");
-	char* NombreTmp = string_substring_until(string_reverse(nombretabla), 1);
+	char* nombreDadoVueltao=string_reverse(nombretabla);
+	char* NombreTmp = string_substring_until(nombreDadoVueltao, 1);
 
 	char buffer [3];
 	char* Montaje= config_get_string_value(config,"PUNTO_MONTAJE");
@@ -559,6 +560,8 @@ char* DirectorioDeTemporalNuevo(char* nombretabla){ //0 ml
 	strcat(directorioTablas,".tmp");
 	config_destroy(config);
 	free(directorioAux);
+	free(nombreDadoVueltao);
+	free(NombreTmp);
 	return directorioTablas;
 
 

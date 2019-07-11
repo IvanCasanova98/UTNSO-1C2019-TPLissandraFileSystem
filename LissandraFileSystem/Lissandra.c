@@ -21,7 +21,7 @@ int main(void)
 	//gettimeofday(&tiempoHastaDump,NULL);
 
 
-	levantarHilosTablasExistentesCompactacion();
+	//levantarHilosTablasExistentesCompactacion();
 	pthread_create(&dump,NULL,chekearDumpeo,NULL);
 	pthread_create(&consola,NULL,prenderConsola,NULL);
 

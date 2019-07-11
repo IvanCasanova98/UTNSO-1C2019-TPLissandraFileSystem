@@ -219,7 +219,7 @@ void* crearTemporal(char* nombreTabla,t_list* registros){  //dictionary_iterator
 	}
 
 	list_clean_and_destroy_elements(listaDeRegistros, liberarBloque);
-
+	list_destroy(listaDeRegistros);
 
 }
 
