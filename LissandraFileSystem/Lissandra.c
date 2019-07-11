@@ -6,10 +6,11 @@ t_dictionary* TablasSem=NULL;
 t_dictionary* memTable=NULL;
 t_bitarray* bitmap;
 t_list* ListaSem=NULL;
+sem_t SemaforoMemtable;
 bool estaDump =0;
 int main(void)
 {
-
+	sem_init(&SemaforoMemtable,0,1);
 	t_config* config = leer_config();
 	//crearMetadataDePuntoDeMontaje();
 	//crearArchivoBitmap();

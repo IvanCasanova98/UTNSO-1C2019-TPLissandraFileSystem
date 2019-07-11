@@ -19,6 +19,8 @@
 #include<time.h>
 #include <semaphore.h>
 
+
+extern sem_t SemaforoMemtable;
 extern t_list* ListaSem;
 extern t_dictionary* TablasSem;
 extern t_dictionary* TablasCompactacion;
