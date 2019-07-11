@@ -21,6 +21,7 @@ void agregarTabla(t_paquete_insert* paquete_insert){
 	if(!dictionary_has_key(memTable, paquete_insert->nombre_tabla)){
 		t_list *nuevo = list_create();
 		dictionary_put(memTable, paquete_insert->nombre_tabla, agregarRegistro(nuevo, nodoRegistro));
+		//list_destroy(nuevo);
 	}else{
 		dictionary_put(memTable, paquete_insert->nombre_tabla, agregarRegistro(dictionary_get(memTable, paquete_insert->nombre_tabla), nodoRegistro));
 	}
@@ -107,12 +108,16 @@ char* crearArrayBloques(int*bloques,int cantBloques){
 	strcpy(arrayBloques,"[");
 	int i=0;
 	while(i<cantBloques){
-	strcat(arrayBloques,string_itoa(bloques[i]));
+
+	char* numeroBloque=	string_itoa(bloques[i]);
+	strcat(arrayBloques,numeroBloque);
 	i++;
-	if (i==cantBloques) break;
+	if (i==cantBloques) {free(numeroBloque);break;}
 	strcat(arrayBloques,",");
+	free(numeroBloque);
 	}
 	strcat(arrayBloques,"]");
+
 	return arrayBloques;
 }
 
@@ -150,6 +155,7 @@ void* crearTemporal(char* nombreTabla,t_list* registros){  //dictionary_iterator
 		i++;
 	}
 	list_clean_and_destroy_elements(registros, liberarNodo);
+	list_destroy(registros);
 	char* directorioMetadata=DirectorioDeMetadata();
 	t_config* config = config_create(directorioMetadata);
 	int sizeBloque = atoi(config_get_string_value(config,"BLOCK_SIZE"));
@@ -236,21 +242,28 @@ int cargarRegistro(char* registroActual,int bytesEnBloque, int* bloquesDisponibl
 
 	int tamanioQueEntra=abs(tamanioBloque-bytesEnBloque);
 	char* parteQueEntra= malloc(tamanioQueEntra+1);
-	strcpy(parteQueEntra,string_substring(registroActual, 0,tamanioQueEntra));
+	char* stringQueEntra=string_substring(registroActual, 0,tamanioQueEntra);
+	strcpy(parteQueEntra,stringQueEntra);
 	escribirEnBloque(bloquesDisponibles[bloquesEnUso], parteQueEntra,0);
 	char* parteQueNoEntra= malloc(tamanioRegistro-tamanioQueEntra+1);
-	strcpy(parteQueNoEntra,string_substring_from(registroActual,tamanioQueEntra));
+	char* stringQueNoEntra= string_substring_from(registroActual,tamanioQueEntra);
+	strcpy(parteQueNoEntra,stringQueNoEntra);
 	bloquesEnUso++;
 	desplazamiento++;
 	tamanioRegistro= tamanioRegistro-tamanioQueEntra;
-
+	free(stringQueEntra);
+	free(stringQueNoEntra);
 	while(tamanioRegistro>tamanioBloque){
-		strcpy(parteQueEntra,string_substring(parteQueNoEntra, 0,tamanioBloque));
+		char* stringQueEntra=string_substring(parteQueNoEntra, 0,tamanioBloque);
+		strcpy(parteQueEntra,stringQueEntra);
 		escribirEnBloque(bloquesDisponibles[bloquesEnUso], parteQueEntra,0);
-		strcpy(parteQueNoEntra,string_substring_from(parteQueNoEntra,tamanioBloque));
+		char* stringQueNoEntra= string_substring_from(parteQueNoEntra,tamanioBloque);
+		strcpy(parteQueNoEntra,stringQueNoEntra);
 		bloquesEnUso++;
 		desplazamiento++;
 		tamanioRegistro= tamanioRegistro-tamanioBloque;
+		free(stringQueEntra);
+		free(stringQueNoEntra);
 	}
 	escribirEnBloque(bloquesDisponibles[bloquesEnUso], parteQueNoEntra,1);
 	free(parteQueEntra);
@@ -287,6 +300,7 @@ int sizeTotalLista(t_list* registros){
 void* dump(){
 	LogDumpeo();
 	dictionary_iterator(memTable, crearTemporal);
+
 	dictionary_destroy(memTable);
 	memTable=NULL;
 	estaDump=0;
