@@ -11,8 +11,8 @@ int main(void)
 {
 
 	t_config* config = leer_config();
-	crearMetadataDePuntoDeMontaje();
-//	crearArchivoBitmap();
+	//crearMetadataDePuntoDeMontaje();
+	//crearArchivoBitmap();
 	crearBitMap();
 	pthread_t consola,dumpeo,dump,compactar;
 

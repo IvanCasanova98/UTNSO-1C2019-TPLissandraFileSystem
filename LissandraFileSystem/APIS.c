@@ -53,7 +53,10 @@ void APIcreate(t_paquete_create* paquete_create){ //0 memory leak
 		liberarPaqueteCreate(paquete_create);
 
 
-	} else LaTablaYaExiste(nombreTablaMayuscula);
+	} else {
+		liberarPaqueteCreate(paquete_create);
+		LaTablaYaExiste(nombreTablaMayuscula);
+	}
 
 }
 
@@ -608,7 +611,8 @@ char* DirectorioDeTemporalCompactacion(char* nombretabla,int nroTemporal){ //0 m
 char* DirectorioDeBloque(int numeroBloque){ //0 ml
 	t_config* config = config_create("Lissandra.config");
 	char* buffer=malloc(sizeof(int));
-	strcpy(buffer,string_itoa(numeroBloque));
+	char* numeroBloqueChar =string_itoa(numeroBloque);
+	strcpy(buffer,numeroBloqueChar);
 	char* Montaje= config_get_string_value(config,"PUNTO_MONTAJE");
 	char *directorioBloque = malloc(strlen(Montaje) + strlen(".bin") +strlen("Bloques/") +sizeof(buffer)+6);
 	strcpy(directorioBloque,Montaje);
@@ -617,6 +621,7 @@ char* DirectorioDeBloque(int numeroBloque){ //0 ml
 	strcat(directorioBloque,".bin");
 	config_destroy(config);
 	free(buffer);
+	free(numeroBloqueChar);
 	return directorioBloque;
 
 

@@ -117,6 +117,8 @@ void deployMenu(){
 	printf("\nIngrese REQUEST\n");
 
 
+	//cambiarNombreTmpATmpc("TABLA4");
+
 //	bool _buscarSemaforo(void* elemento){
 //			return buscarSemaforo(elemento,"POPI");
 //		}

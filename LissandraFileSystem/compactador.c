@@ -152,7 +152,8 @@ bool buscarSemaforo(void* elemento,char* nombreTabla){
 
 void cambiarNombreTmpATmpc(char* nombretabla){ // 9ml
 		t_config* config = config_create("Lissandra.config");
-		char* NombreTmp = string_substring_until(string_reverse(nombretabla), 1);
+		char* NombreDadoVuelta = string_reverse(nombretabla);
+		char* NombreTmp = string_substring_until(NombreDadoVuelta, 1);
 
 
 		char buffer [3];
@@ -195,6 +196,7 @@ void cambiarNombreTmpATmpc(char* nombretabla){ // 9ml
 
 		}
 		free(NombreTmp);
+		free(NombreDadoVuelta);
 		free(directorioAuxNuevo);
 		free(directorioAuxViejo);
 		free(directorioTablas);
@@ -622,7 +624,7 @@ void levantarHilosTablasExistentesCompactacion(){
 				//printf("%d",i);
 
 				i++;
-				//free(nombreTabla);
+				free(nombreTabla);
 				//pthread_join(compactador[i], (void**)NULL);
 			}
 
@@ -643,9 +645,9 @@ void* levantarHiloCompactacion(char* nombreTablaNueva,void* compactador){
 	//sem_t semaforoTabla;
 	//sem_init(&semaforoTabla,0,1);
 
-	int i=0;
-	i++;
-	printf("%d",i);
+	//int i=0;
+	//i++;
+	//printf("%d",i);
 	//dictionary_put(TablasSem,nombreTablaNueva,&semaforoTabla);
 	pthread_create(&_compactador,NULL,funcionCompactar,(void*)nombreTablaNueva);
 	//pthread_join(&_compactador,NULL);
@@ -680,16 +682,14 @@ int cantidadDeTablasExistentes(){
 void crearHiloCompactacion(char* nombreTabla){
 	pthread_t compactador;
 
-//	int test;
-//	sem_getvalue(semaforoTabla,&test);
+
 	if(dictionary_is_empty(TablasCompactacion)){
 		TablasCompactacion=dictionary_create();
 		ListaSem=list_create();
 	}
 	levantarHiloCompactacion(nombreTabla,compactador);
 	dictionary_put(TablasCompactacion,nombreTabla,compactador);
-	//	dictionary_put(TablasSem,nombreTabla,semaforoTabla);
-//		printf("semaforo valor: %d",test);
+	//free(nombreTabla);
 
 }
 
