@@ -262,12 +262,12 @@ bool CambiarRegistro(void*registroParticion,void*registroTemporal){
 
 	if(RegistroParticionCasteado->key==RegistroTemporalCasteado->key){
 		if(RegistroParticionCasteado->timestamp < RegistroTemporalCasteado->timestamp){
-			liberarRegistro(registroParticion);
+			//liberarRegistro(registroParticion);
 			return 1;
 		}
 
 	}
-	liberarRegistro(registroTemporal);
+	//liberarRegistro(registroTemporal);
 	return 0;
 }
 
@@ -282,7 +282,7 @@ bool EstaLaKey(void* registro ,t_registro* registroTemporalCasteado){
 bool filtrarPorMismaKey(void* registro,int nroParticion,int NumeroParticiones){
 
 
-	return (((t_registro*) registro)->key % NumeroParticiones) == nroParticion;
+	return ((((t_registro*) registro)->key) % NumeroParticiones) == nroParticion;
 
 }
 
@@ -687,8 +687,12 @@ void crearHiloCompactacion(char* nombreTabla){
 		TablasCompactacion=dictionary_create();
 		ListaSem=list_create();
 	}
+	semaforoTabla* semaforoNuevo= crearSemaforo(nombreTabla);
+	list_add(ListaSem,semaforoNuevo);
 	levantarHiloCompactacion(nombreTabla,compactador);
 	dictionary_put(TablasCompactacion,nombreTabla,compactador);
+
+
 	//free(nombreTabla);
 
 }

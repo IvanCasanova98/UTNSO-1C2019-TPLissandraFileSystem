@@ -298,13 +298,13 @@ int sizeTotalLista(t_list* registros){
 
 
 void* dump(){
+	sem_wait(&SemaforoMemtable);
 	LogDumpeo();
 	dictionary_iterator(memTable, crearTemporal);
-
 	dictionary_destroy(memTable);
 	memTable=NULL;
 	estaDump=0;
-
+	sem_post(&SemaforoMemtable);
 }
 
 void chekearDumpeo(){

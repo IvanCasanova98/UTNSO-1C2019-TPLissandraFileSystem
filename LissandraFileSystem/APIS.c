@@ -11,12 +11,14 @@ void APIdrop(t_paquete_drop* paquete_drop){ //ml 20bytes
 	if(existeTabla(nombreTablaMayuscula))
 	{
 		verificarSemaforoCompactacion(nombreTablaMayuscula);
+		verificarSemaforoMemTable();
+		sem_wait(&SemaforoMemtable);
 		RemoverDeLaMemtable(nombreTablaMayuscula); //0 ml
 		RemoverParticionesDeTablaYSusBloques(nombreTablaMayuscula); //0 ml
 		RemoverTemporalesDeTablaYSusBloques(nombreTablaMayuscula); //8 bytes ml
 		RemoverMetadataDeTabla(nombreTablaMayuscula);
 		RemoverCarpetaVaciaDeTabla(nombreTablaMayuscula); //ESTA FUNCION SIRVE SOLO SI LA CARPETA ESTA VACIA.
-
+		sem_post(&SemaforoMemtable);
 		LogearDropCorrecto(nombreTablaMayuscula);
 
 
@@ -68,11 +70,14 @@ void APIinsert(t_paquete_insert* paquete_insert){ // 0 memory leak
 	strcpy(nombreTablaMayuscula,paquete_insert->nombre_tabla);
 	string_to_upper(nombreTablaMayuscula);
 	if(existeTabla(nombreTablaMayuscula)){
+		verificarSemaforoMemTable();
+		sem_wait(&SemaforoMemtable);
 		t_metadata* metadataDeTabla=obtenerMetadataTabla(nombreTablaMayuscula);
 		agregarTabla(paquete_insert);
 		LogearInsert(paquete_insert->timestamp,paquete_insert->valor_key,paquete_insert->value,nombreTablaMayuscula);
 		liberarPaqueteInsert(paquete_insert);
 		imprimirListaTablas(memTable);
+		sem_post(&SemaforoMemtable);
 		free(metadataDeTabla);
 		free(nombreTablaMayuscula);
 	} else{
@@ -1176,6 +1181,22 @@ void verificarSemaforoCompactacion(char* nombreTabla){
 
 
 }
+
+void verificarSemaforoMemTable(){
+	int valorSemaforo;
+
+
+	sem_getvalue(&SemaforoMemtable,&valorSemaforo);
+
+	if(valorSemaforo==0){
+		sem_wait(&SemaforoMemtable);
+		sem_post(&SemaforoMemtable);
+
+	}
+
+
+}
+
 
 //void notificarCambioRetardo(){
 //
