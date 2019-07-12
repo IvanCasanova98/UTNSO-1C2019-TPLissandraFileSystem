@@ -1,5 +1,4 @@
 #include "consola.h"
-
 void consola()
 {
 	while(1)
@@ -13,11 +12,14 @@ void consola()
 //------------------------------INGRESO DE PAQUETES------------------------------------
 void request(void * arg) //RECIBIR LOGGER
 {
+
 	struct parametros * parametro;
 	parametro = ( struct parametros *) arg;
 
 	char* request = parametro->parametros;
+
 	request = strtok(request," ");
+
 	int cod_ingresado = codigo_ingresado(request);
 
 	retardo_ejecucion(parametro->config);
@@ -84,6 +86,7 @@ void request(void * arg) //RECIBIR LOGGER
 				printf("\nCAIGO ACA PADRE, TE ESTAS EQUIVOCANDO");
 				break;
 		}
+
 }
 
 char* ingresar_request()

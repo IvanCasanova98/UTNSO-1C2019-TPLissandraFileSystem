@@ -62,6 +62,7 @@ t_paquete_select* selectf(char* parametros){
 	char* nombre_tabla;
 
 	parametros= strtok(NULL, " ");
+
 	if(parametros==NULL)
 	{
 		falta_tabla();

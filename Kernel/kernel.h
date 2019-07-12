@@ -16,5 +16,4 @@
 #include "planificador.h"
 
 
-
 #endif /* KERNEL_H_ */

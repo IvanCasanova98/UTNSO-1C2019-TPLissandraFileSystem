@@ -8,6 +8,7 @@ int main(void){
 
 	startup_diccionario();
 	startup_cola_ready();
+	startup_sem();
 
 	struct parametros parametro;
 
@@ -41,3 +42,4 @@ int main(void){
 
 	return 1;
 }
+

@@ -1,25 +1,30 @@
 #include "planificador.h"
+
 t_queue* cola_ready;
+int elementos_ready;
+int hilos_ejecutando;
+
 
 void planificador(void * arg)
 {
-//	struct parametros * parametro;
-//	parametro = ( struct parametros *) arg ;
+	struct parametros * parametro;
+	parametro = ( struct parametros *) arg;
+
+	char * hilos = config_get_string_value(parametro->config, "MULTIPROCESAMIENTO");
+	int hilos_disponibles = atoi(hilos);
 
 	while(1)
 	{
-		if(elementos_en_la_cola())
+		if(elementos_ready>0)
 		{
-			if(1/*hay menos de 4 hilos*/)
+			if(hilos_ejecutando<hilos_disponibles)
 			{
-				crear_hilo(arg);//CREAR NUEVO HILO
-				//MANDAR A EJECUCION
+				elementos_ready--;
+				hilos_ejecutando++;
+				crear_hilo(arg);
 			}
 		}
-
-//		printf("NO HAY ELEMENTOS EN LA COLA");
 	}
-
 }
 
 void dispatcher(void* arg)
@@ -27,29 +32,30 @@ void dispatcher(void* arg)
 	struct parametros * parametro;
 	parametro = ( struct parametros *) arg;
 
+	char * valor_quantum = config_get_string_value(parametro->config,"QUANTUM");
+	int quantum = atoi(valor_quantum);
+
 	t_proceso* proceso = queue_pop(cola_ready);
 
 	if (proceso->boolean)
 	{
-		t_queue* cola_lql = queue_create();
-		cola_lql = proceso->elemento;
-		for(int i=0; i<4; i++)//CAMBIAR 4 POR LECTURA DE CONFIG
+		for(int i=0; i<quantum; i++)
 		{
-			if(queue_size(cola_lql)>0)
+			if(queue_size(proceso->elemento)>0)
 			{
-				char* linea_request = queue_pop(cola_lql);
+				char* linea_request = queue_pop(proceso->elemento);
 				parametro->parametros = linea_request;
 				request(parametro);
+				free(linea_request);
 			}
 		}
-		int tamanio = tamanio_lql(cola_lql);
+		int tamanio = tamanio_lql(proceso->elemento);
 		if(tamanio!=0)
 		{
-//			t_proceso* proceso_devuelto = malloc(tamanio+sizeof(int));
-//			proceso_devuelto->boolean=1;
-//			proceso_devuelto->elemento = cola_lql;
 			queue_push(cola_ready, proceso);
+			elementos_ready++;
 		}else{
+
 			free(proceso);
 		}
 	}
@@ -58,14 +64,20 @@ void dispatcher(void* arg)
 		parametro->parametros = proceso->elemento;
 		request(parametro);
 	}
+	hilos_ejecutando--;
 }
 
 //------------------------------HILOS----------------------------
 void crear_hilo(void* arg)
 {
 	pthread_t hilo_dispatcher;
-	pthread_create(&hilo_dispatcher, NULL, dispatcher, arg);
-	pthread_join(hilo_dispatcher,NULL);
+	pthread_attr_t atributo;
+
+	pthread_attr_init(&atributo);
+	pthread_attr_setdetachstate(&atributo,PTHREAD_CREATE_DETACHED);
+
+	pthread_create(&hilo_dispatcher, &atributo, dispatcher, arg);
+	pthread_attr_destroy(&atributo);
 }
 
 
@@ -74,6 +86,9 @@ void crear_hilo(void* arg)
 void startup_cola_ready()
 {
 	cola_ready = queue_create();
+	elementos_ready=list_size(cola_ready);
+	hilos_ejecutando=0;
+
 }
 
 //AGREGAR A COLA
@@ -89,13 +104,10 @@ void agregar_a_cola(char* request)
 	switch(cod_ingresado)
 	{
 	case 6:;
+		elementos_ready++;
 		t_queue* proceso_lql = queue_create();
 
 		char * path = strcat(vector_parametros[1], ".lql");
-
-		for(int i=0;vector_parametros[i];i++) printf("\n-%s-",vector_parametros[i]);
-
-
 
 		string_to_lower(path);
 		proceso_lql = lql_to_queue(path);
@@ -106,19 +118,19 @@ void agregar_a_cola(char* request)
 		lql_proceso->boolean=1;
 		lql_proceso->elemento = proceso_lql;
 		queue_push(cola_ready,lql_proceso);
-		//free(lql_proceso);
 		break;
 	case 8:
 		printf("Op. desconocida");
 		break;
 	default:;
+		elementos_ready++;
 		t_proceso* request_proceso = malloc(strlen(request)+sizeof(int));
 		request_proceso->boolean=0;
 		request_proceso->elemento = request;
 		queue_push(cola_ready,request_proceso);
 		break;
 	}
-	free(vector_parametros);
+
 }
 
 int tamanio(char ** vector){

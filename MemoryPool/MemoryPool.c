@@ -6,6 +6,7 @@ int main(int argc, char* archivo[])
 {
 	startup_memoria(); //carga las memorias
 
+
 	struct parametros parametro;
 
 	parametro.config = leer_config(archivo[1]);

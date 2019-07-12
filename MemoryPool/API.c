@@ -2,6 +2,7 @@
 
 void selectf(int cliente,t_paquete_select* paquete, t_config* config, t_log* logger)
 {
+
 	if(condicion_select(paquete -> nombre_tabla,paquete -> valor_key))
 	{
 		t_pagina* pagina_encontrada = buscar_pagina(paquete -> nombre_tabla, paquete -> valor_key);
@@ -21,6 +22,8 @@ void selectf(int cliente,t_paquete_select* paquete, t_config* config, t_log* log
 		if (cliente != NULL){enviar_select_error(cliente);} //AGREGADO
 		else{} //CASO CONSOLA MP
 	}
+
+
 }
 
 void insert(t_paquete_insert* paquete, t_config* config, t_log* logger)
@@ -65,4 +68,6 @@ void create(t_paquete_create* paquete, t_config* config, t_log* logger)
 		crear_tabla_paginas(paquete->nombre_tabla,paquete->consistencia,paquete->particiones);
 		log_info(logger,"Tabla creada: %s\n", paquete->nombre_tabla);
 	}
+
 }
+
