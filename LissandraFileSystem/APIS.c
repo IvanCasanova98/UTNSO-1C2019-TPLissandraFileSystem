@@ -99,7 +99,7 @@ char* APIselect(t_paquete_select* paquete_select){ // bastante ml revisar
 	string_to_upper(nombreTablaMayuscula);
 
 		if(existeTabla(nombreTablaMayuscula)){
-			//verificarSemaforoTabla(nombreTablaMayuscula);
+			verificarSemaforoTabla(nombreTablaMayuscula);
 			t_metadata* metadataDeTabla=obtenerMetadataTabla(nombreTablaMayuscula);
 			int particionKey;
 			particionKey =	particionDeKey(paquete_select->valor_key,metadataDeTabla->particiones);
