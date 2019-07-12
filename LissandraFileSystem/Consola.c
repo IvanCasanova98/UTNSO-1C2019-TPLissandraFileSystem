@@ -272,14 +272,17 @@ t_paquete_insert* LeerInsert(char* parametros){
 
 
 	char* valueCompleto =string_new();
-
+	if(parametros==NULL){
+		faltaEnmascararValue();
+		return NULL;
+	}
 	string_append(&valueCompleto, parametros);
 	if(parametros!=NULL && (string_starts_with(parametros, "\"") && !string_ends_with(parametros, "\""))){
 
 		while(!string_ends_with(valueCompleto, "\"")){
 			parametros = strtok(NULL, " ");
 			if(parametros==NULL){
-				faltaEnmascararValue();
+				faltaValue();
 				return NULL;
 
 			}

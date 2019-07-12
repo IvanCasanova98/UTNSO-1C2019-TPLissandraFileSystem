@@ -246,7 +246,7 @@ void* CompararRegistros(void*registroTemporal,t_list* ListaRegistrosParticion){
 		int sizeNuevo=list_size(ListaRegistrosParticion);
 		if(sizeNuevo != sizeActual){
 			list_add(ListaRegistrosParticion,registroTemporal);
-		}else liberarRegistro(registroTemporalCasteado);
+		}//else liberarRegistro(registroTemporalCasteado);
 
 
 	}else
@@ -401,7 +401,7 @@ t_list* LiberarBin(char *nombreTabla,int NroBin){
 		string_iterate_lines(arrayBloques,free);
 		free(arrayBloques);
 		free(directorioBin);
-
+		printf("%s",registrosCompletos);
 
 	t_list* listaDeRegistros=list_create();
 		int registrosRecorridos=0;

@@ -99,7 +99,7 @@ char* APIselect(t_paquete_select* paquete_select){ // bastante ml revisar
 	string_to_upper(nombreTablaMayuscula);
 
 		if(existeTabla(nombreTablaMayuscula)){
-			verificarSemaforoTabla(nombreTablaMayuscula);
+			//verificarSemaforoTabla(nombreTablaMayuscula);
 			t_metadata* metadataDeTabla=obtenerMetadataTabla(nombreTablaMayuscula);
 			int particionKey;
 			particionKey =	particionDeKey(paquete_select->valor_key,metadataDeTabla->particiones);
@@ -303,7 +303,7 @@ char* elegirMayorTimeStamp(t_list* RegistrosEncontrados){
 
 t_registro* crearRegistro (char*value,uint16_t key,long long timestamp){
 	t_registro* registroNuevo=malloc(sizeof(t_registro));
-	registroNuevo->value=malloc(strlen(value)+1);
+	registroNuevo->value=malloc(strlen(value)+2);
 	strcpy(registroNuevo->value,value);
 	registroNuevo->key=key;
 	registroNuevo->timestamp=timestamp;
@@ -889,7 +889,7 @@ t_registro* buscarEnParticion(char* nombreTabla, int nroParticion,int key){
 					free(RegistroActual[i]);
 					free(RegistroActual);
 
-					free(registrosCompletos);
+	//				free(registrosCompletos);
 					free(directorioParticion);
 					config_destroy(config);
 					return registroEncontrado;
@@ -1024,7 +1024,7 @@ t_registro* buscarEnTemporales(char* nombreTabla,int key){
 	directorioTemporal= DirectorioDeTemporal(nombreTabla,temporales);
 	}
 	free(directorioTemporal);
-	if(temporales==1) {return NULL;}
+	if(temporales==1) { free(registrosCompletos);return NULL;}
 
 
 	return buscarRegistroTemporalMasReciente(registrosCompletos,key);
