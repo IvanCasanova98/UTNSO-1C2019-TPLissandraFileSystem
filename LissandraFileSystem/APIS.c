@@ -574,7 +574,8 @@ char* DirectorioDeTemporalNuevo(char* nombretabla){ //0 ml
 
 char* DirectorioDeTemporal(char* nombretabla,int nroTemporal){ //0 ml
 	t_config* config = config_create("Lissandra.config");
-	char* NombreTmp = string_substring_until(string_reverse(nombretabla), 1);
+	char* nombreDadoVuelta=string_reverse(nombretabla);
+	char* NombreTmp = string_substring_until(nombreDadoVuelta, 1);
 
 	char buffer [3];
 	sprintf(buffer,"%d",nroTemporal);
@@ -588,6 +589,8 @@ char* DirectorioDeTemporal(char* nombretabla,int nroTemporal){ //0 ml
 	strcat(directorioTablas,buffer);
 	strcat(directorioTablas,".tmp");
 	config_destroy(config);
+	free(nombreDadoVuelta);
+	free(NombreTmp);
 	return directorioTablas;
 
 
@@ -595,7 +598,8 @@ char* DirectorioDeTemporal(char* nombretabla,int nroTemporal){ //0 ml
 
 char* DirectorioDeTemporalCompactacion(char* nombretabla,int nroTemporal){ //0 ml
 	t_config* config = config_create("Lissandra.config");
-	char* NombreTmp = string_substring_until(string_reverse(nombretabla), 1);
+	char* nombreDadoVuelta=string_reverse(nombretabla);
+	char* NombreTmp = string_substring_until(nombreDadoVuelta, 1);
 
 	char buffer [3];
 	sprintf(buffer,"%d",nroTemporal);
@@ -609,6 +613,8 @@ char* DirectorioDeTemporalCompactacion(char* nombretabla,int nroTemporal){ //0 m
 	strcat(directorioTablas,buffer);
 	strcat(directorioTablas,".tmpc");
 	config_destroy(config);
+	free(NombreTmp);
+	free(nombreDadoVuelta);
 	return directorioTablas;
 
 
@@ -927,7 +933,7 @@ t_registro* buscarKey(char* registrosDeBloque,int key){
 		free(registrosSeparados[cerrar]);
 		free(registrosSeparados);
 
-		for(int cerrar=0;registrosSeparados[cerrar];cerrar++)
+		for(int cerrar=0;RegistroActual[cerrar];cerrar++)
 		free(RegistroActual[cerrar]);
 		free(RegistroActual);
 		return NULL;
@@ -941,7 +947,7 @@ t_registro* buscarKey(char* registrosDeBloque,int key){
 		free(registrosSeparados);
 
 
-		for(int cerrar=0;registrosSeparados[cerrar];cerrar++)
+		for(int cerrar=0;RegistroActual[cerrar];cerrar++)
 		free(RegistroActual[cerrar]);
 		free(RegistroActual);
 
@@ -1055,7 +1061,7 @@ t_registro* buscarEnTemporalesCompactando(char* nombreTabla,int key){
 	directorioTemporalcompactando= DirectorioDeTemporalCompactacion(nombreTabla,temporales);
 	}
 	free(directorioTemporalcompactando);
-	if(temporales==1) {return NULL;}
+	if(temporales==1) {free(registrosCompletos);return NULL;}
 
 
 	return buscarRegistroTemporalMasReciente(registrosCompletos,key);
@@ -1085,7 +1091,7 @@ t_registro* buscarRegistroTemporalMasReciente(char* todosLosRegistrosTemporales,
 		t_registro* registroEncontrado = crearRegistro(AuxregistroEncontrado->value,AuxregistroEncontrado->key,AuxregistroEncontrado->timestamp);
 
 
-		list_clean_and_destroy_elements(listaDeRegistros,liberarBloque);
+		list_clean_and_destroy_elements(listaDeRegistros,liberarRegistro);
 
 		string_iterate_lines(arrayRegistros,free);
 
@@ -1196,6 +1202,7 @@ void verificarSemaforoMemTable(){
 
 
 }
+
 
 
 //void notificarCambioRetardo(){

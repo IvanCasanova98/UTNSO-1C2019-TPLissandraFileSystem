@@ -75,12 +75,16 @@ t_registro* buscarMemTable(char* nombreTabla,int key){
 	if(dictionary_has_key(memTable,nombreTabla)){
 		if(list_any_satisfy(dictionary_get(memTable,nombreTabla),_filtradoKey)){
 			t_list* listaRegistrosKey=list_create();
-	list_add_all(listaRegistrosKey, list_sorted(list_filter(dictionary_get(memTable,nombreTabla),_filtradoKey),mayorTimeStamp));
+	t_list* listaFiltrada=list_filter(dictionary_get(memTable,nombreTabla),_filtradoKey);
+	t_list* listaOrdenada=list_sorted(listaFiltrada,mayorTimeStamp);
+	list_add_all(listaRegistrosKey, listaOrdenada);
 	if(!listaVacia(listaRegistrosKey)){
 	nodoRegistroMemTable* registroEncontrado =(nodoRegistroMemTable*) list_get(listaRegistrosKey, 0); // 0 es el primero
 	t_registro* registroKey = crearRegistro(registroEncontrado->value,registroEncontrado->key,registroEncontrado->timestamp);
 	//list_clean_and_destroy_elements(listaRegistrosKey,liberarNodo);
 	list_destroy(listaRegistrosKey);
+	list_destroy(listaOrdenada);
+	list_destroy(listaFiltrada);
 	//liberarNodo(registroEncontrado);
 	return registroKey;
 			}
@@ -286,6 +290,7 @@ void liberarNodo(void* nodo){
 	free(((nodoRegistroMemTable*) nodo)->value);
 	free((nodoRegistroMemTable*) nodo);
 }
+
 
 int sumatoriaSize(int numeroTotal,void*elemento1){
 	//printf("o");
