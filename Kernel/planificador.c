@@ -4,6 +4,7 @@ t_queue* cola_ready;
 int elementos_ready;
 int hilos_ejecutando;
 
+pthread_mutex_t mutex1;
 
 void planificador(void * arg)
 {
@@ -19,9 +20,8 @@ void planificador(void * arg)
 		{
 			if(hilos_ejecutando<hilos_disponibles)
 			{
-				elementos_ready--;
-				hilos_ejecutando++;
 				crear_hilo(arg);
+				hilos_ejecutando++;
 			}
 		}
 	}
@@ -32,10 +32,12 @@ void dispatcher(void* arg)
 	struct parametros * parametro;
 	parametro = ( struct parametros *) arg;
 
+	pthread_mutex_lock(&mutex1);
 	char * valor_quantum = config_get_string_value(parametro->config,"QUANTUM");
 	int quantum = atoi(valor_quantum);
 
 	t_proceso* proceso = queue_pop(cola_ready);
+	elementos_ready--;
 
 	if (proceso->boolean)
 	{
@@ -63,8 +65,10 @@ void dispatcher(void* arg)
 	{
 		parametro->parametros = proceso->elemento;
 		request(parametro);
+		//free(proceso);
 	}
 	hilos_ejecutando--;
+	pthread_mutex_unlock(&mutex1);
 }
 
 //------------------------------HILOS----------------------------
@@ -77,6 +81,8 @@ void crear_hilo(void* arg)
 	pthread_attr_setdetachstate(&atributo,PTHREAD_CREATE_DETACHED);
 
 	pthread_create(&hilo_dispatcher, &atributo, dispatcher, arg);
+
+
 	pthread_attr_destroy(&atributo);
 }
 
@@ -86,16 +92,16 @@ void crear_hilo(void* arg)
 void startup_cola_ready()
 {
 	cola_ready = queue_create();
-	elementos_ready=list_size(cola_ready);
+	elementos_ready=0;
 	hilos_ejecutando=0;
-
+	pthread_mutex_init(&mutex1,NULL);
 }
 
 //AGREGAR A COLA
 void agregar_a_cola(char* request)
 {
 
-	char ** vector_parametros = malloc(strlen(request));
+	char ** vector_parametros;
 	vector_parametros=string_split(request, " ");
 
 	int cod_ingresado = codigo_ingresado(vector_parametros[0]);
@@ -104,7 +110,6 @@ void agregar_a_cola(char* request)
 	switch(cod_ingresado)
 	{
 	case 6:;
-		elementos_ready++;
 		t_queue* proceso_lql = queue_create();
 
 		char * path = strcat(vector_parametros[1], ".lql");
@@ -118,16 +123,18 @@ void agregar_a_cola(char* request)
 		lql_proceso->boolean=1;
 		lql_proceso->elemento = proceso_lql;
 		queue_push(cola_ready,lql_proceso);
+		elementos_ready++;
 		break;
 	case 8:
 		printf("Op. desconocida");
 		break;
 	default:;
-		elementos_ready++;
-		t_proceso* request_proceso = malloc(strlen(request)+sizeof(int));
+
+		t_proceso* request_proceso = malloc(strlen(request)+sizeof(int)+1);
 		request_proceso->boolean=0;
 		request_proceso->elemento = request;
 		queue_push(cola_ready,request_proceso);
+		elementos_ready++;
 		break;
 	}
 
