@@ -93,6 +93,16 @@ typedef struct t_paquete_create
 
 }t_paquete_create;
 
+typedef struct t_paquete_create_de_mp
+{
+	uint32_t nombre_tabla_long; //Longitud del nombre de la tabla
+	char* nombre_tabla;
+	uint32_t consistencia_long;
+	char* consistencia;//CREAR TIPO DE DATO
+	uint16_t particiones;
+	uint16_t tiempo_compactacion;
+}__attribute__((packed)) t_paquete_create_de_mp;
+
 //--------------------RECIBIR PAQUETE
 void* recibir_paquetes(void*);
 
@@ -102,6 +112,11 @@ int recibir_operacion(int);
 //---------------------DESERIALIZAR PAQUETE
 t_paquete_select* deserializar_paquete_select(int socket_cliente);
 t_paquete_insert* deserializar_paquete_insert(int socket_cliente);
+t_paquete_create_de_mp* deserializar_paquete_create_de_mp(int socket_cliente);
+t_paquete_drop* deserializar_paquete_drop(int socket_cliente);
+
+//--------------------ADAPTADOR
+t_paquete_create* adaptadorDePaquete(t_paquete_create_de_mp* paquete_create_mp);
 
 //--------------------ARCHIVOS LOGGER/CONFIGURACION
 t_log* iniciar_logger(void);

@@ -16,6 +16,7 @@
 
 t_log* logger;
 
+void* hiloEscucha();
 int iniciar_servidor();
 int esperar_cliente(int);
 
