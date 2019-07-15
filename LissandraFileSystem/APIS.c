@@ -100,6 +100,7 @@ char* APIselect(t_paquete_select* paquete_select){ // bastante ml revisar
 
 		if(existeTabla(nombreTablaMayuscula)){
 			verificarSemaforoTabla(nombreTablaMayuscula);
+			verificarSemaforoMemTable();
 			t_metadata* metadataDeTabla=obtenerMetadataTabla(nombreTablaMayuscula);
 			int particionKey;
 			particionKey =	particionDeKey(paquete_select->valor_key,metadataDeTabla->particiones);

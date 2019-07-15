@@ -344,7 +344,8 @@ t_list* LiberarTmpc(char *nombreTabla){
 
 void RemoverTemporalesCompactadosDeTablaYSusBloques(char* nombretabla){
 	t_config* config = config_create("Lissandra.config");
-	char* NombreTmp = string_substring_until(string_reverse(nombretabla), 1);
+	char* NombreDadoVuelta =string_reverse(nombretabla);
+	char* NombreTmp = string_substring_until(NombreDadoVuelta, 1);
 
 
 	char* Montaje= config_get_string_value(config,"PUNTO_MONTAJE");
@@ -357,10 +358,13 @@ void RemoverTemporalesCompactadosDeTablaYSusBloques(char* nombretabla){
 	strcat(directorioTablas,"/");
 	strcat(directorioTablas,NombreTmp);
 	int i =1;
+	char* Numero=string_itoa(i);
 	strcpy(directorioAux,directorioTablas);
-	strcat(directorioAux,string_itoa(i));
+	strcat(directorioAux,Numero);
 	strcat(directorioAux,".tmpc");
+	free(Numero);
 	while(existe_temporal(directorioAux)){
+
 		t_config* directorioTemporal= config_create(directorioAux);
 		char **arrayBloques = string_get_string_as_array(config_get_string_value(directorioTemporal,"BLOCKS"));
 		string_iterate_lines(arrayBloques,removerBloque);
@@ -368,8 +372,12 @@ void RemoverTemporalesCompactadosDeTablaYSusBloques(char* nombretabla){
 		config_destroy(directorioTemporal); //AGREGADO
 
 		i++;
+		string_iterate_lines(arrayBloques,free);
+		free(arrayBloques);
 		strcpy(directorioAux,directorioTablas);
-		strcat(directorioAux,string_itoa(i));
+		char* Numero=string_itoa(i);
+		strcat(directorioAux,Numero);
+		free(Numero);
 		strcat(directorioAux,".tmpc");
 	}
 
@@ -377,7 +385,8 @@ void RemoverTemporalesCompactadosDeTablaYSusBloques(char* nombretabla){
 	free(directorioTablas); //AGREGADO
 	free(directorioAux);
 	free(NombreTmp); //AGREGADO
-
+	free(NombreDadoVuelta);
+	//free(Numero);
 }
 
 
@@ -401,7 +410,7 @@ t_list* LiberarBin(char *nombreTabla,int NroBin){
 		string_iterate_lines(arrayBloques,free);
 		free(arrayBloques);
 		free(directorioBin);
-		printf("%s",registrosCompletos);
+		//printf("%s",registrosCompletos);
 
 	t_list* listaDeRegistros=list_create();
 		int registrosRecorridos=0;
@@ -535,21 +544,32 @@ void cargarRegistros(char* registroActual, int* bloquesDisponibles){
 
 	int tamanioQueEntra=tamanioBloque;
 	char* parteQueEntra= malloc(tamanioQueEntra+1);
-	strcpy(parteQueEntra,string_substring(registroActual, 0,tamanioQueEntra));
+
+	char* stringQueEntra=string_substring(registroActual, 0,tamanioQueEntra);
+
+	strcpy(parteQueEntra,stringQueEntra);
 	escribirEnBloque(bloquesDisponibles[bloquesEnUso], parteQueEntra,0);
 	char* parteQueNoEntra= malloc(tamanioRegistro-tamanioQueEntra+1);
-	strcpy(parteQueNoEntra,string_substring_from(registroActual,tamanioQueEntra));
+	char* stringQueNoEntra= string_substring_from(registroActual,tamanioQueEntra);
+	strcpy(parteQueNoEntra,stringQueNoEntra);
 	bloquesEnUso++;
 	desplazamiento++;
 	tamanioRegistro= tamanioRegistro-tamanioQueEntra;
-
+	free(stringQueEntra);
+	free(stringQueNoEntra);
 	while(tamanioRegistro>tamanioBloque){
-		strcpy(parteQueEntra,string_substring(parteQueNoEntra, 0,tamanioBloque));
+		char* stringQueEntra=string_substring(parteQueNoEntra, 0,tamanioBloque);
+		strcpy(parteQueEntra,stringQueEntra);
 		escribirEnBloque(bloquesDisponibles[bloquesEnUso], parteQueEntra,0);
-		strcpy(parteQueNoEntra,string_substring_from(parteQueNoEntra,tamanioBloque));
+
+		char* stringQueNoEntra= string_substring_from(parteQueNoEntra,tamanioBloque);
+		strcpy(parteQueNoEntra,stringQueNoEntra);
+
 		bloquesEnUso++;
 		desplazamiento++;
 		tamanioRegistro= tamanioRegistro-tamanioBloque;
+		free(stringQueEntra);
+		free(stringQueNoEntra);
 	}
 	escribirEnBloque(bloquesDisponibles[bloquesEnUso], parteQueNoEntra,0);
 	free(parteQueEntra);
