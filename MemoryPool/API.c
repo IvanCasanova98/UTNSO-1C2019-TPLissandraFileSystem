@@ -1,5 +1,7 @@
 #include "API.h"
 
+pthread_mutex_t mutex;
+
 void selectf(int cliente,t_paquete_select* paquete, t_config* config, t_log* logger)
 {
 

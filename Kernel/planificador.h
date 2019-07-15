@@ -23,7 +23,7 @@ int tamanio(char ** vector);
 
 //-------------------------PLANIFICADOR--------------------------
 void planificador(void * arg);
-void dispatcher();
+void dispatcher(void* arg);
 //------------------------------HILOS----------------------------
 void crear_hilo(void* arg);
 //-------------------------COLA DE READY-------------------------

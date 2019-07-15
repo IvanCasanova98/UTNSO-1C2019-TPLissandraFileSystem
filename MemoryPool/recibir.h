@@ -32,6 +32,7 @@ int recibir_operacion(int);
 t_paquete_select* deserializar_paquete_select(int socket_cliente);
 t_paquete_insert* deserializar_paquete_insert(int socket_cliente);
 t_paquete_create* deserializar_paquete_create(int socket_cliente);
+t_paquete_drop* deserializar_paquete_drop(int socket_cliente);
 
 //------------------RECIBIR MENSAJES------------------
 void* recibir_buffer(int* size, int socket_cliente);

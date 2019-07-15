@@ -1,10 +1,9 @@
 #include "planificador.h"
 
 t_queue* cola_ready;
+
 int elementos_ready;
 int hilos_ejecutando;
-
-pthread_mutex_t mutex1;
 
 void planificador(void * arg)
 {
@@ -20,6 +19,7 @@ void planificador(void * arg)
 		{
 			if(hilos_ejecutando<hilos_disponibles)
 			{
+				elementos_ready--;
 				crear_hilo(arg);
 				hilos_ejecutando++;
 			}
@@ -32,12 +32,11 @@ void dispatcher(void* arg)
 	struct parametros * parametro;
 	parametro = ( struct parametros *) arg;
 
-	pthread_mutex_lock(&mutex1);
 	char * valor_quantum = config_get_string_value(parametro->config,"QUANTUM");
 	int quantum = atoi(valor_quantum);
 
+
 	t_proceso* proceso = queue_pop(cola_ready);
-	elementos_ready--;
 
 	if (proceso->boolean)
 	{
@@ -57,7 +56,6 @@ void dispatcher(void* arg)
 			queue_push(cola_ready, proceso);
 			elementos_ready++;
 		}else{
-
 			free(proceso);
 		}
 	}
@@ -65,10 +63,8 @@ void dispatcher(void* arg)
 	{
 		parametro->parametros = proceso->elemento;
 		request(parametro);
-		//free(proceso);
 	}
 	hilos_ejecutando--;
-	pthread_mutex_unlock(&mutex1);
 }
 
 //------------------------------HILOS----------------------------
@@ -82,7 +78,6 @@ void crear_hilo(void* arg)
 
 	pthread_create(&hilo_dispatcher, &atributo, dispatcher, arg);
 
-
 	pthread_attr_destroy(&atributo);
 }
 
@@ -94,7 +89,6 @@ void startup_cola_ready()
 	cola_ready = queue_create();
 	elementos_ready=0;
 	hilos_ejecutando=0;
-	pthread_mutex_init(&mutex1,NULL);
 }
 
 //AGREGAR A COLA
@@ -129,7 +123,6 @@ void agregar_a_cola(char* request)
 		printf("Op. desconocida");
 		break;
 	default:;
-
 		t_proceso* request_proceso = malloc(strlen(request)+sizeof(int)+1);
 		request_proceso->boolean=0;
 		request_proceso->elemento = request;

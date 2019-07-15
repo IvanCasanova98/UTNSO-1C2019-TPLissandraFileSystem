@@ -16,16 +16,16 @@ void request(void * arg) //RECIBIR LOGGER
 	struct parametros * parametro;
 	parametro = ( struct parametros *) arg;
 
-	char* request = parametro->parametros;
+	char** vector_request = string_split(parametro->parametros," ");
 
-	request = strtok(request," ");
-
-	int cod_ingresado = codigo_ingresado(request);
+	int cod_ingresado = codigo_ingresado(vector_request[0]);
 
 	retardo_ejecucion(parametro->config);
 		switch(cod_ingresado){
 			case 0:;
-				t_paquete_create* paquete_create = create(request);
+
+
+				t_paquete_create* paquete_create = create(vector_request);
 
 				if(paquete_create==NULL){break;}
 
@@ -44,12 +44,11 @@ void request(void * arg) //RECIBIR LOGGER
 				break;
 
 			case 2:;
-				request= strtok(NULL, " ");
-				describe(parametro->conexion,request);
+				describe(parametro->conexion,vector_request[1]);
 				break;
 
 			case 3:;
-				t_paquete_select* paquete_select = selectf(request);
+				t_paquete_select* paquete_select = selectf(vector_request);
 
 				if(paquete_select==NULL){break;}
 
@@ -65,7 +64,7 @@ void request(void * arg) //RECIBIR LOGGER
 
 			case 4:;
 
-				t_paquete_insert* paquete_insert = insert(request);
+				t_paquete_insert* paquete_insert = insert(vector_request);
 
 				if(paquete_insert==NULL){break;}
 
@@ -76,6 +75,7 @@ void request(void * arg) //RECIBIR LOGGER
 				}
 				else
 				{
+					//pedir describe
 					t_log* logger = iniciar_logger();
 					log_error(logger, "Error: no existe la tabla\n");
 					log_destroy(logger);

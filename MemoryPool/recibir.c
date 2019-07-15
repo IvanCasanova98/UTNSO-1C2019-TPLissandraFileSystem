@@ -211,6 +211,27 @@ t_paquete_create* deserializar_paquete_create(int socket_cliente)
 	return paquete_create;
 }
 
+t_paquete_drop* deserializar_paquete_drop(int socket_cliente){
+	int desplazamiento = 0;
+	size_t tamanioNombreTabla;
+
+	recv(socket_cliente, &tamanioNombreTabla, sizeof(int) ,MSG_WAITALL);
+
+	t_paquete_drop* paquete_drop = malloc(tamanioNombreTabla+sizeof(uint32_t));
+	paquete_drop->nombre_tabla = malloc(tamanioNombreTabla);
+
+	void *buffer = malloc(tamanioNombreTabla);
+
+	recv(socket_cliente, buffer, tamanioNombreTabla ,MSG_WAITALL);
+
+	memcpy(paquete_drop->nombre_tabla,buffer + desplazamiento, tamanioNombreTabla);
+	desplazamiento+= tamanioNombreTabla;
+
+	free(buffer);
+	return paquete_drop;
+
+}
+
 //------------------RECIBIR MENSAJES------------------
 void* recibir_buffer(int* size, int socket_cliente)
 {

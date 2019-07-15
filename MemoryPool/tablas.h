@@ -78,7 +78,7 @@ void reemplazar_pagina(char* nombre_tabla, t_pagina_completa* pagina_completa);
 
 void mostrar_pagina(t_pagina* pagina);
 void mostrar_pagina_completa(t_pagina_completa* pagina_completa);
-void mostrar_tabla_paginas(t_tabla_paginas* tabla_paginas);
+void mostrar_tabla_paginas(char* tabla_paginas);
 void mostrar_tabla_segmentos();
 void startup_memoria();
 

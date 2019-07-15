@@ -28,6 +28,7 @@ void ingresar_paquete(void * arg)
 				insert(paquete_i, parametro->config,  parametro->logger);
 				break;
 			default:
+			//	mostrar_tabla_segmentos();
 				printf("Operacion desconocida.");
 				break;
 			}

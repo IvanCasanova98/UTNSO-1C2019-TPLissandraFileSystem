@@ -20,6 +20,7 @@
 void* serializar_paquete_select(t_paquete_select* paquete);
 void* serializar_paquete_insert(t_paquete_insert* paquete);
 void* serializar_paquete_create(t_paquete_create* paquete);
+void* serializar_paquete_drop(t_paquete_drop* paquete);
 
 //----------------------------ENVIAR PAQUETES
 void enviar_paquete_select(t_paquete_select* paquete, int socket_cliente);

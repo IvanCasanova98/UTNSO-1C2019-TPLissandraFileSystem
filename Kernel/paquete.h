@@ -70,6 +70,11 @@ typedef struct t_paquete_insert
 	long long timestamp;
 }__attribute__((packed)) t_paquete_insert;
 
+typedef struct t_paquete_drop{
+	uint32_t nombre_tabla_long;
+	char* nombre_tabla;
+} t_paquete_drop;
+
 //---------------------ARCHIVO LOGGER/CONFIG
 t_log* iniciar_logger(void);
 t_config* leer_config(void);
@@ -82,12 +87,13 @@ void enviar_paquete_insert(t_paquete_insert* paquete, int socket_cliente);
 t_paquete_select* crear_paquete_select(char *nombretabla,uint16_t valor_key);
 t_paquete_insert* crear_paquete_insert(char *nombretabla,uint16_t valor_key, char *value, long long timestamp);
 t_paquete_create* crear_paquete_create(char* nombre_tabla, char* consistencia, int particiones, int tiempo_compactacion);
+void describe(int conexion, char* parametros);
 
 //---------------------ARMAR PAQUETE
-t_paquete_select* selectf(char* parametros);
-t_paquete_insert* insert(char* parametros);
-long long get_timestamp(char* parametros);
-t_paquete_create* create(char* parametros);
+t_paquete_select* selectf(char** vector_parametros);
+t_paquete_insert* insert(char** vector_parametros);
+long long get_timestamp();
+t_paquete_create* create(char** vector_parametros);
 
 //---------------------LOGGEAR PAQUETE
 void loggear_paquete_select(t_paquete_select* paquete);

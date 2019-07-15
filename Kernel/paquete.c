@@ -55,107 +55,110 @@ t_paquete_create* crear_paquete_create(char* nombre_tabla, char* consistencia, i
 
 //---------------------ARMAR PAQUETES
 
-t_paquete_select* selectf(char* parametros){
+t_paquete_select* selectf(char** vector_parametros){
 
 
-	uint16_t valor_key;
-	char* nombre_tabla;
+	uint16_t valor_key;;
 
-	parametros= strtok(NULL, " ");
 
-	if(parametros==NULL)
+
+	if(vector_parametros[1]==NULL)
 	{
 		falta_tabla();
 		return NULL;
 	}
-	nombre_tabla = parametros;
 
-	parametros = strtok(NULL, " ");
-	if(parametros==NULL || !validar_numero(parametros)){
+	if(vector_parametros[2]==NULL || !validar_numero(vector_parametros[2])){
 		falta_key();
 		return NULL;
 	}
-	valor_key = atoi(parametros);
+	valor_key = atoi(vector_parametros[2]);
 
-	t_paquete_select* paquete = crear_paquete_select(nombre_tabla, valor_key);
+	t_paquete_select* paquete = crear_paquete_select(vector_parametros[1], valor_key);
 
 	loggear_paquete_select(paquete);
 
 	return paquete;
 }
 
-t_paquete_insert* insert(char* parametros){
+t_paquete_insert* insert(char** vector_parametros){
 
 	uint16_t valor_key;
-	char* nombre_tabla;
-	char* value;
+
+	char* value_completo;
 	long long timestamp=0;
 
-	parametros= strtok(NULL, " ");
-	if(parametros==NULL)
+
+	if(vector_parametros[1]==NULL)
 	{
 		falta_tabla();
 		return NULL;
 	}
-	nombre_tabla = parametros;
 
-	parametros = strtok(NULL, " ");
-//	printf("\nvalor key %s",parametros);
-	if(parametros==NULL || !validar_numero(parametros))
+	if(vector_parametros[2]==NULL || !validar_numero(vector_parametros[2]))
 	{
 		falta_key();
 		return NULL;
 	}
-	valor_key = atoi(parametros);
+	valor_key = atoi(vector_parametros[2]);
 
-	parametros = strtok(NULL, "\"");
-	if(parametros==NULL) //falta verificar que value vaya si o si con comillas
+
+	if(vector_parametros[3]==NULL)
 	{
 		falta_value();
 		return NULL;
 	}
-	value = parametros;
-	parametros = strtok(NULL, " ");
-	timestamp = get_timestamp(parametros);
+	else
+	{
+		value_completo = concatenar_value(vector_parametros);
+		if((string_starts_with(value_completo, "\"") && string_ends_with(value_completo, "\"")))
+		{
+			value_completo = strtok(value_completo, "\"");
+		}
+		else
+		{
+			falta_value();
+			return NULL;
+		}
+	}
+
+	timestamp = get_timestamp();
 
 
-	t_paquete_insert* paquete = crear_paquete_insert(nombre_tabla, valor_key, value, timestamp);
+	t_paquete_insert* paquete = crear_paquete_insert(vector_parametros[1], valor_key, value_completo, timestamp);
 	loggear_paquete_insert(paquete);
 
 	return paquete;
 }
 
-long long get_timestamp(char* parametros){
+long long get_timestamp(){
 	long long valor;
-	if (parametros==NULL) {
-		struct timeval te;
-		gettimeofday(&te, NULL);
-		valor = te.tv_sec*1000LL + te.tv_usec/1000;
-	} else {valor = atoll(parametros);}
+
+	struct timeval te;
+	gettimeofday(&te, NULL);
+	valor = te.tv_sec*1000LL + te.tv_usec/1000;
 
 	return valor;
 }
 
-t_paquete_create* create(char* parametros)
+t_paquete_create* create(char** vector_parametros)
 {
-	char* nombre_tabla;
-	char* consistencia;
 	uint16_t particiones;
 	uint16_t tiempo_compactacion;
 
-	parametros= strtok(NULL, " ");
-	if(parametros==NULL)
+
+	if(vector_parametros[1]==NULL)
 	{
 		falta_tabla();
 		return NULL;
 	}
-	nombre_tabla = parametros;
 
-	parametros = strtok(NULL, " ");
-	if(!strcmp(parametros,"SC") || !strcmp(parametros,"SHC") || !strcmp(parametros,"EC"))
+	if(vector_parametros[2]==NULL)
 	{
-		consistencia = parametros;
+		falta_consistencia();
+		return NULL;
 	}
+	if(!strcmp(vector_parametros[2],"SC") || !strcmp(vector_parametros[2],"SHC") || !strcmp(vector_parametros[2],"EC")){}
 	else
 	{
 		falta_consistencia();
@@ -163,23 +166,23 @@ t_paquete_create* create(char* parametros)
 	}
 
 
-	parametros = strtok(NULL, " ");
-	if(parametros==NULL || !validar_numero(parametros) || !strcmp(parametros,"0"))
+
+	if(vector_parametros[3]==NULL || !validar_numero(vector_parametros[3]) || !strcmp(vector_parametros[3],"0"))
 	{
 		falta_particiones();
 		return NULL;
 	}
-	particiones = atoi(parametros);
+	particiones = atoi(vector_parametros[3]);
 
-	parametros = strtok(NULL, " ");
-	if(parametros==NULL || !validar_numero(parametros) || !strcmp(parametros,"0"))
+
+	if(vector_parametros[4]==NULL || !validar_numero(vector_parametros[4]) || !strcmp(vector_parametros[4],"0"))
 	{
 		falta_tiempo_compactacion();
 		return NULL;
 	}
-	tiempo_compactacion = atoi(parametros);
+	tiempo_compactacion = atoi(vector_parametros[4]);
 
-	t_paquete_create* paquete = crear_paquete_create(nombre_tabla, consistencia, particiones, tiempo_compactacion);
+	t_paquete_create* paquete = crear_paquete_create(vector_parametros[1], vector_parametros[2], particiones, tiempo_compactacion);
 
 	loggear_paquete_create(paquete);
 

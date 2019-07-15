@@ -79,6 +79,17 @@ void* serializar_paquete_create(t_paquete_create* paquete)
 	free(buffer);
 }
 
+void* serializar_paquete_drop(t_paquete_drop* paquete){
+	void* buffer = malloc(paquete->nombre_tabla_long);
+	int desplazamiento = 0;
+
+	memcpy(buffer + desplazamiento, paquete->nombre_tabla, paquete->nombre_tabla_long);
+	desplazamiento+= paquete->nombre_tabla_long;
+
+	return buffer;
+
+}
+
 //----------------------------ENVIAR PAQUETES
 
 void enviar_paquete_select(t_paquete_select* paquete, int socket_cliente) //DEBE LLEGAR LOGGER

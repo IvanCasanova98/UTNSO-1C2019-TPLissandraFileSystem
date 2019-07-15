@@ -17,7 +17,7 @@ t_config* leer_config()
 void retardo_ejecucion(t_config* config)
 {
 	int retardo_ejecucion = config_get_int_value(config, "SLEEP_EJECUCION");
-	sleep(retardo_ejecucion);
+	usleep(retardo_ejecucion);
 }
 
 //-------------------------------------------------------
@@ -57,6 +57,21 @@ int numero_random(int max)
 	return rnd;
 }
 
+char * concatenar_value(char ** vector)
+{
+	int i=3;
+	char * value=string_new();
+	while(vector[i]!=NULL)
+	{
+		string_append(&value,vector[i]);
+		string_append(&value," ");
+		i++;
+	}
+	string_trim_right(&value);
+
+	return value;
+
+}
 //---------------------------------------------FUNCIONES PARA VALIDAR
 
 bool validar_numero(char* parametro){
@@ -65,6 +80,19 @@ bool validar_numero(char* parametro){
 	}
 	return true;
 }
+
+//bool validar_nombre_alfanumerico(char* parametro){
+//	int x=0;
+//	for(int i=0;i<string_length(parametro);i++){
+//		if(isdigit(parametro[i])) x++;
+//	}
+//	if(x==string_length(parametro)){
+//		return true;
+//	}else{
+//		return false;
+//	}
+//}
+
 void falta_tabla(){
 
 	t_log* logger=iniciar_logger();

@@ -57,6 +57,7 @@ void agregar_pagina(char* nombre_tabla, t_pagina_completa* pagina_completa) //a 
 
 bool existe_pagina(char* nombre_tabla, uint16_t valor_key)
 {
+
 	bool _tiene_key(void* elemento){return tiene_key(valor_key, elemento);}
 	t_list* tabla_paginas = buscar_tabla_paginas(nombre_tabla);
 
@@ -212,12 +213,14 @@ void mostrar_pagina(t_pagina* pagina)
 
 void mostrar_pagina_completa(t_pagina_completa* pagina_completa)
 {
-	printf("%d   %s  %lld %d. ", pagina_completa -> pagina -> valor_key, pagina_completa -> pagina -> value, pagina_completa -> pagina -> timestamp, pagina_completa -> flag);
+	printf("%d   %s  %lld %d. \n", pagina_completa -> pagina -> valor_key, pagina_completa -> pagina -> value, pagina_completa -> pagina -> timestamp, pagina_completa -> flag);
 }
 
-void mostrar_tabla_paginas(t_tabla_paginas* tabla_paginas)//mostrar todas las paginas de la tabla
+
+void mostrar_tabla_paginas(char* tabla_paginas)//mostrar todas las paginas de la tabla
 {
-	list_iterate((t_list*)tabla_paginas, mostrar_pagina_completa);
+//	printf("%s", tabla_paginas);
+	list_iterate(buscar_tabla_paginas(tabla_paginas), mostrar_pagina_completa);
 }
 
 void mostrar_tabla_segmentos()
@@ -255,5 +258,7 @@ void startup_memoria()
 	agregar_pagina("TABLA0", pagina_completa4);
 	agregar_pagina("TABLA1", pagina_completa1);
 	agregar_pagina("TABLA2", pagina_completa2);
+
+//	mostrar_tabla_segmentos();
 
 }

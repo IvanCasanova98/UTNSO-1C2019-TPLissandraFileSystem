@@ -66,6 +66,11 @@ typedef struct t_paquete_insert
 	long long timestamp;
 }t_paquete_insert;
 
+typedef struct t_paquete_drop{
+	uint32_t nombre_tabla_long;
+	char* nombre_tabla;
+} t_paquete_drop;
+
 //---------------------CREAR PAQUETE
 t_paquete_select* crear_paquete_select(char *nombretabla,uint16_t valor_key);
 t_paquete_insert* crear_paquete_insert(char *nombretabla,uint16_t valor_key, char *value, long long timestamp);

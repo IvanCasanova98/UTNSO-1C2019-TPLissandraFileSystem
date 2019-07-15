@@ -31,6 +31,8 @@ int numero_random(int max);
 //--------------------------------------------------
 void retardo_ejecucion(t_config* config);
 
+char * concatenar_value(char ** vector);
+
 //---------------------------VALIDACIONES
 bool validarNumero(char* parametro);
 void falta_tabla();

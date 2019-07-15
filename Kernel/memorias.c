@@ -8,6 +8,7 @@ void startup_diccionario()
 }
 
 void agregar_datos(char* nombre_tabla, char* consistencia){
+
 	dictionary_put(tabla_metadata,nombre_tabla,consistencia);
 }
 
@@ -23,7 +24,6 @@ void deserealizar_metadata(int socket){
 	while(i<cant_elementos){
 		t_metadata* nodo_metadata = deserealizar_nodo(socket);
 		agregar_datos(nodo_metadata->nombre_tabla, nodo_metadata->consistencia);
-
 		i++;
 	}
 
