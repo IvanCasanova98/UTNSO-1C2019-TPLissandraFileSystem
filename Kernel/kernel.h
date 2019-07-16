@@ -3,12 +3,17 @@
 
 #include<stdio.h>
 #include<stdlib.h>
+#include<pthread.h>
 
 #include "conexion.h"
-#include "paquete.h"
+//#include "paquete.h"
 #include "envio.h"
+#include "recibir.h"
+#include "criterio.h"
+#include "utils.h"
+#include "memorias.h"
+#include "consola.h"
+#include "planificador.h"
 
-//---------------------INGRESO DE PAQUETE
-void ingresar_paquete(int conexion, t_log* logger);
 
 #endif /* KERNEL_H_ */
