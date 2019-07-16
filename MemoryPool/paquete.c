@@ -111,6 +111,25 @@ long long get_timestamp(char* parametros){
 	return valor;
 }
 
+t_paquete_describe_lfs* paquete_describe_para_lfs(char *parametros,t_log* logger)
+{
+	parametros= strtok(NULL, " ");
+		if(parametros == NULL){
+			uint32_t tamanio_tabla= strlen("ALL")+1;
+			t_paquete_describe_lfs* paquete= malloc(tamanio_tabla + sizeof(uint32_t));
+			paquete->nombre_tabla ="ALL";
+			paquete->nombre_tabla_long = tamanio_tabla;
+			return paquete;
+		}
+		else
+		{
+			uint32_t tamanio_tabla= strlen(parametros)+1;
+			t_paquete_describe_lfs* paquete= malloc(tamanio_tabla + sizeof(uint32_t));
+			paquete->nombre_tabla =parametros;
+			paquete->nombre_tabla_long = tamanio_tabla;
+			return paquete;
+		}
+}
 
 t_paquete_create* paquete_create(char* parametros, t_log* logger)
 {
@@ -149,3 +168,4 @@ t_paquete_drop* paquete_drop(char *parametros, t_log* logger){
 
 	return paquete;
 }
+

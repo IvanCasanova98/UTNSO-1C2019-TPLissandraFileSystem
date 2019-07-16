@@ -83,7 +83,7 @@ void recibir_paquetes(int cliente_fd, int server_fd, t_config* config, t_log* lo
 			break;
 		case HS:
 			enviar_memorias(cliente_fd, config);
-			cliente_fd=0;
+//			cliente_fd=0;
 			break;
 		case -1:
 			cliente_fd=0;
@@ -110,8 +110,6 @@ int recibir_operacion(int socket_cliente)
 
 //----------------------------DESERIALIZAR PAQUETES
 
-//FALTA PROBARLA ESTA
-//*******************************************************************
 t_paquete_drop* deserializar_paquete_drop(int socket_cliente){
 	int desplazamiento = 0;
 	size_t tamanioNombreTabla;
@@ -132,7 +130,6 @@ t_paquete_drop* deserializar_paquete_drop(int socket_cliente){
 	return paqueteDrop;
 
 }
-//*******************************************************************
 
 t_paquete_select* deserializar_paquete_select(int socket_cliente)
 {

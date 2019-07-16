@@ -24,12 +24,16 @@ void ingresar_paquete(void * arg)
 				t_paquete_drop* paquete_d = paquete_drop(parametros_paquete,parametro->logger);
 				enviar_drop_lissandra(paquete_d,parametro->config,parametro->logger);
 				break;
+			case 2:;
+				//PARA ENVIAR A LFS, hay que armar ese paquete.
+				t_paquete_describe_lfs* paquete_describe_lfs= paquete_describe_para_lfs(parametros_paquete,parametro->logger);
+				enviar_describe_lissandra(paquete_describe_lfs,parametro->config,parametro->logger);
+				break;
 			case 3:;
 				t_paquete_select* paquete_s = paquete_select(parametros_paquete, parametro->logger);
 //				selectf(NULL,paquete_s, parametro->config, parametro->logger);
 				enviar_select_lissandra(paquete_s,parametro->config,parametro->logger);
 				break;
-
 			case 4:;
 				t_paquete_insert* paquete_i = paquete_insert(parametros_paquete, parametro->logger);
 //				insert(paquete_i, parametro->config,  parametro->logger);

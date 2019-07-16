@@ -11,11 +11,12 @@ void retardo_ejecucion(t_config* config)
 //---------------------------CALCULAR TAMAÑO DE CHAR**------------------
 int tamanio_array(char** array)
 {
-	int tamanio=0;
+	size_t tamanio;
 	int i=0;
+
 	while(array[i]!=NULL)
 	{
-		tamanio+= sizeof(int) + strlen(array[i]) + 5; //Por qué hay que agregarle 5 para que ande bien.
+		tamanio+= sizeof(int)+sizeof(array[i]); //Por qué hay que agregarle 5 para que ande bien.
 		i++;
 	}
 	return tamanio;
@@ -23,11 +24,11 @@ int tamanio_array(char** array)
 
 int tamanio_array_puerto(char** array)
 {
-	int tamanio=0;
+	size_t tamanio;
 	int i=0;
 	while(array[i]!=NULL)
 	{
-		tamanio+= sizeof(int) + strlen(array[i]) + 1; //Por qué hay que agregarle 5 para que ande bien.
+		tamanio+= sizeof(int); //Por qué hay que agregarle 5 para que ande bien.
 		i++;
 	}
 	return tamanio;

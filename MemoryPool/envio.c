@@ -29,7 +29,7 @@ void* serializar_array(char** array, int bytes, int cant_elementos)
 
 	while(i<cant_elementos)
 	{
-		tamanio=strlen(array[i]) + 5;
+		tamanio=sizeof(int)+ sizeof(array[i]) + 4;
 		memcpy(buffer + desplazamiento, &(tamanio), sizeof(int));
 		desplazamiento+= sizeof(int);
 
@@ -54,7 +54,7 @@ void* serializar_array_puerto(char** array, int bytes, int cant_elementos)
 
 	while(i<cant_elementos)
 	{
-		tamanio=strlen(array[i]) + 1;
+		tamanio=sizeof(int)+sizeof(array[i]) + 1;
 		memcpy(buffer + desplazamiento, &(tamanio), sizeof(int));
 		desplazamiento+= sizeof(int);
 
@@ -98,6 +98,20 @@ void* serializar_paquete_drop(t_paquete_drop* paquete){
 
 	return buffer;
 
+}
+
+void* serializar_paquete_describe(t_paquete_describe_lfs* paquete){
+
+	void* buffer = malloc(paquete->nombre_tabla_long + sizeof(uint32_t));
+	int desplazamiento = 0;
+
+	memcpy(buffer + desplazamiento, &paquete->nombre_tabla_long, sizeof(uint32_t));
+	desplazamiento+= sizeof(uint32_t);
+
+	memcpy(buffer + desplazamiento, paquete->nombre_tabla, paquete->nombre_tabla_long);
+	desplazamiento+= paquete->nombre_tabla_long;
+
+	return buffer;
 }
 
 void* serializar_paquete_insert(t_paquete_insert* paquete)
@@ -195,6 +209,7 @@ void* serializar_enviar_paquete_describe(int socket_cliente, t_list* metadata)
 	}
 
 }
+
 //---------------------------ENVIOS DE MEMORIAS
 
 void enviar_memorias(int socket_cliente, t_config* config)
@@ -202,13 +217,14 @@ void enviar_memorias(int socket_cliente, t_config* config)
 	char** IP_SEEDS = config_get_array_value(config, "IP_SEEDS");
 	char** PUERTO_SEEDS = config_get_array_value(config, "PUERTO_SEEDS");
 
-	int cant_elementos = cant_elementos_array(IP_SEEDS);
+	int cant_elementos = cant_elementos_array(IP_SEEDS); //BIEN
+
 
 	int bytes_IP = tamanio_array(IP_SEEDS);
 	void* enviar_IP_SEEDS = serializar_array(IP_SEEDS, bytes_IP, cant_elementos);
 	send(socket_cliente,enviar_IP_SEEDS,bytes_IP,MSG_WAITALL);
 
-	int bytes_PUERTO = tamanio_array(PUERTO_SEEDS);
+	int bytes_PUERTO = tamanio_array_puerto(PUERTO_SEEDS);
 	void* enviar_PUERTO_SEEDS = serializar_array_puerto(PUERTO_SEEDS, bytes_PUERTO, cant_elementos);
 	send(socket_cliente,enviar_PUERTO_SEEDS,bytes_PUERTO,MSG_WAITALL);
 
@@ -258,7 +274,7 @@ void enviar_paquete_create(t_paquete_create* paquete, int socket_cliente,t_log* 
 void enviar_paquete_drop(t_paquete_drop* paquete, int socket_cliente,t_log* logger){
 	int bytes = paquete->nombre_tabla_long + sizeof(uint32_t);
 	void* a_enviar = serializar_paquete_drop(paquete);
-	if ( send(socket_cliente, a_enviar, bytes, 0) <= 0) puts("Error en envio de PAQUETE CREATE.");
+	if ( send(socket_cliente, a_enviar, bytes, 0) <= 0) puts("Error en envio de PAQUETE DROP.");
 	else {
 			t_log* logger = iniciar_logger();
 			log_info(logger, "DROP ENVIADO\n");
@@ -268,8 +284,34 @@ void enviar_paquete_drop(t_paquete_drop* paquete, int socket_cliente,t_log* logg
 	free(a_enviar);
 }
 
+void enviar_paquete_describe(t_paquete_describe_lfs* paquete,int socket_cliente, t_log* logger){
+
+	int bytes = paquete->nombre_tabla_long + sizeof(uint32_t);
+	void* a_enviar = serializar_paquete_describe(paquete);
+	if ( send(socket_cliente, a_enviar, bytes, 0) <= 0) puts("Error en envio de PAQUETE DESCRIBE.");
+	else {
+		t_log* logger = iniciar_logger();
+		log_info(logger, "DESCRIBE ENVIADO\n");
+		log_destroy(logger);
+	}
+
+	free(a_enviar);
+}
+
 
 //---------------------------ENVIOS DE SERVIDOR A LISSANDRA
+
+void enviar_describe_lissandra(t_paquete_describe_lfs* paquete,t_config* config,t_log* logger)
+{
+	int conexion = iniciar_conexion(config);
+	int cod = 2;
+	if (send(conexion, &cod, sizeof(int), 0) <= 0)
+		puts("Error en envio de CODIGO DE OPERACION.");
+	else{enviar_paquete_describe(paquete, conexion, logger);}
+	free(paquete);
+
+	terminar_conexion(conexion);
+}
 
 void enviar_select_lissandra(t_paquete_select* paquete, t_config* config, t_log* logger)
 {

@@ -39,6 +39,10 @@ typedef enum
 	HS //HandShake
 }op_code;
 
+typedef struct t_paquete_describe_lfs{
+	uint32_t nombre_tabla_long;
+	char* nombre_tabla;
+} t_paquete_describe_lfs;
 
 typedef struct t_paquete_drop{
 	uint32_t nombre_tabla_long;
@@ -83,6 +87,7 @@ t_paquete_drop* crear_paquete_drop(char *nombre_tabla);
 t_paquete_drop* paquete_drop(char *parametros, t_log* logger);
 t_paquete_select* paquete_select(char* parametros, t_log* logger);
 t_paquete_insert* paquete_insert(char* parametros, t_log* logger);
+t_paquete_describe_lfs* paquete_describe_para_lfs(char *parametros,t_log* logger);
 long long get_timestamp(char* parametros);
 t_paquete_create* paquete_create(char* parametros, t_log* logger);
 void describe(int conexion, char* parametros);

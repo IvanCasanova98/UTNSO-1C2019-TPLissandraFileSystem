@@ -16,6 +16,9 @@
 #include "conexion.h"
 #include "utils.h"
 
+// EXTRAS
+void* serializar_array_tomi_PUERTO(char** arrayPUERTO);
+int cant_bytes_array_puerto(char** arrayPUERTO);
 //----------------------------SERIALIZAR PAQUETES
 
 
@@ -23,6 +26,7 @@ void* serializar_paquete_select(t_paquete_select* paquete);
 void* serializar_paquete_insert(t_paquete_insert* paquete);
 void* serializar_paquete_create(t_paquete_create* paquete);
 void* serializar_paquete_drop(t_paquete_drop* paquete);
+void* serializar_paquete_describe(t_paquete_describe_lfs* paquete);
 
 void* serializar_mensaje(char* value, int bytes);
 void* serializar_array(char** array, int bytes, int cant_elementos);
@@ -43,7 +47,7 @@ void enviar_paquete_drop(t_paquete_drop* paquete, int socket_cliente,t_log* logg
 
 void enviar_select_lissandra(t_paquete_select* paquete, t_config* config, t_log* logger);
 void enviar_insert_lissandra(t_paquete_insert* paquete, t_config* config, t_log* logger);
-
+void enviar_describe_lissandra(t_paquete_describe_lfs* paquete_describe_lfs,t_config* config,t_log* logger);
 void enviar_create_lissandra(t_paquete_create* paquete_c,t_config* config,t_log* logger);
 void enviar_drop_lissandra(t_paquete_create* paquete,t_config* config,t_log* logger);
 
