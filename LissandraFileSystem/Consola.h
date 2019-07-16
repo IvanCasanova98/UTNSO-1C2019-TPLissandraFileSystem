@@ -57,7 +57,7 @@ t_paquete_insert* LeerInsert2(char* parametros);
 //---------------------LOGGEAR PAQUETE
 void loggear_request_select(t_paquete_select* paquete);
 void loggear_request_insert(t_paquete_insert* paquete);
-void loggear_request_create(t_paquete_create* paquete);
+void loggear_request_create(t_paquete_create_de_mp* paquete);
 void loggear_request_drop(t_paquete_drop* paquete);
 void loggear_request_describe_con_tabla(t_paquete_describe* paquete);
 void loggear_request_describe_sin_tabla();

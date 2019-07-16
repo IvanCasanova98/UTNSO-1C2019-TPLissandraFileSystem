@@ -22,9 +22,10 @@ void* recibir_paquetes(void *arg)
 			t_paquete_create* paquete_create_fs;
 			paquete_create_fs = adaptadorDePaquete(paquete_create_de_mp);
 			if(paquete_create_fs==NULL) break;
+
 			APIcreate(paquete_create_fs);
 
-			loggear_request_create(paquete_create_fs);
+			loggear_request_create(paquete_create_de_mp);
 			break;
 		case DROP:;
 			t_paquete_drop* paquete_drop = deserializar_paquete_drop(cliente_fd);
@@ -34,7 +35,22 @@ void* recibir_paquetes(void *arg)
 			break;
 
 		case DESCRIBE:;
-			log_info(logger, "Se recibio paquete tipo: DESCRIBE");
+			t_paquete_describe* paquete_describe= deserializar_paquete_describe(cliente_fd);
+
+			if(strcmp(paquete_describe->nombre_tabla,"ALL") == 0){
+				t_dictionary* metadatasDeTablasPedidas = APIdescribeTodasLasTablas();
+				if(metadatasDeTablasPedidas != NULL)
+					imprimirListaMetadatas(metadatasDeTablasPedidas);
+				dictionary_destroy_and_destroy_elements(metadatasDeTablasPedidas,free);
+
+			} else{
+
+				t_dictionary* metadataDeTablaPedida = APIdescribe(paquete_describe);
+				if(metadataDeTablaPedida != NULL)
+					imprimirListaMetadatas(metadataDeTablaPedida);
+				dictionary_destroy_and_destroy_elements(metadataDeTablaPedida,free);
+
+			}
 			break;
 
 		case SELECT:;
@@ -54,8 +70,6 @@ void* recibir_paquetes(void *arg)
 			break;
 		case JOURNAL:;
 
-			//AGREGE ACA PARA SALIR. !!
-			log_info(logger, "FIN CONEXION.\n");
 			cliente_fd=0;
 			log_info(logger, "Se recibio paquete tipo: JOURNAL");
 			pthread_exit(NULL);
@@ -129,6 +143,21 @@ t_paquete_drop* deserializar_paquete_drop(int socket_cliente){
 	paqueteDrop->nombre_tabla_long=tamanioTabla;
 	free(buffer);
 	return paqueteDrop;
+
+}
+
+t_paquete_describe* deserializar_paquete_describe(int socket_cliente){
+
+	size_t tamanioTabla;
+	recv(socket_cliente, &tamanioTabla, sizeof(uint32_t) ,MSG_WAITALL);
+	t_paquete_describe* paqueteDescribe= malloc(tamanioTabla+sizeof(uint32_t));
+	paqueteDescribe->nombre_tabla = malloc(tamanioTabla);
+	void *buffer = malloc(tamanioTabla);
+	recv(socket_cliente, buffer, tamanioTabla ,MSG_WAITALL);
+	memcpy(paqueteDescribe->nombre_tabla,buffer, tamanioTabla);
+	paqueteDescribe->nombre_tabla_long=tamanioTabla;
+	free(buffer);
+	return paqueteDescribe;
 
 }
 

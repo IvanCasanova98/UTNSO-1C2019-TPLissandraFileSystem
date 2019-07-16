@@ -5,7 +5,7 @@
  *      Author: utnso
  */
 #include"Consola.h"
-
+#include"recibir.h"
 
 void* prenderConsola(void* arg){
 
@@ -499,10 +499,10 @@ void loggear_request_insert(t_paquete_insert* paquete){
 	log_info(logger, "NUEVA REQUEST: INSERT %s %d %s %lli\n", paquete->nombre_tabla, paquete->valor_key, paquete->value, paquete->timestamp);
     log_destroy(logger);
 }
-void loggear_request_create(t_paquete_create* paquete){
+void loggear_request_create(t_paquete_create_de_mp* paquete){
 
 	t_log* logger = iniciar_logger();
-	log_info(logger, "NUEVA REQUEST: CREATE %s %s %d %d \n", paquete->nombre_tabla,pasarAConsistenciaChar(paquete->metadata.consistencia),paquete->metadata.particiones,paquete->metadata.tiempo_de_compactacion);
+	log_info(logger, "NUEVA REQUEST: CREATE %s %s %d %d \n", paquete->nombre_tabla,paquete->consistencia,paquete->particiones,paquete->tiempo_compactacion);
     log_destroy(logger);
 }
 
@@ -590,7 +590,7 @@ t_paquete_create* crear_paquete_create(char* nombretabla, consistency consistenc
 	strcpy(paquete->nombre_tabla,nombretabla);
 	paquete->metadata.consistencia = consistencia;
 	paquete->metadata.particiones = particiones;
-	paquete->metadata.tiempo_de_compactacion = tiempo_de_compactacion;
+	paquete->metadata.tiempo_de_compactacion= tiempo_de_compactacion;
 	paquete->nombre_tabla_long= tamaniotabla;
 
 	return paquete;
