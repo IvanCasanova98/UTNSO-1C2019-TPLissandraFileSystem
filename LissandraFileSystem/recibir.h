@@ -99,9 +99,9 @@ typedef struct t_paquete_create_de_mp
 	char* nombre_tabla;
 	uint32_t consistencia_long;
 	char* consistencia;//CREAR TIPO DE DATO
-	uint16_t particiones;
-	uint16_t tiempo_compactacion;
-}__attribute__((packed)) t_paquete_create_de_mp;
+	int particiones;
+	int tiempo_compactacion;
+}t_paquete_create_de_mp;
 
 //--------------------RECIBIR PAQUETE
 void* recibir_paquetes(void*);
