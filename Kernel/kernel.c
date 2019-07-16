@@ -8,7 +8,7 @@ int main(void){
 
 	startup_diccionario();
 	startup_cola_ready();
-	startup_sem();
+//	startup_sem();
 
 	struct parametros parametro;
 
@@ -21,7 +21,7 @@ int main(void){
 	int conexion = iniciar_conexion(parametro.logger, ip, puerto);
 	parametro.conexion = conexion;
 
-//	pedir_seed(conexion);
+	pedir_seed(conexion);
 //
 //	close(conexion);//desconecta de memoria 0 (A MENOS DE QUE SE VUELVA A CONECTAR A LA MEMORIA 0)
 //

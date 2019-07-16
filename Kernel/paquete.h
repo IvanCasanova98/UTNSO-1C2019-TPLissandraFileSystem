@@ -42,12 +42,16 @@ typedef enum
 	HS //HandShake
 }op_code; //TIPO DE PAQUETE
 
-//*******************************************************************
+
+typedef struct t_paquete_describe_lfs{
+	uint32_t nombre_tabla_long;
+	char* nombre_tabla;
+} t_paquete_describe_lfs;
+
 typedef struct t_paquete_drop{
 	uint32_t nombre_tabla_long;
 	char* nombre_tabla;
 } t_paquete_drop;
-//*******************************************************************
 
 typedef struct t_paquete_create
 {
@@ -57,7 +61,7 @@ typedef struct t_paquete_create
 	char* consistencia;//CREAR TIPO DE DATO
 	int particiones;
 	int tiempo_compactacion;
-} t_paquete_create;
+}__attribute__((packed)) t_paquete_create;
 
 typedef struct t_paquete_select
 {

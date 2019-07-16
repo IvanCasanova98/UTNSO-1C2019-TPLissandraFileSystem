@@ -3,7 +3,6 @@
 //----------------------------SERIALIZAR PAQUETES
 
 
-//*******************************************************************
 void* serializar_paquete_drop(t_paquete_drop* paquete){
 	void* buffer = malloc(paquete->nombre_tabla_long);
 	int desplazamiento = 0;
@@ -14,7 +13,6 @@ void* serializar_paquete_drop(t_paquete_drop* paquete){
 	return buffer;
 
 }
-//*******************************************************************
 
 void* serializar_paquete_select(t_paquete_select* paquete)
 {
