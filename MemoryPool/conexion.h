@@ -13,10 +13,16 @@
 #include<commons/config.h>
 
 #include "recibir.h"
+#include "utils.h"
 
-t_log* logger;
-
+//----------------------------CONEXION COMO SERVIDOR
 int iniciar_servidor(t_config* config);
-int esperar_cliente(int);
+int esperar_cliente(t_config* config, int);
+
+//----------------------------CONEXION COMO CLIENTE
+int iniciar_conexion(t_config* config);
+int crear_conexion(char *ip, char* puerto);
+void terminar_conexion(int conexion);
+
 
 #endif /* CONEXION_H_ */

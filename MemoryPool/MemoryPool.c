@@ -1,18 +1,33 @@
+//NO REVISAR EXISTENCIAS DE TABLAS PARA INSERT Y SELECT
+
 #include "MemoryPool.h"
 
-int main(void)
+int main(int argc, char* archivo[])
 {
-	logger = iniciar_logger();
-	t_config* config = leer_config();
+	startup_memoria(); //carga las memorias
 
-	int server_fd = iniciar_servidor(config);
 
-	int cliente_fd = esperar_cliente(server_fd);
+	struct parametros parametro;
 
-	recibir_paquetes(logger, cliente_fd, server_fd);
+	parametro.config = leer_config(archivo[1]);
+	parametro.logger = iniciar_logger();
 
-	log_info(logger, "FIN CONEXION");
+	pthread_t hilo_servidor;
+	pthread_t hilo_consola;
+
+//	int conexion = iniciar_conexion_con_FS();
+
+//	terminar_conexion(conexion);
+
+
+//	pthread_create(&hilo_servidor, NULL, servidor,  (void *) &parametro); //Falta verificacion de error en la creacion de hilos
+	pthread_create(&hilo_consola, NULL, ingresar_paquete,  (void *) &parametro);
+
+//	pthread_join(hilo_servidor,NULL);
+	pthread_join(hilo_consola,NULL);
+
+	config_destroy(parametro.config);
+	log_destroy(parametro.logger);
 
 	return 1;
-
 }
