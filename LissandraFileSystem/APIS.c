@@ -357,6 +357,38 @@ t_dictionary* APIdescribe (t_paquete_describe* paquete_describe){
 
 }
 
+void* APIdescribeRESPUESTA(t_paquete_describe* paquete_describe){
+	char nombreTablaMayuscula [strlen(paquete_describe->nombre_tabla)+1];
+	strcpy(nombreTablaMayuscula,paquete_describe->nombre_tabla);
+	string_to_upper(nombreTablaMayuscula);
+
+	if(existeTabla(nombreTablaMayuscula)){
+		t_metadata* metadataDeTabla = obtenerMetadataTabla(nombreTablaMayuscula);
+		t_dictionary* metadataParticularSolicitada = dictionary_create();
+
+		dictionary_put(metadataParticularSolicitada,nombreTablaMayuscula,metadataDeTabla);
+//		free(metadataDeTabla);
+
+		logearDescribeTablaEnParticular(nombreTablaMayuscula);
+
+		respuestaDESCRIBE* rtaDESCRIBE = malloc(sizeof(respuestaDESCRIBE));
+						rtaDESCRIBE->rta =20;
+						rtaDESCRIBE->tablas=metadataParticularSolicitada;
+
+
+
+		return rtaDESCRIBE;
+
+	} else {
+		logearDescribeTablaInexistente(nombreTablaMayuscula);
+		respuestaDESCRIBE* rtaDESCRIBE = malloc(sizeof(respuestaDESCRIBE));
+		rtaDESCRIBE->rta =22;
+		return rtaDESCRIBE;
+	}
+
+}
+
+
 t_dictionary* APIdescribeTodasLasTablas(){
 //	void* eliminarNombreTablaHallada(void *elemento){
 //		free((char*) elemento);

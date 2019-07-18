@@ -75,3 +75,756 @@ Value       : ASDWAKO
 Timestamp   : 1563410360760
 [INFO] 21:39:20:762 MemoryPool/(9782:9784): PAQUETE INSERT ENVIADO
 [INFO] 21:39:20:769 MemoryPool/(9782:9784): Se insertó la key en la memtable con éxito.
+[INFO] 22:11:31:701 MemoryPool/(22830:22832): INSERT:
+Nombre tabla: METALS
+Valor KEY   : 5
+Value       : JOLA
+Timestamp   : 1563412291701
+[INFO] 22:11:31:702 MemoryPool/(22830:22832): PAQUETE INSERT ENVIADO
+[INFO] 22:11:31:702 MemoryPool/(22830:22832): Se insertó la key en la memtable con éxito.
+[INFO] 22:12:24:50 MemoryPool/(22830:22832): SELECT:
+Nombre tabla: METALS
+Valor KEY   : 5
+[INFO] 22:12:24:50 MemoryPool/(22830:22832): PAQUETE SELECT ENVIADO
+[INFO] 22:19:35:945 MemoryPool/(22830:22832): CREATE:
+Nombre tabla       : JUAN
+Consistencia       : CREATE
+Particiones        : 5
+Tiempo compactacion: 0
+[INFO] 22:19:35:945 MemoryPool/(22830:22832): CREATE ENVIADO
+
+[INFO] 22:25:32:498 MemoryPool/(22830:22832): INSERT:
+Nombre tabla: METALS
+Valor KEY   : 5
+Value       : JOLA
+Timestamp   : 1563413132497
+[INFO] 22:25:52:150 MemoryPool/(16152:16154): CREATE:
+Nombre tabla       : JOHN
+Consistencia       : CREATE
+Particiones        : 5
+Tiempo compactacion: 0
+[INFO] 22:25:52:150 MemoryPool/(16152:16154): CREATE ENVIADO
+
+[INFO] 22:26:18:456 MemoryPool/(3510:3512): CREATE:
+Nombre tabla       : PEDRO
+Consistencia       : CREATE
+Particiones        : 3
+Tiempo compactacion: 0
+[INFO] 22:26:18:457 MemoryPool/(3510:3512): CREATE ENVIADO
+
+[INFO] 22:29:04:665 MemoryPool/(8548:8550): CREATE:
+Nombre tabla       : SILVANA
+Consistencia       : CREATE
+Particiones        : 5
+Tiempo compactacion: 0
+[INFO] 22:29:04:665 MemoryPool/(8548:8550): CREATE ENVIADO
+
+[INFO] 22:33:53:447 MemoryPool/(24098:24104): CREATE:
+Nombre tabla       : AGUSTIN
+Consistencia       : CREATE
+Particiones        : 5
+Tiempo compactacion: 0
+[INFO] 22:33:53:451 MemoryPool/(24098:24104): CREATE ENVIADO
+
+[INFO] 22:34:34:732 MemoryPool/(12512:12514): CREATE:
+Nombre tabla       : TOMAS
+Consistencia       : CREATE
+Particiones        : 5
+Tiempo compactacion: 0
+[INFO] 22:34:34:736 MemoryPool/(12512:12514): CREATE ENVIADO
+
+[INFO] 22:39:36:502 MemoryPool/(17473:17480): CREATE:
+Nombre tabla       : NESTOR
+Consistencia       : EC
+Particiones        : 5
+Tiempo compactacion: 3000
+[INFO] 22:39:36:502 MemoryPool/(17473:17480): CREATE ENVIADO
+
+[INFO] 01:08:19:329 MemoryPool/(17473:17480): DESCRIBE ENVIADO
+
+[INFO] 05:10:30:409 MemoryPool/(17473:17480): CREATE:
+Nombre tabla       : AIL
+Consistencia       : EC
+Particiones        : 3
+Tiempo compactacion: 30000
+[INFO] 05:10:30:410 MemoryPool/(17473:17480): CREATE ENVIADO
+
+[INFO] 05:13:44:376 MemoryPool/(17473:17480): CREATE:
+Nombre tabla       : AIL
+Consistencia       : EC
+Particiones        : 3
+Tiempo compactacion: 30000
+[INFO] 05:13:44:377 MemoryPool/(17473:17480): CREATE ENVIADO
+
+[INFO] 05:13:47:266 MemoryPool/(17473:17480): CREATE:
+Nombre tabla       : AIL
+Consistencia       : EC
+Particiones        : 3
+Tiempo compactacion: 30000
+[INFO] 05:13:47:268 MemoryPool/(17473:17480): CREATE ENVIADO
+
+[INFO] 05:16:38:172 MemoryPool/(17473:17480): CREATE:
+Nombre tabla       : AIL
+Consistencia       : EC
+Particiones        : 3
+Tiempo compactacion: 30000
+[INFO] 05:16:38:173 MemoryPool/(17473:17480): CREATE ENVIADO
+
+[INFO] 05:18:15:995 MemoryPool/(4290:4292): CREATE:
+Nombre tabla       : AIL
+Consistencia       : EC
+Particiones        : 3
+Tiempo compactacion: 30000
+[INFO] 05:18:15:995 MemoryPool/(4290:4292): CREATE ENVIADO
+
+[INFO] 05:18:52:820 MemoryPool/(3660:3662): CREATE:
+Nombre tabla       : AIL
+Consistencia       : EC
+Particiones        : 3
+Tiempo compactacion: 30000
+[INFO] 05:18:52:821 MemoryPool/(3660:3662): CREATE ENVIADO
+
+[INFO] 05:19:06:695 MemoryPool/(3660:3662): CREATE:
+Nombre tabla       : asd
+Consistencia       : EC
+Particiones        : 3
+Tiempo compactacion: 30000
+[INFO] 05:19:06:696 MemoryPool/(3660:3662): CREATE ENVIADO
+
+[INFO] 05:23:28:320 MemoryPool/(21904:21906): CREATE:
+Nombre tabla       : AIL
+Consistencia       : SC
+Particiones        : 5
+Tiempo compactacion: 3000
+[INFO] 05:23:28:320 MemoryPool/(21904:21906): CREATE ENVIADO
+
+[INFO] 05:25:16:57 MemoryPool/(32603:32610): CREATE:
+Nombre tabla       : AIL
+Consistencia       : SC
+Particiones        : 5
+Tiempo compactacion: 3000
+[INFO] 05:25:16:57 MemoryPool/(32603:32610): CREATE ENVIADO
+
+[INFO] 05:27:45:963 MemoryPool/(20341:20353): CREATE:
+Nombre tabla       : AIL
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 5000
+[INFO] 05:27:45:964 MemoryPool/(20341:20353): CREATE ENVIADO
+
+[INFO] 05:27:48:581 MemoryPool/(20341:20353): CREATE:
+Nombre tabla       : AIL
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 5000
+[INFO] 05:27:48:581 MemoryPool/(20341:20353): CREATE ENVIADO
+
+[INFO] 05:27:53:78 MemoryPool/(20341:20353): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 5000
+[INFO] 05:27:53:79 MemoryPool/(20341:20353): CREATE ENVIADO
+
+[INFO] 05:29:14:940 MemoryPool/(20341:20353): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 5000
+[INFO] 05:29:14:941 MemoryPool/(20341:20353): CREATE ENVIADO
+
+[INFO] 05:29:33:571 MemoryPool/(20341:20353): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 5000
+[INFO] 05:29:33:572 MemoryPool/(20341:20353): CREATE ENVIADO
+
+[INFO] 05:30:11:990 MemoryPool/(20341:20353): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 5000
+[INFO] 05:30:11:990 MemoryPool/(20341:20353): CREATE ENVIADO
+
+[INFO] 05:31:00:805 MemoryPool/(20341:20353): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 5000
+[INFO] 05:31:00:806 MemoryPool/(20341:20353): CREATE ENVIADO
+
+[INFO] 05:31:30:87 MemoryPool/(20341:20353): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 5000
+[INFO] 05:31:30:88 MemoryPool/(20341:20353): CREATE ENVIADO
+
+[INFO] 05:31:53:864 MemoryPool/(20341:20353): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 5000
+[INFO] 05:31:53:866 MemoryPool/(20341:20353): CREATE ENVIADO
+
+[INFO] 05:33:11:654 MemoryPool/(20341:20353): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 5000
+[INFO] 05:33:11:654 MemoryPool/(20341:20353): CREATE ENVIADO
+
+[INFO] 05:34:26:740 MemoryPool/(21310:21317): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 05:34:26:740 MemoryPool/(21310:21317): CREATE ENVIADO
+
+[INFO] 05:36:59:955 MemoryPool/(21946:21948): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 5
+Tiempo compactacion: 3000
+[INFO] 05:36:59:955 MemoryPool/(21946:21948): CREATE ENVIADO
+
+[INFO] 05:38:12:179 MemoryPool/(21946:21948): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 5
+Tiempo compactacion: 3000
+[INFO] 05:38:12:180 MemoryPool/(21946:21948): CREATE ENVIADO
+
+[INFO] 05:38:15:783 MemoryPool/(21946:21948): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 5
+Tiempo compactacion: 3000
+[INFO] 05:38:15:783 MemoryPool/(21946:21948): CREATE ENVIADO
+
+[INFO] 05:38:16:395 MemoryPool/(21946:21948): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 5
+Tiempo compactacion: 3000
+[INFO] 05:38:16:396 MemoryPool/(21946:21948): CREATE ENVIADO
+
+[INFO] 05:38:16:939 MemoryPool/(21946:21948): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 5
+Tiempo compactacion: 3000
+[INFO] 05:38:16:940 MemoryPool/(21946:21948): CREATE ENVIADO
+
+[INFO] 05:38:17:610 MemoryPool/(21946:21948): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 5
+Tiempo compactacion: 3000
+[INFO] 05:38:17:610 MemoryPool/(21946:21948): CREATE ENVIADO
+
+[INFO] 05:38:18:173 MemoryPool/(21946:21948): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 5
+Tiempo compactacion: 3000
+[INFO] 05:38:18:173 MemoryPool/(21946:21948): CREATE ENVIADO
+
+[INFO] 05:38:18:717 MemoryPool/(21946:21948): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 5
+Tiempo compactacion: 3000
+[INFO] 05:38:18:718 MemoryPool/(21946:21948): CREATE ENVIADO
+
+[INFO] 05:38:19:227 MemoryPool/(21946:21948): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 5
+Tiempo compactacion: 3000
+[INFO] 05:38:19:227 MemoryPool/(21946:21948): CREATE ENVIADO
+
+[INFO] 05:40:20:994 MemoryPool/(27263:27277): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 5
+Tiempo compactacion: 3000
+[INFO] 05:40:20:994 MemoryPool/(27263:27277): CREATE ENVIADO
+
+[INFO] 05:40:56:499 MemoryPool/(3253:3263): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 5
+Tiempo compactacion: 3000
+[INFO] 05:40:56:500 MemoryPool/(3253:3263): CREATE ENVIADO
+
+[INFO] 05:40:58:39 MemoryPool/(3253:3263): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 5
+Tiempo compactacion: 3000
+[INFO] 05:40:58:40 MemoryPool/(3253:3263): CREATE ENVIADO
+
+[INFO] 05:40:58:481 MemoryPool/(3253:3263): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 5
+Tiempo compactacion: 3000
+[INFO] 05:40:58:481 MemoryPool/(3253:3263): CREATE ENVIADO
+
+[INFO] 05:40:58:743 MemoryPool/(3253:3263): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 5
+Tiempo compactacion: 3000
+[INFO] 05:40:58:744 MemoryPool/(3253:3263): CREATE ENVIADO
+
+[INFO] 05:40:58:982 MemoryPool/(3253:3263): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 5
+Tiempo compactacion: 3000
+[INFO] 05:40:58:982 MemoryPool/(3253:3263): CREATE ENVIADO
+
+[INFO] 05:41:05:9 MemoryPool/(3253:3263): CREATE:
+Nombre tabla       : NER
+Consistencia       : SC
+Particiones        : 5
+Tiempo compactacion: 3000
+[INFO] 05:41:05:9 MemoryPool/(3253:3263): CREATE ENVIADO
+
+[INFO] 05:41:59:976 MemoryPool/(14554:14565): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 05:41:59:976 MemoryPool/(14554:14565): CREATE ENVIADO
+
+[INFO] 05:42:01:667 MemoryPool/(14554:14565): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 05:42:01:667 MemoryPool/(14554:14565): CREATE ENVIADO
+
+[INFO] 05:42:20:264 MemoryPool/(856:863): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 05:42:20:265 MemoryPool/(856:863): CREATE ENVIADO
+
+[INFO] 05:42:21:250 MemoryPool/(856:863): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 05:42:21:250 MemoryPool/(856:863): CREATE ENVIADO
+
+[INFO] 05:42:53:808 MemoryPool/(30437:30444): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 05:42:53:809 MemoryPool/(30437:30444): CREATE ENVIADO
+
+[INFO] 05:43:27:704 MemoryPool/(30437:30444): INSERT:
+Nombre tabla: IVAN
+Valor KEY   : 4
+Value       : HOLI
+Timestamp   : 1563439407704
+[INFO] 05:43:27:705 MemoryPool/(30437:30444): PAQUETE INSERT ENVIADO
+[INFO] 05:43:27:706 MemoryPool/(30437:30444): Se insertó la key en la memtable con éxito.
+[INFO] 05:44:20:321 MemoryPool/(31951:31961): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 05:44:20:321 MemoryPool/(31951:31961): CREATE ENVIADO
+
+[INFO] 05:45:46:358 MemoryPool/(9449:9462): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 05:45:46:359 MemoryPool/(9449:9462): CREATE ENVIADO
+
+[INFO] 05:51:50:299 MemoryPool/(17639:17641): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 05:51:50:300 MemoryPool/(17639:17641): CREATE ENVIADO
+
+[INFO] 05:51:54:572 MemoryPool/(17639:17641): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 05:51:54:572 MemoryPool/(17639:17641): CREATE ENVIADO
+
+[INFO] 05:53:09:959 MemoryPool/(30212:30220): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 05:53:09:960 MemoryPool/(30212:30220): CREATE ENVIADO
+
+[INFO] 05:56:04:823 MemoryPool/(30212:30220): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 05:56:04:824 MemoryPool/(30212:30220): CREATE ENVIADO
+
+[INFO] 05:56:06:188 MemoryPool/(30212:30220): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 05:56:06:188 MemoryPool/(30212:30220): CREATE ENVIADO
+
+[INFO] 05:56:06:434 MemoryPool/(30212:30220): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 05:56:06:434 MemoryPool/(30212:30220): CREATE ENVIADO
+
+[INFO] 05:56:06:601 MemoryPool/(30212:30220): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 05:56:06:602 MemoryPool/(30212:30220): CREATE ENVIADO
+
+[INFO] 05:56:06:772 MemoryPool/(30212:30220): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 05:56:06:773 MemoryPool/(30212:30220): CREATE ENVIADO
+
+[INFO] 05:56:06:923 MemoryPool/(30212:30220): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 05:56:06:924 MemoryPool/(30212:30220): CREATE ENVIADO
+
+[INFO] 05:56:07:69 MemoryPool/(30212:30220): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 05:56:07:69 MemoryPool/(30212:30220): CREATE ENVIADO
+
+[INFO] 05:56:07:179 MemoryPool/(30212:30220): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 05:56:07:180 MemoryPool/(30212:30220): CREATE ENVIADO
+
+[INFO] 05:56:07:316 MemoryPool/(30212:30220): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 05:56:07:316 MemoryPool/(30212:30220): CREATE ENVIADO
+
+[INFO] 05:56:07:451 MemoryPool/(30212:30220): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 05:56:07:452 MemoryPool/(30212:30220): CREATE ENVIADO
+
+[INFO] 05:57:02:792 MemoryPool/(23925:23932): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 05:57:02:792 MemoryPool/(23925:23932): CREATE ENVIADO
+
+[INFO] 05:57:07:747 MemoryPool/(23925:23932): CREATE:
+Nombre tabla       : TAKA
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 05:57:07:747 MemoryPool/(23925:23932): CREATE ENVIADO
+
+[INFO] 05:58:16:188 MemoryPool/(22393:22395): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 05:58:16:189 MemoryPool/(22393:22395): CREATE ENVIADO
+
+[INFO] 05:58:19:929 MemoryPool/(22393:22395): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 05:58:19:929 MemoryPool/(22393:22395): CREATE ENVIADO
+
+[INFO] 05:58:21:409 MemoryPool/(22393:22395): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 05:58:21:410 MemoryPool/(22393:22395): CREATE ENVIADO
+
+[INFO] 05:58:21:943 MemoryPool/(22393:22395): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 05:58:21:944 MemoryPool/(22393:22395): CREATE ENVIADO
+
+[INFO] 05:58:22:317 MemoryPool/(22393:22395): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 05:58:22:318 MemoryPool/(22393:22395): CREATE ENVIADO
+
+[INFO] 05:58:22:716 MemoryPool/(22393:22395): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 05:58:22:717 MemoryPool/(22393:22395): CREATE ENVIADO
+
+[INFO] 05:58:23:99 MemoryPool/(22393:22395): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 05:58:23:99 MemoryPool/(22393:22395): CREATE ENVIADO
+
+[INFO] 05:58:23:498 MemoryPool/(22393:22395): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 05:58:23:499 MemoryPool/(22393:22395): CREATE ENVIADO
+
+[INFO] 05:58:23:949 MemoryPool/(22393:22395): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 05:58:23:950 MemoryPool/(22393:22395): CREATE ENVIADO
+
+[INFO] 05:58:24:391 MemoryPool/(22393:22395): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 05:58:24:391 MemoryPool/(22393:22395): CREATE ENVIADO
+
+[INFO] 06:00:17:303 MemoryPool/(8159:8161): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 06:00:17:304 MemoryPool/(8159:8161): CREATE ENVIADO
+
+[INFO] 06:00:18:674 MemoryPool/(8159:8161): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 06:00:18:675 MemoryPool/(8159:8161): CREATE ENVIADO
+
+[INFO] 06:00:44:188 MemoryPool/(8159:8161): INSERT:
+Nombre tabla: IVAN
+Valor KEY   : 4
+Value       : ASD
+Timestamp   : 1563440444187
+[INFO] 06:00:44:188 MemoryPool/(8159:8161): PAQUETE INSERT ENVIADO
+[INFO] 06:00:44:190 MemoryPool/(8159:8161): Se insertó la key en la memtable con éxito.
+[INFO] 06:04:24:630 MemoryPool/(18438:18440): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 06:04:24:630 MemoryPool/(18438:18440): CREATE ENVIADO
+
+[INFO] 06:04:25:752 MemoryPool/(18438:18440): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 06:04:25:752 MemoryPool/(18438:18440): CREATE ENVIADO
+
+[INFO] 06:04:26:219 MemoryPool/(18438:18440): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 06:04:26:219 MemoryPool/(18438:18440): CREATE ENVIADO
+
+[INFO] 06:04:26:626 MemoryPool/(18438:18440): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 06:04:26:626 MemoryPool/(18438:18440): CREATE ENVIADO
+
+[INFO] 06:04:27:11 MemoryPool/(18438:18440): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 06:04:27:11 MemoryPool/(18438:18440): CREATE ENVIADO
+
+[INFO] 06:04:27:394 MemoryPool/(18438:18440): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 06:04:27:394 MemoryPool/(18438:18440): CREATE ENVIADO
+
+[INFO] 06:04:27:759 MemoryPool/(18438:18440): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 06:04:27:759 MemoryPool/(18438:18440): CREATE ENVIADO
+
+[INFO] 06:04:28:132 MemoryPool/(18438:18440): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 06:04:28:132 MemoryPool/(18438:18440): CREATE ENVIADO
+
+[INFO] 06:04:28:540 MemoryPool/(18438:18440): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 06:04:28:540 MemoryPool/(18438:18440): CREATE ENVIADO
+
+[INFO] 06:04:28:938 MemoryPool/(18438:18440): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 06:04:28:938 MemoryPool/(18438:18440): CREATE ENVIADO
+
+[INFO] 06:04:29:332 MemoryPool/(18438:18440): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 06:04:29:333 MemoryPool/(18438:18440): CREATE ENVIADO
+
+[INFO] 06:04:29:706 MemoryPool/(18438:18440): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 06:04:29:706 MemoryPool/(18438:18440): CREATE ENVIADO
+
+[INFO] 06:04:30:80 MemoryPool/(18438:18440): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 06:04:30:80 MemoryPool/(18438:18440): CREATE ENVIADO
+
+[INFO] 06:04:30:488 MemoryPool/(18438:18440): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 06:04:30:488 MemoryPool/(18438:18440): CREATE ENVIADO
+
+[INFO] 06:04:30:896 MemoryPool/(18438:18440): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 06:04:30:896 MemoryPool/(18438:18440): CREATE ENVIADO
+
+[INFO] 06:04:31:284 MemoryPool/(18438:18440): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 06:04:31:284 MemoryPool/(18438:18440): CREATE ENVIADO
+
+[INFO] 06:04:31:712 MemoryPool/(18438:18440): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 06:04:31:713 MemoryPool/(18438:18440): CREATE ENVIADO
+
+[INFO] 06:04:32:110 MemoryPool/(18438:18440): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 06:04:32:110 MemoryPool/(18438:18440): CREATE ENVIADO
+
+[INFO] 06:04:32:528 MemoryPool/(18438:18440): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 06:04:32:528 MemoryPool/(18438:18440): CREATE ENVIADO
+
+[INFO] 06:04:32:902 MemoryPool/(18438:18440): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 06:04:32:902 MemoryPool/(18438:18440): CREATE ENVIADO
+
+[INFO] 06:04:33:277 MemoryPool/(18438:18440): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 06:04:33:277 MemoryPool/(18438:18440): CREATE ENVIADO
+
+[INFO] 06:04:33:616 MemoryPool/(18438:18440): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 06:04:33:616 MemoryPool/(18438:18440): CREATE ENVIADO
+
+[INFO] 06:04:33:3 MemoryPool/(18438:18440): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 06:04:34:4 MemoryPool/(18438:18440): CREATE ENVIADO
+
+[INFO] 06:04:41:877 MemoryPool/(18438:18440): CREATE:
+Nombre tabla       : ZEPPA
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 06:04:41:878 MemoryPool/(18438:18440): CREATE ENVIADO
+
+[INFO] 06:04:43:389 MemoryPool/(18438:18440): CREATE:
+Nombre tabla       : ZEPPA
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 06:04:43:389 MemoryPool/(18438:18440): CREATE ENVIADO
+
+[INFO] 06:06:45:5 MemoryPool/(11600:11602): CREATE:
+Nombre tabla       : IVAN
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 3000
+[INFO] 06:06:45:5 MemoryPool/(11600:11602): CREATE ENVIADO
+

@@ -5,7 +5,7 @@
 void* recibir_paquetes(void *arg)
 {
 	int cliente_fd = *((int *) arg);
-	free(arg);
+	//free(arg);
 	uint16_t rta;
 
 	//mutex
@@ -31,12 +31,15 @@ void* recibir_paquetes(void *arg)
 				break;
 			}
 
-			uint16_t rta= APIcreateRESPUESTA(paquete_create_fs);
+			rta= APIcreateRESPUESTA(paquete_create_fs);
+			printf("%d\n",rta);
 
-			if (send(cliente_fd, &rta, sizeof(uint16_t), MSG_DONTWAIT) <= 0)
+
+
+			if (send(cliente_fd, &rta,sizeof(uint16_t), MSG_DONTWAIT) <= 0)
 				puts("Error en envio de CODIGO DE RESPUESTA.");
 
-			loggear_request_create_mp(paquete_create_de_mp);
+			//loggear_request_create_mp(paquete_create_de_mp);
 			break;
 
 		case DROP:;
@@ -60,15 +63,23 @@ void* recibir_paquetes(void *arg)
 
 			if(strcmp(paquete_describe->nombre_tabla,"ALL") == 0){
 				t_dictionary* metadatasDeTablasPedidas = APIdescribeTodasLasTablas();
-				if(metadatasDeTablasPedidas != NULL)
+				if(metadatasDeTablasPedidas != NULL){
 					imprimirListaMetadatas(metadatasDeTablasPedidas);
+					//serealizar_respuesta_describe(metadatasDeTablasPedidas);
+
 				dictionary_destroy_and_destroy_elements(metadatasDeTablasPedidas,free);
 
 			} else{
 
-				t_dictionary* metadataDeTablaPedida = APIdescribe(paquete_describe);
-				if(metadataDeTablaPedida != NULL)
-					imprimirListaMetadatas(metadataDeTablaPedida);
+				respuestaDESCRIBE* metadataDeTablaPedida = APIdescribe(paquete_describe);
+				if(metadataDeTablaPedida->rta == 22){
+					uint16_t rta=22;
+				send(cliente_fd, &rta, sizeof(uint16_t), MSG_DONTWAIT);
+				free(metadataDeTablaPedida);
+				break;
+				}
+				imprimirListaMetadatas(metadataDeTablaPedida->tablas);
+				//serealizar_respuesta_describe(metadataDeTablaPedida);
 				dictionary_destroy_and_destroy_elements(metadataDeTablaPedida,free);
 
 			}
@@ -139,6 +150,7 @@ void* recibir_paquetes(void *arg)
 		pthread_exit(NULL);
 
 
+}
 }
 
 //----------------------------TIPO DE OPERACION RECIBIDA
@@ -275,6 +287,7 @@ t_paquete_create_de_mp* deserializar_paquete_create_de_mp(int socket_cliente)
 	memcpy(&(paquete_create->tiempo_compactacion),buffer + desplazamiento, sizeof(int));
 	desplazamiento+= sizeof(int);
 
+	printf("tiempo de compractacion %d",paquete_create->tiempo_compactacion);
 	paquete_create->nombre_tabla_long = tamanio_tabla;
 	paquete_create->consistencia_long = tamanio_consistencia;
 
@@ -315,4 +328,49 @@ t_paquete_create* adaptadorDePaquete(t_paquete_create_de_mp* paquete_create_mp){
 
 	return paquete_adaptado;
 }
+
+
+void* serealizar_respuesta_describe(respuestaDESCRIBE* metadatasDeTablasPedidas){
+ int cantidadDeTablas= dictionary_size(metadatasDeTablasPedidas->tablas);
+ int i =0;
+ t_list* ListaDeTablas= convertirDiccionaryALista(metadatasDeTablasPedidas->tablas);
+ while (i<cantidadDeTablas){
+	 valoresDescribe* valorTabla = malloc(sizeof(valoresDescribe));
+	 valorTabla = list_get(ListaDeTablas,i);
+
+
+ }
+
+
+ }
+
+
+
+
+
+
+t_list* convertirDiccionaryALista(t_dictionary* diccionario){
+	t_list* lista = list_create();
+void* _pasarAvaloresDescribe(char* key, void* metadata){
+	pasarAvaloresDescribe(key, metadata,lista);
+}
+
+	dictionary_iterator(diccionario,_pasarAvaloresDescribe);
+
+}
+
+void* pasarAvaloresDescribe(char* key, void* metadata,t_list* lista){
+	valoresDescribe* valorTabla = malloc(sizeof(valoresDescribe));
+	int longNombreTabla= strlen(valorTabla->nombre_tabla)+1;
+	valorTabla->nombre_tabla=malloc(longNombreTabla);
+
+	valorTabla->nombre_tabla_long=longNombreTabla;
+	strcpy(valorTabla->nombre_tabla,key);
+	valorTabla->metadata.consistencia= ((t_metadata*) metadata)->consistencia;
+	valorTabla->metadata.particiones= ((t_metadata*) metadata)->particiones;
+	valorTabla->metadata.tiempo_de_compactacion= ((t_metadata*) metadata)->tiempo_de_compactacion;
+	list_add(lista,valorTabla);
+
+}
+
 

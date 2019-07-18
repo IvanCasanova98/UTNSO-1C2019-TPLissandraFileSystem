@@ -148,18 +148,20 @@ t_paquete_create* paquete_create(char* parametros, t_log* logger)
 	if(parametros==NULL || !validarConsistencia(parametros)){
 		return NULL;
 	}
-
+	consistencia =parametros;
 	parametros = strtok(NULL, " ");
 	if(parametros==NULL || !validarNumero(parametros) || !strcmp(parametros,"0")){
 		return NULL;
 	}
 
 	particiones = atoi(parametros);
+
 	parametros = strtok(NULL, " ");
 	if(parametros==NULL || !validarNumero(parametros)){
 		return NULL;
 	}
 
+	compactacion=atoi(parametros);
 	t_paquete_create* paquete = crear_paquete_create(nombre_tabla, consistencia,particiones,compactacion);
 
 	loggear_paquete_create(paquete,logger);

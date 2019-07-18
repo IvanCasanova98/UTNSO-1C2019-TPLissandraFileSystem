@@ -149,6 +149,7 @@ void* serializar_paquete_create(t_paquete_create* paquete)
 
 	memcpy(buffer + desplazamiento, &paquete->nombre_tabla_long, sizeof(uint32_t));
 	desplazamiento+= sizeof(uint32_t);
+
 	memcpy(buffer + desplazamiento, &paquete->consistencia_long, sizeof(uint32_t));
 	desplazamiento+= sizeof(uint32_t);
 
@@ -365,9 +366,9 @@ void enviar_create_lissandra(t_paquete_create* paquete,t_config* config,t_log* l
 	free(paquete);
 
 	//------RESPUESTA DE LISSANDRA:
-
 	uint16_t rta;
-	recv(conexion, &rta, sizeof(uint16_t) ,MSG_DONTWAIT);
+	recv(conexion, &rta,sizeof(uint16_t) ,MSG_DONTWAIT);
+	printf("%d",rta);
 	protocolo_respuesta(rta,logger);
 
 	terminar_conexion(conexion);

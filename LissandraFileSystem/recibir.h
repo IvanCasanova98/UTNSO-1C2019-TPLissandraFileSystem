@@ -110,6 +110,24 @@ typedef struct respuestaSELECT
 	char* keyHallada;
 }respuestaSELECT;
 
+typedef struct respuestaDESCRIBE
+{
+	uint16_t rta;
+	t_dictionary* tablas;
+}respuestaDESCRIBE;
+
+typedef struct valoresDescribe
+{
+	uint32_t nombre_tabla_long; //Longitud del nombre de la tabla
+	char* nombre_tabla;
+	t_metadata metadata;
+
+}valoresDescribe;
+
+
+void* pasarAvaloresDescribe(char* key, void* metadata,t_list* lista);
+t_list* convertirDiccionaryALista(t_dictionary* diccionario);
+void* serealizar_respuesta_describe(respuestaDESCRIBE* metadatasDeTablasPedidas);
 //--------------------RECIBIR PAQUETE
 void* recibir_paquetes(void*);
 
