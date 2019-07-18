@@ -63,31 +63,52 @@ void* recibir_paquetes(void *arg)
 		case DESCRIBE:;
 			t_paquete_describe* paquete_describe= deserializar_paquete_describe(cliente_fd);
 
-			if(strcmp(paquete_describe->nombre_tabla,"ALL") == 0){
-				t_dictionary* metadatasDeTablasPedidas = APIdescribeTodasLasTablas();
-				if(metadatasDeTablasPedidas != NULL){
-					imprimirListaMetadatas(metadatasDeTablasPedidas);
-					serealizar_respuesta_describe(metadatasDeTablasPedidas,cliente_fd);
+			if(paquete_describe != NULL)
+			{
+
+				if(strcmp(paquete_describe->nombre_tabla,"ALL") == 0){
+
+					respuestaDESCRIBE* metadatasDeTablasPedidas = APIdescribeTodasLasTablasRESPUESTA();
+
+					if(metadatasDeTablasPedidas->rta == 25){
+						uint16_t rta=25;
+						send(cliente_fd, &rta, sizeof(uint16_t), 0);
+
+	//					imprimirListaMetadatas(metadatasDeTablasPedidas); SI DESCOMENTAS ESTO ROMPE PORQUE ES TIPO respuestaDESCRIBE*
+						serealizar_respuesta_describe(metadatasDeTablasPedidas,cliente_fd);
+					}
+					if(metadatasDeTablasPedidas->rta == 23){
+						uint16_t rta=23;
+					send(cliente_fd, &rta, sizeof(uint16_t), 0);
+					free(metadatasDeTablasPedidas);
+					break;
+					}
+					//ME FALTA SI LA RTA ES ERRONEA.
+					//dictionary_destroy_and_destroy_elements(metadatasDeTablasPedidas,free);
+
+				} else{
+
+					respuestaDESCRIBE* metadataDeTablaPedida = APIdescribeRESPUESTA(paquete_describe);
+					if(metadataDeTablaPedida->rta == 22){
+						uint16_t rta=22;
+					send(cliente_fd, &rta, sizeof(uint16_t), 0);
+					free(metadataDeTablaPedida);
+					break;
+					}
+
+					if(metadataDeTablaPedida->rta == 20){
+						uint16_t rta=20;
+					send(cliente_fd, &rta, sizeof(uint16_t), 0);
+
+	//				imprimirListaMetadatas(metadataDeTablaPedida->tablas);
+					serealizar_respuesta_describe(metadataDeTablaPedida,cliente_fd);
+					//dictionary_destroy_and_destroy_elements(metadataDeTablaPedida,free);
+					}
 				}
-				//dictionary_destroy_and_destroy_elements(metadatasDeTablasPedidas,free);
-
-			} else{
-
-				respuestaDESCRIBE* metadataDeTablaPedida = APIdescribeRESPUESTA(paquete_describe);
-				if(metadataDeTablaPedida->rta == 22){
-					uint16_t rta=22;
+			} else
+			{
+				uint16_t rta=24;
 				send(cliente_fd, &rta, sizeof(uint16_t), 0);
-				free(metadataDeTablaPedida);
-				break;
-				}
-				if(metadataDeTablaPedida->rta == 20){
-					uint16_t rta=20;
-				send(cliente_fd, &rta, sizeof(uint16_t), 0);
-
-				imprimirListaMetadatas(metadataDeTablaPedida->tablas);
-				serealizar_respuesta_describe(metadataDeTablaPedida,cliente_fd);
-				//dictionary_destroy_and_destroy_elements(metadataDeTablaPedida,free);
-				}
 			}
 			break;
 
@@ -336,35 +357,27 @@ t_paquete_create* adaptadorDePaquete(t_paquete_create_de_mp* paquete_create_mp){
 }
 
 
-void* serealizar_respuesta_describe(respuestaDESCRIBE* metadatasDeTablasPedidas,int conexion){
-void* _pasarAvaloresDescribe(char* key, void* metadata){
-	pasarAvaloresDescribe(key,  metadata,conexion);
+void serealizar_respuesta_describe(respuestaDESCRIBE* metadatasDeTablasPedidas,int conexion){
+	void _pasarAvaloresDescribe(char* key, void* metadata){
+		pasarAvaloresDescribe(key,  metadata,conexion);
+	}
 
-}
-
-int cantidadDeTablas= dictionary_size(metadatasDeTablasPedidas->tablas);
- int i =0;
- send(conexion, &cantidadDeTablas, sizeof(int), 0);
- dictionary_iterator(metadatasDeTablasPedidas->tablas,_pasarAvaloresDescribe);
+	int cantidadDeTablas= dictionary_size(metadatasDeTablasPedidas->tablas);
+	int i =0;
+	send(conexion, &cantidadDeTablas, sizeof(int), 0);
+	dictionary_iterator(metadatasDeTablasPedidas->tablas,_pasarAvaloresDescribe);
  }
 
 
+void pasarAvaloresDescribe(char* key, void* metadata,int conexion){
 
-
-
-
-
-
-
-
-void* pasarAvaloresDescribe(char* key, void* metadata,int conexion){
-	t_metadata* metadataTabla = metadata;
-
+	t_metadata_fs* metadataTabla = metadata;
 
 	int longNombreTabla= strlen(key)+1;
-	int longConsistencia=strlen(pasarAConsistenciaChar(metadataTabla->consistencia));
+	int longConsistencia=strlen(pasarAConsistenciaChar(metadataTabla->consistencia))+1; //AGREGÉ UN +1
 
 	void* buffer=malloc(longNombreTabla+longConsistencia +sizeof(int)*4);
+
 	int desplazamiento=0;
 	memcpy(buffer+desplazamiento, &longNombreTabla,sizeof(int));
 	desplazamiento+=sizeof(int);
@@ -374,9 +387,10 @@ void* pasarAvaloresDescribe(char* key, void* metadata,int conexion){
 	desplazamiento+=longNombreTabla;
 	memcpy(buffer+desplazamiento, pasarAConsistenciaChar(metadataTabla->consistencia),longConsistencia);
 	desplazamiento+=longConsistencia;
+
 	memcpy(buffer+desplazamiento,&metadataTabla->particiones,sizeof(int));
 	desplazamiento+=sizeof(int);
-	memcpy(buffer+desplazamiento,metadataTabla->tiempo_de_compactacion,sizeof(int));
+	memcpy(buffer+desplazamiento,&metadataTabla->tiempo_de_compactacion,sizeof(int));
 	desplazamiento+=sizeof(int);
 
 	send(conexion, buffer, longNombreTabla+longConsistencia +sizeof(int)*4, 0);
@@ -384,5 +398,13 @@ void* pasarAvaloresDescribe(char* key, void* metadata,int conexion){
 
 
 }
+
+
+
+
+
+
+
+
 
 

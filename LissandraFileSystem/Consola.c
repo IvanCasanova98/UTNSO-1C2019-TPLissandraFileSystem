@@ -134,7 +134,7 @@ void deployMenu(){
 
 
 void imprimirMetadataDeTabla(char* nombre_tabla){
-	t_metadata* metadata = obtenerMetadataTabla(nombre_tabla);
+	t_metadata_fs* metadata = obtenerMetadataTabla(nombre_tabla);
 	printf("%s\t",nombre_tabla);
 	imprimirMetadata(metadata);
 	free(metadata);

@@ -55,12 +55,18 @@ void  APIdrop(t_paquete_drop*);
 char* APIselect(t_paquete_select*);
 void  APIinsert(t_paquete_insert*);
 void  APIcreate(t_paquete_create*);
+t_dictionary*  APIdescribe(t_paquete_describe*);
+t_dictionary*  APIdescribeTodasLasTablas();
+
+//-------------------------------RESPUESTAS
+
 respuestaSELECT* APIselectRESPUESTA(t_paquete_select* paquete_select);
 uint16_t APIinsertRESPUESTA(t_paquete_insert* paquete_insert);
 uint16_t APIcreateRESPUESTA(t_paquete_create* paquete_create);
 uint16_t APIdropRESPUESTA(t_paquete_drop* paquete_drop);
-t_dictionary*  APIdescribe(t_paquete_describe*);
-t_dictionary*  APIdescribeTodasLasTablas();
+void* APIdescribeTodasLasTablasRESPUESTA();
+respuestaDESCRIBE* APIdescribeRESPUESTA(t_paquete_describe* paquete_describe);
+
 //*************************************
 void liberarRegistro(void* registro);
 void verificarSemaforoMemTable();
@@ -81,7 +87,7 @@ char* DirectorioDeTemporalNuevo(char* nombretabla);
 void mostrarMetadataTablas(char*nombreTabla,void* elemento);
 void imprimirListaMetadatas(t_dictionary * metadatas);
 void imprimirMetadataDeTabla(char* nombre_tabla);
-void imprimirMetadata(t_metadata* metadataDeTablaPedida);
+void imprimirMetadata(t_metadata_fs* metadataDeTablaPedida);
 void listarTablas(); //ESTA FUNCION NO SIRVE PARA NADA, SOLO POR SI QUEREMOS LISTARLAS.
 t_list* listarTablasExistentes();
 char* DirectorioDeTemporalCompactacion(char* nombretabla,int nroTemporal);
@@ -93,9 +99,9 @@ void crearParticiones(char*nombreTabla ,int nroParticiones);
 char* elegirMayorTimeStamp(t_list* RegistrosEncontrados);
 t_registro* crearRegistro (char*value,uint16_t key,long long timestamp);
 int particionDeKey(int key,int particiones);
-t_metadata* obtenerMetadataTabla (char* nombreTabla );
+t_metadata_fs* obtenerMetadataTabla (char* nombreTabla );
 char* DirectorioDeTabla(char* tabla);
-t_metadata* crearMetadata(consistency consistencia, int particiones,int tiempo_compactacion);
+t_metadata_fs* crearMetadata(consistency consistencia, int particiones,int tiempo_compactacion);
 int pasarAConsistenciaINT(char* consistencia);
 char* pasarAConsistenciaChar(int consistencia);
 void logLaTablaYaExiste();

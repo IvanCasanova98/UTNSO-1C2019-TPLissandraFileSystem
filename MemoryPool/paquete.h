@@ -44,6 +44,22 @@ typedef struct t_paquete_describe_lfs{
 	char* nombre_tabla;
 } t_paquete_describe_lfs;
 
+typedef enum consistency
+{
+	SC,
+	SHC,
+	EC
+
+}consistency;
+
+typedef struct t_metadata_fs
+{
+	consistency consistencia;
+	int particiones;
+	int tiempo_de_compactacion;
+}t_metadata_fs;
+
+
 typedef struct t_paquete_drop{
 	uint32_t nombre_tabla_long;
 	char* nombre_tabla;

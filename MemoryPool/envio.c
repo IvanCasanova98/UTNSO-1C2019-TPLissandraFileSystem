@@ -301,7 +301,7 @@ void enviar_paquete_describe(t_paquete_describe_lfs* paquete,int socket_cliente,
 }
 
 
-//---------------------------ENVIOS DE SERVIDOR A LISSANDRA
+//-------------------------------------------ENVIOS DE SERVIDOR A LISSANDRA
 
 void enviar_describe_lissandra(t_paquete_describe_lfs* paquete,t_config* config,t_log* logger)
 {
@@ -316,12 +316,14 @@ void enviar_describe_lissandra(t_paquete_describe_lfs* paquete,t_config* config,
 
 	uint16_t rta;
 	recv(conexion, &rta, sizeof(uint16_t) ,0);
-	if(rta==20){
+	if(rta==20 || rta==25){
+		protocolo_respuesta(rta,logger);
 		t_dictionary* diccionario=deserializar_respuesta_describe(conexion);
+		loggearListaMetadatas(diccionario);
 		terminar_conexion(conexion);
 	}else{
-	protocolo_respuesta(rta,logger);
-	terminar_conexion(conexion);
+		protocolo_respuesta(rta,logger);
+		terminar_conexion(conexion);
 	}
 }
 
@@ -342,8 +344,6 @@ void enviar_select_lissandra(t_paquete_select* paquete, t_config* config, t_log*
 	else
 	protocolo_respuesta(rtaSelect->rta,logger);
 
-
-	//printf("\n%d %s\n",rtaSelect->rta,rtaSelect->keyHallada);
 	free(rtaSelect);
 	terminar_conexion(conexion);
 }
@@ -360,7 +360,6 @@ void enviar_insert_lissandra(t_paquete_insert* paquete, t_config* config, t_log*
 	//------RESPUESTA DE LISSANDRA:
 	uint16_t rta;
 	recv(conexion, &rta, sizeof(uint16_t) ,MSG_WAITALL);
-	printf("RESPUESTA: %d",rta);
 	protocolo_respuesta(rta,logger);
 
 	terminar_conexion(conexion);
@@ -377,10 +376,9 @@ void enviar_create_lissandra(t_paquete_create* paquete,t_config* config,t_log* l
 
 	//------RESPUESTA DE LISSANDRA:
 	uint16_t rta;
-	//void* buffer=malloc(sizeof(uint16_t));
 	recv(conexion, &rta,sizeof(uint16_t) ,0);
-	//memcpy(&rta, buffer, sizeof(uint16_t));
-	printf("%d",rta);
+
+
 	protocolo_respuesta(rta,logger);
 
 	terminar_conexion(conexion);
@@ -406,4 +404,16 @@ void enviar_drop_lissandra(t_paquete_create* paquete,t_config* config,t_log* log
 
 }
 
+//----------------------------------------------------------LOGGEAR METADATAS DE LFS
+void loggearListaMetadatas(t_dictionary * metadatas){
+	dictionary_iterator(metadatas,loggearMetadataTablas);
+}
 
+void loggearMetadataTablas(char*nombreTabla,void* elemento){
+
+	t_log* logger= iniciar_logger();
+	t_metadata_fs* metadataDeTablaPedida= (t_metadata_fs*)elemento;
+	log_info(logger,"%s %s %d %d ",nombreTabla,metadataDeTablaPedida->consistencia,metadataDeTablaPedida->particiones,metadataDeTablaPedida->tiempo_de_compactacion);
+	log_destroy(logger);
+
+}

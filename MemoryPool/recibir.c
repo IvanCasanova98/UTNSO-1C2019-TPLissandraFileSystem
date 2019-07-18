@@ -238,33 +238,41 @@ t_dictionary* deserializar_respuesta_describe(int conexion){
 	int cantidadDeTablas;
 	recv(conexion, &cantidadDeTablas, sizeof(int) ,MSG_WAITALL);
 	int i=0;
-	while(i<cantidadDeTablas){
+
+	while(i<cantidadDeTablas)
+	{
+
 		int longNombreTabla;
 		int longConsistencia;
+
 		int desplazamiento=0;
 		recv(conexion, &longNombreTabla, sizeof(int) ,MSG_WAITALL);
 		recv(conexion, &longConsistencia, sizeof(int) ,MSG_WAITALL);
-	void* buffer=malloc(sizeof(int)*2+longNombreTabla+longConsistencia);
-	recv(conexion, buffer,sizeof(int)*2+longNombreTabla+longConsistencia ,MSG_WAITALL);
+
+		void* buffer=malloc(sizeof(int)*2+longNombreTabla+longConsistencia);
 
 
-	char* nombreTabla=malloc(longNombreTabla);
-	t_metadataDescribe* metadata= malloc(sizeof(struct t_metadataDescribe));
-	metadata->consistencia=malloc(longConsistencia);
+		recv(conexion, buffer,sizeof(int)*2+longNombreTabla+longConsistencia ,MSG_WAITALL);
 
 
-	memcpy(nombreTabla,buffer + desplazamiento, longNombreTabla);
-	desplazamiento+= longNombreTabla;
-	memcpy(metadata->consistencia,buffer + desplazamiento, longConsistencia);
-	desplazamiento+= longConsistencia;
-	memcpy(&(metadata->particiones),buffer + desplazamiento, sizeof(int));
-	desplazamiento+= sizeof(int);
-	memcpy(&(metadata->tiempo_de_compactacion),buffer + desplazamiento, sizeof(int));
-	desplazamiento+= sizeof(int);
+		char* nombreTabla=malloc(longNombreTabla);
+		t_metadataDescribe* metadata= malloc(sizeof(longConsistencia)+sizeof(int)*2); //CAMBIE ESTE MALLOC
+		metadata->consistencia=malloc(longConsistencia);
 
-	dictionary_put(diccionarioDescribe,nombreTabla,metadata);
+		memcpy(nombreTabla, buffer + desplazamiento, longNombreTabla);
+		desplazamiento+= longNombreTabla;
+		memcpy(metadata->consistencia,buffer + desplazamiento, longConsistencia);
+		desplazamiento+= longConsistencia;
+		memcpy(&(metadata->particiones),buffer + desplazamiento, sizeof(int));
+		desplazamiento+= sizeof(int);
+		memcpy(&(metadata->tiempo_de_compactacion),buffer + desplazamiento, sizeof(int));
+		desplazamiento+= sizeof(int);
 
+		dictionary_put(diccionarioDescribe,nombreTabla,metadata);
+
+		i++;
 	}
+
 return diccionarioDescribe;
 }
 

@@ -43,12 +43,12 @@ typedef struct  argumentosEnvioPaquete{
 
 }argumentosEnvioPaquete;
 
-typedef struct t_metadata
+typedef struct t_metadata_fs
 {
 	consistency consistencia;
 	int particiones;
 	int tiempo_de_compactacion;
-}t_metadata;
+}t_metadata_fs;
 
 typedef struct t_registro
 {
@@ -89,7 +89,7 @@ typedef struct t_paquete_create
 {
 	uint32_t nombre_tabla_long; //Longitud del nombre de la tabla
 	char* nombre_tabla;
-	t_metadata metadata;
+	t_metadata_fs metadata;
 
 }t_paquete_create;
 
@@ -120,14 +120,14 @@ typedef struct valoresDescribe
 {
 	uint32_t nombre_tabla_long; //Longitud del nombre de la tabla
 	char* nombre_tabla;
-	t_metadata metadata;
+	t_metadata_fs metadata;
 
 }valoresDescribe;
 
 
-void* pasarAvaloresDescribe(char* key, void* metadata,int conexion);
+void pasarAvaloresDescribe(char* key, void* metadata,int conexion);
 
-void* serealizar_respuesta_describe(respuestaDESCRIBE* metadatasDeTablasPedidas,int conexion);
+void serealizar_respuesta_describe(respuestaDESCRIBE* metadatasDeTablasPedidas,int conexion);
 //--------------------RECIBIR PAQUETE
 void* recibir_paquetes(void*);
 

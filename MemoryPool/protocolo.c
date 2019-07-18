@@ -33,15 +33,23 @@ void protocolo_respuesta(uint16_t codigo_respuesta,t_log* logger)
 				break;
 		//********************************** DESCRIBE(2)
 			case 20:;
+			log_info(logger,"DESCRIBE de tabla:");
 				break;
 			case 21:;
+			log_warning(logger,"ERROR ingreso request DESCRIBE.");
 				break;
 			case 22:;
+			log_warning(logger,"NO existe la tabla a describir solicitada.");
 				break;
 			case 23:;
+			log_warning(logger,"NO hay ninguna tabla en el filesystem para describir.");
 				break;
 			case 24:;
+			log_warning(logger,"ERROR recibo de paquete DESCRIBE.");
 				break;
+			case 25:;
+				log_info(logger,"DESCRIBE de todas las tablas:");
+			break;
 		//********************************** SELECT(3)
 			case 31:;
 			log_warning(logger,"ERROR ingreso request SELECT.");
