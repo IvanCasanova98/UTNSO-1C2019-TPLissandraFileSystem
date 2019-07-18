@@ -26,7 +26,7 @@ void retardo_ejecucion(t_config* config);
 void* serializar_mensaje(char* value, int bytes);
 //---------------------------CALCULAR TAMAÑO DE CHAR**
 int tamanio_array(char** array);
-int tamanio_array_puerto(char** array); //borrar
+int tamanio_array_int(int array[]); //borrar
 
 //-------------CALCULAR CANTIDAD DE ELEMENTOS DE ARRAY---------------
 int cant_elementos_array(char** array);

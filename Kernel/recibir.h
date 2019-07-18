@@ -9,6 +9,7 @@
 #include<sys/socket.h>
 #include<commons/string.h>
 
+#include "criterio.h"
 #include "utils.h"
 
 typedef struct{
@@ -21,5 +22,7 @@ void* recibir_buffer(int* size, int socket_cliente);
 void recibir_mensaje(int socket_cliente);
 void recibir_seed(int socket_cliente);
 t_metadata* deserealizar_nodo(int socket);
+
+SEED* deserealizar_seed(int socket_cliente);
 
 #endif /* RECIBIR_H_ */

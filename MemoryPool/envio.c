@@ -23,13 +23,13 @@ void* serializar_array(char** array, int bytes, int cant_elementos)
 	int i = 0;
 
 
-	tamanio=cant_elementos;
-	memcpy(buffer + desplazamiento, &(tamanio), sizeof(int));
-	desplazamiento+= sizeof(int);
+//	tamanio=cant_elementos;
+//	memcpy(buffer + desplazamiento, &(tamanio), sizeof(int));
+//	desplazamiento+= sizeof(int);
 
 	while(i<cant_elementos)
 	{
-		tamanio=strlen(array[i]) + 5;
+		tamanio=strlen(array[i])+1;
 		memcpy(buffer + desplazamiento, &(tamanio), sizeof(int));
 		desplazamiento+= sizeof(int);
 
@@ -40,29 +40,23 @@ void* serializar_array(char** array, int bytes, int cant_elementos)
 	return buffer;
 }
 
-void* serializar_array_puerto(char** array, int bytes, int cant_elementos)
+void* serializar_array_int(int array[], int bytes, int cant_elementos)
 {
 	void* buffer = malloc(bytes);
 	int desplazamiento = 0;
 	int tamanio = 0;
 	int i = 0;
 
-
-	tamanio=cant_elementos;
-	memcpy(buffer + desplazamiento, &(tamanio), sizeof(int));
-	desplazamiento+= sizeof(int);
-
 	while(i<cant_elementos)
 	{
-		tamanio=strlen(array[i]) + 1;
-		memcpy(buffer + desplazamiento, &(tamanio), sizeof(int));
-		desplazamiento+= sizeof(int);
+		int puerto = array[i];
 
-		memcpy(buffer + desplazamiento, array[i], tamanio);
-		desplazamiento+= tamanio;
+		memcpy(buffer + desplazamiento, &puerto, sizeof(int));
+		desplazamiento+= sizeof(int);
 		i++;
 	}
 	return buffer;
+	free(buffer);
 }
 
 //----------------------------SERIALIZAR PAQUETES
@@ -153,25 +147,62 @@ void* serializar_enviar_paquete_describe(int socket_cliente, t_list* metadata)
 	}
 
 }
+
+void* serealizar_seed_completa(int memoria, int puerto, char* IP,int tamanio_total)
+{
+
+	int bytes_ip = strlen(IP)+1;
+	//3 size of int porque so 2 de memoria y puerto, y otro de tamanio de ip
+	void* buffer = malloc(tamanio_total);
+
+	int desplazamiento = 0;
+
+	memcpy(buffer + desplazamiento, &bytes_ip, sizeof(int));
+	desplazamiento+= sizeof(int);
+
+	memcpy(buffer + desplazamiento, IP, bytes_ip);
+	desplazamiento+= bytes_ip;
+
+	memcpy(buffer + desplazamiento, &memoria, sizeof(int));
+	desplazamiento+= sizeof(int);
+
+	memcpy(buffer + desplazamiento, &puerto, sizeof(int));
+	desplazamiento+= sizeof(int);
+
+
+
+	return buffer;
+
+}
 //---------------------------ENVIOS DE MEMORIAS
 
 void enviar_memorias(int socket_cliente, t_config* config)
 {
+	char** MEMORY_NUMBERS = config_get_array_value(config, "MEMORY_NUMBERS");
 	char** IP_SEEDS = config_get_array_value(config, "IP_SEEDS");
 	char** PUERTO_SEEDS = config_get_array_value(config, "PUERTO_SEEDS");
 
 	int cant_elementos = cant_elementos_array(IP_SEEDS);
 
-	int bytes_IP = tamanio_array(IP_SEEDS);
-	void* enviar_IP_SEEDS = serializar_array(IP_SEEDS, bytes_IP, cant_elementos);
-	send(socket_cliente,enviar_IP_SEEDS,bytes_IP,MSG_WAITALL);
+	int puertos[cant_elementos];
+	int memory_number[cant_elementos];
 
-	int bytes_PUERTO = tamanio_array(PUERTO_SEEDS);
-	void* enviar_PUERTO_SEEDS = serializar_array_puerto(PUERTO_SEEDS, bytes_PUERTO, cant_elementos);
-	send(socket_cliente,enviar_PUERTO_SEEDS,bytes_PUERTO,MSG_WAITALL);
+	for (int i=0; i<cant_elementos;i++)
+	{
+		puertos[i] = atoi(PUERTO_SEEDS[i]);
+		memory_number[i] = atoi(MEMORY_NUMBERS[i]);
+	}
 
-	free(enviar_IP_SEEDS);
-	free(enviar_PUERTO_SEEDS);
+	send(socket_cliente,&cant_elementos,sizeof(int),MSG_WAITALL);
+
+	for(int j=0;j<cant_elementos;j++)
+	{
+		int tamanio_total = 3*sizeof(int) + strlen(IP_SEEDS[j])+1;
+
+		void* envio = serealizar_seed_completa(memory_number[j],puertos[j],IP_SEEDS[j],tamanio_total);
+
+		send(socket_cliente,envio,tamanio_total,MSG_WAITALL);
+	}
 }
 
 //----------------------------ENVIAR PAQUETES

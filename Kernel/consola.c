@@ -20,6 +20,15 @@ void request(void * arg) //RECIBIR LOGGER
 
 	int cod_ingresado = codigo_ingresado(vector_request[0]);
 
+	//HARCODEADO SOLO PARA QUE ANDE UNA PRUEBA DE STRONG CONSISTENCY
+	agregar_consistencia(0,"SC");
+
+	int conexion_nueva;
+	if(cod_ingresado!=7) //SI ES UN ADD NO NECESITO CONEXION
+	{
+		conexion_nueva = conectarse_a_memoria(vector_request, parametro->logger); //ELIGE UNA MEMORIA, SEGUN EL CRITERIO BASADO EN LA TABLA
+	}
+
 	retardo_ejecucion(parametro->config);
 		switch(cod_ingresado){
 			case 0:;
@@ -29,22 +38,22 @@ void request(void * arg) //RECIBIR LOGGER
 
 				if(paquete_create==NULL){break;}
 
-				if (send(parametro->conexion, &cod_ingresado, sizeof(int), 0) <= 0) puts("Error en envio de CODIGO DE OPERACION.");
+				if (send(conexion_nueva, &cod_ingresado, sizeof(int), 0) <= 0) puts("Error en envio de CODIGO DE OPERACION.");
 				else
 				{
-					enviar_paquete_create(paquete_create,parametro->conexion);
+					enviar_paquete_create(paquete_create,conexion_nueva);
 				}
 
 				char* nombre_tabla = paquete_create->nombre_tabla;
 
-				describe(parametro->conexion,nombre_tabla);
+				describe(conexion_nueva,nombre_tabla);
 
 				free(paquete_create);
 
 				break;
 
 			case 2:;
-				describe(parametro->conexion,vector_request[1]);
+				describe(conexion_nueva,vector_request[1]);
 				break;
 
 			case 3:;
@@ -52,11 +61,11 @@ void request(void * arg) //RECIBIR LOGGER
 
 				if(paquete_select==NULL){break;}
 
-				if (send(parametro->conexion, &cod_ingresado, sizeof(int), 0) <= 0) puts("Error en envio de CODIGO DE OPERACION.");
+				if (send(conexion_nueva, &cod_ingresado, sizeof(int), 0) <= 0) puts("Error en envio de CODIGO DE OPERACION.");
 				else
 				{
-					enviar_paquete_select(paquete_select, parametro->conexion);
-					recibir_mensaje(parametro->conexion);
+					enviar_paquete_select(paquete_select, conexion_nueva);
+					recibir_mensaje(conexion_nueva);
 				}
 
 				free(paquete_select);
@@ -70,8 +79,8 @@ void request(void * arg) //RECIBIR LOGGER
 
 				if(existe_tabla(paquete_insert->nombre_tabla)) //HACER DESCRIBE CON CREATE
 				{
-					if (send(parametro->conexion, &cod_ingresado, sizeof(int), 0) <= 0) puts("Error en envio de CODIGO DE OPERACION.");
-					else{enviar_paquete_insert(paquete_insert, parametro->conexion);}
+					if (send(conexion_nueva, &cod_ingresado, sizeof(int), 0) <= 0) puts("Error en envio de CODIGO DE OPERACION.");
+					else{enviar_paquete_insert(paquete_insert, conexion_nueva);}
 				}
 				else
 				{
@@ -82,11 +91,19 @@ void request(void * arg) //RECIBIR LOGGER
 				}
 				free(paquete_insert);
 				break;
-			default:
-				printf("\nCAIGO ACA PADRE, TE ESTAS EQUIVOCANDO");
+			case 7:
+				agregar_consistencia(atoi(vector_request[2]),vector_request[4]);
 				break;
+			default:
+				break;
+			break;
 		}
 
+
+		//----------------------------------------------------------------------------------------
+		//esto no va para mi, pero bueno era para probar todo
+		close(conexion_nueva);
+		//----------------------------------------------------------------------------------------
 }
 
 char* ingresar_request()

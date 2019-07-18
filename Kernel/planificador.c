@@ -120,12 +120,13 @@ void agregar_a_cola(char* request)
 		elementos_ready++;
 		break;
 	case 8:
-		printf("Op. desconocida");
+		puts("Operacion desconocida.");
 		break;
 	default:;
 		t_proceso* request_proceso = malloc(strlen(request)+sizeof(int)+1);
 		request_proceso->boolean=0;
 		request_proceso->elemento = request;
+
 		queue_push(cola_ready,request_proceso);
 		elementos_ready++;
 		break;

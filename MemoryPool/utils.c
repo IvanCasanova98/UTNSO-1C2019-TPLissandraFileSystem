@@ -8,29 +8,31 @@ void retardo_ejecucion(t_config* config)
 	sleep(retardo_ejecucion);
 }
 
-//---------------------------CALCULAR TAMAÑO DE CHAR**------------------
+//---------------------------CALCULAR TAMAÑO DE VECTORES------------------
 int tamanio_array(char** array)
 {
 	int tamanio=0;
 	int i=0;
-	while(array[i]!=NULL)
-	{
-		tamanio+= sizeof(int) + strlen(array[i]) + 5; //Por qué hay que agregarle 5 para que ande bien.
-		i++;
-	}
-	return tamanio;
-}
 
-int tamanio_array_puerto(char** array)
-{
-	int tamanio=0;
-	int i=0;
+
 	while(array[i]!=NULL)
 	{
 		tamanio+= sizeof(int) + strlen(array[i]) + 1; //Por qué hay que agregarle 5 para que ande bien.
 		i++;
 	}
 	return tamanio;
+}
+
+int tamanio_array_int(int array[])
+{
+//	int tamanio=0;
+//	int i=0;
+//	while(array[i]!=NULL)
+//	{
+//		tamanio+= sizeof(int); //Por qué hay que agregarle 5 para que ande bien.
+//		i++;
+//	}
+//	return tamanio;
 }
 //-------------CALCULAR CANTIDAD DE ELEMENTOS DE ARRAY---------------
 int cant_elementos_array(char** array)

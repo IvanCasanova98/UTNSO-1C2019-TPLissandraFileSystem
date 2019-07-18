@@ -24,22 +24,45 @@ int crear_conexion(char* ip, char* puerto)
 
 int iniciar_conexion(t_log* logger, char* ip, char* puerto) //tiene que llegar logger, archivo config y numero de conexion (int)
 {
-	log_info(logger, "CONECTANDO CON MEMORY POOL");
+	log_info(logger, "CONECTANDO A LA MEMORIA");
 
 	int conexion = crear_conexion(ip,puerto);
 
 	describe(conexion,NULL);
 
+
 	return conexion;
+}
+
+int conectarse_a_memoria(char** vector_request, t_log* logger)
+{
+	SEED * memoria;
+
+	if(strcmp(vector_request[0],"CREATE"))
+	{
+		char * consistencia_tabla = get_consistencia(vector_request[1]);
+		printf("\nCONSISTENCIA PARA MEMORIA %s: ",consistencia_tabla);
+		memoria = elegir_memoria(consistencia_tabla);
+	}
+	else
+	{
+		printf("\nCONSISTENCIA PARA MEMORIA con create%s: ",vector_request[2]);
+		memoria = elegir_memoria(vector_request[2]);
+	}
+
+	char * puerto_char = string_itoa(memoria->PUERTO);
+	char ** ip_sin_comillas = string_split(memoria->IP,"\"");
+
+	int conexion_nueva = iniciar_conexion(logger, ip_sin_comillas[0], puerto_char);
+
+	return conexion_nueva;
 }
 
 void pedir_seed(int conexion)
 {
-	printf("\nESPERANDO MEMORIAS");
 	int cod_operacion=HS;
 	send(conexion, &cod_operacion, sizeof(int), 0);
 	recibir_seed(conexion);
-	printf("\nMEMORIAS RECIBIDAS");
 }
 
 void terminar_kernel(t_log* logger, t_config* config, int conexion)

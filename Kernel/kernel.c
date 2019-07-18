@@ -1,13 +1,17 @@
+//VER QUE PASA CON LOS DESCRIBE GLOBAL COMO REQUEST SIMPLE
+
 //REVISAR BYTES PARA LOS MALLOCS CUANDO EJECUTAS LA FUNCION SERIALIZAR, ESTRUCTURA REPETIDA
 //ENVIAR TAMANIO COMPLETO DEL PAQUETE, Y LUEGO BUFFER
 //REVISAR EXISTENCIA DE TABLA ANTES DE ENVIAR INSERT O SELECT
 
 #include "kernel.h"
 
+
 int main(void){
 
 	startup_diccionario();
 	startup_cola_ready();
+	startup_lista_seeds();
 
 	struct parametros parametro;
 
@@ -18,14 +22,17 @@ int main(void){
 	char* puerto = config_get_string_value(parametro.config, "PUERTO_MEMORIA");
 
 	int conexion = iniciar_conexion(parametro.logger, ip, puerto);
-	parametro.conexion = conexion;
+	//parametro.conexion = conexion;
 
-//	pedir_seed(conexion);
-//
-//	close(conexion);//desconecta de memoria 0 (A MENOS DE QUE SE VUELVA A CONECTAR A LA MEMORIA 0)
-//
+	pedir_seed(conexion);
+	mostrar_lista_seeds();
+
+
+	close(conexion);
 //	SEED memoria = elegir_memoria();
+
 //	conexion = iniciar_conexion(logger, memoria.IP, memoria.PUERTO);//conectar a la memoria elegida
+
 
 	pthread_t hilo_consola;
 	pthread_t hilo_planificador;

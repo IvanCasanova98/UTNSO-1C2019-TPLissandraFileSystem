@@ -47,7 +47,23 @@ int codigo_ingresado(char* parametros)
 	else if (strcmp(parametros, "ADD")==0) {
 		return 7;
 	}
-	else {return 8;}
+	else{
+		return 8;
+	}
+}
+
+int consistencia_ingresada(char* parametros)
+{
+	if (strcmp(parametros, "SC")==0) {
+		return 0;
+	}
+	else if (strcmp(parametros, "SHC")==0) {
+		return 1;
+	}
+	else if (strcmp(parametros, "EC")==0) {
+		return 2;
+	}
+	else {return 3;}
 }
 
 int numero_random(int max)

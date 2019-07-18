@@ -6,13 +6,21 @@
 #include <stdio.h>
 #include <unistd.h>
 
+typedef enum
+{
+	SC,
+	SHC,
+	EC
+};
+
 typedef struct SEED
 {
 	char* IP;
-	char* PUERTO;
+	int PUERTO;
+	int NUMBER;
 }SEED;
 
-SEED seed[];
+
 
 struct parametros
 {
@@ -27,6 +35,7 @@ t_log* iniciar_logger(void);
 t_config* leer_config(void);
 //--------------------------------------------------
 int codigo_ingresado(char* parametros);
+int consistencia_ingresada(char* parametros);
 int numero_random(int max);
 //--------------------------------------------------
 void retardo_ejecucion(t_config* config);

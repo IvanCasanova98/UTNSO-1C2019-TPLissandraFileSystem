@@ -2,6 +2,7 @@
 #define CONSOLA_H_
 
 #include<stdlib.h>
+#include <stdio.h>
 #include<string.h>
 #include<stdint.h>
 #include<curses.h>
@@ -12,9 +13,9 @@
 
 #include "paquete.h"
 #include "planificador.h"
+#include "conexion.h"
 
 void consola();
-
 //---------------------INGRESO DE PAQUETE
 void request(void * arg);
 

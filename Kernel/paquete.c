@@ -141,7 +141,7 @@ long long get_timestamp(){
 	return valor;
 }
 
-t_paquete_create* create(char** vector_parametros)
+t_paquete_create* create(char** vector_parametros) //ARREGLAR VERIFICACIONES POR "FALTAN DATOS"
 {
 	uint16_t particiones;
 	uint16_t tiempo_compactacion;
@@ -164,8 +164,6 @@ t_paquete_create* create(char** vector_parametros)
 		falta_consistencia();
 		return NULL;
 	}
-
-
 
 	if(vector_parametros[3]==NULL || !validar_numero(vector_parametros[3]) || !strcmp(vector_parametros[3],"0"))
 	{

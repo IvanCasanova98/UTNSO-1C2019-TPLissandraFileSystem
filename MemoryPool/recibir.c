@@ -89,7 +89,7 @@ void recibir_paquetes(int cliente_fd, int server_fd, t_config* config, t_log* lo
 			cliente_fd=0;
 			break;
 		default:
-			printf("operacion desconocidaaaa");
+			puts("operacion desconocida.");
 			break;
 		}
 	}

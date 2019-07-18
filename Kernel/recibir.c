@@ -12,6 +12,7 @@ void* recibir_buffer(int* size, int socket_cliente)
 	free(buffer);
 }
 
+
 void recibir_mensaje(int socket_cliente)
 {
 	int size;
@@ -24,37 +25,50 @@ void recibir_mensaje(int socket_cliente)
 	free(buffer);
 }
 
+SEED* deserealizar_seed(int socket_cliente)
+{
+
+
+	int tamanio_ip;
+	recv(socket_cliente, &tamanio_ip, sizeof(int), 0);
+
+
+	int size=tamanio_ip+2*sizeof(int);
+	void * buffer = malloc(size);
+
+	recv(socket_cliente, buffer, size, 0);
+
+	int desplazamiento = 0;
+
+	SEED* aux = malloc(size);
+	aux->IP = malloc(tamanio_ip);
+
+	memcpy(aux->IP,buffer + desplazamiento, tamanio_ip);
+	desplazamiento+=tamanio_ip;
+
+	memcpy(&(aux->NUMBER),buffer + desplazamiento, sizeof(int));
+	desplazamiento+=sizeof(int);
+
+	memcpy(&(aux->PUERTO),buffer + desplazamiento, sizeof(int));
+	desplazamiento+=sizeof(int);
+
+
+	return aux;
+}
+
+
 void recibir_seed(int socket_cliente)
 {
-	int size1, i=0, size2, j=0;
+	int size1, i=0, j=0, k=0;
 
 	int cant;
 	recv(socket_cliente, &cant, sizeof(int), 0);
 
-	SEED seed_aux[cant];
-
-	for(int i=0; i<cant; i++)
-	{
-		seed[i].IP = seed_aux[i].IP;
-		seed[i].PUERTO = seed_aux[i].PUERTO;
-	}
-
-	while(i<cant)//Recibe IPS
-	{
-		char* array_IP_SEED = recibir_buffer(&size1, socket_cliente);
-
-		seed[i].IP = array_IP_SEED;
-
+	while(i<cant){
+		SEED *memoria_i = deserealizar_seed(socket_cliente);
+		list_add(lista_seeds,memoria_i);
 		i++;
-	}
-
-	while(j<cant) //Recibe PUERTOS
-	{
-		char* array_PUERTO_SEED = recibir_buffer(&size2, socket_cliente);
-
-		seed[j].PUERTO = array_PUERTO_SEED;
-
-		j++;
+	//printf("\nMemoria: %d - Puerto: %d - Ip: %s", memoria_i->NUMBER,memoria_i->PUERTO,memoria_i->IP);
 	}
 }
 

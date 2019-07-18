@@ -13,6 +13,8 @@
 
 int contador_hilos;
 
+
+
 typedef struct
 {
 	int boolean;
