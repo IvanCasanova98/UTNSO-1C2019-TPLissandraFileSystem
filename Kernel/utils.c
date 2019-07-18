@@ -12,6 +12,16 @@ t_config* leer_config()
 	return config_create("Kernel.config");
 }
 
+//---------------------------RECIBIR NUMERO DE MEMORIA
+
+void recibir_numero_memoria(int conexion)
+{
+	int numero_memoria;
+	recv(conexion, &numero_memoria, sizeof(int), 0);
+
+	printf("\nCONECTADO A LA MEMORIA %d", numero_memoria); //LOGGEAR, NO PRINTEAR
+}
+
 //-----------------------------------------RETARDOS
 
 void retardo_ejecucion(t_config* config)

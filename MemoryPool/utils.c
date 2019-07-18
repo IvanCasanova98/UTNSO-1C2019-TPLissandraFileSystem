@@ -1,5 +1,13 @@
 #include "utils.h"
 
+//-----------------------------ENVIO NUMERO DE MEMORIA
+
+void envio_numero_memoria(t_config* config, int conexion)
+{
+	int numero_memoria =  config_get_int_value(config, "MEMORY_NUMBER");
+	send(conexion,&numero_memoria,sizeof(int),0);
+}
+
 //---------------------------RETARDO
 
 void retardo_ejecucion(t_config* config)

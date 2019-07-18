@@ -20,6 +20,8 @@ struct parametros
 	t_log* logger;
 };
 
+//-----------------------------ENVIO NUMERO DE MEMORIA
+void envio_numero_memoria(t_config* config, int conexion);
 //--------------------retardos
 void retardo_ejecucion(t_config* config);
 //----------------------------SERIALIZAR PAQUETES (envio.c)

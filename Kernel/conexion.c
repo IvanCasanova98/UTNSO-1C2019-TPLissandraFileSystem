@@ -28,6 +28,8 @@ int iniciar_conexion(t_log* logger, char* ip, char* puerto) //tiene que llegar l
 
 	int conexion = crear_conexion(ip,puerto);
 
+	recibir_numero_memoria(conexion);
+
 	describe(conexion,NULL);
 
 
@@ -41,17 +43,17 @@ int conectarse_a_memoria(char** vector_request, t_log* logger)
 	if(strcmp(vector_request[0],"CREATE"))
 	{
 		char * consistencia_tabla = get_consistencia(vector_request[1]);
-		printf("\nCONSISTENCIA PARA MEMORIA %s: ",consistencia_tabla);
 		memoria = elegir_memoria(consistencia_tabla);
 	}
 	else
 	{
-		printf("\nCONSISTENCIA PARA MEMORIA con create%s: ",vector_request[2]);
 		memoria = elegir_memoria(vector_request[2]);
 	}
 
 	char * puerto_char = string_itoa(memoria->PUERTO);
 	char ** ip_sin_comillas = string_split(memoria->IP,"\"");
+
+//	printf("\n IP %s, PUERTO %s", puerto_char, ip_sin_comillas);
 
 	int conexion_nueva = iniciar_conexion(logger, ip_sin_comillas[0], puerto_char);
 

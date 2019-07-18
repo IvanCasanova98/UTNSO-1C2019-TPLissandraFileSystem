@@ -33,6 +33,9 @@ struct parametros
 //----------------------------ARCHIVOS LOGGER/CONFIG
 t_log* iniciar_logger(void);
 t_config* leer_config(void);
+
+//---------------------------RECIBIR NUMERO DE MEMORIA
+void recibir_numero_memoria(int conexion);
 //--------------------------------------------------
 int codigo_ingresado(char* parametros);
 int consistencia_ingresada(char* parametros);

@@ -55,12 +55,9 @@ t_paquete_create* crear_paquete_create(char* nombre_tabla, char* consistencia, i
 
 //---------------------ARMAR PAQUETES
 
-t_paquete_select* selectf(char** vector_parametros){
-
-
+t_paquete_select* selectf(char** vector_parametros)
+{
 	uint16_t valor_key;;
-
-
 
 	if(vector_parametros[1]==NULL)
 	{

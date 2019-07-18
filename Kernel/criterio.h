@@ -21,6 +21,7 @@ SEED * elegir_memoria(char * consistencia_tabla);
 
 SEED * get_seed_especifica(int numero_memoria);
 bool seed_buscada(SEED * memoria_i , int numero_memoria);
+int get_memoria_fifo(t_list* pool);
 
 //SEED elegir_memoria();
 

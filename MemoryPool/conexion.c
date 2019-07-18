@@ -43,6 +43,8 @@ int esperar_cliente(t_config* config, int socket_servidor)
 
 	int socket_cliente = accept(socket_servidor, (void*) &dir_cliente, &tam_direccion);
 
+	envio_numero_memoria(config, socket_cliente);
+
 	return socket_cliente;
 }
 

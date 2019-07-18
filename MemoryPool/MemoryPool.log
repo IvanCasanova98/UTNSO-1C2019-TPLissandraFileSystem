@@ -24967,3 +24967,536 @@ Nombre tabla: PLATOS_PRINCIPALES
 Valor KEY   : 271
 [INFO] 14:59:27:341 MemoryPool/(7275:7276): Respuesta enviada: Milanesa
 
+[INFO] 16:09:45:488 MemoryPool/(8467:8468): SELECT:
+Nombre tabla: TABLA0
+Valor KEY   : 0
+[INFO] 16:09:45:488 MemoryPool/(8467:8468): Respuesta enviada: cero
+
+[INFO] 16:09:57:585 MemoryPool/(8467:8468): CREATE:
+Nombre tabla       : POSTRES
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 60000
+[INFO] 16:09:57:585 MemoryPool/(8467:8468): Tabla creada: POSTRES
+
+[INFO] 16:09:57:626 MemoryPool/(8467:8468): INSERT:
+Nombre tabla: POSTRES
+Valor KEY   : 100
+Value       : Flan
+Timestamp   : 1563476997625
+[INFO] 16:09:57:626 MemoryPool/(8467:8468): Pagina agregada en: POSTRES
+
+[INFO] 16:09:57:665 MemoryPool/(8467:8468): CREATE:
+Nombre tabla       : FRUTAS
+Consistencia       : SC
+Particiones        : 2
+Tiempo compactacion: 50000
+[INFO] 16:09:57:665 MemoryPool/(8467:8468): Tabla creada: FRUTAS
+
+[INFO] 16:09:57:706 MemoryPool/(8467:8468): INSERT:
+Nombre tabla: FRUTAS
+Valor KEY   : 222
+Value       : Manzana
+Timestamp   : 1563476997706
+[INFO] 16:09:57:706 MemoryPool/(8467:8468): Pagina agregada en: FRUTAS
+
+[INFO] 16:09:57:714 MemoryPool/(8467:8468): INSERT:
+Nombre tabla: POSTRES
+Valor KEY   : 101
+Value       : Chocotorta
+Timestamp   : 1563476997713
+[INFO] 16:09:57:714 MemoryPool/(8467:8468): Pagina agregada en: POSTRES
+
+[INFO] 16:09:57:714 MemoryPool/(8467:8468): INSERT:
+Nombre tabla: FRUTAS
+Valor KEY   : 34
+Value       : Banana
+Timestamp   : 1563476997714
+[INFO] 16:09:57:715 MemoryPool/(8467:8468): Pagina agregada en: FRUTAS
+
+[INFO] 16:09:57:715 MemoryPool/(8467:8468): INSERT:
+Nombre tabla: POSTRES
+Valor KEY   : 4000
+Value       : Tiramisu
+Timestamp   : 1563476997715
+[INFO] 16:09:57:715 MemoryPool/(8467:8468): Pagina agregada en: POSTRES
+
+[INFO] 16:09:57:757 MemoryPool/(8467:8468): CREATE:
+Nombre tabla       : BEBIDAS
+Consistencia       : SC
+Particiones        : 6
+Tiempo compactacion: 10000
+[INFO] 16:09:57:757 MemoryPool/(8467:8468): Tabla creada: BEBIDAS
+
+[INFO] 16:09:57:881 MemoryPool/(8467:8468): INSERT:
+Nombre tabla: FRUTAS
+Valor KEY   : 10245
+Value       : Pera
+Timestamp   : 1563476997881
+[ERROR] 16:09:57:881 MemoryPool/(8467:8468): NO HAY MAS LUGAR EN FRUTAS
+
+[INFO] 16:09:57:920 MemoryPool/(8467:8468): SELECT:
+Nombre tabla: FRUTAS
+Valor KEY   : 34
+[INFO] 16:09:57:920 MemoryPool/(8467:8468): Respuesta enviada: Banana
+
+[INFO] 16:09:57:921 MemoryPool/(8467:8468): INSERT:
+Nombre tabla: POSTRES
+Valor KEY   : 101
+Value       : Helado
+Timestamp   : 1563476997921
+[ERROR] 16:09:57:921 MemoryPool/(8467:8468): NO HAY MAS LUGAR EN POSTRES
+
+[INFO] 16:09:57:964 MemoryPool/(8467:8468): SELECT:
+Nombre tabla: POSTRES
+Valor KEY   : 101
+[INFO] 16:09:57:964 MemoryPool/(8467:8468): Respuesta enviada: Chocotorta
+
+[INFO] 16:09:57:965 MemoryPool/(8467:8468): INSERT:
+Nombre tabla: POSTRES
+Valor KEY   : 101
+Value       : Almendrado
+Timestamp   : 1563476997965
+[ERROR] 16:09:57:965 MemoryPool/(8467:8468): NO HAY MAS LUGAR EN POSTRES
+
+[INFO] 16:09:57:966 MemoryPool/(8467:8468): INSERT:
+Nombre tabla: FRUTAS
+Valor KEY   : 621
+Value       : Uva
+Timestamp   : 1563476997966
+[ERROR] 16:09:57:966 MemoryPool/(8467:8468): NO HAY MAS LUGAR EN FRUTAS
+
+[INFO] 16:09:58:49 MemoryPool/(8467:8468): INSERT:
+Nombre tabla: BEBIDAS
+Valor KEY   : 10
+Value       : Pepsi
+Timestamp   : 1563476998048
+[INFO] 16:09:58:49 MemoryPool/(8467:8468): Pagina agregada en: BEBIDAS
+
+[INFO] 16:09:58:51 MemoryPool/(8467:8468): INSERT:
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+Value       : Coca Cola
+Timestamp   : 1563476998050
+[INFO] 16:09:58:51 MemoryPool/(8467:8468): Pagina agregada en: BEBIDAS
+
+[INFO] 16:09:58:89 MemoryPool/(8467:8468): SELECT:
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+[INFO] 16:09:58:89 MemoryPool/(8467:8468): Respuesta enviada: Coca Cola
+
+[INFO] 16:09:58:90 MemoryPool/(8467:8468): INSERT:
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+Value       : Sprite
+Timestamp   : 1563476998089
+[INFO] 16:09:58:90 MemoryPool/(8467:8468): Pagina agregada en: BEBIDAS
+
+[INFO] 16:09:58:133 MemoryPool/(8467:8468): SELECT:
+Nombre tabla: POSTRES
+Valor KEY   : 101
+[INFO] 16:09:58:133 MemoryPool/(8467:8468): Respuesta enviada: Chocotorta
+
+[INFO] 16:09:58:134 MemoryPool/(8467:8468): INSERT:
+Nombre tabla: POSTRES
+Valor KEY   : 80
+Value       : Bizcochuelo
+Timestamp   : 1563476998133
+[ERROR] 16:09:58:134 MemoryPool/(8467:8468): NO HAY MAS LUGAR EN POSTRES
+
+[INFO] 16:09:58:135 MemoryPool/(8467:8468): INSERT:
+Nombre tabla: BEBIDAS
+Valor KEY   : 7338
+Value       : Limonada
+Timestamp   : 1563476998134
+[INFO] 16:09:58:135 MemoryPool/(8467:8468): Pagina agregada en: BEBIDAS
+
+[INFO] 16:09:58:136 MemoryPool/(8467:8468): INSERT:
+Nombre tabla: FRUTAS
+Valor KEY   : 621
+Value       : Melon
+Timestamp   : 1563476998135
+[ERROR] 16:09:58:136 MemoryPool/(8467:8468): NO HAY MAS LUGAR EN FRUTAS
+
+[INFO] 16:09:58:142 MemoryPool/(8467:8468): INSERT:
+Nombre tabla: FRUTAS
+Valor KEY   : 34
+Value       : Manzana
+Timestamp   : 1563476998142
+[ERROR] 16:09:58:142 MemoryPool/(8467:8468): NO HAY MAS LUGAR EN FRUTAS
+
+[INFO] 16:09:58:180 MemoryPool/(8467:8468): SELECT:
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+[INFO] 16:09:58:181 MemoryPool/(8467:8468): Respuesta enviada: Sprite
+
+[INFO] 16:09:58:181 MemoryPool/(8467:8468): INSERT:
+Nombre tabla: POSTRES
+Valor KEY   : 8927
+Value       : Budin de pan
+Timestamp   : 1563476998181
+[ERROR] 16:09:58:182 MemoryPool/(8467:8468): NO HAY MAS LUGAR EN POSTRES
+
+[INFO] 16:09:58:182 MemoryPool/(8467:8468): INSERT:
+Nombre tabla: FRUTAS
+Valor KEY   : 222
+Value       : Sandia
+Timestamp   : 1563476998182
+[ERROR] 16:09:58:182 MemoryPool/(8467:8468): NO HAY MAS LUGAR EN FRUTAS
+
+[INFO] 16:09:58:190 MemoryPool/(8467:8468): INSERT:
+Nombre tabla: BEBIDAS
+Valor KEY   : 44
+Value       : Exprimido
+Timestamp   : 1563476998190
+[INFO] 16:09:58:190 MemoryPool/(8467:8468): Pagina agregada en: BEBIDAS
+
+[INFO] 16:09:58:191 MemoryPool/(8467:8468): INSERT:
+Nombre tabla: BEBIDAS
+Valor KEY   : 7338
+Value       : Agua con gas
+Timestamp   : 1563476998191
+[INFO] 16:09:58:191 MemoryPool/(8467:8468): Pagina agregada en: BEBIDAS
+
+[INFO] 16:09:58:192 MemoryPool/(8467:8468): INSERT:
+Nombre tabla: FRUTAS
+Valor KEY   : 222
+Value       : Manzana
+Timestamp   : 1563476998192
+[ERROR] 16:09:58:192 MemoryPool/(8467:8468): NO HAY MAS LUGAR EN FRUTAS
+
+[INFO] 16:09:58:278 MemoryPool/(8467:8468): INSERT:
+Nombre tabla: FRUTAS
+Valor KEY   : 34
+Value       : Cereza
+Timestamp   : 1563476998277
+[ERROR] 16:09:58:278 MemoryPool/(8467:8468): NO HAY MAS LUGAR EN FRUTAS
+
+[INFO] 16:09:58:317 MemoryPool/(8467:8468): SELECT:
+Nombre tabla: FRUTAS
+Valor KEY   : 34
+[INFO] 16:09:58:317 MemoryPool/(8467:8468): Respuesta enviada: Banana
+
+[INFO] 16:09:58:357 MemoryPool/(8467:8468): SELECT:
+Nombre tabla: BEBIDAS
+Valor KEY   : 44
+[INFO] 16:09:58:357 MemoryPool/(8467:8468): Respuesta enviada: Exprimido
+
+[INFO] 16:09:58:358 MemoryPool/(8467:8468): INSERT:
+Nombre tabla: FRUTAS
+Valor KEY   : 10245
+Value       : Frutilla
+Timestamp   : 1563476998357
+[ERROR] 16:09:58:358 MemoryPool/(8467:8468): NO HAY MAS LUGAR EN FRUTAS
+
+[INFO] 16:09:58:362 MemoryPool/(8467:8468): INSERT:
+Nombre tabla: POSTRES
+Valor KEY   : 4000
+Value       : Gelatina
+Timestamp   : 1563476998361
+[ERROR] 16:09:58:362 MemoryPool/(8467:8468): NO HAY MAS LUGAR EN POSTRES
+
+[INFO] 16:09:58:363 MemoryPool/(8467:8468): INSERT:
+Nombre tabla: POSTRES
+Valor KEY   : 100
+Value       : Helado
+Timestamp   : 1563476998362
+[ERROR] 16:09:58:363 MemoryPool/(8467:8468): NO HAY MAS LUGAR EN POSTRES
+
+[INFO] 16:09:58:364 MemoryPool/(8467:8468): INSERT:
+Nombre tabla: POSTRES
+Valor KEY   : 101
+Value       : Almendrado
+Timestamp   : 1563476998363
+[ERROR] 16:09:58:364 MemoryPool/(8467:8468): NO HAY MAS LUGAR EN POSTRES
+
+[INFO] 16:09:58:405 MemoryPool/(8467:8468): SELECT:
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+[INFO] 16:09:58:405 MemoryPool/(8467:8468): Respuesta enviada: Sprite
+
+[INFO] 16:09:58:448 MemoryPool/(8467:8468): CREATE:
+Nombre tabla       : PLATOS_PRINCIPALES
+Consistencia       : SC
+Particiones        : 2
+Tiempo compactacion: 60000
+[INFO] 16:09:58:448 MemoryPool/(8467:8468): Tabla creada: PLATOS_PRINCIPALES
+
+[INFO] 16:09:58:490 MemoryPool/(8467:8468): INSERT:
+Nombre tabla: POSTRES
+Valor KEY   : 231
+Value       : Flan
+Timestamp   : 1563476998489
+[ERROR] 16:09:58:490 MemoryPool/(8467:8468): NO HAY MAS LUGAR EN POSTRES
+
+[INFO] 16:09:58:491 MemoryPool/(8467:8468): INSERT:
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 271
+Value       : Milanesa
+Timestamp   : 1563476998490
+[INFO] 16:09:58:491 MemoryPool/(8467:8468): Pagina agregada en: PLATOS_PRINCIPALES
+
+[INFO] 16:09:58:492 MemoryPool/(8467:8468): INSERT:
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 32
+Value       : Omelette
+Timestamp   : 1563476998491
+[INFO] 16:09:58:492 MemoryPool/(8467:8468): Pagina agregada en: PLATOS_PRINCIPALES
+
+[INFO] 16:09:58:498 MemoryPool/(8467:8468): INSERT:
+Nombre tabla: POSTRES
+Valor KEY   : 80
+Value       : Tiramisu
+Timestamp   : 1563476998497
+[ERROR] 16:09:58:498 MemoryPool/(8467:8468): NO HAY MAS LUGAR EN POSTRES
+
+[INFO] 16:09:58:536 MemoryPool/(8467:8468): SELECT:
+Nombre tabla: FRUTAS
+Valor KEY   : 222
+[INFO] 16:09:58:536 MemoryPool/(8467:8468): Respuesta enviada: Manzana
+
+[INFO] 16:09:58:577 MemoryPool/(8467:8468): SELECT:
+Nombre tabla: POSTRES
+Valor KEY   : 231
+[ERROR] 16:09:58:577 MemoryPool/(8467:8468): PAGINA NO ENCONTRADA
+
+[INFO] 16:09:58:617 MemoryPool/(8467:8468): SELECT:
+Nombre tabla: BEBIDAS
+Valor KEY   : 44
+[INFO] 16:09:58:617 MemoryPool/(8467:8468): Respuesta enviada: Exprimido
+
+[INFO] 16:09:58:660 MemoryPool/(8467:8468): SELECT:
+Nombre tabla: POSTRES
+Valor KEY   : 80
+[ERROR] 16:09:58:660 MemoryPool/(8467:8468): PAGINA NO ENCONTRADA
+
+[INFO] 16:09:58:662 MemoryPool/(8467:8468): INSERT:
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 54
+Value       : Hamburguesa
+Timestamp   : 1563476998661
+[ERROR] 16:09:58:662 MemoryPool/(8467:8468): NO HAY MAS LUGAR EN PLATOS_PRINCIPALES
+
+[INFO] 16:09:58:701 MemoryPool/(8467:8468): SELECT:
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 271
+[INFO] 16:09:58:701 MemoryPool/(8467:8468): Respuesta enviada: Milanesa
+
+[INFO] 16:09:58:702 MemoryPool/(8467:8468): INSERT:
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 271
+Value       : Pizza
+Timestamp   : 1563476998701
+[ERROR] 16:09:58:702 MemoryPool/(8467:8468): NO HAY MAS LUGAR EN PLATOS_PRINCIPALES
+
+[INFO] 16:09:58:711 MemoryPool/(8467:8468): INSERT:
+Nombre tabla: BEBIDAS
+Valor KEY   : 10
+Value       : Fanta
+Timestamp   : 1563476998711
+[ERROR] 16:09:58:711 MemoryPool/(8467:8468): NO HAY MAS LUGAR EN BEBIDAS
+
+[INFO] 16:09:58:712 MemoryPool/(8467:8468): INSERT:
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 32
+Value       : Empanadas
+Timestamp   : 1563476998712
+[ERROR] 16:09:58:712 MemoryPool/(8467:8468): NO HAY MAS LUGAR EN PLATOS_PRINCIPALES
+
+[INFO] 16:09:58:713 MemoryPool/(8467:8468): INSERT:
+Nombre tabla: POSTRES
+Valor KEY   : 8927
+Value       : Helado
+Timestamp   : 1563476998713
+[ERROR] 16:09:58:713 MemoryPool/(8467:8468): NO HAY MAS LUGAR EN POSTRES
+
+[INFO] 16:09:58:714 MemoryPool/(8467:8468): INSERT:
+Nombre tabla: POSTRES
+Valor KEY   : 100
+Value       : Chocotorta
+Timestamp   : 1563476998714
+[ERROR] 16:09:58:714 MemoryPool/(8467:8468): NO HAY MAS LUGAR EN POSTRES
+
+[INFO] 16:09:58:719 MemoryPool/(8467:8468): INSERT:
+Nombre tabla: BEBIDAS
+Valor KEY   : 11
+Value       : Mate
+Timestamp   : 1563476998719
+[ERROR] 16:09:58:719 MemoryPool/(8467:8468): NO HAY MAS LUGAR EN BEBIDAS
+
+[INFO] 16:09:58:756 MemoryPool/(8467:8468): SELECT:
+Nombre tabla: FRUTAS
+Valor KEY   : 10245
+[ERROR] 16:09:58:756 MemoryPool/(8467:8468): PAGINA NO ENCONTRADA
+
+[INFO] 16:09:58:796 MemoryPool/(8467:8468): SELECT:
+Nombre tabla: FRUTAS
+Valor KEY   : 22
+[ERROR] 16:09:58:796 MemoryPool/(8467:8468): PAGINA NO ENCONTRADA
+
+[INFO] 16:09:58:797 MemoryPool/(8467:8468): INSERT:
+Nombre tabla: POSTRES
+Valor KEY   : 100
+Value       : Helado
+Timestamp   : 1563476998797
+[ERROR] 16:09:58:797 MemoryPool/(8467:8468): NO HAY MAS LUGAR EN POSTRES
+
+[INFO] 16:09:58:840 MemoryPool/(8467:8468): SELECT:
+Nombre tabla: POSTRES
+Valor KEY   : 100
+[INFO] 16:09:58:840 MemoryPool/(8467:8468): Respuesta enviada: Flan
+
+[INFO] 16:09:58:841 MemoryPool/(8467:8468): INSERT:
+Nombre tabla: POSTRES
+Valor KEY   : 101
+Value       : Muffin
+Timestamp   : 1563476998841
+[ERROR] 16:09:58:841 MemoryPool/(8467:8468): NO HAY MAS LUGAR EN POSTRES
+
+[INFO] 16:09:58:881 MemoryPool/(8467:8468): SELECT:
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 54
+[ERROR] 16:09:58:881 MemoryPool/(8467:8468): PAGINA NO ENCONTRADA
+
+[INFO] 16:09:58:921 MemoryPool/(8467:8468): SELECT:
+Nombre tabla: BEBIDAS
+Valor KEY   : 10245
+[ERROR] 16:09:58:921 MemoryPool/(8467:8468): PAGINA NO ENCONTRADA
+
+[INFO] 16:09:58:965 MemoryPool/(8467:8468): SELECT:
+Nombre tabla: POSTRES
+Valor KEY   : 101
+[INFO] 16:09:58:965 MemoryPool/(8467:8468): Respuesta enviada: Chocotorta
+
+[INFO] 16:09:59:5 MemoryPool/(8467:8468): SELECT:
+Nombre tabla: BEBIDAS
+Valor KEY   : 10
+[INFO] 16:09:59:5 MemoryPool/(8467:8468): Respuesta enviada: Pepsi
+
+[INFO] 16:09:59:45 MemoryPool/(8467:8468): SELECT:
+Nombre tabla: POSTRES
+Valor KEY   : 8927
+[ERROR] 16:09:59:45 MemoryPool/(8467:8468): PAGINA NO ENCONTRADA
+
+[INFO] 16:09:59:85 MemoryPool/(8467:8468): SELECT:
+Nombre tabla: PLATOS_PRINCIPALES
+Valor KEY   : 271
+[INFO] 16:09:59:85 MemoryPool/(8467:8468): Respuesta enviada: Milanesa
+
+[INFO] 16:12:47:776 MemoryPool/(8467:8468): CREATE:
+Nombre tabla       : TABLA12
+Consistencia       : SC
+Particiones        : 1
+Tiempo compactacion: 1
+[INFO] 16:12:47:776 MemoryPool/(8467:8468): Tabla creada: TABLA12
+
+[INFO] 19:21:18:241 MemoryPool/(14523:14524): SELECT:
+Nombre tabla: TABLA0
+Valor KEY   : 0
+[INFO] 19:21:18:340 MemoryPool/(14523:14524): Respuesta enviada: cero
+
+[INFO] 19:22:08:289 MemoryPool/(14523:14524): SELECT:
+Nombre tabla: TABLA0
+Valor KEY   : 0
+[INFO] 19:22:08:289 MemoryPool/(14523:14524): Respuesta enviada: cero
+
+[INFO] 19:23:51:353 MemoryPool/(14523:14524): SELECT:
+Nombre tabla: TABLA0
+Valor KEY   : 0
+[INFO] 19:23:51:353 MemoryPool/(14523:14524): Respuesta enviada: cero
+
+[INFO] 19:23:56:25 MemoryPool/(14523:14524): SELECT:
+Nombre tabla: TABLA0
+Valor KEY   : 0
+[INFO] 19:23:56:25 MemoryPool/(14523:14524): Respuesta enviada: cero
+
+[INFO] 19:28:12:329 MemoryPool/(14523:14524): SELECT:
+Nombre tabla: TABLA0
+Valor KEY   : 0
+[INFO] 19:28:12:329 MemoryPool/(14523:14524): Respuesta enviada: cero
+
+[INFO] 19:29:04:72 MemoryPool/(14523:14524): SELECT:
+Nombre tabla: TABLA0
+Valor KEY   : 0
+[INFO] 19:29:04:72 MemoryPool/(14523:14524): Respuesta enviada: cero
+
+[INFO] 19:29:09:720 MemoryPool/(14523:14524): SELECT:
+Nombre tabla: TABLA0
+Valor KEY   : 0
+[INFO] 19:29:09:720 MemoryPool/(14523:14524): Respuesta enviada: cero
+
+[INFO] 19:32:48:280 MemoryPool/(14523:14524): SELECT:
+Nombre tabla: TABLA0
+Valor KEY   : 0
+[INFO] 19:32:48:281 MemoryPool/(14523:14524): Respuesta enviada: cero
+
+[INFO] 19:36:05:206 MemoryPool/(15210:15211): SELECT:
+Nombre tabla: TABLA0
+Valor KEY   : 0
+[INFO] 19:36:05:206 MemoryPool/(15210:15211): Respuesta enviada: cero
+
+[INFO] 19:36:12:229 MemoryPool/(15210:15211): SELECT:
+Nombre tabla: TABLA0
+Valor KEY   : 0
+[INFO] 19:36:12:229 MemoryPool/(15210:15211): Respuesta enviada: cero
+
+[INFO] 19:36:14:132 MemoryPool/(15210:15211): SELECT:
+Nombre tabla: TABLA0
+Valor KEY   : 0
+[INFO] 19:36:14:133 MemoryPool/(15210:15211): Respuesta enviada: cero
+
+[INFO] 19:36:36:76 MemoryPool/(15210:15211): CREATE:
+Nombre tabla       : TABLA6
+Consistencia       : EC
+Particiones        : 12
+Tiempo compactacion: 12
+[INFO] 19:36:36:76 MemoryPool/(15210:15211): Tabla creada: TABLA6
+
+[INFO] 19:51:30:48 MemoryPool/(15210:15211): SELECT:
+Nombre tabla: TABLA0
+Valor KEY   : 0
+[INFO] 19:51:30:48 MemoryPool/(15210:15211): Respuesta enviada: cero
+
+[INFO] 19:52:04:377 MemoryPool/(15210:15211): CREATE:
+Nombre tabla       : TABLA8
+Consistencia       : EC
+Particiones        : 12
+Tiempo compactacion: 12
+[INFO] 19:52:04:377 MemoryPool/(15210:15211): Tabla creada: TABLA8
+
+[INFO] 19:52:23:249 MemoryPool/(15210:15211): INSERT:
+Nombre tabla: TABLA8
+Valor KEY   : 8
+Value       : OCHOA
+Timestamp   : 1563490343249
+[INFO] 19:52:23:249 MemoryPool/(15210:15211): Pagina agregada en: TABLA8
+
+[INFO] 19:52:33:336 MemoryPool/(15210:15211): SELECT:
+Nombre tabla: TABLA8
+Valor KEY   : 8
+[INFO] 19:52:33:336 MemoryPool/(15210:15211): Respuesta enviada: OCHOA
+
+[INFO] 19:57:25:709 MemoryPool/(15210:15211): CREATE:
+Nombre tabla       : TABLA9
+Consistencia       : EC
+Particiones        : 12
+Tiempo compactacion: 12
+[INFO] 19:57:25:802 MemoryPool/(15210:15211): Tabla creada: TABLA9
+
+[INFO] 19:57:37:166 MemoryPool/(15803:15804): INSERT:
+Nombre tabla: TABLA9
+Valor KEY   : 9
+Value       : NOVENO
+Timestamp   : 1563490657165
+[ERROR] 19:57:37:166 MemoryPool/(15803:15804): NO EXISTE LA TABLA
+
+[INFO] 19:57:55:532 MemoryPool/(15321:15322): SELECT:
+Nombre tabla: TABLA9
+Valor KEY   : 9
+[ERROR] 19:57:55:532 MemoryPool/(15321:15322): PAGINA NO ENCONTRADA
+
+[INFO] 19:58:07:197 MemoryPool/(15210:15211): SELECT:
+Nombre tabla: TABLA9
+Valor KEY   : 9
+[ERROR] 19:58:07:197 MemoryPool/(15210:15211): PAGINA NO ENCONTRADA
+

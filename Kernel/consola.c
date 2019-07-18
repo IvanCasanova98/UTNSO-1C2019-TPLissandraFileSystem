@@ -20,9 +20,6 @@ void request(void * arg) //RECIBIR LOGGER
 
 	int cod_ingresado = codigo_ingresado(vector_request[0]);
 
-	//HARCODEADO SOLO PARA QUE ANDE UNA PRUEBA DE STRONG CONSISTENCY
-	agregar_consistencia(0,"SC");
-
 	int conexion_nueva;
 	if(cod_ingresado!=7) //SI ES UN ADD NO NECESITO CONEXION
 	{
@@ -108,7 +105,7 @@ void request(void * arg) //RECIBIR LOGGER
 
 char* ingresar_request()
 {
-	printf("\n\nCREATE    NOMBRETABLA CONSISTENCIA PARTICIONES T_COMPACTACION\nDROP\nDESCRIBE\nSELECT    NOMBRETABLA KEY\nINSERT    NOMBRETABLA KEY VALUE \nJOURNAL\nRUN    PATH\nADD\nEXIT\n");
+	printf("\n\nCREATE    NOMBRETABLA CONSISTENCIA PARTICIONES T_COMPACTACION\nDROP\nDESCRIBE\nSELECT    NOMBRETABLA KEY\nINSERT    NOMBRETABLA KEY VALUE \nJOURNAL\nRUN    PATH\nADD MEMORY [#MEMORIA] TO [CONSISTENCY]\nEXIT\n");
 	printf("\nIngrese REQUEST ");
 	char * linea;
 

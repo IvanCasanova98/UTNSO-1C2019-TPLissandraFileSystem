@@ -1,52 +1,33 @@
 #include "criterio.h"
 
 t_list* lista_seeds;
-
-//SEED elegir_memoria()
-//{
-//	SEED memoria;
-//	int rnd = numero_random(2);
-//
-//	memoria.PUERTO= seed[rnd].PUERTO;
-//	memoria.IP = strtok(seed[rnd].IP,"\"");
-//
-//	printf("\nCRITERIO POR DOS MEMORIA ELEGIDA: IP: %s, PUERTO: %s ",memoria.IP, memoria.PUERTO);
-//	return memoria;
-//}
+int referencia_memoria_ec; //PUNTERO A LA ULTIMA MEMORIA UTILIZADA POR EVENTUAL CONSISTENCY
 
 
-SEED * elegir_memoria(char * consistencia_tabla){
-//para mi no llega el nombre tabla, hay q ver por request, pero bueno, es para una primera
-//aproximacion. Fijense dsp
-
+SEED * elegir_memoria(char * consistencia_tabla)
+{
 	t_list * pool_especifico = get_pool(consistencia_tabla); //Tengo todas LOS NUMEROS DE MEMORIA asociados a una consistencia
 
 	SEED * seed_i;
-
-
+	int numero_memoria;
 
 	int cons_ingresada = consistencia_ingresada(consistencia_tabla);
 	switch(cons_ingresada)
 	{
 	case SC:;
-		//Hay una sola memoria en este caso, asi que elijo la unica
-		//Como hay una sola, tomo el numero de memoria del pool (es lo que creamos en memorias.c como agregar consistencia
-		// y dsp agarro la seed especifica de ese numero de memoria (q la conozco por la lista de seed que recibo en
-		// el inicio del kernel. esta en este header) y la devuelvo
-
-		int numero_memoria;
 		numero_memoria = list_get(pool_especifico,0);
-		seed_i = get_seed_especifica(numero_memoria);
-
 		break;
 	case SHC:;
+		//numero_memoria = hash(pool_especifico);
 		break;
 	case EC:
+		numero_memoria = get_memoria_fifo(pool_especifico);
 		break;
 	default:
 		break;
 	}
 
+	seed_i = get_seed_especifica(numero_memoria); //PROBLEMA DE ELECCION DE MEMORIA
 
 	return seed_i;
 }
@@ -56,8 +37,9 @@ SEED * elegir_memoria(char * consistencia_tabla){
 //----------------------------------------------UTILS------------------------------
 SEED * get_seed_especifica(int numero_memoria)
 {
-
 	bool _seed_buscada(void * elemento) {return seed_buscada(elemento,numero_memoria);}
+
+//	printf("BUSCANDO SEED");
 
 	return list_find(lista_seeds, _seed_buscada);
 }
@@ -66,10 +48,30 @@ bool seed_buscada(SEED * memoria_i , int numero_memoria)
 {
 	return memoria_i->NUMBER == numero_memoria;
 }
+
+int get_memoria_fifo(t_list* pool)
+{
+	int tope_lista = list_size(pool) - 1;
+	int numero_memoria = 0;
+
+	if (referencia_memoria_ec == tope_lista)
+	{
+		referencia_memoria_ec = 0;
+	}
+	else
+	{
+		referencia_memoria_ec ++;
+	}
+
+	numero_memoria = list_get(pool, referencia_memoria_ec);
+
+	return numero_memoria;
+}
 //----------------------------------------------------------------------------------------
 
 void startup_lista_seeds()
 {
+	referencia_memoria_ec = -1;
 	lista_seeds = list_create();
 }
 
