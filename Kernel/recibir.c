@@ -40,7 +40,7 @@ void recibir_seed(int socket_cliente)
 		seed[i].PUERTO = seed_aux[i].PUERTO;
 	}
 
-	while(i<=cant)//Recibe IPS
+	while(i<=2)//Recibe IPS
 	{
 		char* array_IP_SEED = recibir_buffer(&size1, socket_cliente);
 

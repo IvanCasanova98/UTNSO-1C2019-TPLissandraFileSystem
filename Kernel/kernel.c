@@ -22,7 +22,7 @@ int main(void){
 	parametro.conexion = conexion;
 
 	pedir_seed(conexion);
-//
+
 //	close(conexion);//desconecta de memoria 0 (A MENOS DE QUE SE VUELVA A CONECTAR A LA MEMORIA 0)
 //
 //	SEED memoria = elegir_memoria();
