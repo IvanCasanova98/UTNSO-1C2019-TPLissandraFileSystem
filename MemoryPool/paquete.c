@@ -136,20 +136,33 @@ t_paquete_create* paquete_create(char* parametros, t_log* logger)
 	char* nombre_tabla;
 	char* consistencia;
 	int particiones;
-	int tiempo_compactacion;
+	int compactacion;
 
 	parametros= strtok(NULL, " ");
+	if(parametros==NULL){
+		return NULL;
+	}
 	nombre_tabla = parametros;
+
 	parametros = strtok(NULL, " ");
-	consistencia = parametros;
+	if(parametros==NULL || !validarConsistencia(parametros)){
+		return NULL;
+	}
+
 	parametros = strtok(NULL, " ");
+	if(parametros==NULL || !validarNumero(parametros) || !strcmp(parametros,"0")){
+		return NULL;
+	}
+
 	particiones = atoi(parametros);
 	parametros = strtok(NULL, " ");
-	tiempo_compactacion = atoi(parametros);
+	if(parametros==NULL || !validarNumero(parametros)){
+		return NULL;
+	}
 
-	t_paquete_create* paquete = crear_paquete_create(nombre_tabla, consistencia, particiones, tiempo_compactacion);
+	t_paquete_create* paquete = crear_paquete_create(nombre_tabla, consistencia,particiones,compactacion);
 
-	loggear_paquete_create(paquete, logger);
+	loggear_paquete_create(paquete,logger);
 
 	return paquete;
 }
@@ -159,13 +172,35 @@ t_paquete_drop* paquete_drop(char *parametros, t_log* logger){
 	char* nombre_tabla;
 	parametros= strtok(NULL, " ");
 	if(parametros==NULL){
-//		faltaTabla();
 		return NULL;
 	}
 	nombre_tabla = parametros;
 	t_paquete_drop* paquete = crear_paquete_drop(nombre_tabla);
-//	loggear_request_drop(paquete);
+
+	//FALTA LOGGEAR
 
 	return paquete;
 }
 
+bool validarConsistencia(char* consistencia){ //0 ml
+
+	if (strcmp(consistencia, "SC")==0) {
+		return true;
+	}
+	else if (strcmp(consistencia, "SHC")==0) {
+		return true;
+	}
+	else if (strcmp(consistencia, "EC")==0) {
+		return true;
+
+	}
+	return false;
+
+}
+
+bool validarNumero(char* parametro){
+	for(int i=0;i<string_length(parametro);i++){
+		if(!isdigit(parametro[i])) return false;
+	}
+	return true;
+}

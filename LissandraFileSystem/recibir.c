@@ -6,6 +6,7 @@ void* recibir_paquetes(void *arg)
 {
 	int cliente_fd = *((int *) arg);
 	free(arg);
+	uint16_t rta;
 
 	//mutex
 	int cod_op = recibir_operacion(cliente_fd);
@@ -21,17 +22,37 @@ void* recibir_paquetes(void *arg)
 			t_paquete_create_de_mp* paquete_create_de_mp = deserializar_paquete_create_de_mp(cliente_fd);
 			t_paquete_create* paquete_create_fs;
 			paquete_create_fs = adaptadorDePaquete(paquete_create_de_mp);
-			if(paquete_create_fs==NULL) break;
 
-			APIcreate(paquete_create_fs);
 
-			loggear_request_create(paquete_create_de_mp);
+			if(paquete_create_fs==NULL){
+				rta = 93;
+					if (send(cliente_fd, &rta, sizeof(uint16_t), MSG_DONTWAIT) <= 0)
+						puts("Error en envio de CODIGO DE RESPUESTA.");
+				break;
+			}
+
+			uint16_t rta= APIcreateRESPUESTA(paquete_create_fs);
+
+			if (send(cliente_fd, &rta, sizeof(uint16_t), MSG_DONTWAIT) <= 0)
+				puts("Error en envio de CODIGO DE RESPUESTA.");
+
+			loggear_request_create_mp(paquete_create_de_mp);
 			break;
+
 		case DROP:;
 			t_paquete_drop* paquete_drop = deserializar_paquete_drop(cliente_fd);
-			if(paquete_drop==NULL) break;
+			if(paquete_drop==NULL)
+			{
+				rta = 13;
+				if (send(cliente_fd, &rta, sizeof(uint16_t), MSG_DONTWAIT) <= 0)
+					puts("Error en envio de CODIGO DE RESPUESTA.");
+				break;
+			}
+			rta = APIdropRESPUESTA(paquete_drop);
+
+			if (send(cliente_fd, &rta, sizeof(uint16_t), MSG_DONTWAIT) <= 0)
+				puts("Error en envio de CODIGO DE RESPUESTA.");
 			loggear_request_drop(paquete_drop);
-			APIdrop(paquete_drop);
 			break;
 
 		case DESCRIBE:;
@@ -56,17 +77,41 @@ void* recibir_paquetes(void *arg)
 		case SELECT:;
 
 			t_paquete_select *paquete_select=deserializar_paquete_select(cliente_fd);
-			if(paquete_select==NULL) break;
+			if(paquete_select==NULL){
+
+				respuestaSELECT* rtaSELECT = malloc(sizeof(uint32_t) + sizeof(uint16_t));
+				rtaSELECT->keyHallada = malloc(1);
+				rtaSELECT->rta=34;
+				strcpy(rtaSELECT->keyHallada,"");
+				rtaSELECT->tamanio_key=1;
+
+				void* respuesta_a_enviar = serializar_respuesta_select(rtaSELECT);
+				if (send(cliente_fd, respuesta_a_enviar, sizeof(uint16_t)+ sizeof(uint32_t)+ rtaSELECT->tamanio_key, MSG_DONTWAIT) <= 0)
+						puts("Error en envio de CODIGO DE RESPUESTA.");
+				break;
+			}
+
 			loggear_request_select(paquete_select);
-			APIselect(paquete_select);
+			respuestaSELECT* rtaSELECT = APIselectRESPUESTA(paquete_select);
+
+			void* respuesta_a_enviar = serializar_respuesta_select(rtaSELECT);
+			if (send(cliente_fd, respuesta_a_enviar, sizeof(uint16_t)+ sizeof(uint32_t)+ rtaSELECT->tamanio_key, MSG_DONTWAIT) <= 0)
+				puts("Error en envio de CODIGO DE RESPUESTA.");
 
 			break;
+
 		case INSERT:;
 
 			t_paquete_insert* paquete_insert = deserializar_paquete_insert(cliente_fd);
-			if(paquete_insert==NULL) break;
-			APIinsert(paquete_insert);
-
+			if(paquete_insert==NULL){
+				rta= 43;
+				if (send(cliente_fd, &rta, sizeof(uint16_t), MSG_DONTWAIT) <= 0)
+					puts("Error en envio de CODIGO DE RESPUESTA.");
+				break;
+			}
+				rta= APIinsertRESPUESTA(paquete_insert);
+				if (send(cliente_fd, &rta, sizeof(uint16_t), MSG_DONTWAIT) <= 0)
+					puts("Error en envio de CODIGO DE RESPUESTA.");
 			break;
 		case JOURNAL:;
 
@@ -238,6 +283,22 @@ t_paquete_create_de_mp* deserializar_paquete_create_de_mp(int socket_cliente)
 	return paquete_create;
 }
 
+void* serializar_respuesta_select(respuestaSELECT* respuestaSELECT){
+
+		void* buffer = malloc(sizeof(uint32_t) + sizeof(uint16_t)  + respuestaSELECT->tamanio_key);
+		int desplazamiento = 0;
+
+		memcpy(buffer + desplazamiento, &respuestaSELECT->rta, sizeof(uint16_t));
+		desplazamiento+= sizeof(uint16_t);
+
+		memcpy(buffer + desplazamiento, &respuestaSELECT->tamanio_key, sizeof(uint32_t));
+		desplazamiento+= sizeof(uint32_t);
+
+		memcpy(buffer + desplazamiento, respuestaSELECT->keyHallada, respuestaSELECT->tamanio_key);
+		desplazamiento+= respuestaSELECT->tamanio_key;
+
+		return buffer;
+}
 
 t_paquete_create* adaptadorDePaquete(t_paquete_create_de_mp* paquete_create_mp){
 	t_paquete_create* paquete_adaptado = crear_paquete_create(
@@ -245,6 +306,7 @@ t_paquete_create* adaptadorDePaquete(t_paquete_create_de_mp* paquete_create_mp){
 			pasarAConsistenciaINT(paquete_create_mp->consistencia),
 			paquete_create_mp->particiones,
 			paquete_create_mp->tiempo_compactacion);
+	printf("\nEL TIEMPO DE COMPACTACION ES: %d\n",paquete_create_mp->tiempo_compactacion);
 
 //	memcpy(paquete_adaptado->nombre_tabla,paquete_create_mp->nombre_tabla,sizeof(paquete_create_mp->nombre_tabla));
 //	paquete_adaptado->metadata.particiones = paquete_create_mp->particiones;

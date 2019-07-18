@@ -474,7 +474,8 @@ t_paquete_create* LeerCreate(char* parametros){
 
 	t_paquete_create* paquete = crear_paquete_create(nombre_tabla, consistencia,particiones,compactacion);
 
-	loggear_request_create(paquete);
+
+	loggear_request_create_fs(paquete);
 
 	return paquete;
 }
@@ -499,10 +500,17 @@ void loggear_request_insert(t_paquete_insert* paquete){
 	log_info(logger, "NUEVA REQUEST: INSERT %s %d %s %lli\n", paquete->nombre_tabla, paquete->valor_key, paquete->value, paquete->timestamp);
     log_destroy(logger);
 }
-void loggear_request_create(t_paquete_create_de_mp* paquete){
+void loggear_request_create_mp(t_paquete_create_de_mp* paquete){
 
 	t_log* logger = iniciar_logger();
 	log_info(logger, "NUEVA REQUEST: CREATE %s %s %d %d \n", paquete->nombre_tabla,paquete->consistencia,paquete->particiones,paquete->tiempo_compactacion);
+    log_destroy(logger);
+}
+
+void loggear_request_create_fs(t_paquete_create* paquete_create_fs){
+
+	t_log* logger = iniciar_logger();
+	log_info(logger, "NUEVA REQUEST: CREATE %s %s %d %d \n", paquete_create_fs->nombre_tabla,pasarAConsistenciaChar(paquete_create_fs->metadata.consistencia),paquete_create_fs->metadata.particiones,paquete_create_fs->metadata.tiempo_de_compactacion);
     log_destroy(logger);
 }
 

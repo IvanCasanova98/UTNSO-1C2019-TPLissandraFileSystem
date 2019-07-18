@@ -1,4 +1,5 @@
 #include "envio.h"
+#include "protocolo.h"
 
 //----------------------------SERIALIZAR MENSAJE
 
@@ -310,7 +311,12 @@ void enviar_describe_lissandra(t_paquete_describe_lfs* paquete,t_config* config,
 	else{enviar_paquete_describe(paquete, conexion, logger);}
 	free(paquete);
 
-	terminar_conexion(conexion);
+	//------RESPUESTA DE LISSANDRA:
+
+//	uint16_t rta;
+//	recv(conexion, &rta, sizeof(uint16_t) ,MSG_WAITALL);
+//	protocolo_respuesta(rta,logger);
+//	terminar_conexion(conexion);
 }
 
 void enviar_select_lissandra(t_paquete_select* paquete, t_config* config, t_log* logger)
@@ -322,6 +328,12 @@ void enviar_select_lissandra(t_paquete_select* paquete, t_config* config, t_log*
 	else{enviar_paquete_select(paquete, conexion, logger);}
 	free(paquete);
 
+	//------RESPUESTA DE LISSANDRA:
+
+	respuestaSELECT_FS* rtaSelect= deserializar_respuesta_select(conexion);
+	protocolo_respuesta(rtaSelect->rta,logger);
+	printf("\n%d %s\n",rtaSelect->rta,rtaSelect->keyHallada);
+	free(rtaSelect);
 	terminar_conexion(conexion);
 }
 
@@ -334,6 +346,12 @@ void enviar_insert_lissandra(t_paquete_insert* paquete, t_config* config, t_log*
 	else{enviar_paquete_insert(paquete, conexion, logger);}
 	free(paquete);
 
+	//------RESPUESTA DE LISSANDRA:
+	uint16_t rta;
+	recv(conexion, &rta, sizeof(uint16_t) ,MSG_WAITALL);
+	printf("RESPUESTA: %d",rta);
+	protocolo_respuesta(rta,logger);
+
 	terminar_conexion(conexion);
 }
 
@@ -343,8 +361,14 @@ void enviar_create_lissandra(t_paquete_create* paquete,t_config* config,t_log* l
 	int cod = 0;
 	if (send(conexion, &cod, sizeof(int), 0) <= 0)
 			puts("Error en envio de CODIGO DE OPERACION.");
-		else{enviar_paquete_create(paquete, conexion, logger);}
-		free(paquete);
+	else{enviar_paquete_create(paquete, conexion, logger);}
+	free(paquete);
+
+	//------RESPUESTA DE LISSANDRA:
+
+	uint16_t rta;
+	recv(conexion, &rta, sizeof(uint16_t) ,MSG_DONTWAIT);
+	protocolo_respuesta(rta,logger);
 
 	terminar_conexion(conexion);
 
@@ -356,8 +380,14 @@ void enviar_drop_lissandra(t_paquete_create* paquete,t_config* config,t_log* log
 	int cod = 1;
 	if (send(conexion, &cod, sizeof(int), 0) <= 0)
 			puts("Error en envio de CODIGO DE OPERACION.");
-		else{enviar_paquete_drop(paquete, conexion, logger);}
-		free(paquete);
+	else{enviar_paquete_drop(paquete, conexion, logger);}
+	free(paquete);
+
+	//------RESPUESTA DE LISSANDRA:
+
+	uint16_t rta;
+	recv(conexion, &rta, sizeof(uint16_t) ,MSG_DONTWAIT);
+	protocolo_respuesta(rta,logger);
 
 	terminar_conexion(conexion);
 

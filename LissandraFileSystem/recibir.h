@@ -103,6 +103,13 @@ typedef struct t_paquete_create_de_mp
 	int tiempo_compactacion;
 }t_paquete_create_de_mp;
 
+typedef struct respuestaSELECT
+{
+	uint32_t tamanio_key;
+	uint16_t rta;
+	char* keyHallada;
+}respuestaSELECT;
+
 //--------------------RECIBIR PAQUETE
 void* recibir_paquetes(void*);
 
@@ -116,6 +123,7 @@ t_paquete_create_de_mp* deserializar_paquete_create_de_mp(int socket_cliente);
 t_paquete_drop* deserializar_paquete_drop(int socket_cliente);
 t_paquete_describe* deserializar_paquete_describe(int socket_cliente);
 
+void* serializar_respuesta_select(respuestaSELECT* respuestaSELECT);
 //--------------------ADAPTADOR
 t_paquete_create* adaptadorDePaquete(t_paquete_create_de_mp* paquete_create_mp);
 

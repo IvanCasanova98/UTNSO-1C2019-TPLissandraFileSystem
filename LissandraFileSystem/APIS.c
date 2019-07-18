@@ -19,6 +19,7 @@ void APIdrop(t_paquete_drop* paquete_drop){ //ml 20bytes
 		RemoverMetadataDeTabla(nombreTablaMayuscula);
 		RemoverCarpetaVaciaDeTabla(nombreTablaMayuscula); //ESTA FUNCION SIRVE SOLO SI LA CARPETA ESTA VACIA.
 		sem_post(&SemaforoMemtable);
+
 		LogearDropCorrecto(nombreTablaMayuscula);
 
 
@@ -29,6 +30,34 @@ void APIdrop(t_paquete_drop* paquete_drop){ //ml 20bytes
 
 }
 
+uint16_t APIdropRESPUESTA(t_paquete_drop* paquete_drop){ //ml 20bytes
+
+	char nombreTablaMayuscula [strlen(paquete_drop->nombre_tabla)+1];
+	strcpy(nombreTablaMayuscula,paquete_drop->nombre_tabla);
+	string_to_upper(nombreTablaMayuscula);
+
+	if(existeTabla(nombreTablaMayuscula))
+	{
+		verificarSemaforoCompactacion(nombreTablaMayuscula);
+		verificarSemaforoMemTable();
+		sem_wait(&SemaforoMemtable);
+		RemoverDeLaMemtable(nombreTablaMayuscula); //0 ml
+		RemoverParticionesDeTablaYSusBloques(nombreTablaMayuscula); //0 ml
+		RemoverTemporalesDeTablaYSusBloques(nombreTablaMayuscula); //8 bytes ml
+		RemoverMetadataDeTabla(nombreTablaMayuscula);
+		RemoverCarpetaVaciaDeTabla(nombreTablaMayuscula); //ESTA FUNCION SIRVE SOLO SI LA CARPETA ESTA VACIA.
+		sem_post(&SemaforoMemtable);
+		LogearDropCorrecto(nombreTablaMayuscula);
+
+		return 10;
+
+	} else
+	{
+		LogearDropFallido(nombreTablaMayuscula);
+		return 12;
+	}
+
+}
 
 
 void APIcreate(t_paquete_create* paquete_create){ //0 memory leak
@@ -39,14 +68,11 @@ void APIcreate(t_paquete_create* paquete_create){ //0 memory leak
 	if(!existeTabla(nombreTablaMayuscula)){
 		crearTabla(nombreTablaMayuscula);
 		crearMetadataConfig(nombreTablaMayuscula,paquete_create->metadata.consistencia,paquete_create->metadata.particiones,paquete_create->metadata.tiempo_de_compactacion);
-		//crearParticiones(nombreTablaMayuscula,paquete_create->metadata.particiones);
+//		crearParticiones(nombreTablaMayuscula,paquete_create->metadata.particiones);
 		int particiones=paquete_create->metadata.particiones;
 		int particionesCargadas=0;
 		for(int particionesCargadas=0;particionesCargadas<paquete_create->metadata.particiones;particionesCargadas++)
 		crearParticion(nombreTablaMayuscula,particionesCargadas);
-
-
-
 
 		char* nombreTabla= malloc(strlen (nombreTablaMayuscula)+1);
 		strcpy(nombreTabla,nombreTablaMayuscula);
@@ -62,6 +88,64 @@ void APIcreate(t_paquete_create* paquete_create){ //0 memory leak
 
 }
 
+uint16_t APIcreateRESPUESTA(t_paquete_create* paquete_create){ //0 memory leak
+
+	char nombreTablaMayuscula [strlen(paquete_create->nombre_tabla)+1];
+
+	strcpy(nombreTablaMayuscula,paquete_create->nombre_tabla);
+	string_to_upper(nombreTablaMayuscula);
+	if(!existeTabla(nombreTablaMayuscula)){
+		crearTabla(nombreTablaMayuscula);
+		crearMetadataConfig(nombreTablaMayuscula,paquete_create->metadata.consistencia,paquete_create->metadata.particiones,paquete_create->metadata.tiempo_de_compactacion);
+		//crearParticiones(nombreTablaMayuscula,paquete_create->metadata.particiones);
+		int particiones=paquete_create->metadata.particiones;
+		int particionesCargadas=0;
+		for(int particionesCargadas=0;particionesCargadas<paquete_create->metadata.particiones;particionesCargadas++)
+		crearParticion(nombreTablaMayuscula,particionesCargadas);
+
+		char* nombreTabla= malloc(strlen (nombreTablaMayuscula)+1);
+		strcpy(nombreTabla,nombreTablaMayuscula);
+		crearHiloCompactacion(nombreTabla);
+
+		liberarPaqueteCreate(paquete_create);
+
+		return 90;
+
+	} else {
+		liberarPaqueteCreate(paquete_create);
+//		LaTablaYaExiste(nombreTablaMayuscula);
+		return 92;
+	}
+
+}
+
+uint16_t APIinsertRESPUESTA(t_paquete_insert* paquete_insert){ // 0 memory leak
+
+	char* nombreTablaMayuscula=malloc(strlen(paquete_insert->nombre_tabla)+1);
+
+	strcpy(nombreTablaMayuscula,paquete_insert->nombre_tabla);
+	string_to_upper(nombreTablaMayuscula);
+	if(existeTabla(nombreTablaMayuscula)){
+		verificarSemaforoMemTable();
+		sem_wait(&SemaforoMemtable);
+		t_metadata* metadataDeTabla=obtenerMetadataTabla(nombreTablaMayuscula);
+		agregarTabla(paquete_insert);
+		LogearInsert(paquete_insert->timestamp,paquete_insert->valor_key,paquete_insert->value,nombreTablaMayuscula);
+		liberarPaqueteInsert(paquete_insert);
+		imprimirListaTablas(memTable);
+		sem_post(&SemaforoMemtable);
+		free(metadataDeTabla);
+		free(nombreTablaMayuscula);
+		return 40;
+	} else{
+		LaTablaNoExiste(paquete_insert->timestamp,paquete_insert->valor_key,paquete_insert->value,nombreTablaMayuscula);
+		liberarPaqueteInsert(paquete_insert);
+		free(nombreTablaMayuscula);
+		return 42;
+	}
+
+
+}
 
 void APIinsert(t_paquete_insert* paquete_insert){ // 0 memory leak
 
@@ -87,6 +171,96 @@ void APIinsert(t_paquete_insert* paquete_insert){ // 0 memory leak
 	}
 
 
+}
+
+respuestaSELECT* APIselectRESPUESTA(t_paquete_select* paquete_select){ // bastante ml revisar
+
+
+	char* nombreTablaMayuscula=malloc(strlen(paquete_select->nombre_tabla)+1);
+	strcpy(nombreTablaMayuscula,paquete_select->nombre_tabla);
+
+
+	string_to_upper(nombreTablaMayuscula);
+
+		if(existeTabla(nombreTablaMayuscula)){
+			verificarSemaforoTabla(nombreTablaMayuscula);
+			verificarSemaforoMemTable();
+			t_metadata* metadataDeTabla=obtenerMetadataTabla(nombreTablaMayuscula);
+			int particionKey;
+			particionKey =	particionDeKey(paquete_select->valor_key,metadataDeTabla->particiones);
+			t_list* RegistrosEncontrados=list_create();
+
+			void* RegistroParticion 		  = buscarEnParticion(nombreTablaMayuscula,particionKey,paquete_select->valor_key);
+			void* RegistroMemTable  		  = buscarMemTable(nombreTablaMayuscula,paquete_select->valor_key); // 8 bytes ml
+			void* RegistroTemporal  		  = buscarEnTemporales(nombreTablaMayuscula,paquete_select->valor_key);
+			void* RegistroTemporalCompactando = buscarEnTemporalesCompactando(nombreTablaMayuscula,paquete_select->valor_key);
+
+			if(RegistroMemTable!=NULL){
+			list_add(RegistrosEncontrados,RegistroMemTable);
+			}
+			if(RegistroParticion!=NULL){
+			list_add(RegistrosEncontrados,RegistroParticion);
+
+			}
+			if(RegistroTemporal!=NULL){
+			list_add(RegistrosEncontrados,RegistroTemporal);
+
+			}
+			if(RegistroTemporalCompactando!=NULL){
+			list_add(RegistrosEncontrados,RegistroMemTable);
+			}
+
+			if(!list_is_empty(RegistrosEncontrados)){
+			char* valueEncontrado = elegirMayorTimeStamp(RegistrosEncontrados);
+			list_clean_and_destroy_elements(RegistrosEncontrados,liberarRegistro);
+			list_destroy(RegistrosEncontrados);
+
+			valueExiste(nombreTablaMayuscula,paquete_select->valor_key,valueEncontrado);
+
+			liberarPaqueteSelect(paquete_select);
+
+			free(metadataDeTabla);
+			free(nombreTablaMayuscula);
+
+			respuestaSELECT* rtaSELECT = malloc(sizeof(uint32_t) + sizeof(uint16_t) + strlen(valueEncontrado)+1);
+
+			rtaSELECT->keyHallada = malloc(strlen(valueEncontrado)+1);
+			rtaSELECT->rta=30;
+			strcpy(rtaSELECT->keyHallada,valueEncontrado);
+			rtaSELECT->tamanio_key= strlen(valueEncontrado)+1;
+			return rtaSELECT;
+
+
+//			return NULL;
+			}else{
+				valueNoExiste(paquete_select->nombre_tabla,paquete_select->valor_key);
+
+				list_destroy(RegistrosEncontrados);
+				free(nombreTablaMayuscula);
+				free(metadataDeTabla);
+				liberarPaqueteSelect(paquete_select);
+//				return NULL;
+				respuestaSELECT* rtaSELECT = malloc(sizeof(uint32_t) + sizeof(uint16_t));
+				rtaSELECT->keyHallada = malloc(1);
+				rtaSELECT->rta=32;
+				strcpy(rtaSELECT->keyHallada,"");
+				rtaSELECT->tamanio_key=1;
+				return rtaSELECT;
+		}
+
+		}else
+		{
+		LaTablaNoExisteSelect(nombreTablaMayuscula);
+		free(nombreTablaMayuscula);
+		liberarPaqueteSelect(paquete_select);
+//		return NULL;
+		respuestaSELECT* rtaSELECT = malloc(sizeof(uint32_t) + sizeof(uint16_t));
+		rtaSELECT->keyHallada = malloc(1);
+		strcpy(rtaSELECT->keyHallada,"");
+		rtaSELECT->tamanio_key=1;
+		rtaSELECT->rta=33;
+		return rtaSELECT;
+		}
 }
 
 char* APIselect(t_paquete_select* paquete_select){ // bastante ml revisar

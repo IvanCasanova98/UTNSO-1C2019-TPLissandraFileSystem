@@ -55,6 +55,10 @@ void  APIdrop(t_paquete_drop*);
 char* APIselect(t_paquete_select*);
 void  APIinsert(t_paquete_insert*);
 void  APIcreate(t_paquete_create*);
+respuestaSELECT* APIselectRESPUESTA(t_paquete_select* paquete_select);
+uint16_t APIinsertRESPUESTA(t_paquete_insert* paquete_insert);
+uint16_t APIcreateRESPUESTA(t_paquete_create* paquete_create);
+uint16_t APIdropRESPUESTA(t_paquete_drop* paquete_drop);
 t_dictionary*  APIdescribe(t_paquete_describe*);
 t_dictionary*  APIdescribeTodasLasTablas();
 //*************************************

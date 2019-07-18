@@ -19,6 +19,13 @@
 #include "tablas.h"
 //#include "envio.h"
 
+typedef struct respuestaSELECT_FS
+{
+	uint32_t tamanio_key;
+	uint16_t rta;
+	char* keyHallada;
+}respuestaSELECT_FS;
+
 //--------------------LEVANTAR SERVIDOR
 void* servidor(void * arg);
 
@@ -32,6 +39,7 @@ int recibir_operacion(int);
 t_paquete_select* deserializar_paquete_select(int socket_cliente);
 t_paquete_insert* deserializar_paquete_insert(int socket_cliente);
 t_paquete_create* deserializar_paquete_create(int socket_cliente);
+
 
 //------------------RECIBIR MENSAJES------------------
 void* recibir_buffer(int* size, int socket_cliente);

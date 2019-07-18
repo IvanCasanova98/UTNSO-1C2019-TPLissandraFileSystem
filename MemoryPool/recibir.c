@@ -232,6 +232,56 @@ t_paquete_create* deserializar_paquete_create(int socket_cliente)
 	return paquete_create;
 }
 
+respuestaSELECT_FS *deserializar_respuesta_select(int socket_cliente){
+
+	int desplazamiento = 0;
+	uint16_t rta;
+
+	recv(socket_cliente, &rta, sizeof(uint16_t) ,MSG_WAITALL);
+	desplazamiento+= sizeof(uint16_t);
+
+	if(rta != 30 ) { //HUBO FALLO.
+
+		respuestaSELECT_FS* respuestaSELECT = malloc(sizeof(uint32_t) + sizeof(uint16_t));
+		respuestaSELECT->rta = rta;
+
+		respuestaSELECT->keyHallada = malloc(1);
+		respuestaSELECT->keyHallada = "";
+		respuestaSELECT->tamanio_key=1;
+
+		return respuestaSELECT;
+	}
+	else if(rta == 30) //EXITO
+	{
+		size_t tamanioKey;
+		recv(socket_cliente, &tamanioKey, sizeof(uint32_t) ,MSG_WAITALL);
+
+		respuestaSELECT_FS* respuestaSELECT= malloc(tamanioKey+sizeof(uint16_t)+sizeof(uint32_t));
+
+		void* buffer = malloc(tamanioKey);
+		respuestaSELECT->keyHallada= malloc(tamanioKey);
+
+		recv(socket_cliente, buffer, tamanioKey ,MSG_WAITALL);
+
+
+		memcpy(respuestaSELECT->keyHallada,buffer, tamanioKey);
+		respuestaSELECT->rta = rta;
+		respuestaSELECT->tamanio_key= tamanioKey;
+
+		free(buffer);
+		return respuestaSELECT;
+	} else{
+		respuestaSELECT_FS* respuestaSELECT = malloc(sizeof(uint32_t) + sizeof(uint16_t));
+				respuestaSELECT->rta = 34;
+
+				respuestaSELECT->keyHallada = malloc(1);
+				respuestaSELECT->keyHallada = "";
+				respuestaSELECT->tamanio_key=1;
+		return respuestaSELECT;
+	}
+
+}
+
 //------------------RECIBIR MENSAJES------------------
 void* recibir_buffer(int* size, int socket_cliente)
 {
