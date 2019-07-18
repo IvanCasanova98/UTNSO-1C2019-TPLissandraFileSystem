@@ -314,10 +314,15 @@ void enviar_describe_lissandra(t_paquete_describe_lfs* paquete,t_config* config,
 
 	//------RESPUESTA DE LISSANDRA:
 
-//	uint16_t rta;
-//	recv(conexion, &rta, sizeof(uint16_t) ,MSG_WAITALL);
-//	protocolo_respuesta(rta,logger);
-//	terminar_conexion(conexion);
+	uint16_t rta;
+	recv(conexion, &rta, sizeof(uint16_t) ,0);
+	if(rta==20){
+		t_dictionary* diccionario=deserializar_respuesta_describe(conexion);
+		terminar_conexion(conexion);
+	}else{
+	protocolo_respuesta(rta,logger);
+	terminar_conexion(conexion);
+	}
 }
 
 void enviar_select_lissandra(t_paquete_select* paquete, t_config* config, t_log* logger)
@@ -332,8 +337,13 @@ void enviar_select_lissandra(t_paquete_select* paquete, t_config* config, t_log*
 	//------RESPUESTA DE LISSANDRA:
 
 	respuestaSELECT_FS* rtaSelect= deserializar_respuesta_select(conexion);
+	if(rtaSelect->rta==30)
+		log_info(logger,"SELECT DE LA KEY %d es %s",rtaSelect->rta,rtaSelect->keyHallada);
+	else
 	protocolo_respuesta(rtaSelect->rta,logger);
-	printf("\n%d %s\n",rtaSelect->rta,rtaSelect->keyHallada);
+
+
+	//printf("\n%d %s\n",rtaSelect->rta,rtaSelect->keyHallada);
 	free(rtaSelect);
 	terminar_conexion(conexion);
 }
@@ -367,7 +377,9 @@ void enviar_create_lissandra(t_paquete_create* paquete,t_config* config,t_log* l
 
 	//------RESPUESTA DE LISSANDRA:
 	uint16_t rta;
-	recv(conexion, &rta,sizeof(uint16_t) ,MSG_DONTWAIT);
+	//void* buffer=malloc(sizeof(uint16_t));
+	recv(conexion, &rta,sizeof(uint16_t) ,0);
+	//memcpy(&rta, buffer, sizeof(uint16_t));
 	printf("%d",rta);
 	protocolo_respuesta(rta,logger);
 
@@ -387,7 +399,7 @@ void enviar_drop_lissandra(t_paquete_create* paquete,t_config* config,t_log* log
 	//------RESPUESTA DE LISSANDRA:
 
 	uint16_t rta;
-	recv(conexion, &rta, sizeof(uint16_t) ,MSG_DONTWAIT);
+	recv(conexion, &rta, sizeof(uint16_t) ,0);
 	protocolo_respuesta(rta,logger);
 
 	terminar_conexion(conexion);

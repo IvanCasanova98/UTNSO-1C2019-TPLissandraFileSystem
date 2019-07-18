@@ -125,9 +125,9 @@ typedef struct valoresDescribe
 }valoresDescribe;
 
 
-void* pasarAvaloresDescribe(char* key, void* metadata,t_list* lista);
-t_list* convertirDiccionaryALista(t_dictionary* diccionario);
-void* serealizar_respuesta_describe(respuestaDESCRIBE* metadatasDeTablasPedidas);
+void* pasarAvaloresDescribe(char* key, void* metadata,int conexion);
+
+void* serealizar_respuesta_describe(respuestaDESCRIBE* metadatasDeTablasPedidas,int conexion);
 //--------------------RECIBIR PAQUETE
 void* recibir_paquetes(void*);
 
@@ -144,6 +144,7 @@ t_paquete_describe* deserializar_paquete_describe(int socket_cliente);
 void* serializar_respuesta_select(respuestaSELECT* respuestaSELECT);
 //--------------------ADAPTADOR
 t_paquete_create* adaptadorDePaquete(t_paquete_create_de_mp* paquete_create_mp);
+
 
 //--------------------ARCHIVOS LOGGER/CONFIGURACION
 t_log* iniciar_logger(void);

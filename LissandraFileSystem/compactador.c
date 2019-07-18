@@ -632,20 +632,17 @@ void levantarHilosTablasExistentesCompactacion(){
 
 
 				char* nombreTabla = malloc(sizeof(dir->d_name)+1);
-				//mutex[i] = PTHREAD_MUTEX_INITIALIZER;
-
-				//pthread_mutex_init(& mutex[i], NULL);
 
 				strcpy(nombreTabla,dir->d_name);
 				semaforoTabla* semaforoNuevo= crearSemaforo(nombreTabla);
 				list_add(ListaSem,semaforoNuevo);
 				dictionary_put(TablasCompactacion,nombreTabla,compactador[i]);
 
-				//printf("%d",i);
+
 
 				i++;
 				free(nombreTabla);
-				//pthread_join(compactador[i], (void**)NULL);
+
 			}
 
 
@@ -669,7 +666,13 @@ void* levantarHiloCompactacion(char* nombreTablaNueva,void* compactador){
 	//i++;
 	//printf("%d",i);
 	//dictionary_put(TablasSem,nombreTablaNueva,&semaforoTabla);
+
+
 	pthread_create(&_compactador,NULL,funcionCompactar,(void*)nombreTablaNueva);
+
+
+
+
 	//pthread_join(&_compactador,NULL);
 	//dictionary_remove(TablasCompactacion,nombreTablaNueva);
 

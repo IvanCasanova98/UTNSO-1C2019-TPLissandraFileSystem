@@ -9,6 +9,7 @@
 #include<netdb.h>
 #include<commons/log.h>
 #include<commons/collections/list.h>
+#include<commons/collections/dictionary.h>
 #include<commons/string.h>
 #include<commons/config.h>
 #include<string.h>
@@ -25,6 +26,13 @@ typedef struct respuestaSELECT_FS
 	uint16_t rta;
 	char* keyHallada;
 }respuestaSELECT_FS;
+
+typedef struct t_metadataDescribe
+{
+	char* consistencia;
+	int particiones;
+	int tiempo_de_compactacion;
+}t_metadataDescribe;
 
 //--------------------LEVANTAR SERVIDOR
 void* servidor(void * arg);

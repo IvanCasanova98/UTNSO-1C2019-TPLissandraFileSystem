@@ -8,8 +8,10 @@ t_bitarray* bitmap;
 t_list* ListaSem=NULL;
 sem_t SemaforoMemtable;
 bool estaDump =0;
+
 int main(void)
 {
+	logger = iniciar_logger();
 	sem_init(&SemaforoMemtable,0,1);
 	t_config* config = leer_config();
 	//crearMetadataDePuntoDeMontaje();
@@ -17,8 +19,8 @@ int main(void)
 	crearBitMap();
 	pthread_t consola,dumpeo,dump,compactar,hiloListener;
 
-	logger = iniciar_logger();
-	int tiempoEntreDump = atoi(config_get_string_value(config, "TIEMPO_DUMP"));
+
+	//int tiempoEntreDump = atoi(config_get_string_value(config, "TIEMPO_DUMP"));
 	//gettimeofday(&tiempoHastaDump,NULL);
 
 
@@ -29,8 +31,9 @@ int main(void)
 
 
 	config_destroy(config);
-	log_info(logger, "FIN CONEXION");
 
+	log_info(logger, "FIN CONEXION");
+	//log_destroy(logger);
 	pthread_join(hiloListener, (void**)NULL);
 	pthread_join(dump, (void**)NULL);
 	pthread_join(consola, (void**)NULL);

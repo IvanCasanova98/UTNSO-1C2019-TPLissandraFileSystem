@@ -232,6 +232,42 @@ t_paquete_create* deserializar_paquete_create(int socket_cliente)
 	return paquete_create;
 }
 
+t_dictionary* deserializar_respuesta_describe(int conexion){
+	t_dictionary* diccionarioDescribe=dictionary_create();
+
+	int cantidadDeTablas;
+	recv(conexion, &cantidadDeTablas, sizeof(int) ,MSG_WAITALL);
+	int i=0;
+	while(i<cantidadDeTablas){
+		int longNombreTabla;
+		int longConsistencia;
+		int desplazamiento=0;
+		recv(conexion, &longNombreTabla, sizeof(int) ,MSG_WAITALL);
+		recv(conexion, &longConsistencia, sizeof(int) ,MSG_WAITALL);
+	void* buffer=malloc(sizeof(int)*2+longNombreTabla+longConsistencia);
+	recv(conexion, buffer,sizeof(int)*2+longNombreTabla+longConsistencia ,MSG_WAITALL);
+
+
+	char* nombreTabla=malloc(longNombreTabla);
+	t_metadataDescribe* metadata= malloc(sizeof(struct t_metadataDescribe));
+	metadata->consistencia=malloc(longConsistencia);
+
+
+	memcpy(nombreTabla,buffer + desplazamiento, longNombreTabla);
+	desplazamiento+= longNombreTabla;
+	memcpy(metadata->consistencia,buffer + desplazamiento, longConsistencia);
+	desplazamiento+= longConsistencia;
+	memcpy(&(metadata->particiones),buffer + desplazamiento, sizeof(int));
+	desplazamiento+= sizeof(int);
+	memcpy(&(metadata->tiempo_de_compactacion),buffer + desplazamiento, sizeof(int));
+	desplazamiento+= sizeof(int);
+
+	dictionary_put(diccionarioDescribe,nombreTabla,metadata);
+
+	}
+return diccionarioDescribe;
+}
+
 respuestaSELECT_FS *deserializar_respuesta_select(int socket_cliente){
 
 	int desplazamiento = 0;

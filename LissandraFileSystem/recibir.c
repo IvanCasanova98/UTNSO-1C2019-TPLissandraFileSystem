@@ -26,17 +26,19 @@ void* recibir_paquetes(void *arg)
 
 			if(paquete_create_fs==NULL){
 				rta = 93;
-					if (send(cliente_fd, &rta, sizeof(uint16_t), MSG_DONTWAIT) <= 0)
+
+				if (send(cliente_fd, &rta, sizeof(uint16_t), MSG_DONTWAIT) <= 0)
 						puts("Error en envio de CODIGO DE RESPUESTA.");
 				break;
 			}
 
 			rta= APIcreateRESPUESTA(paquete_create_fs);
-			printf("%d\n",rta);
+			//printf("%d\n",rta);
+			//void* buffer = malloc(sizeof(uint16_t));
+			//memcpy(buffer, &rta, sizeof(uint16_t));
 
 
-
-			if (send(cliente_fd, &rta,sizeof(uint16_t), MSG_DONTWAIT) <= 0)
+			if (send(cliente_fd, &rta,sizeof(uint16_t), 0) <= 0)
 				puts("Error en envio de CODIGO DE RESPUESTA.");
 
 			//loggear_request_create_mp(paquete_create_de_mp);
@@ -47,13 +49,13 @@ void* recibir_paquetes(void *arg)
 			if(paquete_drop==NULL)
 			{
 				rta = 13;
-				if (send(cliente_fd, &rta, sizeof(uint16_t), MSG_DONTWAIT) <= 0)
+				if (send(cliente_fd, &rta, sizeof(uint16_t), 0) <= 0)
 					puts("Error en envio de CODIGO DE RESPUESTA.");
 				break;
 			}
 			rta = APIdropRESPUESTA(paquete_drop);
 
-			if (send(cliente_fd, &rta, sizeof(uint16_t), MSG_DONTWAIT) <= 0)
+			if (send(cliente_fd, &rta, sizeof(uint16_t), 0) <= 0)
 				puts("Error en envio de CODIGO DE RESPUESTA.");
 			loggear_request_drop(paquete_drop);
 			break;
@@ -65,23 +67,27 @@ void* recibir_paquetes(void *arg)
 				t_dictionary* metadatasDeTablasPedidas = APIdescribeTodasLasTablas();
 				if(metadatasDeTablasPedidas != NULL){
 					imprimirListaMetadatas(metadatasDeTablasPedidas);
-					//serealizar_respuesta_describe(metadatasDeTablasPedidas);
-
-				dictionary_destroy_and_destroy_elements(metadatasDeTablasPedidas,free);
+					serealizar_respuesta_describe(metadatasDeTablasPedidas,cliente_fd);
+				}
+				//dictionary_destroy_and_destroy_elements(metadatasDeTablasPedidas,free);
 
 			} else{
 
-				respuestaDESCRIBE* metadataDeTablaPedida = APIdescribe(paquete_describe);
+				respuestaDESCRIBE* metadataDeTablaPedida = APIdescribeRESPUESTA(paquete_describe);
 				if(metadataDeTablaPedida->rta == 22){
 					uint16_t rta=22;
-				send(cliente_fd, &rta, sizeof(uint16_t), MSG_DONTWAIT);
+				send(cliente_fd, &rta, sizeof(uint16_t), 0);
 				free(metadataDeTablaPedida);
 				break;
 				}
-				imprimirListaMetadatas(metadataDeTablaPedida->tablas);
-				//serealizar_respuesta_describe(metadataDeTablaPedida);
-				dictionary_destroy_and_destroy_elements(metadataDeTablaPedida,free);
+				if(metadataDeTablaPedida->rta == 20){
+					uint16_t rta=20;
+				send(cliente_fd, &rta, sizeof(uint16_t), 0);
 
+				imprimirListaMetadatas(metadataDeTablaPedida->tablas);
+				serealizar_respuesta_describe(metadataDeTablaPedida,cliente_fd);
+				//dictionary_destroy_and_destroy_elements(metadataDeTablaPedida,free);
+				}
 			}
 			break;
 
@@ -145,12 +151,12 @@ void* recibir_paquetes(void *arg)
 		default:
 			log_warning(logger, "Operacion desconocida.");
 			break;
-		}
+
 		//salgo mutex
 		pthread_exit(NULL);
+		}
 
 
-}
 }
 
 //----------------------------TIPO DE OPERACION RECIBIDA
@@ -319,7 +325,7 @@ t_paquete_create* adaptadorDePaquete(t_paquete_create_de_mp* paquete_create_mp){
 			pasarAConsistenciaINT(paquete_create_mp->consistencia),
 			paquete_create_mp->particiones,
 			paquete_create_mp->tiempo_compactacion);
-	printf("\nEL TIEMPO DE COMPACTACION ES: %d\n",paquete_create_mp->tiempo_compactacion);
+	//printf("\nEL TIEMPO DE COMPACTACION ES: %d\n",paquete_create_mp->tiempo_compactacion);
 
 //	memcpy(paquete_adaptado->nombre_tabla,paquete_create_mp->nombre_tabla,sizeof(paquete_create_mp->nombre_tabla));
 //	paquete_adaptado->metadata.particiones = paquete_create_mp->particiones;
@@ -330,46 +336,52 @@ t_paquete_create* adaptadorDePaquete(t_paquete_create_de_mp* paquete_create_mp){
 }
 
 
-void* serealizar_respuesta_describe(respuestaDESCRIBE* metadatasDeTablasPedidas){
- int cantidadDeTablas= dictionary_size(metadatasDeTablasPedidas->tablas);
- int i =0;
- t_list* ListaDeTablas= convertirDiccionaryALista(metadatasDeTablasPedidas->tablas);
- while (i<cantidadDeTablas){
-	 valoresDescribe* valorTabla = malloc(sizeof(valoresDescribe));
-	 valorTabla = list_get(ListaDeTablas,i);
-
-
- }
-
-
- }
-
-
-
-
-
-
-t_list* convertirDiccionaryALista(t_dictionary* diccionario){
-	t_list* lista = list_create();
+void* serealizar_respuesta_describe(respuestaDESCRIBE* metadatasDeTablasPedidas,int conexion){
 void* _pasarAvaloresDescribe(char* key, void* metadata){
-	pasarAvaloresDescribe(key, metadata,lista);
-}
-
-	dictionary_iterator(diccionario,_pasarAvaloresDescribe);
+	pasarAvaloresDescribe(key,  metadata,conexion);
 
 }
 
-void* pasarAvaloresDescribe(char* key, void* metadata,t_list* lista){
-	valoresDescribe* valorTabla = malloc(sizeof(valoresDescribe));
-	int longNombreTabla= strlen(valorTabla->nombre_tabla)+1;
-	valorTabla->nombre_tabla=malloc(longNombreTabla);
+int cantidadDeTablas= dictionary_size(metadatasDeTablasPedidas->tablas);
+ int i =0;
+ send(conexion, &cantidadDeTablas, sizeof(int), 0);
+ dictionary_iterator(metadatasDeTablasPedidas->tablas,_pasarAvaloresDescribe);
+ }
 
-	valorTabla->nombre_tabla_long=longNombreTabla;
-	strcpy(valorTabla->nombre_tabla,key);
-	valorTabla->metadata.consistencia= ((t_metadata*) metadata)->consistencia;
-	valorTabla->metadata.particiones= ((t_metadata*) metadata)->particiones;
-	valorTabla->metadata.tiempo_de_compactacion= ((t_metadata*) metadata)->tiempo_de_compactacion;
-	list_add(lista,valorTabla);
+
+
+
+
+
+
+
+
+
+void* pasarAvaloresDescribe(char* key, void* metadata,int conexion){
+	t_metadata* metadataTabla = metadata;
+
+
+	int longNombreTabla= strlen(key)+1;
+	int longConsistencia=strlen(pasarAConsistenciaChar(metadataTabla->consistencia));
+
+	void* buffer=malloc(longNombreTabla+longConsistencia +sizeof(int)*4);
+	int desplazamiento=0;
+	memcpy(buffer+desplazamiento, &longNombreTabla,sizeof(int));
+	desplazamiento+=sizeof(int);
+	memcpy(buffer+desplazamiento, &longConsistencia,sizeof(int));
+	desplazamiento+=sizeof(int);
+	memcpy(buffer+desplazamiento, key,longNombreTabla);
+	desplazamiento+=longNombreTabla;
+	memcpy(buffer+desplazamiento, pasarAConsistenciaChar(metadataTabla->consistencia),longConsistencia);
+	desplazamiento+=longConsistencia;
+	memcpy(buffer+desplazamiento,&metadataTabla->particiones,sizeof(int));
+	desplazamiento+=sizeof(int);
+	memcpy(buffer+desplazamiento,metadataTabla->tiempo_de_compactacion,sizeof(int));
+	desplazamiento+=sizeof(int);
+
+	send(conexion, buffer, longNombreTabla+longConsistencia +sizeof(int)*4, 0);
+
+
 
 }
 

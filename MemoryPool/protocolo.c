@@ -43,8 +43,6 @@ void protocolo_respuesta(uint16_t codigo_respuesta,t_log* logger)
 			case 24:;
 				break;
 		//********************************** SELECT(3)
-			case 30:;
-				break;
 			case 31:;
 			log_warning(logger,"ERROR ingreso request SELECT.");
 				break;
