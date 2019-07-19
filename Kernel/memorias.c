@@ -19,6 +19,7 @@ void startup_diccionario()
 	agregar_consistencia(0, "SC");
 	agregar_consistencia(0, "EC");
 	agregar_consistencia(1, "SHC");
+	agregar_consistencia(2, "SHC");
 	agregar_consistencia(2, "EC");
 	agregar_consistencia(3, "EC");
 }

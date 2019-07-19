@@ -43,11 +43,11 @@ int conectarse_a_memoria(char** vector_request, t_log* logger)
 	if(strcmp(vector_request[0],"CREATE"))
 	{
 		char * consistencia_tabla = get_consistencia(vector_request[1]);
-		memoria = elegir_memoria(consistencia_tabla);
+		memoria = elegir_memoria(vector_request[1],consistencia_tabla);
 	}
 	else
 	{
-		memoria = elegir_memoria(vector_request[2]);
+		memoria = elegir_memoria(vector_request[1],vector_request[2]);
 	}
 
 	char * puerto_char = string_itoa(memoria->PUERTO);

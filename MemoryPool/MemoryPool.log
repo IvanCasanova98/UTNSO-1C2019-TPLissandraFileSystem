@@ -25500,3 +25500,1613 @@ Nombre tabla: TABLA9
 Valor KEY   : 9
 [ERROR] 19:58:07:197 MemoryPool/(15210:15211): PAGINA NO ENCONTRADA
 
+[INFO] 23:25:32:795 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA12
+Consistencia       : SHC
+Particiones        : 12
+Tiempo compactacion: 12
+[INFO] 23:25:32:842 MemoryPool/(4598:4599): Tabla creada: TABLA12
+
+[INFO] 23:26:26:269 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA12
+Consistencia       : SHC
+Particiones        : 12
+Tiempo compactacion: 12
+[ERROR] 23:26:26:269 MemoryPool/(4598:4599): Ya existe la tabla: TABLA12
+
+[INFO] 23:27:12:517 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA12
+Consistencia       : SHC
+Particiones        : 12
+Tiempo compactacion: 12
+[ERROR] 23:27:12:517 MemoryPool/(4598:4599): Ya existe la tabla: TABLA12
+
+[INFO] 23:27:33:925 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA12
+Consistencia       : SHC
+Particiones        : 12
+Tiempo compactacion: 12
+[ERROR] 23:27:33:925 MemoryPool/(4598:4599): Ya existe la tabla: TABLA12
+
+[INFO] 23:27:43:72 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA12
+Consistencia       : SHC
+Particiones        : 12
+Tiempo compactacion: 12
+[ERROR] 23:27:43:73 MemoryPool/(4598:4599): Ya existe la tabla: TABLA12
+
+[INFO] 23:27:44:137 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA12
+Consistencia       : SHC
+Particiones        : 12
+Tiempo compactacion: 12
+[ERROR] 23:27:44:138 MemoryPool/(4598:4599): Ya existe la tabla: TABLA12
+
+[INFO] 23:27:44:829 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA12
+Consistencia       : SHC
+Particiones        : 12
+Tiempo compactacion: 12
+[ERROR] 23:27:44:829 MemoryPool/(4598:4599): Ya existe la tabla: TABLA12
+
+[INFO] 23:27:48:305 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA12
+Consistencia       : SHC
+Particiones        : 12
+Tiempo compactacion: 12
+[ERROR] 23:27:48:305 MemoryPool/(4598:4599): Ya existe la tabla: TABLA12
+
+[INFO] 23:27:49:24 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA12
+Consistencia       : SHC
+Particiones        : 12
+Tiempo compactacion: 12
+[ERROR] 23:27:49:24 MemoryPool/(4598:4599): Ya existe la tabla: TABLA12
+
+[INFO] 23:28:32:585 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA12
+Consistencia       : SHC
+Particiones        : 12
+Tiempo compactacion: 12
+[ERROR] 23:28:32:585 MemoryPool/(4598:4599): Ya existe la tabla: TABLA12
+
+[INFO] 23:28:33:997 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA12
+Consistencia       : SHC
+Particiones        : 12
+Tiempo compactacion: 12
+[ERROR] 23:28:33:997 MemoryPool/(4598:4599): Ya existe la tabla: TABLA12
+
+[INFO] 23:28:34:801 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA12
+Consistencia       : SHC
+Particiones        : 12
+Tiempo compactacion: 12
+[ERROR] 23:28:34:801 MemoryPool/(4598:4599): Ya existe la tabla: TABLA12
+
+[INFO] 23:28:35:265 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA12
+Consistencia       : SHC
+Particiones        : 12
+Tiempo compactacion: 12
+[ERROR] 23:28:35:265 MemoryPool/(4598:4599): Ya existe la tabla: TABLA12
+
+[INFO] 23:28:35:521 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA12
+Consistencia       : SHC
+Particiones        : 12
+Tiempo compactacion: 12
+[ERROR] 23:28:35:521 MemoryPool/(4598:4599): Ya existe la tabla: TABLA12
+
+[INFO] 23:28:35:736 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA12
+Consistencia       : SHC
+Particiones        : 12
+Tiempo compactacion: 12
+[ERROR] 23:28:35:737 MemoryPool/(4598:4599): Ya existe la tabla: TABLA12
+
+[INFO] 23:28:35:945 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA12
+Consistencia       : SHC
+Particiones        : 12
+Tiempo compactacion: 12
+[ERROR] 23:28:35:945 MemoryPool/(4598:4599): Ya existe la tabla: TABLA12
+
+[INFO] 23:28:36:365 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA12
+Consistencia       : SHC
+Particiones        : 12
+Tiempo compactacion: 12
+[ERROR] 23:28:36:365 MemoryPool/(4598:4599): Ya existe la tabla: TABLA12
+
+[INFO] 23:28:36:565 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA12
+Consistencia       : SHC
+Particiones        : 12
+Tiempo compactacion: 12
+[ERROR] 23:28:36:565 MemoryPool/(4598:4599): Ya existe la tabla: TABLA12
+
+[INFO] 23:28:36:997 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA12
+Consistencia       : SHC
+Particiones        : 12
+Tiempo compactacion: 12
+[ERROR] 23:28:36:997 MemoryPool/(4598:4599): Ya existe la tabla: TABLA12
+
+[INFO] 23:28:37:242 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA12
+Consistencia       : SHC
+Particiones        : 12
+Tiempo compactacion: 12
+[ERROR] 23:28:37:243 MemoryPool/(4598:4599): Ya existe la tabla: TABLA12
+
+[INFO] 23:30:56:249 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA12
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 23:30:56:249 MemoryPool/(4598:4599): Ya existe la tabla: TABLA12
+
+[INFO] 23:30:58:17 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA12
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 23:30:58:17 MemoryPool/(4598:4599): Ya existe la tabla: TABLA12
+
+[INFO] 23:30:58:873 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA12
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 23:30:58:873 MemoryPool/(4598:4599): Ya existe la tabla: TABLA12
+
+[INFO] 23:31:02:85 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA123
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[INFO] 23:31:02:85 MemoryPool/(4598:4599): Tabla creada: TABLA123
+
+[INFO] 23:31:06:569 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : T3
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[INFO] 23:31:06:569 MemoryPool/(4598:4599): Tabla creada: T3
+
+[INFO] 23:31:09:857 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : ASDT3
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[INFO] 23:31:09:857 MemoryPool/(4598:4599): Tabla creada: ASDT3
+
+[INFO] 23:31:22:309 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : 456
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[INFO] 23:31:22:309 MemoryPool/(4598:4599): Tabla creada: 456
+
+[INFO] 23:34:34:116 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA12
+Consistencia       : SHC
+Particiones        : 12
+Tiempo compactacion: 12
+[ERROR] 23:34:34:116 MemoryPool/(4598:4599): Ya existe la tabla: TABLA12
+
+[INFO] 23:34:40:529 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TA
+Consistencia       : SHC
+Particiones        : 12
+Tiempo compactacion: 12
+[INFO] 23:34:40:529 MemoryPool/(4598:4599): Tabla creada: TA
+
+[INFO] 23:34:42:665 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TA
+Consistencia       : SHC
+Particiones        : 12
+Tiempo compactacion: 12
+[ERROR] 23:34:42:665 MemoryPool/(4598:4599): Ya existe la tabla: TA
+
+[INFO] 23:34:45:473 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : A
+Consistencia       : SHC
+Particiones        : 12
+Tiempo compactacion: 12
+[INFO] 23:34:45:473 MemoryPool/(4598:4599): Tabla creada: A
+
+[INFO] 23:36:11:25 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA12
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 23:36:11:25 MemoryPool/(4598:4599): Ya existe la tabla: TABLA12
+
+[INFO] 23:36:17:69 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TAB
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[INFO] 23:36:17:69 MemoryPool/(4598:4599): Tabla creada: TAB
+
+[INFO] 23:36:27:745 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : A
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 23:36:27:745 MemoryPool/(4598:4599): Ya existe la tabla: A
+
+[INFO] 23:38:10:361 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[INFO] 23:38:10:361 MemoryPool/(4598:4599): Tabla creada: TABLA
+
+[INFO] 23:38:49:73 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA1
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 23:38:49:73 MemoryPool/(4598:4599): Ya existe la tabla: TABLA1
+
+[INFO] 23:38:53:33 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA1
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 23:38:53:33 MemoryPool/(4598:4599): Ya existe la tabla: TABLA1
+
+[INFO] 23:38:55:877 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA1
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 23:38:55:877 MemoryPool/(4598:4599): Ya existe la tabla: TABLA1
+
+[INFO] 23:38:56:824 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA1
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 23:38:56:824 MemoryPool/(4598:4599): Ya existe la tabla: TABLA1
+
+[INFO] 23:38:57:865 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA1
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 23:38:57:865 MemoryPool/(4598:4599): Ya existe la tabla: TABLA1
+
+[INFO] 23:38:58:436 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA1
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 23:38:58:436 MemoryPool/(4598:4599): Ya existe la tabla: TABLA1
+
+[INFO] 23:38:59:973 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA1
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 23:38:59:973 MemoryPool/(4598:4599): Ya existe la tabla: TABLA1
+
+[INFO] 23:39:04:517 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA11
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[INFO] 23:39:04:517 MemoryPool/(4598:4599): Tabla creada: TABLA11
+
+[INFO] 23:39:09:25 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TA11
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[INFO] 23:39:09:25 MemoryPool/(4598:4599): Tabla creada: TA11
+
+[INFO] 23:39:19:257 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA1
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 23:39:19:257 MemoryPool/(4598:4599): Ya existe la tabla: TABLA1
+
+[INFO] 23:47:09:665 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA0
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 23:47:09:665 MemoryPool/(4598:4599): Ya existe la tabla: TABLA0
+
+[INFO] 23:47:13:674 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA0
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 23:47:13:674 MemoryPool/(4598:4599): Ya existe la tabla: TABLA0
+
+[INFO] 23:47:16:164 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA0
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 23:47:16:164 MemoryPool/(4598:4599): Ya existe la tabla: TABLA0
+
+[INFO] 23:47:17:697 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA0
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 23:47:17:697 MemoryPool/(4598:4599): Ya existe la tabla: TABLA0
+
+[INFO] 23:47:18:937 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA0
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 23:47:18:937 MemoryPool/(4598:4599): Ya existe la tabla: TABLA0
+
+[INFO] 23:47:47:473 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA0
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 23:47:47:474 MemoryPool/(4598:4599): Ya existe la tabla: TABLA0
+
+[INFO] 23:47:48:969 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA0
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 23:47:48:969 MemoryPool/(4598:4599): Ya existe la tabla: TABLA0
+
+[INFO] 23:47:49:613 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA0
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 23:47:49:613 MemoryPool/(4598:4599): Ya existe la tabla: TABLA0
+
+[INFO] 23:47:50:13 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA0
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 23:47:50:13 MemoryPool/(4598:4599): Ya existe la tabla: TABLA0
+
+[INFO] 23:47:50:337 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA0
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 23:47:50:337 MemoryPool/(4598:4599): Ya existe la tabla: TABLA0
+
+[INFO] 23:47:50:648 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA0
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 23:47:50:648 MemoryPool/(4598:4599): Ya existe la tabla: TABLA0
+
+[INFO] 23:47:50:897 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA0
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 23:47:50:897 MemoryPool/(4598:4599): Ya existe la tabla: TABLA0
+
+[INFO] 23:47:51:129 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA0
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 23:47:51:129 MemoryPool/(4598:4599): Ya existe la tabla: TABLA0
+
+[INFO] 23:47:51:367 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA0
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 23:47:51:367 MemoryPool/(4598:4599): Ya existe la tabla: TABLA0
+
+[INFO] 23:47:51:621 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA0
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 23:47:51:621 MemoryPool/(4598:4599): Ya existe la tabla: TABLA0
+
+[INFO] 23:47:51:917 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA0
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 23:47:51:917 MemoryPool/(4598:4599): Ya existe la tabla: TABLA0
+
+[INFO] 23:48:51:820 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 23:48:51:821 MemoryPool/(4598:4599): Ya existe la tabla: TABLA
+
+[INFO] 23:48:54:205 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 23:48:54:205 MemoryPool/(4598:4599): Ya existe la tabla: TABLA
+
+[INFO] 23:48:54:970 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 23:48:54:971 MemoryPool/(4598:4599): Ya existe la tabla: TABLA
+
+[INFO] 23:49:12:6 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 23:49:12:6 MemoryPool/(4598:4599): Ya existe la tabla: TABLA
+
+[INFO] 23:49:12:837 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 23:49:12:837 MemoryPool/(4598:4599): Ya existe la tabla: TABLA
+
+[INFO] 23:49:13:345 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 23:49:13:345 MemoryPool/(4598:4599): Ya existe la tabla: TABLA
+
+[INFO] 23:49:13:713 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 23:49:13:713 MemoryPool/(4598:4599): Ya existe la tabla: TABLA
+
+[INFO] 23:49:14:49 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 23:49:14:49 MemoryPool/(4598:4599): Ya existe la tabla: TABLA
+
+[INFO] 23:49:14:421 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 23:49:14:421 MemoryPool/(4598:4599): Ya existe la tabla: TABLA
+
+[INFO] 23:50:27:967 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 23:50:27:968 MemoryPool/(4598:4599): Ya existe la tabla: TABLA
+
+[INFO] 23:50:29:152 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 23:50:29:152 MemoryPool/(4598:4599): Ya existe la tabla: TABLA
+
+[INFO] 23:50:29:741 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 23:50:29:741 MemoryPool/(4598:4599): Ya existe la tabla: TABLA
+
+[INFO] 23:50:30:153 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 23:50:30:153 MemoryPool/(4598:4599): Ya existe la tabla: TABLA
+
+[INFO] 23:58:16:1 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 23:58:16:1 MemoryPool/(4598:4599): Ya existe la tabla: TA
+
+[INFO] 23:58:19:888 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 23:58:19:888 MemoryPool/(4598:4599): Ya existe la tabla: TA
+
+[INFO] 23:59:20:317 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 23:59:20:317 MemoryPool/(4598:4599): Ya existe la tabla: TA
+
+[INFO] 23:59:21:197 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 23:59:21:197 MemoryPool/(4598:4599): Ya existe la tabla: TA
+
+[INFO] 00:01:00:525 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:01:00:525 MemoryPool/(4598:4599): Ya existe la tabla: TA
+
+[INFO] 00:01:03:821 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:01:03:821 MemoryPool/(4598:4599): Ya existe la tabla: TA
+
+[INFO] 00:01:12:809 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:01:12:809 MemoryPool/(4598:4599): Ya existe la tabla: TA
+
+[INFO] 00:01:13:665 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:01:13:665 MemoryPool/(4598:4599): Ya existe la tabla: TA
+
+[INFO] 00:01:14:324 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:01:14:324 MemoryPool/(4598:4599): Ya existe la tabla: TA
+
+[INFO] 00:01:40:813 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:01:40:813 MemoryPool/(4598:4599): Ya existe la tabla: TA
+
+[INFO] 00:01:41:885 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:01:41:885 MemoryPool/(4598:4599): Ya existe la tabla: TA
+
+[INFO] 00:01:42:457 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:01:42:457 MemoryPool/(4598:4599): Ya existe la tabla: TA
+
+[INFO] 00:01:42:828 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:01:42:828 MemoryPool/(4598:4599): Ya existe la tabla: TA
+
+[INFO] 00:01:43:97 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:01:43:97 MemoryPool/(4598:4599): Ya existe la tabla: TA
+
+[INFO] 00:01:43:360 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:01:43:360 MemoryPool/(4598:4599): Ya existe la tabla: TA
+
+[INFO] 00:01:43:613 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:01:43:613 MemoryPool/(4598:4599): Ya existe la tabla: TA
+
+[INFO] 00:01:43:849 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:01:43:849 MemoryPool/(4598:4599): Ya existe la tabla: TA
+
+[INFO] 00:01:44:60 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:01:44:60 MemoryPool/(4598:4599): Ya existe la tabla: TA
+
+[INFO] 00:01:44:285 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:01:44:285 MemoryPool/(4598:4599): Ya existe la tabla: TA
+
+[INFO] 00:01:45:817 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:01:45:817 MemoryPool/(4598:4599): Ya existe la tabla: TA
+
+[INFO] 00:10:22:445 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:10:22:445 MemoryPool/(4598:4599): Ya existe la tabla: TABLA
+
+[INFO] 00:10:23:521 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:10:23:521 MemoryPool/(4598:4599): Ya existe la tabla: TABLA
+
+[INFO] 00:10:24:165 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:10:24:165 MemoryPool/(4598:4599): Ya existe la tabla: TABLA
+
+[INFO] 00:10:24:653 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:10:24:653 MemoryPool/(4598:4599): Ya existe la tabla: TABLA
+
+[INFO] 00:10:24:820 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:10:24:820 MemoryPool/(4598:4599): Ya existe la tabla: TABLA
+
+[INFO] 00:10:24:992 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:10:24:992 MemoryPool/(4598:4599): Ya existe la tabla: TABLA
+
+[INFO] 00:10:25:137 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:10:25:137 MemoryPool/(4598:4599): Ya existe la tabla: TABLA
+
+[INFO] 00:10:25:417 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:10:25:417 MemoryPool/(4598:4599): Ya existe la tabla: TABLA
+
+[INFO] 00:10:25:570 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:10:25:570 MemoryPool/(4598:4599): Ya existe la tabla: TABLA
+
+[INFO] 00:10:25:713 MemoryPool/(4598:4599): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:10:25:713 MemoryPool/(4598:4599): Ya existe la tabla: TABLA
+
+[INFO] 00:17:24:856 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[INFO] 00:17:24:856 MemoryPool/(6008:6009): Tabla creada: TABLA
+
+[INFO] 00:17:26:569 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:17:26:569 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:17:27:257 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:17:27:257 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:17:27:806 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:17:27:806 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:17:28:185 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:17:28:185 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:17:42:157 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:17:42:157 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:17:47:921 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:17:47:921 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:17:49:553 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:17:49:553 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:17:50:372 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:17:50:372 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:17:51:108 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:17:51:109 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:17:52:889 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:17:52:889 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:17:53:549 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:17:53:549 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:17:54:121 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:17:54:121 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:17:54:701 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:17:54:701 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:18:06:757 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:18:06:757 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:18:21:993 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:18:21:993 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:18:22:725 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:18:22:725 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:18:23:220 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:18:23:221 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:18:23:734 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:18:23:734 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:18:24:213 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:18:24:213 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:18:24:693 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:18:24:693 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:18:25:166 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:18:25:166 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:18:25:597 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:18:25:597 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:18:26:33 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:18:26:33 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:18:26:429 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:18:26:429 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:18:26:829 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:18:26:829 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:18:27:185 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:18:27:185 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:18:28:145 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:18:28:145 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:18:28:656 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:18:28:656 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:18:29:53 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:18:29:53 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:18:29:429 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:18:29:429 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:18:29:833 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:18:29:833 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:18:30:260 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:18:30:260 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:18:30:697 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:18:30:697 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:18:31:189 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:18:31:189 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:18:56:948 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:18:56:948 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:19:02:461 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:19:02:461 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:19:03:205 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:19:03:205 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:21:53:80 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:21:53:80 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:21:56:48 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:21:56:48 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:21:56:876 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:21:56:876 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:21:57:560 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:21:57:560 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:21:58:81 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:21:58:81 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:21:58:533 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:21:58:533 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:21:58:961 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:21:58:961 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:21:59:297 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:21:59:297 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:21:59:545 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:21:59:545 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:21:59:765 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:21:59:765 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:21:59:989 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:21:59:989 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:22:00:200 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:22:00:200 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:22:00:437 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:22:00:437 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:22:00:633 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:22:00:633 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:22:00:845 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:22:00:845 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:22:01:901 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:22:01:901 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:22:02:713 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:22:02:713 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:22:03:161 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:22:03:161 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:22:03:442 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:22:03:442 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:22:03:713 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:22:03:713 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:22:04:13 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:22:04:13 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:22:39:133 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA1
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:22:39:133 MemoryPool/(6008:6009): Ya existe la tabla: TABLA1
+
+[INFO] 00:22:42:1 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA1
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:22:42:1 MemoryPool/(6008:6009): Ya existe la tabla: TABLA1
+
+[INFO] 00:22:43:689 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA1
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:22:43:689 MemoryPool/(6008:6009): Ya existe la tabla: TABLA1
+
+[INFO] 00:22:44:337 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA1
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:22:44:337 MemoryPool/(6008:6009): Ya existe la tabla: TABLA1
+
+[INFO] 00:22:44:957 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA1
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:22:44:957 MemoryPool/(6008:6009): Ya existe la tabla: TABLA1
+
+[INFO] 00:22:48:353 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA2
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:22:48:353 MemoryPool/(6008:6009): Ya existe la tabla: TABLA2
+
+[INFO] 00:22:55:841 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:22:55:841 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:22:59:757 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLAASD
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[INFO] 00:22:59:757 MemoryPool/(6008:6009): Tabla creada: TABLAASD
+
+[INFO] 00:23:08:461 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : 123TABLAASD
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[INFO] 00:23:08:461 MemoryPool/(6008:6009): Tabla creada: 123TABLAASD
+
+[INFO] 00:23:17:393 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : ABLAASD
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[INFO] 00:23:17:393 MemoryPool/(6008:6009): Tabla creada: ABLAASD
+
+[INFO] 00:23:22:697 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : LAASD
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[INFO] 00:23:22:697 MemoryPool/(6008:6009): Tabla creada: LAASD
+
+[INFO] 00:23:23:997 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : LAASD
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:23:23:997 MemoryPool/(6008:6009): Ya existe la tabla: LAASD
+
+[INFO] 00:23:24:533 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : LAASD
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:23:24:533 MemoryPool/(6008:6009): Ya existe la tabla: LAASD
+
+[INFO] 00:23:24:969 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : LAASD
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:23:24:969 MemoryPool/(6008:6009): Ya existe la tabla: LAASD
+
+[INFO] 00:23:25:353 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : LAASD
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:23:25:353 MemoryPool/(6008:6009): Ya existe la tabla: LAASD
+
+[INFO] 00:23:25:969 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : LAASD
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:23:25:969 MemoryPool/(6008:6009): Ya existe la tabla: LAASD
+
+[INFO] 00:23:26:601 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : LAASD
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:23:26:601 MemoryPool/(6008:6009): Ya existe la tabla: LAASD
+
+[INFO] 00:23:27:73 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : LAASD
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:23:27:73 MemoryPool/(6008:6009): Ya existe la tabla: LAASD
+
+[INFO] 00:23:27:561 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : LAASD
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:23:27:561 MemoryPool/(6008:6009): Ya existe la tabla: LAASD
+
+[INFO] 00:25:33:534 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:25:33:534 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:25:34:689 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:25:34:689 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:25:35:429 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:25:35:429 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:25:38:33 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : ABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[INFO] 00:25:38:34 MemoryPool/(6008:6009): Tabla creada: ABLA
+
+[INFO] 00:25:38:908 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : ABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:25:38:908 MemoryPool/(6008:6009): Ya existe la tabla: ABLA
+
+[INFO] 00:25:39:381 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : ABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:25:39:381 MemoryPool/(6008:6009): Ya existe la tabla: ABLA
+
+[INFO] 00:25:39:657 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : ABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:25:39:657 MemoryPool/(6008:6009): Ya existe la tabla: ABLA
+
+[INFO] 00:25:39:902 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : ABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:25:39:902 MemoryPool/(6008:6009): Ya existe la tabla: ABLA
+
+[INFO] 00:25:40:537 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : ABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:25:40:537 MemoryPool/(6008:6009): Ya existe la tabla: ABLA
+
+[INFO] 00:25:47:173 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : ABLAASDASDASDASDASDASDAS
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[INFO] 00:25:47:173 MemoryPool/(6008:6009): Tabla creada: ABLAASDASDASDASDASDASDAS
+
+[INFO] 00:27:18:788 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:27:18:788 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:27:20:317 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:27:20:317 MemoryPool/(6008:6009): Ya existe la tabla: TABLA
+
+[INFO] 00:27:30:385 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABL2
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[INFO] 00:27:30:385 MemoryPool/(6008:6009): Tabla creada: TABL2
+
+[INFO] 00:27:31:385 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABL2
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:27:31:385 MemoryPool/(6008:6009): Ya existe la tabla: TABL2
+
+[INFO] 00:27:34:885 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABL0
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[INFO] 00:27:34:885 MemoryPool/(6008:6009): Tabla creada: TABL0
+
+[INFO] 00:27:39:877 MemoryPool/(6008:6009): CREATE:
+Nombre tabla       : TABL1
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[INFO] 00:27:39:877 MemoryPool/(6008:6009): Tabla creada: TABL1
+
+[INFO] 00:30:52:753 MemoryPool/(6458:6459): CREATE:
+Nombre tabla       : TABLA3
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 12
+[INFO] 00:30:52:753 MemoryPool/(6458:6459): Tabla creada: TABLA3
+
+[INFO] 00:30:57:149 MemoryPool/(6458:6459): CREATE:
+Nombre tabla       : TABLA3
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 12
+[ERROR] 00:30:57:149 MemoryPool/(6458:6459): Ya existe la tabla: TABLA3
+
+[INFO] 00:31:07:205 MemoryPool/(6458:6459): CREATE:
+Nombre tabla       : TABLA4
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 2222
+[INFO] 00:31:07:205 MemoryPool/(6458:6459): Tabla creada: TABLA4
+
+[INFO] 00:31:08:193 MemoryPool/(6458:6459): CREATE:
+Nombre tabla       : TABLA4
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 2222
+[ERROR] 00:31:08:193 MemoryPool/(6458:6459): Ya existe la tabla: TABLA4
+
+[INFO] 00:31:13:85 MemoryPool/(6458:6459): CREATE:
+Nombre tabla       : TABLA42
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 2222
+[INFO] 00:31:13:85 MemoryPool/(6458:6459): Tabla creada: TABLA42
+
+[INFO] 00:32:50:333 MemoryPool/(6508:6509): CREATE:
+Nombre tabla       : TABLA32
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 11
+[INFO] 00:32:50:335 MemoryPool/(6508:6509): Tabla creada: TABLA32
+
+[INFO] 00:32:52:269 MemoryPool/(6508:6509): CREATE:
+Nombre tabla       : TABLA32
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 11
+[ERROR] 00:32:52:269 MemoryPool/(6508:6509): Ya existe la tabla: TABLA32
+
+[INFO] 00:32:56:521 MemoryPool/(6508:6509): CREATE:
+Nombre tabla       : TABLA2
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 11
+[ERROR] 00:32:56:521 MemoryPool/(6508:6509): Ya existe la tabla: TABLA2
+
+[INFO] 00:33:02:898 MemoryPool/(6508:6509): CREATE:
+Nombre tabla       : TABA2
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 11
+[INFO] 00:33:02:898 MemoryPool/(6508:6509): Tabla creada: TABA2
+
+[INFO] 00:33:07:317 MemoryPool/(6508:6509): CREATE:
+Nombre tabla       : SDAD2
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 11
+[INFO] 00:33:07:317 MemoryPool/(6508:6509): Tabla creada: SDAD2
+
+[INFO] 00:33:09:933 MemoryPool/(6508:6509): CREATE:
+Nombre tabla       : SDAD2
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 11
+[ERROR] 00:33:09:933 MemoryPool/(6508:6509): Ya existe la tabla: SDAD2
+
+[INFO] 00:33:15:372 MemoryPool/(6508:6509): CREATE:
+Nombre tabla       : SDAD2
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 11
+[ERROR] 00:33:15:372 MemoryPool/(6508:6509): Ya existe la tabla: SDAD2
+
+[INFO] 00:33:18:445 MemoryPool/(6508:6509): CREATE:
+Nombre tabla       : SDA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 11
+[INFO] 00:33:18:445 MemoryPool/(6508:6509): Tabla creada: SDA
+
+[INFO] 00:34:28:601 MemoryPool/(6508:6509): CREATE:
+Nombre tabla       : TABLA2
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:34:28:601 MemoryPool/(6508:6509): Ya existe la tabla: TABLA2
+
+[INFO] 00:34:30:893 MemoryPool/(6508:6509): CREATE:
+Nombre tabla       : ABLA2
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[INFO] 00:34:30:893 MemoryPool/(6508:6509): Tabla creada: ABLA2
+
+[INFO] 00:34:34:5 MemoryPool/(6508:6509): CREATE:
+Nombre tabla       : ABL32
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[INFO] 00:34:34:5 MemoryPool/(6508:6509): Tabla creada: ABL32
+
+[INFO] 00:34:37:405 MemoryPool/(6508:6509): CREATE:
+Nombre tabla       : ABL3
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[INFO] 00:34:37:405 MemoryPool/(6508:6509): Tabla creada: ABL3
+
+[INFO] 00:35:40:112 MemoryPool/(6508:6509): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[INFO] 00:35:40:113 MemoryPool/(6508:6509): Tabla creada: TABLA
+
+[INFO] 00:38:09:625 MemoryPool/(6508:6509): CREATE:
+Nombre tabla       : TABLA0
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:38:09:625 MemoryPool/(6508:6509): Ya existe la tabla: TABLA0
+
+[INFO] 00:38:42:781 MemoryPool/(6508:6509): CREATE:
+Nombre tabla       : TABLA0
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:38:42:781 MemoryPool/(6508:6509): Ya existe la tabla: TABLA0
+
+[INFO] 00:39:00:769 MemoryPool/(6508:6509): CREATE:
+Nombre tabla       : TABLA1
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:39:00:769 MemoryPool/(6508:6509): Ya existe la tabla: TABLA1
+
+[INFO] 00:41:57:277 MemoryPool/(6508:6509): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:41:57:277 MemoryPool/(6508:6509): Ya existe la tabla: TABLA
+
+[INFO] 00:42:07:624 MemoryPool/(6508:6509): CREATE:
+Nombre tabla       : TABLB
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[INFO] 00:42:07:624 MemoryPool/(6508:6509): Tabla creada: TABLB
+
+[INFO] 00:42:11:380 MemoryPool/(6508:6509): CREATE:
+Nombre tabla       : TABLC
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[INFO] 00:42:11:381 MemoryPool/(6508:6509): Tabla creada: TABLC
+
+[INFO] 00:42:15:269 MemoryPool/(6508:6509): CREATE:
+Nombre tabla       : TABLD
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[INFO] 00:42:15:269 MemoryPool/(6508:6509): Tabla creada: TABLD
+
+[INFO] 00:50:18:988 MemoryPool/(6508:6509): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:50:18:989 MemoryPool/(6508:6509): Ya existe la tabla: TABLA
+
+[INFO] 00:50:28:412 MemoryPool/(6508:6509): CREATE:
+Nombre tabla       : TABLB
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:50:28:412 MemoryPool/(6508:6509): Ya existe la tabla: TABLB
+
+[INFO] 00:50:54:853 MemoryPool/(6508:6509): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:50:54:853 MemoryPool/(6508:6509): Ya existe la tabla: TABLA
+
+[INFO] 00:50:59:977 MemoryPool/(6508:6509): CREATE:
+Nombre tabla       : TABLB
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:50:59:977 MemoryPool/(6508:6509): Ya existe la tabla: TABLB
+
+[INFO] 00:53:04:86 MemoryPool/(6508:6509): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:53:04:86 MemoryPool/(6508:6509): Ya existe la tabla: TABLA
+
+[INFO] 00:53:14:853 MemoryPool/(6508:6509): CREATE:
+Nombre tabla       : TABLB
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:53:14:853 MemoryPool/(6508:6509): Ya existe la tabla: TABLB
+
+[INFO] 00:55:42:817 MemoryPool/(6508:6509): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SHC
+Particiones        : 1
+Tiempo compactacion: 1
+[ERROR] 00:55:42:817 MemoryPool/(6508:6509): Ya existe la tabla: TABLA
+
