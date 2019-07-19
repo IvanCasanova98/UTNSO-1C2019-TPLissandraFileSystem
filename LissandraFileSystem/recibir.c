@@ -15,7 +15,6 @@ void* recibir_paquetes(void *arg)
 			printf("Error al conectarse para intentar recibir paquete\ņ");
 			pthread_exit(NULL);
 		}
-		printf("\nSE ENTRO A FUNCION RECIBIR\n");
 		switch(cod_op){
 
 		case CREATE:;
@@ -314,7 +313,6 @@ t_paquete_create_de_mp* deserializar_paquete_create_de_mp(int socket_cliente)
 	memcpy(&(paquete_create->tiempo_compactacion),buffer + desplazamiento, sizeof(int));
 	desplazamiento+= sizeof(int);
 
-	printf("tiempo de compractacion %d",paquete_create->tiempo_compactacion);
 	paquete_create->nombre_tabla_long = tamanio_tabla;
 	paquete_create->consistencia_long = tamanio_consistencia;
 

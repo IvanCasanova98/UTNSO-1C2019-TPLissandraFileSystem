@@ -287,6 +287,7 @@ void enviar_paquete_create(t_paquete_create* paquete, int socket_cliente,t_log* 
 	void* a_enviar = serializar_paquete_create(paquete);
 	if ( send(socket_cliente, a_enviar, bytes, 0) <= 0) puts("Error en envio de PAQUETE CREATE.");
 
+	printf("\nPAQUETE CREATE ENVIADO");
 	free(a_enviar);
 }
 
@@ -387,7 +388,6 @@ void enviar_create_lissandra(t_paquete_create* paquete,t_config* config,t_log* l
 	protocolo_respuesta(rta,logger);
 
 	terminar_conexion(conexion);
-
 }
 
 void enviar_drop_lissandra(t_paquete_create* paquete,t_config* config,t_log* logger)

@@ -40,7 +40,8 @@ t_paquete_create* crear_paquete_create(char* nombre_tabla, char* consistencia, i
 {
 	uint32_t tamanio_tabla = strlen(nombre_tabla)+1;
 	uint32_t tamanio_consistencia = strlen(consistencia)+1;
-	t_paquete_create* paquete = malloc(tamanio_tabla + tamanio_consistencia + sizeof(uint32_t)*2 + sizeof(uint16_t)*2);
+	t_paquete_create* paquete = malloc(tamanio_tabla + tamanio_consistencia + sizeof(uint32_t)*2 + sizeof(int)*2);
+
 
 	paquete->nombre_tabla= nombre_tabla;
 	paquete->consistencia = consistencia;
@@ -140,8 +141,8 @@ long long get_timestamp(){
 
 t_paquete_create* create(char** vector_parametros) //ARREGLAR VERIFICACIONES POR "FALTAN DATOS"
 {
-	uint16_t particiones;
-	uint16_t tiempo_compactacion;
+	int particiones;
+	int tiempo_compactacion;
 
 
 	if(vector_parametros[1]==NULL)

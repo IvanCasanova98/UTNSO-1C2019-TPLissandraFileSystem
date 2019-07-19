@@ -55,11 +55,12 @@ void* serializar_paquete_insert(t_paquete_insert* paquete)
 
 void* serializar_paquete_create(t_paquete_create* paquete)
 {
-	void* buffer = malloc(paquete->nombre_tabla_long + paquete->consistencia_long + sizeof(uint32_t)*2 + sizeof(uint16_t)*2); //Mandar por parametro
+	void* buffer = malloc(paquete->nombre_tabla_long + paquete->consistencia_long + sizeof(uint32_t)*2 + sizeof(int)*2); //Mandar por parametro
 	int desplazamiento = 0;
 
 	memcpy(buffer + desplazamiento, &paquete->nombre_tabla_long, sizeof(uint32_t));
 	desplazamiento+= sizeof(uint32_t);
+
 	memcpy(buffer + desplazamiento, &paquete->consistencia_long, sizeof(uint32_t));
 	desplazamiento+= sizeof(uint32_t);
 
@@ -69,11 +70,11 @@ void* serializar_paquete_create(t_paquete_create* paquete)
 	memcpy(buffer + desplazamiento, paquete->consistencia, paquete->consistencia_long);
 	desplazamiento+= paquete->consistencia_long;
 
-	memcpy(buffer + desplazamiento, &paquete->particiones, sizeof(uint16_t));
-	desplazamiento+= sizeof(uint16_t);
+	memcpy(buffer + desplazamiento, &paquete->particiones, sizeof(int));
+	desplazamiento+= sizeof(int);
 
-	memcpy(buffer + desplazamiento, &paquete->tiempo_compactacion, sizeof(uint16_t));
-	desplazamiento+= sizeof(uint16_t);
+	memcpy(buffer + desplazamiento, &paquete->tiempo_compactacion, sizeof(int));
+	desplazamiento+= sizeof(int);
 
 	return buffer;
 	free(buffer);
@@ -124,7 +125,7 @@ void enviar_paquete_insert(t_paquete_insert* paquete, int socket_cliente)
 
 void enviar_paquete_create(t_paquete_create* paquete, int socket_cliente)
 {
-	int bytes = paquete->nombre_tabla_long + paquete->consistencia_long + sizeof(uint32_t)*2 + sizeof(uint16_t)*2;
+	int bytes = paquete->nombre_tabla_long + paquete->consistencia_long + sizeof(uint32_t)*2 + sizeof(int)*2;
 	void* a_enviar = serializar_paquete_create(paquete);
 	if ( send(socket_cliente, a_enviar, bytes, 0) <= 0) puts("Error en envio de PAQUETE CREATE.");
 	else {

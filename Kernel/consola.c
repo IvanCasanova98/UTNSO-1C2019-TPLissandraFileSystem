@@ -28,6 +28,7 @@ void request(void * arg) //RECIBIR LOGGER
 
 	retardo_ejecucion(parametro->config);
 		switch(cod_ingresado){
+		sleep(1000);
 			case 0:;
 
 

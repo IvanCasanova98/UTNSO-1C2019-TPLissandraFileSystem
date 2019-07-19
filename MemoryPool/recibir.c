@@ -21,7 +21,6 @@ void* servidor(void * arg)
 void recibir_paquetes(int cliente_fd, int server_fd, t_config* config, t_log* logger)
 {
 	int cod_op;
-
 	while(1){
 
 		if (cliente_fd!=0)
@@ -203,14 +202,14 @@ t_paquete_create* deserializar_paquete_create(int socket_cliente)
 
 	memcpy(&tamanio_tabla ,buffer_para_longitudes,sizeof(uint32_t));
 	memcpy(&tamanio_consistencia ,buffer_para_longitudes+sizeof(uint32_t),sizeof(uint32_t));
-	t_paquete_create* paquete_create = malloc(tamanio_tabla + tamanio_consistencia + sizeof(uint32_t)*2 + sizeof(uint16_t)*2);
+	t_paquete_create* paquete_create = malloc(tamanio_tabla + tamanio_consistencia + sizeof(uint32_t)*2 + sizeof(int)*2);
 
 	paquete_create->nombre_tabla = malloc(tamanio_tabla);
 	paquete_create->consistencia = malloc(tamanio_consistencia);
 
-	void *buffer = malloc(tamanio_tabla + tamanio_consistencia + sizeof(uint16_t)*2);
+	void *buffer = malloc(tamanio_tabla + tamanio_consistencia + sizeof(int)*2);
 
-	recv(socket_cliente, buffer, sizeof(uint16_t)*2 +tamanio_tabla+tamanio_consistencia ,MSG_WAITALL);
+	recv(socket_cliente, buffer, sizeof(int)*2 +tamanio_tabla+tamanio_consistencia ,MSG_WAITALL);
 
 	memcpy(paquete_create->nombre_tabla,buffer + desplazamiento, tamanio_tabla);
 	desplazamiento+= tamanio_tabla;
@@ -218,11 +217,11 @@ t_paquete_create* deserializar_paquete_create(int socket_cliente)
 	memcpy(paquete_create->consistencia,buffer + desplazamiento, tamanio_consistencia);
 	desplazamiento+= tamanio_consistencia;
 
-	memcpy(&(paquete_create->particiones),buffer + desplazamiento, sizeof(uint16_t));
-	desplazamiento+= sizeof(uint16_t);
+	memcpy(&(paquete_create->particiones),buffer + desplazamiento, sizeof(int));
+	desplazamiento+= sizeof(int);
 
-	memcpy(&(paquete_create->tiempo_compactacion),buffer + desplazamiento, sizeof(uint16_t));
-	desplazamiento+= sizeof(uint16_t);
+	memcpy(&(paquete_create->tiempo_compactacion),buffer + desplazamiento, sizeof(int));
+	desplazamiento+= sizeof(int);
 
 	paquete_create->nombre_tabla_long = tamanio_tabla;
 	paquete_create->consistencia_long = tamanio_consistencia;

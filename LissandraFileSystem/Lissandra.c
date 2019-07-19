@@ -15,7 +15,7 @@ int main(void)
 	sem_init(&SemaforoMemtable,0,1);
 	t_config* config = leer_config();
 //	crearMetadataDePuntoDeMontaje();
-	//crearArchivoBitmap();
+//	crearArchivoBitmap();
 	crearBitMap();
 	pthread_t consola,dumpeo,dump,compactar,hiloListener;
 

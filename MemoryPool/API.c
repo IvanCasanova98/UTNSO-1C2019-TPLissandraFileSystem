@@ -19,7 +19,8 @@ void selectf(int cliente,t_paquete_select* paquete, t_config* config, t_log* log
 	}
 	else
 	{
-//		enviar_select_lissandra(paquete, config, logger); //FALTA ESPERAR RESPUESTA
+		enviar_select_lissandra(paquete, config, logger); //FALTA ESPERAR RESPUESTA
+
 		log_error(logger,"PAGINA NO ENCONTRADA\n"); //SACAR CUANDO SE ENVIE A LISSANDRA
 		if (cliente != NULL){enviar_select_error(cliente);} //AGREGADO
 		else{} //CASO CONSOLA MP
@@ -68,6 +69,7 @@ void create(t_paquete_create* paquete, t_config* config, t_log* logger)
 	else
 	{
 		crear_tabla_paginas(paquete->nombre_tabla,paquete->consistencia,paquete->particiones);
+		enviar_create_lissandra(paquete, config, logger);
 		log_info(logger,"Tabla creada: %s\n", paquete->nombre_tabla);
 	}
 
