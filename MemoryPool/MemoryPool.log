@@ -27110,3 +27110,62 @@ Particiones        : 1
 Tiempo compactacion: 1
 [ERROR] 00:55:42:817 MemoryPool/(6508:6509): Ya existe la tabla: TABLA
 
+[INFO] 02:03:22:878 MemoryPool/(9920:9922): INSERT:
+Nombre tabla: JUEGOS
+Valor KEY   : 2
+Value       : RE4
+Timestamp   : 1563512602877
+[ERROR] 02:03:22:878 MemoryPool/(9920:9922): NO EXISTE LA TABLA
+
+[INFO] 02:03:29:678 MemoryPool/(9920:9922): INSERT:
+Nombre tabla: JUEGOS
+Valor KEY   : 2
+Value       : RE4
+Timestamp   : 1563512609677
+[ERROR] 02:03:29:678 MemoryPool/(9920:9922): NO EXISTE LA TABLA
+
+[INFO] 02:03:46:525 MemoryPool/(9920:9922): SELECT:
+Nombre tabla: JUEGOS
+Valor KEY   : 2
+[ERROR] 02:03:46:525 MemoryPool/(9920:9922): PAGINA NO ENCONTRADA
+
+[INFO] 02:04:36:54 MemoryPool/(9920:9922): CREATE:
+Nombre tabla       : PRUEBA
+Consistencia       : SHC
+Particiones        : 3
+Tiempo compactacion: 23000
+[INFO] 02:04:36:54 MemoryPool/(9920:9922): Tabla creada: PRUEBA
+
+[INFO] 02:08:57:214 MemoryPool/(10285:10287): INSERT:
+Nombre tabla: JUEGOS
+Valor KEY   : 2
+Value       : VALE
+Timestamp   : 1563512937213
+[ERROR] 02:08:57:214 MemoryPool/(10285:10287): NO EXISTE LA TABLA
+
+[INFO] 02:09:19:228 MemoryPool/(10291:10293): INSERT:
+Nombre tabla: JUEGOS
+Valor KEY   : 2
+Value       : VALUE
+Timestamp   : 1563512959141
+[ERROR] 02:09:19:251 MemoryPool/(10291:10293): NO EXISTE LA TABLA
+
+[INFO] 02:11:13:983 MemoryPool/(10347:10349): SELECT:
+Nombre tabla: JUEGOS
+Valor KEY   : 3
+[ERROR] 02:11:13:983 MemoryPool/(10347:10349): PAGINA NO ENCONTRADA
+
+[INFO] 02:32:11:151 MemoryPool/(11173:11175): INSERT:
+Nombre tabla: JUEGOS
+Valor KEY   : 2
+Value       : RE4
+Timestamp   : 1563514331150
+[INFO] 02:32:11:152 MemoryPool/(11173:11175): Se insertó la key en la memtable con éxito.
+[INFO] 02:32:21:15 MemoryPool/(11173:11175): INSERT:
+Nombre tabla: JUEGOS
+Valor KEY   : 3
+Value       : GOD
+Timestamp   : 1563514341015
+[INFO] 02:32:21:16 MemoryPool/(11173:11175): Se insertó la key en la memtable con éxito.
+[INFO] 02:32:25:128 MemoryPool/(11173:11175): DESCRIBE de todas las tablas:
+[INFO] 02:32:25:128 MemoryPool/(11173:11175): JUEGOS SHC 3 12322 

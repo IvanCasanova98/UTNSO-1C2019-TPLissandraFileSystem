@@ -1,69 +1,85 @@
+/*
+ * memTable.h
+ *
+ *  Created on: 8 may. 2019
+ *      Author: utnso
+ */
+
 #ifndef MEMTABLE_H_
 #define MEMTABLE_H_
-#include<stdint.h>
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+#include<stdint.h>
+#include<curses.h>
+#include<sys/socket.h>
+#include<readline/readline.h>
+#include<readline/history.h>
+#include<commons/log.h>
+#include<commons/string.h>
+#include<commons/config.h>
+#include<commons/temporal.h>
+#include <sys/time.h>
+#include"recibir.h"
+#include"APIS.h"
+#include <dirent.h>
+#include <errno.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include<commons/collections/list.h>
+#include <stdbool.h>
+#include<commons/collections/dictionary.h>
+#include "Lissandra.h"
+#include "bloque.h"
+#include <commons/collections/node.h>
+#include <math.h>
 
-
-typedef struct nodo_registro_tmp
-{
-	uint16_t valor_key;
-	char *value;
+typedef struct nodoRegistroMemTable{
+	char* value;
+	uint16_t key;
 	long long timestamp;
-	struct nodo_registro_tmp *sgte_registro;
-}nodo_registro_tmp;
+
+}nodoRegistroMemTable;
+
+typedef struct nodoTablaMemTable{
+	char* nombreTabla;
+	t_list* registros;
+}nodoTablaMemTable;
+
+void* dump();
 
 
-typedef struct nodo_tabla_tmp
-{
-	char* nombre_tabla;
-	nodo_registro_tmp *sgte_registro;
-	struct nodo_tabla_tmp *sgte_tabla;
-}nodo_tabla_tmp;
+void chekearDumpeo();
 
-/*
-typedef struct lista_de_KeyValue_Timestamp
-{
-	uint16_t valor_key;
-	long long timestamp;
-	struct lista_de_KeyValue_Timestamp *anterior;
-	struct lista_de_KeyValue_Timestamp *siguiente;
-}lista_de_KeyValue_Timestamp;
-*/
+char* crearArrayBloques(int*bloques,int cantBloques);
+int cargarRegistro(char* registroActual,int bytesEnBloque, int* bloquesDisponibles,int bloquesEnUso);
+void* crearTemporal(char* nombreTabla,t_list* registros);
+void crearArchivotmp(char* nombreTabla, int size, int*bloques,int cantBloques);
 
-//typedef struct t_KeyValue_Timestamp{
-//	uint16_t valor_key;
-//	long long timestamp;
-//}t_KeyValue_Timestamp;
+void mostrarRegistros(void* elemento);
+void mostrarTablas(char*key,void* elemento);
+t_dictionary* crearMemTable();
 
-//long long SELECT(char *nombre_tabla, uint16_t valor_key);
-//void INSERT(char *nombre_tabla, uint16_t valor_key, char *value, long long timestamp);
+void liberarNodo(void* nodo);
 
+int sumatoriaSize(int numeroTotal,void*elemento1);
+int sizeTotalLista(t_list* registros);
+bool listaVacia(t_list* lista);
+bool mayorTimeStamp(void*elemento1,void*elemento2);
+bool filtrarPorKey(void* elemento,int key);
+t_registro* buscarMemTable(char* nombreTabla,int key);
+bool _mismoNombre(void* elemento);
+bool igualNombre(void* elemento,char* nombreBuscado);
+void agregarTabla(t_paquete_insert* paquete_insert);
+bool existeDuplicado(nodoTablaMemTable* nodoTabla);
+nodoTablaMemTable* crearNodoTabla(char* nombreTabla);
+void imprimirListaTablas();
+void eliminarNodoTabla();
+t_list* agregarRegistro(t_list* listaTabla, nodoRegistroMemTable* nodoRegistro);
+void imprimirRegistrosTabla();
+void eliminarUltimoRegistro(nodoTablaMemTable* nodoTabla);
 
-
-/*
- * SE UTILIZA EL TYPEDEF PARA EVITAR ESTAR UTILIZANDO struct nodo_registro_tmp
- * o struct nodo_tabla_tmp, para todo.
- */
-
-typedef nodo_registro_tmp *ptr_nodo_registro;
-typedef nodo_tabla_tmp *ptr_nodo_tabla;
-
-//typedef lista_de_KeyValue_Timestamp *ptr_KeyValue_Timestamp;
-
-long long Buscar_KeyValue_conMayor_TimeStamp(ptr_nodo_tabla TablaBuscada,uint16_t valor_key);
-ptr_nodo_registro CargarRegistrosAUnNodo(uint16_t valor_key, char *value, long long timestamp);
-ptr_nodo_tabla BuscarLaTabla(ptr_nodo_tabla TablaInicial, char *nombre_tabla);
-ptr_nodo_tabla CrearTabla(char *nombre_tabla);
-void InsertarleRegistroATablaAlFinal(ptr_nodo_registro nuevoRegistro, ptr_nodo_tabla TablaDeseada);
-void InsertarTablaAlFinal(ptr_nodo_registro registroDeLaNuevaLista,ptr_nodo_tabla TablaInicial,ptr_nodo_tabla TablaAInsertar);
-void BorrarRegistrosDeTabla(ptr_nodo_tabla TablaABorrar);
-
-//FUNCION PARA PROBAR
-void imprimirRegistrosVALUEDe(char *nombre_tabla);
-
-
-
-
+nodoTablaMemTable* crearNodoTabla(char* nombreTabla);
+nodoRegistroMemTable* crearNodoRegistro(char*value,uint16_t key,long long timestamp);
 #endif /* MEMTABLE_H_ */

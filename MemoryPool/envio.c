@@ -60,7 +60,6 @@ void* serializar_array_int(int array[], int bytes, int cant_elementos)
 }
 
 //----------------------------SERIALIZAR PAQUETES
-
 void* serializar_paquete_select(t_paquete_select* paquete)
 {
 	void* buffer = malloc(sizeof(uint32_t) + sizeof(uint16_t)  + paquete->nombre_tabla_long);
@@ -78,9 +77,39 @@ void* serializar_paquete_select(t_paquete_select* paquete)
 	//free(buffer);
 }
 
+void* serializar_paquete_drop(t_paquete_drop* paquete){
+
+	void* buffer = malloc(paquete->nombre_tabla_long + sizeof(uint32_t));
+	int desplazamiento = 0;
+
+	memcpy(buffer + desplazamiento, &paquete->nombre_tabla_long, sizeof(uint32_t));
+	desplazamiento+= sizeof(uint32_t);
+
+	memcpy(buffer + desplazamiento, paquete->nombre_tabla, paquete->nombre_tabla_long);
+	desplazamiento+= paquete->nombre_tabla_long;
+
+
+	return buffer;
+
+}
+
+void* serializar_paquete_describe(t_paquete_describe_lfs* paquete){
+
+	void* buffer = malloc(paquete->nombre_tabla_long + sizeof(uint32_t));
+	int desplazamiento = 0;
+
+	memcpy(buffer + desplazamiento, &paquete->nombre_tabla_long, sizeof(uint32_t));
+	desplazamiento+= sizeof(uint32_t);
+
+	memcpy(buffer + desplazamiento, paquete->nombre_tabla, paquete->nombre_tabla_long);
+	desplazamiento+= paquete->nombre_tabla_long;
+
+	return buffer;
+}
+
 void* serializar_paquete_insert(t_paquete_insert* paquete)
 {
-	void * buffer = malloc(sizeof(uint32_t)*2 + sizeof(int)*2 +paquete->nombre_tabla_long +paquete->value_long);
+	void * buffer = malloc(sizeof(uint16_t)+sizeof(uint32_t)*2 + sizeof(long long) +paquete->nombre_tabla_long +paquete->value_long);
 	int desplazamiento = 0;
 
 	memcpy(buffer + desplazamiento, &paquete->nombre_tabla_long, sizeof(uint32_t));
@@ -95,14 +124,41 @@ void* serializar_paquete_insert(t_paquete_insert* paquete)
 	memcpy(buffer + desplazamiento, paquete->value, paquete->value_long);
 	desplazamiento+= paquete->value_long;
 
-	memcpy(buffer + desplazamiento, &(paquete->valor_key), 4);
-	desplazamiento+=  sizeof(int);
+	memcpy(buffer + desplazamiento, &(paquete->valor_key), sizeof(uint16_t));
+	desplazamiento+=  sizeof(uint16_t);
 
-	memcpy(buffer + desplazamiento, &(paquete->timestamp), 4);
-	desplazamiento+=  sizeof(int);
+	memcpy(buffer + desplazamiento, &(paquete->timestamp), sizeof(long long));
+	desplazamiento+=  sizeof(long long);
 
 	return buffer;
 	//free(buffer);
+}
+
+void* serializar_paquete_create(t_paquete_create* paquete)
+{
+	void* buffer = malloc(paquete->nombre_tabla_long + paquete->consistencia_long + sizeof(uint32_t)*2 + sizeof(int)*2); //Mandar por parametro
+	int desplazamiento = 0;
+
+	memcpy(buffer + desplazamiento, &paquete->nombre_tabla_long, sizeof(uint32_t));
+	desplazamiento+= sizeof(uint32_t);
+
+	memcpy(buffer + desplazamiento, &paquete->consistencia_long, sizeof(uint32_t));
+	desplazamiento+= sizeof(uint32_t);
+
+	memcpy(buffer + desplazamiento, paquete->nombre_tabla, paquete->nombre_tabla_long);
+	desplazamiento+= paquete->nombre_tabla_long;
+
+	memcpy(buffer + desplazamiento, paquete->consistencia, paquete->consistencia_long);
+	desplazamiento+= paquete->consistencia_long;
+
+	memcpy(buffer + desplazamiento, &paquete->particiones, sizeof(int));
+	desplazamiento+= sizeof(int);
+
+	memcpy(buffer + desplazamiento, &paquete->tiempo_compactacion, sizeof(int));
+	desplazamiento+= sizeof(int);
+
+	return buffer;
+	free(buffer);
 }
 
 void* serializar_enviar_paquete_describe(int socket_cliente, t_list* metadata)
@@ -212,25 +268,69 @@ void enviar_paquete_select(t_paquete_select* paquete, int socket_cliente, t_log*
 	int bytes = 8 + paquete->nombre_tabla_long;
 	void* a_enviar = serializar_paquete_select(paquete);
 	if ( send(socket_cliente, a_enviar, bytes, 0) <= 0) puts("Error en envio de PAQUETE SELECT.");
-	else
-	{
-			log_info(logger, "PAQUETE SELECT ENVIADO");
-	}
+
 	free(a_enviar);
 }
 
 void enviar_paquete_insert(t_paquete_insert* paquete, int socket_cliente, t_log* logger)
 {
-	int bytes = sizeof(int)*4 +paquete->nombre_tabla_long + paquete->value_long;
+	int bytes = sizeof(uint32_t)*2+sizeof(uint16_t) +paquete->nombre_tabla_long + paquete->value_long + sizeof(long long);
 	void* a_enviar = serializar_paquete_insert(paquete);
 	if ( send(socket_cliente, a_enviar, bytes, 0) <= 0) puts("Error en envio de PAQUETE INSERT.");
-	else {
-			log_info(logger, "PAQUETE INSERT ENVIADO");
-	}
+
+	free(a_enviar);
+}
+
+void enviar_paquete_create(t_paquete_create* paquete, int socket_cliente,t_log* logger)
+{
+	int bytes = paquete->nombre_tabla_long + paquete->consistencia_long + sizeof(uint32_t)*2 + sizeof(int)*2;
+	void* a_enviar = serializar_paquete_create(paquete);
+	if ( send(socket_cliente, a_enviar, bytes, 0) <= 0) puts("Error en envio de PAQUETE CREATE.");
+
+	free(a_enviar);
+}
+
+void enviar_paquete_drop(t_paquete_drop* paquete, int socket_cliente,t_log* logger){
+	int bytes = paquete->nombre_tabla_long + sizeof(uint32_t);
+	void* a_enviar = serializar_paquete_drop(paquete);
+	if ( send(socket_cliente, a_enviar, bytes, 0) <= 0) puts("Error en envio de PAQUETE DROP.");
+
+	free(a_enviar);
+}
+
+void enviar_paquete_describe(t_paquete_describe_lfs* paquete,int socket_cliente, t_log* logger){
+
+	int bytes = paquete->nombre_tabla_long + sizeof(uint32_t);
+	void* a_enviar = serializar_paquete_describe(paquete);
+	if ( send(socket_cliente, a_enviar, bytes, 0) <= 0) puts("Error en envio de PAQUETE DESCRIBE.");
+
 	free(a_enviar);
 }
 
 //---------------------------ENVIOS DE SERVIDOR A LISSANDRA
+void enviar_describe_lissandra(t_paquete_describe_lfs* paquete,t_config* config,t_log* logger)
+{
+	int conexion = iniciar_conexion(config);
+	int cod = 2;
+	if (send(conexion, &cod, sizeof(int), 0) <= 0)
+		puts("Error en envio de CODIGO DE OPERACION.");
+	else{enviar_paquete_describe(paquete, conexion, logger);}
+	free(paquete);
+
+	//------RESPUESTA DE LISSANDRA:
+
+	uint16_t rta;
+	recv(conexion, &rta, sizeof(uint16_t) ,0);
+	if(rta==20 || rta==25){
+		protocolo_respuesta(rta,logger);
+		t_dictionary* diccionario=deserializar_respuesta_describe(conexion);
+		loggearListaMetadatas(diccionario);
+		terminar_conexion(conexion);
+	}else{
+		protocolo_respuesta(rta,logger);
+		terminar_conexion(conexion);
+	}
+}
 
 void enviar_select_lissandra(t_paquete_select* paquete, t_config* config, t_log* logger)
 {
@@ -241,6 +341,15 @@ void enviar_select_lissandra(t_paquete_select* paquete, t_config* config, t_log*
 	else{enviar_paquete_select(paquete, conexion, logger);}
 	free(paquete);
 
+	//------RESPUESTA DE LISSANDRA:
+
+	respuestaSELECT_FS* rtaSelect= deserializar_respuesta_select(conexion);
+	if(rtaSelect->rta==30)
+		log_info(logger,"SELECT DE LA KEY %d es %s",rtaSelect->rta,rtaSelect->keyHallada);
+	else
+	protocolo_respuesta(rtaSelect->rta,logger);
+
+	free(rtaSelect);
 	terminar_conexion(conexion);
 }
 
@@ -253,5 +362,64 @@ void enviar_insert_lissandra(t_paquete_insert* paquete, t_config* config, t_log*
 	else{enviar_paquete_insert(paquete, conexion, logger);}
 	free(paquete);
 
+	//------RESPUESTA DE LISSANDRA:
+	uint16_t rta;
+	recv(conexion, &rta, sizeof(uint16_t) ,MSG_WAITALL);
+	protocolo_respuesta(rta,logger);
+
 	terminar_conexion(conexion);
 }
+
+void enviar_create_lissandra(t_paquete_create* paquete,t_config* config,t_log* logger)
+{
+	int conexion = iniciar_conexion(config);
+	int cod = 0;
+	if (send(conexion, &cod, sizeof(int), 0) <= 0)
+			puts("Error en envio de CODIGO DE OPERACION.");
+	else{enviar_paquete_create(paquete, conexion, logger);}
+	free(paquete);
+
+	//------RESPUESTA DE LISSANDRA:
+	uint16_t rta;
+	recv(conexion, &rta,sizeof(uint16_t) ,0);
+
+
+	protocolo_respuesta(rta,logger);
+
+	terminar_conexion(conexion);
+
+}
+
+void enviar_drop_lissandra(t_paquete_create* paquete,t_config* config,t_log* logger)
+{
+	int conexion = iniciar_conexion(config);
+	int cod = 1;
+	if (send(conexion, &cod, sizeof(int), 0) <= 0)
+			puts("Error en envio de CODIGO DE OPERACION.");
+	else{enviar_paquete_drop(paquete, conexion, logger);}
+	free(paquete);
+
+	//------RESPUESTA DE LISSANDRA:
+
+	uint16_t rta;
+	recv(conexion, &rta, sizeof(uint16_t) ,0);
+	protocolo_respuesta(rta,logger);
+
+	terminar_conexion(conexion);
+
+}
+
+//----------------------------------------------------------LOGGEAR METADATAS DE LFS
+void loggearListaMetadatas(t_dictionary * metadatas){
+	dictionary_iterator(metadatas,loggearMetadataTablas);
+}
+
+void loggearMetadataTablas(char*nombreTabla,void* elemento){
+
+	t_log* logger= iniciar_logger();
+	t_metadata_fs* metadataDeTablaPedida= (t_metadata_fs*)elemento;
+	log_info(logger,"%s %s %d %d ",nombreTabla,metadataDeTablaPedida->consistencia,metadataDeTablaPedida->particiones,metadataDeTablaPedida->tiempo_de_compactacion);
+	log_destroy(logger);
+
+}
+

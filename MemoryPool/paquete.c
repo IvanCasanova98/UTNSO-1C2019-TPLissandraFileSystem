@@ -34,7 +34,7 @@ t_paquete_create* crear_paquete_create(char* nombre_tabla, char* consistencia, i
 {
 	uint32_t tamanio_tabla = strlen(nombre_tabla)+1;
 	uint32_t tamanio_consistencia = strlen(consistencia)+1;
-	t_paquete_create* paquete = malloc(tamanio_tabla + tamanio_consistencia + sizeof(uint32_t)*2 + sizeof(uint16_t)*2);
+	t_paquete_create* paquete = malloc(tamanio_tabla + tamanio_consistencia + sizeof(uint32_t)*2 + sizeof(int)*2);
 
 	paquete->nombre_tabla= nombre_tabla;
 	paquete->consistencia = consistencia;
@@ -42,6 +42,17 @@ t_paquete_create* crear_paquete_create(char* nombre_tabla, char* consistencia, i
 	paquete->tiempo_compactacion= tiempo_compactacion;
 	paquete->nombre_tabla_long = tamanio_tabla;
 	paquete->consistencia_long = tamanio_consistencia;
+
+	return paquete;
+}
+
+t_paquete_drop* crear_paquete_drop(char *nombre_tabla)
+{
+	uint32_t tamanio_tabla= strlen(nombre_tabla)+1;
+	t_paquete_drop* paquete= malloc(tamanio_tabla + sizeof(int));
+
+	paquete->nombre_tabla = nombre_tabla;
+	paquete->nombre_tabla_long = tamanio_tabla;
 
 	return paquete;
 }
@@ -100,6 +111,25 @@ long long get_timestamp(char* parametros){
 	return valor;
 }
 
+t_paquete_describe_lfs* paquete_describe_para_lfs(char* parametros,t_log* logger)
+{
+	parametros= strtok(NULL, " ");
+		if(parametros == NULL){
+			uint32_t tamanio_tabla= strlen("ALL")+1;
+			t_paquete_describe_lfs* paquete= malloc(tamanio_tabla + sizeof(uint32_t));
+			paquete->nombre_tabla ="ALL";
+			paquete->nombre_tabla_long = tamanio_tabla;
+			return paquete;
+		}
+		else
+		{
+			uint32_t tamanio_tabla= strlen(parametros)+1;
+			t_paquete_describe_lfs* paquete= malloc(tamanio_tabla + sizeof(uint32_t));
+			paquete->nombre_tabla =parametros;
+			paquete->nombre_tabla_long = tamanio_tabla;
+			return paquete;
+		}
+}
 
 t_paquete_create* paquete_create(char* parametros, t_log* logger)
 {
@@ -120,6 +150,21 @@ t_paquete_create* paquete_create(char* parametros, t_log* logger)
 	t_paquete_create* paquete = crear_paquete_create(nombre_tabla, consistencia, particiones, tiempo_compactacion);
 
 	loggear_paquete_create(paquete, logger);
+
+	return paquete;
+}
+
+t_paquete_drop* paquete_drop(char *parametros, t_log* logger){
+
+	char* nombre_tabla;
+	parametros= strtok(NULL, " ");
+	if(parametros==NULL){
+		return NULL;
+	}
+	nombre_tabla = parametros;
+	t_paquete_drop* paquete = crear_paquete_drop(nombre_tabla);
+
+	//FALTA LOGGEAR
 
 	return paquete;
 }

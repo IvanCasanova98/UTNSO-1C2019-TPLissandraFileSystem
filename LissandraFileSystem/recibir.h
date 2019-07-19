@@ -12,8 +12,11 @@
 #include<commons/string.h>
 #include<commons/config.h>
 #include<string.h>
+#include<pthread.h>
 
-typedef enum
+t_log* logger;
+
+typedef enum op_code
 {
 	CREATE,
 	DROP,
@@ -25,12 +28,52 @@ typedef enum
 	ADD
 }op_code;
 
+typedef enum consistency
+{
+	SC,
+	SHC,
+	EC
+
+}consistency;
+
+
+typedef struct  argumentosEnvioPaquete{
+	int clientefd;
+	int serverfd;
+
+}argumentosEnvioPaquete;
+
+typedef struct t_metadata_fs
+{
+	consistency consistencia;
+	int particiones;
+	int tiempo_de_compactacion;
+}t_metadata_fs;
+
+typedef struct t_registro
+{
+	char* value;
+	uint16_t key;
+	long long timestamp;
+
+}t_registro;
+
 typedef struct t_paquete_select
 {
 	char* nombre_tabla;
 	uint32_t nombre_tabla_long;
 	uint16_t valor_key;
 }t_paquete_select;
+
+typedef struct t_paquete_drop{
+	uint32_t nombre_tabla_long;
+	char* nombre_tabla;
+} t_paquete_drop;
+
+typedef struct t_paquete_describe{
+	uint32_t nombre_tabla_long;
+	char* nombre_tabla;
+} t_paquete_describe;
 
 typedef struct t_paquete_insert
 {
@@ -42,8 +85,51 @@ typedef struct t_paquete_insert
 	long long timestamp;
 }t_paquete_insert;
 
+typedef struct t_paquete_create
+{
+	uint32_t nombre_tabla_long; //Longitud del nombre de la tabla
+	char* nombre_tabla;
+	t_metadata_fs metadata;
+
+}t_paquete_create;
+
+typedef struct t_paquete_create_de_mp
+{
+	uint32_t nombre_tabla_long; //Longitud del nombre de la tabla
+	char* nombre_tabla;
+	uint32_t consistencia_long;
+	char* consistencia;//CREAR TIPO DE DATO
+	int particiones;
+	int tiempo_compactacion;
+}t_paquete_create_de_mp;
+
+typedef struct respuestaSELECT
+{
+	uint32_t tamanio_key;
+	uint16_t rta;
+	char* keyHallada;
+}respuestaSELECT;
+
+typedef struct respuestaDESCRIBE
+{
+	uint16_t rta;
+	t_dictionary* tablas;
+}respuestaDESCRIBE;
+
+typedef struct valoresDescribe
+{
+	uint32_t nombre_tabla_long; //Longitud del nombre de la tabla
+	char* nombre_tabla;
+	t_metadata_fs metadata;
+
+}valoresDescribe;
+
+
+void pasarAvaloresDescribe(char* key, void* metadata,int conexion);
+
+void serealizar_respuesta_describe(respuestaDESCRIBE* metadatasDeTablasPedidas,int conexion);
 //--------------------RECIBIR PAQUETE
-void recibir_paquetes(t_log* logger, int cliente_fd, int server_fd);
+void* recibir_paquetes(void*);
 
 //--------------------RECIBIR OPERACION
 int recibir_operacion(int);
@@ -51,6 +137,14 @@ int recibir_operacion(int);
 //---------------------DESERIALIZAR PAQUETE
 t_paquete_select* deserializar_paquete_select(int socket_cliente);
 t_paquete_insert* deserializar_paquete_insert(int socket_cliente);
+t_paquete_create_de_mp* deserializar_paquete_create_de_mp(int socket_cliente);
+t_paquete_drop* deserializar_paquete_drop(int socket_cliente);
+t_paquete_describe* deserializar_paquete_describe(int socket_cliente);
+
+void* serializar_respuesta_select(respuestaSELECT* respuestaSELECT);
+//--------------------ADAPTADOR
+t_paquete_create* adaptadorDePaquete(t_paquete_create_de_mp* paquete_create_mp);
+
 
 //--------------------ARCHIVOS LOGGER/CONFIGURACION
 t_log* iniciar_logger(void);

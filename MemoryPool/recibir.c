@@ -110,6 +110,27 @@ int recibir_operacion(int socket_cliente)
 
 //----------------------------DESERIALIZAR PAQUETES
 
+t_paquete_drop* deserializar_paquete_drop(int socket_cliente){
+	int desplazamiento = 0;
+	size_t tamanioNombreTabla;
+
+	recv(socket_cliente, &tamanioNombreTabla, sizeof(int) ,MSG_WAITALL);
+
+	t_paquete_drop* paqueteDrop = malloc(tamanioNombreTabla+sizeof(uint32_t));
+	paqueteDrop->nombre_tabla = malloc(tamanioNombreTabla);
+
+	void *buffer = malloc(tamanioNombreTabla);
+
+	recv(socket_cliente, buffer, tamanioNombreTabla ,MSG_WAITALL);
+
+	memcpy(paqueteDrop->nombre_tabla,buffer + desplazamiento, tamanioNombreTabla);
+	desplazamiento+= tamanioNombreTabla;
+
+	free(buffer);
+	return paqueteDrop;
+
+}
+
 t_paquete_select* deserializar_paquete_select(int socket_cliente)
 {
 	int desplazamiento = 0;
@@ -211,24 +232,97 @@ t_paquete_create* deserializar_paquete_create(int socket_cliente)
 	return paquete_create;
 }
 
-t_paquete_drop* deserializar_paquete_drop(int socket_cliente){
+t_dictionary* deserializar_respuesta_describe(int conexion){
+	t_dictionary* diccionarioDescribe=dictionary_create();
+
+	int cantidadDeTablas;
+	recv(conexion, &cantidadDeTablas, sizeof(int) ,MSG_WAITALL);
+	int i=0;
+
+	while(i<cantidadDeTablas)
+	{
+
+		int longNombreTabla;
+		int longConsistencia;
+
+		int desplazamiento=0;
+		recv(conexion, &longNombreTabla, sizeof(int) ,MSG_WAITALL);
+		recv(conexion, &longConsistencia, sizeof(int) ,MSG_WAITALL);
+
+		void* buffer=malloc(sizeof(int)*2+longNombreTabla+longConsistencia);
+
+
+		recv(conexion, buffer,sizeof(int)*2+longNombreTabla+longConsistencia ,MSG_WAITALL);
+
+
+		char* nombreTabla=malloc(longNombreTabla);
+		t_metadataDescribe* metadata= malloc(sizeof(longConsistencia)+sizeof(int)*2); //CAMBIE ESTE MALLOC
+		metadata->consistencia=malloc(longConsistencia);
+
+		memcpy(nombreTabla, buffer + desplazamiento, longNombreTabla);
+		desplazamiento+= longNombreTabla;
+		memcpy(metadata->consistencia,buffer + desplazamiento, longConsistencia);
+		desplazamiento+= longConsistencia;
+		memcpy(&(metadata->particiones),buffer + desplazamiento, sizeof(int));
+		desplazamiento+= sizeof(int);
+		memcpy(&(metadata->tiempo_de_compactacion),buffer + desplazamiento, sizeof(int));
+		desplazamiento+= sizeof(int);
+
+		dictionary_put(diccionarioDescribe,nombreTabla,metadata);
+
+		i++;
+	}
+
+return diccionarioDescribe;
+}
+
+respuestaSELECT_FS *deserializar_respuesta_select(int socket_cliente){
+
 	int desplazamiento = 0;
-	size_t tamanioNombreTabla;
+	uint16_t rta;
 
-	recv(socket_cliente, &tamanioNombreTabla, sizeof(int) ,MSG_WAITALL);
+	recv(socket_cliente, &rta, sizeof(uint16_t) ,MSG_WAITALL);
+	desplazamiento+= sizeof(uint16_t);
 
-	t_paquete_drop* paquete_drop = malloc(tamanioNombreTabla+sizeof(uint32_t));
-	paquete_drop->nombre_tabla = malloc(tamanioNombreTabla);
+	if(rta != 30 ) { //HUBO FALLO.
 
-	void *buffer = malloc(tamanioNombreTabla);
+		respuestaSELECT_FS* respuestaSELECT = malloc(sizeof(uint32_t) + sizeof(uint16_t));
+		respuestaSELECT->rta = rta;
 
-	recv(socket_cliente, buffer, tamanioNombreTabla ,MSG_WAITALL);
+		respuestaSELECT->keyHallada = malloc(1);
+		respuestaSELECT->keyHallada = "";
+		respuestaSELECT->tamanio_key=1;
 
-	memcpy(paquete_drop->nombre_tabla,buffer + desplazamiento, tamanioNombreTabla);
-	desplazamiento+= tamanioNombreTabla;
+		return respuestaSELECT;
+	}
+	else if(rta == 30) //EXITO
+	{
+		size_t tamanioKey;
+		recv(socket_cliente, &tamanioKey, sizeof(uint32_t) ,MSG_WAITALL);
 
-	free(buffer);
-	return paquete_drop;
+		respuestaSELECT_FS* respuestaSELECT= malloc(tamanioKey+sizeof(uint16_t)+sizeof(uint32_t));
+
+		void* buffer = malloc(tamanioKey);
+		respuestaSELECT->keyHallada= malloc(tamanioKey);
+
+		recv(socket_cliente, buffer, tamanioKey ,MSG_WAITALL);
+
+
+		memcpy(respuestaSELECT->keyHallada,buffer, tamanioKey);
+		respuestaSELECT->rta = rta;
+		respuestaSELECT->tamanio_key= tamanioKey;
+
+		free(buffer);
+		return respuestaSELECT;
+	} else{
+		respuestaSELECT_FS* respuestaSELECT = malloc(sizeof(uint32_t) + sizeof(uint16_t));
+				respuestaSELECT->rta = 34;
+
+				respuestaSELECT->keyHallada = malloc(1);
+				respuestaSELECT->keyHallada = "";
+				respuestaSELECT->tamanio_key=1;
+		return respuestaSELECT;
+	}
 
 }
 

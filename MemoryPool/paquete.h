@@ -39,14 +39,34 @@ typedef enum
 	HS //HandShake
 }op_code;
 
+typedef enum consistency
+{
+	SC,
+	SHC,
+	EC
+
+}consistency;
+
+typedef struct t_paquete_describe_lfs{
+	uint32_t nombre_tabla_long;
+	char* nombre_tabla;
+} t_paquete_describe_lfs;
+
+typedef struct t_metadata_fs
+{
+	consistency consistencia;
+	int particiones;
+	int tiempo_de_compactacion;
+}t_metadata_fs;
+
 typedef struct t_paquete_create
 {
 	uint32_t nombre_tabla_long; //Longitud del nombre de la tabla
 	char* nombre_tabla;
 	uint32_t consistencia_long;
 	char* consistencia;//CREAR TIPO DE DATO
-	uint16_t particiones;
-	uint16_t tiempo_compactacion;
+	int particiones;
+	int tiempo_compactacion;
 }__attribute__((packed)) t_paquete_create;
 
 typedef struct t_paquete_select
@@ -75,10 +95,15 @@ typedef struct t_paquete_drop{
 t_paquete_select* crear_paquete_select(char *nombretabla,uint16_t valor_key);
 t_paquete_insert* crear_paquete_insert(char *nombretabla,uint16_t valor_key, char *value, long long timestamp);
 t_paquete_create* crear_paquete_create(char* nombre_tabla, char* consistencia, int particiones, int tiempo_compactacion);
+t_paquete_drop* crear_paquete_drop(char *nombre_tabla);
 
 //---------------------ARMAR PAQUETE
+t_paquete_drop* paquete_drop(char* parametros, t_log* logger);
 t_paquete_select* paquete_select(char* parametros, t_log* logger);
 t_paquete_insert* paquete_insert(char* parametros, t_log* logger);
+t_paquete_describe_lfs* paquete_describe_para_lfs(char* parametros,t_log* logger);
+
+
 long long get_timestamp(char* parametros);
 t_paquete_create* paquete_create(char* parametros, t_log* logger);
 void describe(int conexion, char* parametros);
