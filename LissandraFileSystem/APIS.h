@@ -48,6 +48,14 @@ t_config config;
 #define BLUE  "\x1B[34m"
 #define NORMAL_COLOR  "\x1B[0m"
 
+typedef struct  t_respuesta_pagina{
+	uint16_t bit;
+	size_t long_value;
+	size_t tamanioPaquete;
+	char* value;
+	long long timestamp;
+} t_respuesta_pagina;
+
 int existeTabla(char* TablaBuscada);
 
 //**********- FUNCIONES API -**********
@@ -59,7 +67,7 @@ t_dictionary*  APIdescribe(t_paquete_describe*);
 t_dictionary*  APIdescribeTodasLasTablas();
 
 //-------------------------------RESPUESTAS
-void APIselectRESPUESTA(t_paquete_select* paquete_select,int cliente);
+t_respuesta_pagina* APIselectRESPUESTA(t_paquete_select* paquete_select,int cliente);
 void APIinsertRESPUESTA(t_paquete_insert* paquete_insert,int cliente);
 void APIcreateRESPUESTA(t_paquete_create* paquete_create,int cliente);
 void APIdropRESPUESTA(t_paquete_drop* paquete_drop,int cliente);
@@ -97,6 +105,7 @@ t_registro* buscarEnTemporalesCompactando(char* nombreTabla,int key);
 int existe_temporal(char* path);
 char* DirectorioDeBloque(int numeroBloque);
 void crearParticiones(char*nombreTabla ,int nroParticiones);
+long long retornarElMayorTimeStamp(t_list* RegistrosEncontrados);
 char* elegirMayorTimeStamp(t_list* RegistrosEncontrados);
 t_registro* crearRegistro (char*value,uint16_t key,long long timestamp);
 int particionDeKey(int key,int particiones);
@@ -125,6 +134,7 @@ void RemoverParticionesDeTablaYSusBloques(char* nombreTabla);
 void RemoverParticionDeTablaEspecificaYSusBloques(char* nombreTabla,int nroParticionABorrar);
 
 void* serializar_mensaje(char* value, int bytes);
+void* serializar_respuesta_pagina(t_respuesta_pagina* t_respuesta_pag);
 
 
 #endif /* APIS_H_ */

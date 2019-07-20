@@ -114,7 +114,7 @@ t_pagina_completa* crear_pagina_completa(t_pagina* pagina)
 {
 	t_pagina_completa* pagina_completa = malloc(sizeof(t_pagina_completa));
 	pagina_completa -> pagina = pagina;
-	pagina_completa -> flag = 1;
+	pagina_completa -> flag = 0;
 	return pagina_completa;
 }
 

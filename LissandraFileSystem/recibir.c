@@ -111,7 +111,33 @@ void* recibir_paquetes(void *arg)
 		case SELECT:;
 
 			t_paquete_select *paquete_select=deserializar_paquete_select(cliente_fd);
+
 			if(paquete_select!=NULL){
+
+				t_respuesta_pagina* rta_pagina= APIselectRESPUESTA(paquete_select,cliente_fd);
+
+				int bytes = rta_pagina->tamanioPaquete;
+
+
+				if(rta_pagina->bit != 1)
+				{
+					void * buffer = serializar_respuesta_pagina(rta_pagina);
+					if (send(cliente_fd, &rta_pagina->tamanioPaquete, sizeof(size_t), MSG_DONTWAIT) <= 0)
+						puts("Error en envio de CODIGO DE RESPUESTA.");
+
+					if (send(cliente_fd, buffer, bytes, MSG_DONTWAIT) <= 0)
+						puts("Error en envio de CODIGO DE RESPUESTA.");
+					free(buffer);
+				}
+				else
+				{
+					uint16_t bit_error = 1;
+					size_t tamanio_buffer = sizeof(uint16_t);
+
+					send(cliente_fd,&tamanio_buffer,sizeof(size_t),0);
+					send(cliente_fd,&bit_error,tamanio_buffer,0);
+				}
+				free(rta_pagina);
 
 //				respuestaSELECT* rtaSELECT = malloc(sizeof(uint32_t) + sizeof(uint16_t));
 //				rtaSELECT->keyHallada = malloc(1);
@@ -122,8 +148,7 @@ void* recibir_paquetes(void *arg)
 //				void* respuesta_a_enviar = serializar_respuesta_select(rtaSELECT);
 //				if (send(cliente_fd, respuesta_a_enviar, sizeof(uint16_t)+ sizeof(uint32_t)+ rtaSELECT->tamanio_key, MSG_DONTWAIT) <= 0)
 //						puts("Error en envio de CODIGO DE RESPUESTA.");
-				APIselectRESPUESTA(paquete_select,cliente_fd);
-				loggear_request_select(paquete_select);
+//				loggear_request_select(paquete_select);
 			}
 
 

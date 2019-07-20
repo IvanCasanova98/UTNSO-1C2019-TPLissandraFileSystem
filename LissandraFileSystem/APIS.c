@@ -301,7 +301,7 @@ void APIcreateRESPUESTA(t_paquete_create* paquete_create,int cliente){ //0 memor
 
 }
 
-void APIselectRESPUESTA(t_paquete_select* paquete_select,int cliente){ // bastante ml revisar
+t_respuesta_pagina* APIselectRESPUESTA(t_paquete_select* paquete_select,int cliente){ // bastante ml revisar
 
 
 	char* nombreTablaMayuscula=malloc(strlen(paquete_select->nombre_tabla)+1);
@@ -340,6 +340,9 @@ void APIselectRESPUESTA(t_paquete_select* paquete_select,int cliente){ // bastan
 
 			if(!list_is_empty(RegistrosEncontrados)){
 			char* valueEncontrado = elegirMayorTimeStamp(RegistrosEncontrados);
+
+			long long mayorTimestamp= retornarElMayorTimeStamp(RegistrosEncontrados);
+
 			list_clean_and_destroy_elements(RegistrosEncontrados,liberarRegistro);
 			list_destroy(RegistrosEncontrados);
 
@@ -350,6 +353,16 @@ void APIselectRESPUESTA(t_paquete_select* paquete_select,int cliente){ // bastan
 			free(metadataDeTabla);
 			free(nombreTablaMayuscula);
 
+			t_respuesta_pagina* pagina= malloc(strlen(valueEncontrado)+1+sizeof(uint16_t)+sizeof(size_t)+sizeof(long long));
+
+			pagina->value=malloc(strlen(valueEncontrado)+1);
+			pagina->bit=0;
+			pagina->long_value=strlen(valueEncontrado)+1;
+			memcpy(pagina->value,valueEncontrado,pagina->long_value);
+			pagina->timestamp= mayorTimestamp;
+
+
+			return pagina;
 
 //			int bytes= sizeof(int)+strlen(valueEncontrado)+1;
 //			void* buffer= serializar_mensaje(valueEncontrado,bytes);
@@ -372,12 +385,16 @@ void APIselectRESPUESTA(t_paquete_select* paquete_select,int cliente){ // bastan
 				free(metadataDeTabla);
 				liberarPaqueteSelect(paquete_select);
 
-				int bytes= sizeof(int)+strlen("NO EXISTE EL VALUE BUSCADO")+1;
-				void* buffer= serializar_mensaje("NO EXISTE EL VALUE BUSCADO",bytes);
+//				int bytes= sizeof(int)+strlen("NO EXISTE EL VALUE BUSCADO")+1;
+//				void* buffer= serializar_mensaje("NO EXISTE EL VALUE BUSCADO",bytes);
+//
+//				send(cliente,buffer,bytes,0);
+//				free(buffer);
 
-				send(cliente,buffer,bytes,0);
-				free(buffer);
+				t_respuesta_pagina* pagina= malloc(sizeof(uint16_t));
 
+				pagina->bit=1;
+				return pagina;
 //				return NULL;
 //				respuestaSELECT* rtaSELECT = malloc(sizeof(uint32_t) + sizeof(uint16_t));
 //				rtaSELECT->keyHallada = malloc(1);
@@ -392,6 +409,11 @@ void APIselectRESPUESTA(t_paquete_select* paquete_select,int cliente){ // bastan
 		LaTablaNoExisteSelect(nombreTablaMayuscula);
 		free(nombreTablaMayuscula);
 		liberarPaqueteSelect(paquete_select);
+
+		t_respuesta_pagina* pagina= malloc(sizeof(uint16_t));
+
+		pagina->bit=1;
+		return pagina;
 
 //		int bytes= sizeof(int)+strlen("NO EXISTE LA TABLA")+1;
 //		void* buffer= serializar_mensaje("NO EXISTE LA TABLA",bytes);
@@ -600,6 +622,11 @@ t_list* listarTablasExistentes() {
 
 }
 
+long long retornarElMayorTimeStamp(t_list* RegistrosEncontrados){
+	list_sort(RegistrosEncontrados,mayorTimeStamp);
+	t_registro* registroConMayorTimeStamp = (t_registro*)list_remove(RegistrosEncontrados,0);
+	return registroConMayorTimeStamp->timestamp;
+}
 
 char* elegirMayorTimeStamp(t_list* RegistrosEncontrados){
 	list_sort(RegistrosEncontrados,mayorTimeStamp);
@@ -1542,5 +1569,30 @@ void* serializar_mensaje(char* value, int bytes)
 //	}
 //}
 
+void* serializar_respuesta_pagina(t_respuesta_pagina* t_respuesta_pag){
+
+	void * buffer = malloc(sizeof(uint16_t)+sizeof(size_t) + sizeof(long long) +t_respuesta_pag->long_value);
+
+	int desplazamiento = 0;
+	size_t tamanioTotal= sizeof(uint16_t)+sizeof(size_t)*2 + sizeof(long long) +t_respuesta_pag->long_value;
+
+	memcpy(buffer + desplazamiento,&(t_respuesta_pag->tamanioPaquete),tamanioTotal);
+	desplazamiento +=tamanioTotal;
+
+	memcpy(buffer + desplazamiento, &(t_respuesta_pag->bit), sizeof(uint16_t));
+	desplazamiento+= sizeof(uint16_t);
+
+	memcpy(buffer + desplazamiento, &(t_respuesta_pag->long_value), sizeof(size_t));
+	desplazamiento+= sizeof(size_t);
+
+	memcpy(buffer + desplazamiento, t_respuesta_pag->value, t_respuesta_pag->long_value);
+	desplazamiento+= t_respuesta_pag->long_value;
+
+	memcpy(buffer + desplazamiento, &(t_respuesta_pag->timestamp), sizeof(long long));
+	desplazamiento+=  sizeof(long long);
+
+	return buffer;
+
+}
 
 

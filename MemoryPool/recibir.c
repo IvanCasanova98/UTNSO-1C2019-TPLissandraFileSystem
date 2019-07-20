@@ -275,12 +275,59 @@ t_dictionary* deserializar_respuesta_describe(int conexion){
 	return diccionarioDescribe;
 }
 
+t_pagina* deserializar_pagina (int socket_cliente)
+{
+	/*BUFFER:
+	 * BIT DE ERROR
+	 * TAMAÑO VALUE
+	 * VALUE
+	 * TIMESTAMP
+	 */
+	int desplazamiento = 0;
+	size_t tamanio_paquete;
+	uint16_t bit_error;
+	size_t tamanio_value;
+	long long timestamp;
 
+	t_pagina* pagina;
 
+	recv(socket_cliente, &tamanio_paquete, sizeof(size_t) ,MSG_WAITALL);
 
+	void *buffer = malloc(tamanio_paquete);
+	recv(socket_cliente, buffer, tamanio_paquete,MSG_WAITALL);
 
+	memcpy(&bit_error,buffer + desplazamiento, sizeof(uint16_t));
+	desplazamiento+= sizeof(uint16_t);
 
+	if(bit_error == 0)
+	{
+		memcpy(&(tamanio_value),buffer + desplazamiento, sizeof(size_t));
+		desplazamiento+= sizeof(size_t);
 
+		char* value = malloc(tamanio_value);
+		memcpy(value,buffer + desplazamiento, tamanio_value);
+		desplazamiento+= tamanio_value;
+
+		memcpy(timestamp,buffer + desplazamiento, sizeof(long long));
+		desplazamiento+= sizeof(long long);
+
+		pagina= malloc(sizeof(uint16_t)+tamanio_value+sizeof(long long));
+
+		strcpy(pagina->value,value);
+		pagina->timestamp = timestamp;
+	}
+	else
+	{
+		char* value = "Pagina no encontrada";
+		pagina= malloc(sizeof(uint16_t)+strlen(value)+1+sizeof(long long));
+		pagina->value=malloc(strlen(value)+1);
+		strcpy(pagina->value,value);
+		pagina->timestamp = 0;
+	}
+
+	free(buffer);
+	return pagina;
+}
 
 
 //------------------RECIBIR MENSAJES------------------
@@ -319,3 +366,5 @@ void* recibir_mensaje_para_kernel(int socket_cliente){
 	return buffer;
 
 }
+
+

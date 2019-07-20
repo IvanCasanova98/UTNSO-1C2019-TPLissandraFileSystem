@@ -32,7 +32,6 @@ void ingresar_paquete(void * arg)
 				}
 				break;
 			case 2:;
-			//PARA ENVIAR A LFS, hay que armar ese paquete.
 				t_paquete_describe_lfs* paquete_describe_lfs = paquete_describe_para_lfs(parametros_paquete,parametro->logger);
 				if(paquete_describe_lfs != NULL)
 				{

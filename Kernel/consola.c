@@ -29,8 +29,6 @@ void request(void * arg) //RECIBIR LOGGER
 	retardo_ejecucion(parametro->config);
 		switch(cod_ingresado){
 			case 0:;
-
-
 				t_paquete_create* paquete_create = create(vector_request);
 
 				if(paquete_create==NULL){break;}

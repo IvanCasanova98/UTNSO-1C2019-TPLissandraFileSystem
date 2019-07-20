@@ -5,36 +5,48 @@ pthread_mutex_t mutex;
 void selectf(int cliente,t_paquete_select* paquete, t_config* config, t_log* logger)
 {
 
-	int cod_consistencia = consistencia_to_int(get_consistencia(paquete -> nombre_tabla));
+	if(!(condicion_select(paquete -> nombre_tabla,paquete -> valor_key)))
+	{
+		int conexion = iniciar_conexion(config);
+		enviar_select_lissandra(conexion, paquete, logger);
+		t_pagina* pagina_lissandra = deserializar_pagina(conexion);
+		terminar_conexion(conexion);
 
-	if(cod_consistencia==0)
-	{
-		void * enviar = enviar_select_lissandra(paquete, config, logger);
-		send(cliente,enviar,strlen(enviar),0);
-	}
-	else
-	{
-		if(condicion_select(paquete -> nombre_tabla,paquete -> valor_key))
+		if(pagina_lissandra->timestamp!=0)
 		{
-			t_pagina* pagina_encontrada = buscar_pagina(paquete -> nombre_tabla, paquete -> valor_key);
+			pagina_lissandra->valor_key = paquete->valor_key;
+			t_pagina_completa* pagina_completa_lissandra = crear_pagina_completa(pagina_lissandra);
 
-			int bytes = sizeof(int) + strlen(pagina_encontrada -> value) + 1;
-			void* a_enviar = serializar_mensaje(pagina_encontrada -> value, bytes);
-			if (cliente != NULL){
-				send(cliente,a_enviar,bytes,0);
-				log_info(logger,"Respuesta enviada: %s\n", pagina_encontrada -> value);
+			if(condicion_insert(paquete->nombre_tabla))
+			{
+				agregar_pagina(paquete->nombre_tabla, pagina_completa_lissandra);
 			}
-			else{log_info(logger,"Respuesta: %s\n", pagina_encontrada -> value);}
+			else
+			{
+				journal(config, logger);
+				agregar_pagina(paquete->nombre_tabla, pagina_completa_lissandra);
+			}
 		}
 		else
 		{
-			void* a_enviar= enviar_select_lissandra(paquete, config, logger); //FALTA ESPERAR RESPUESTA
-			send(cliente,a_enviar,strlen(a_enviar),0);
-
-			if (cliente != NULL){enviar_select_error(cliente);} //AGREGADO
-			else{} //CASO CONSOLA MP
+			char* value_error = pagina_lissandra->value;
+			size_t tamanio_value_error = strlen(value_error)+1;
+			send(cliente,&tamanio_value_error,sizeof(size_t),0);
+			send(cliente,value_error,tamanio_value_error,0);
+			log_info(logger,"Respuesta enviada: %s\n", value_error);
+			return;
 		}
 	}
+
+	t_pagina* pagina_encontrada = buscar_pagina(paquete -> nombre_tabla, paquete -> valor_key);
+
+	int bytes = sizeof(int) + strlen(pagina_encontrada -> value) + 1;
+	void* a_enviar = serializar_mensaje(pagina_encontrada -> value, bytes);
+	if (cliente != NULL){
+		send(cliente,a_enviar,bytes,0);
+		log_info(logger,"Respuesta enviada: %s\n", pagina_encontrada -> value);
+	}
+	else{log_info(logger,"Respuesta: %s\n", pagina_encontrada -> value);}
 
 }
 

@@ -332,21 +332,13 @@ void enviar_describe_lissandra(t_paquete_describe_lfs* paquete,t_config* config,
 }
 
 
-void* enviar_select_lissandra(t_paquete_select* paquete, t_config* config, t_log* logger)
+void enviar_select_lissandra(int conexion, t_paquete_select* paquete, t_log* logger)
 {
-	int conexion = iniciar_conexion(config);
 	int cod = 3;
 	if (send(conexion, &cod, sizeof(int), 0) <= 0)
 		puts("Error en envio de CODIGO DE OPERACION.");
 	else{enviar_paquete_select(paquete, conexion, logger);}
 	free(paquete);
-
-	//------RESPUESTA DE LISSANDRA:
-	void* respuesta = recibir_mensaje_para_kernel(conexion);
-
-	terminar_conexion(conexion);
-	return respuesta;
-
 }
 
 void enviar_insert_lissandra(t_paquete_insert* paquete, t_config* config, t_log* logger)
