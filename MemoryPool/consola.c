@@ -40,11 +40,7 @@ void ingresar_paquete(void * arg)
 				break;
 			case 3:;
 				t_paquete_select* paquete_s = paquete_select(parametros_paquete, parametro->logger);
-//				selectf(NULL,paquete_s, parametro->config, parametro->logger);
-				if(paquete_s != NULL)
-				{
-				enviar_select_lissandra(paquete_s,parametro->config,parametro->logger);
-				}
+				selectf(NULL,paquete_s, parametro->config, parametro->logger);
 				break;
 			case 4:;
 				t_paquete_insert* paquete_i = paquete_insert(parametros_paquete, parametro->logger);

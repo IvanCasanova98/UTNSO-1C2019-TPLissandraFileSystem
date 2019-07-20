@@ -25,7 +25,7 @@ void recibir_mensaje(int socket_cliente)
 	}
 	else
 	{
-		log_error(logger, "%s", buffer);
+		log_error(logger, "%s\n", buffer);
 	}
 
 	log_destroy(logger);

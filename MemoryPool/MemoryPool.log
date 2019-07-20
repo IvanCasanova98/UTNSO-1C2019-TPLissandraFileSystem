@@ -1,0 +1,30 @@
+[INFO] 03:50:07:290 MemoryPool/(12787:12788): SELECT:
+Nombre tabla: TABLA0
+Valor KEY   : 0
+[INFO] 03:50:07:290 MemoryPool/(12787:12788): Respuesta enviada: CERO
+
+[INFO] 03:50:12:474 MemoryPool/(12787:12788): SELECT:
+Nombre tabla: TABLA0
+Valor KEY   : 12
+[INFO] 03:50:12:476 MemoryPool/(12787:12788): Respuesta enviada: Pagina no encontrada
+
+[INFO] 03:50:15:473 MemoryPool/(12787:12788): SELECT:
+Nombre tabla: TABLA0
+Valor KEY   : 0
+[INFO] 03:50:15:473 MemoryPool/(12787:12788): Respuesta enviada: CERO
+
+[INFO] 03:51:02:717 MemoryPool/(12787:12789): SELECT:
+Nombre tabla: TABLA1
+Valor KEY   : 23
+[ERROR] 03:51:02:720 MemoryPool/(12787:12789): Respuesta: Pagina no encontrada
+
+[INFO] 03:51:10:45 MemoryPool/(12787:12789): SELECT:
+Nombre tabla: TABLA0
+Valor KEY   : 0
+[INFO] 03:51:10:45 MemoryPool/(12787:12789): Respuesta: CERO
+A
+[INFO] 03:51:23:661 MemoryPool/(12787:12789): SELECT:
+Nombre tabla: TABLA1
+Valor KEY   : 32
+[ERROR] 03:51:23:666 MemoryPool/(12787:12789): Respuesta: Pagina no encontrada
+

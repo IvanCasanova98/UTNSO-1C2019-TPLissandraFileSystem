@@ -31,9 +31,19 @@ void selectf(int cliente,t_paquete_select* paquete, t_config* config, t_log* log
 		{
 			char* value_error = pagina_lissandra->value;
 			size_t tamanio_value_error = strlen(value_error)+1;
-			send(cliente,&tamanio_value_error,sizeof(size_t),0);
-			send(cliente,value_error,tamanio_value_error,0);
-			log_info(logger,"Respuesta enviada: %s\n", value_error);
+
+			if(cliente!=NULL)
+			{
+				send(cliente,&tamanio_value_error,sizeof(size_t),0);
+				send(cliente,value_error,tamanio_value_error,0);
+				log_info(logger,"Respuesta enviada: %s\n", value_error);
+			}
+			else
+			{
+				log_error(logger,"Respuesta: %s\n", value_error);
+			}
+
+
 			return;
 		}
 	}
