@@ -219,8 +219,7 @@ t_dictionary* APIdescribeTodasLasTablas(){
 
 //-------------------------------------------RESPUESTAS
 
-
-uint16_t APIdropRESPUESTA(t_paquete_drop* paquete_drop){ //ml 20bytes
+void APIdropRESPUESTA(t_paquete_drop* paquete_drop,int cliente){ //ml 20bytes
 
 	char nombreTablaMayuscula [strlen(paquete_drop->nombre_tabla)+1];
 	strcpy(nombreTablaMayuscula,paquete_drop->nombre_tabla);
@@ -239,22 +238,31 @@ uint16_t APIdropRESPUESTA(t_paquete_drop* paquete_drop){ //ml 20bytes
 		sem_post(&SemaforoMemtable);
 		LogearDropCorrecto(nombreTablaMayuscula);
 
-		return 10;
+		int bytes= sizeof(int)+strlen("TABLA ELIMINADA DEL FILESYSTEM")+1;
+		void* buffer= serializar_mensaje("TABLA ELIMINADA DEL FILESYSTEM",bytes);
 
+		send(cliente,buffer,bytes,0);
+		free(buffer);
 	} else
 	{
 		LogearDropFallido(nombreTablaMayuscula);
-		return 12;
+
+		int bytes= sizeof(int)+strlen("TABLA NO EXISTE EN EL FILESYSTEM")+1;
+		void* buffer= serializar_mensaje("TABLA NO EXISTE EN EL FILESYSTEM",bytes);
+
+		send(cliente,buffer,bytes,0);
+		free(buffer);
 	}
 
 }
 
-uint16_t APIcreateRESPUESTA(t_paquete_create* paquete_create){ //0 memory leak
+void APIcreateRESPUESTA(t_paquete_create* paquete_create,int cliente){ //0 memory leak
 
 	char nombreTablaMayuscula [strlen(paquete_create->nombre_tabla)+1];
 
 	strcpy(nombreTablaMayuscula,paquete_create->nombre_tabla);
 	string_to_upper(nombreTablaMayuscula);
+
 	if(!existeTabla(nombreTablaMayuscula)){
 		crearTabla(nombreTablaMayuscula);
 		crearMetadataConfig(nombreTablaMayuscula,paquete_create->metadata.consistencia,paquete_create->metadata.particiones,paquete_create->metadata.tiempo_de_compactacion);
@@ -270,17 +278,30 @@ uint16_t APIcreateRESPUESTA(t_paquete_create* paquete_create){ //0 memory leak
 
 		liberarPaqueteCreate(paquete_create);
 
-		return 90;
+		int bytes= sizeof(int)+strlen("TABLA CREADA EN EL FILESYSTEM")+1;
+		void* buffer= serializar_mensaje("TABLA CREADA EN EL FILESYSTEM",bytes);
+
+		send(cliente,buffer,bytes,0);
+		free(buffer);
+
+//		return 90;
+
 
 	} else {
 		liberarPaqueteCreate(paquete_create);
+
+		int bytes= sizeof(int)+strlen("YA EXISTE TABLA A CREAR")+1;
+		void* buffer= serializar_mensaje("YA EXISTE TABLA A CREAR",bytes);
+
+		send(cliente,buffer,bytes,0);
+		free(buffer);
 //		LaTablaYaExiste(nombreTablaMayuscula);
-		return 92;
+//		return 92;
 	}
 
 }
 
-respuestaSELECT* APIselectRESPUESTA(t_paquete_select* paquete_select){ // bastante ml revisar
+void APIselectRESPUESTA(t_paquete_select* paquete_select,int cliente){ // bastante ml revisar
 
 
 	char* nombreTablaMayuscula=malloc(strlen(paquete_select->nombre_tabla)+1);
@@ -329,15 +350,19 @@ respuestaSELECT* APIselectRESPUESTA(t_paquete_select* paquete_select){ // bastan
 			free(metadataDeTabla);
 			free(nombreTablaMayuscula);
 
-			respuestaSELECT* rtaSELECT = malloc(sizeof(uint32_t) + sizeof(uint16_t) + strlen(valueEncontrado)+1);
 
-			rtaSELECT->keyHallada = malloc(strlen(valueEncontrado)+1);
-			rtaSELECT->rta=30;
-			strcpy(rtaSELECT->keyHallada,valueEncontrado);
-			rtaSELECT->tamanio_key= strlen(valueEncontrado)+1;
-			return rtaSELECT;
+//			int bytes= sizeof(int)+strlen(valueEncontrado)+1;
+//			void* buffer= serializar_mensaje(valueEncontrado,bytes);
 
+//			send(cliente,buffer,bytes,0);
+//			free(buffer);
 
+//			respuestaSELECT* rtaSELECT = malloc(sizeof(uint32_t) + sizeof(uint16_t) + strlen(valueEncontrado)+1);
+//			rtaSELECT->keyHallada = malloc(strlen(valueEncontrado)+1);
+//			rtaSELECT->rta=30;
+//			strcpy(rtaSELECT->keyHallada,valueEncontrado);
+//			rtaSELECT->tamanio_key= strlen(valueEncontrado)+1;
+//			return rtaSELECT;
 //			return NULL;
 			}else{
 				valueNoExiste(paquete_select->nombre_tabla,paquete_select->valor_key);
@@ -346,13 +371,20 @@ respuestaSELECT* APIselectRESPUESTA(t_paquete_select* paquete_select){ // bastan
 				free(nombreTablaMayuscula);
 				free(metadataDeTabla);
 				liberarPaqueteSelect(paquete_select);
+
+				int bytes= sizeof(int)+strlen("NO EXISTE EL VALUE BUSCADO")+1;
+				void* buffer= serializar_mensaje("NO EXISTE EL VALUE BUSCADO",bytes);
+
+				send(cliente,buffer,bytes,0);
+				free(buffer);
+
 //				return NULL;
-				respuestaSELECT* rtaSELECT = malloc(sizeof(uint32_t) + sizeof(uint16_t));
-				rtaSELECT->keyHallada = malloc(1);
-				rtaSELECT->rta=32;
-				strcpy(rtaSELECT->keyHallada,"");
-				rtaSELECT->tamanio_key=1;
-				return rtaSELECT;
+//				respuestaSELECT* rtaSELECT = malloc(sizeof(uint32_t) + sizeof(uint16_t));
+//				rtaSELECT->keyHallada = malloc(1);
+//				rtaSELECT->rta=32;
+//				strcpy(rtaSELECT->keyHallada,"");
+//				rtaSELECT->tamanio_key=1;
+//				return rtaSELECT;
 		}
 
 		}else
@@ -360,17 +392,23 @@ respuestaSELECT* APIselectRESPUESTA(t_paquete_select* paquete_select){ // bastan
 		LaTablaNoExisteSelect(nombreTablaMayuscula);
 		free(nombreTablaMayuscula);
 		liberarPaqueteSelect(paquete_select);
+
+//		int bytes= sizeof(int)+strlen("NO EXISTE LA TABLA")+1;
+//		void* buffer= serializar_mensaje("NO EXISTE LA TABLA",bytes);
+//
+//		send(cliente,buffer,bytes,0);
+//		free(buffer);
 //		return NULL;
-		respuestaSELECT* rtaSELECT = malloc(sizeof(uint32_t) + sizeof(uint16_t));
-		rtaSELECT->keyHallada = malloc(1);
-		strcpy(rtaSELECT->keyHallada,"");
-		rtaSELECT->tamanio_key=1;
-		rtaSELECT->rta=33;
-		return rtaSELECT;
+//		respuestaSELECT* rtaSELECT = malloc(sizeof(uint32_t) + sizeof(uint16_t));
+//		rtaSELECT->keyHallada = malloc(1);
+//		strcpy(rtaSELECT->keyHallada,"");
+//		rtaSELECT->tamanio_key=1;
+//		rtaSELECT->rta=33;
+//		return rtaSELECT;
 		}
 }
 
-uint16_t APIinsertRESPUESTA(t_paquete_insert* paquete_insert){ // 0 memory leak
+void APIinsertRESPUESTA(t_paquete_insert* paquete_insert,int cliente){ // 0 memory leak
 
 	char* nombreTablaMayuscula=malloc(strlen(paquete_insert->nombre_tabla)+1);
 
@@ -387,17 +425,26 @@ uint16_t APIinsertRESPUESTA(t_paquete_insert* paquete_insert){ // 0 memory leak
 		sem_post(&SemaforoMemtable);
 		free(metadataDeTabla);
 		free(nombreTablaMayuscula);
-		return 40;
+
+//		int bytes= sizeof(int)+strlen("SE INSERTO EN EL FS.")+1;
+//		void* buffer= serializar_mensaje("SE INSERTO EN EL FS.",bytes);
+//
+//		send(cliente,buffer,bytes,0);
+//		free(buffer);
+//		return 40;
 	} else{
 		LaTablaNoExiste(paquete_insert->timestamp,paquete_insert->valor_key,paquete_insert->value,nombreTablaMayuscula);
 		liberarPaqueteInsert(paquete_insert);
 		free(nombreTablaMayuscula);
-		return 42;
+//		int bytes= sizeof(int)+strlen("NO EXISTE LA TABLA")+1;
+//		void* buffer= serializar_mensaje("NO EXISTE LA TABLA",bytes);
+//
+//		send(cliente,buffer,bytes,0);
+//		free(buffer);
 	}
 
 
 }
-
 respuestaDESCRIBE* APIdescribeRESPUESTA(t_paquete_describe* paquete_describe){
 	char nombreTablaMayuscula [strlen(paquete_describe->nombre_tabla)+1];
 	strcpy(nombreTablaMayuscula,paquete_describe->nombre_tabla);
@@ -1466,7 +1513,18 @@ void verificarSemaforoMemTable(){
 
 }
 
+void* serializar_mensaje(char* value, int bytes)
+{
+	void* buffer = malloc(bytes);
+	int desplazamiento = 0;
 
+	int tamanio=strlen(value)+1;
+	memcpy(buffer + desplazamiento, &(tamanio), sizeof(int));
+	desplazamiento+= sizeof(int);
+	memcpy(buffer + desplazamiento, value, tamanio);
+
+	return buffer;
+}
 
 //void notificarCambioRetardo(){
 //

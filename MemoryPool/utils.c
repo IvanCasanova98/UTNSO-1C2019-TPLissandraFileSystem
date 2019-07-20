@@ -1,5 +1,21 @@
 #include "utils.h"
 
+
+int consistencia_to_int(char* parametros)
+{
+	if (strcmp(parametros, "SC")==0) {
+		return 0;
+	}
+	else if (strcmp(parametros, "SHC")==0) {
+		return 1;
+	}
+	else if (strcmp(parametros, "EC")==0) {
+		return 2;
+	}
+	else {return 3;}
+}
+
+
 //-----------------------------ENVIO NUMERO DE MEMORIA
 
 void envio_numero_memoria(t_config* config, int conexion)

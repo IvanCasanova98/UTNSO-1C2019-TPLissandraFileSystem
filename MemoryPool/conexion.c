@@ -79,6 +79,7 @@ int iniciar_conexion(t_config* config)
 		config_get_string_value(config, "IP_FS"),
 		config_get_string_value(config, "PUERTO_FS")
 	);
+
 	return conexion;
 }
 

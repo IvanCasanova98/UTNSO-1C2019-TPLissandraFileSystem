@@ -97,12 +97,11 @@ void enviar_paquete_select(t_paquete_select* paquete, int socket_cliente) //DEBE
 {
 	int bytes = sizeof(int) + sizeof(uint16_t) + paquete->nombre_tabla_long;
 	void* a_enviar = serializar_paquete_select(paquete);
-	//printf("%s %d",paquete->nombre_tabla,paquete->valor_key);
 	if ( send(socket_cliente, a_enviar, bytes, 0) <= 0) puts("Error en envio de PAQUETE SELECT.");
 	else {
-			t_log* logger = iniciar_logger();
-			log_info(logger, "SELECT ENVIADO");
-		    log_destroy(logger);
+//			t_log* logger = iniciar_logger();
+//			log_info(logger, "SELECT ENVIADO");
+//		    log_destroy(logger);
 
 	}
 	free(a_enviar);
@@ -114,9 +113,9 @@ void enviar_paquete_insert(t_paquete_insert* paquete, int socket_cliente)
 	void* a_enviar = serializar_paquete_insert(paquete);
 	if ( send(socket_cliente, a_enviar, bytes, 0) <= 0) puts("Error en envio de PAQUETE INSERT.");
 	else {
-			t_log* logger = iniciar_logger();
-			log_info(logger, "INSERT ENVIADO\n");
-		    log_destroy(logger);
+//			t_log* logger = iniciar_logger();
+//			log_info(logger, "INSERT ENVIADO\n");
+//		    log_destroy(logger);
 	}
 
 	free(a_enviar);
@@ -129,9 +128,9 @@ void enviar_paquete_create(t_paquete_create* paquete, int socket_cliente)
 	void* a_enviar = serializar_paquete_create(paquete);
 	if ( send(socket_cliente, a_enviar, bytes, 0) <= 0) puts("Error en envio de PAQUETE CREATE.");
 	else {
-			t_log* logger = iniciar_logger();
-			log_info(logger, "CREATE ENVIADO\n");
-		    log_destroy(logger);
+//			t_log* logger = iniciar_logger();
+//			log_info(logger, "CREATE ENVIADO\n");
+//		    log_destroy(logger);
 	}
 
 	free(a_enviar);

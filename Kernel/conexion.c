@@ -24,7 +24,7 @@ int crear_conexion(char* ip, char* puerto)
 
 int iniciar_conexion(t_log* logger, char* ip, char* puerto) //tiene que llegar logger, archivo config y numero de conexion (int)
 {
-	log_info(logger, "CONECTANDO A LA MEMORIA");
+	//log_info(logger, "CONECTANDO A LA MEMORIA");
 
 	int conexion = crear_conexion(ip,puerto);
 

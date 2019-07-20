@@ -19,7 +19,7 @@ void recibir_mensaje(int socket_cliente)
 	char* buffer = recibir_buffer(&size, socket_cliente);
 
 	t_log* logger = iniciar_logger();
-	log_info(logger, "Value recibido: %s\n", buffer);
+	log_info(logger, "Value recibido: %s", buffer);
     log_destroy(logger);
 
 	free(buffer);

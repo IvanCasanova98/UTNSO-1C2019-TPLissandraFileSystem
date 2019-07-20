@@ -23,40 +23,37 @@ void* recibir_paquetes(void *arg)
 			paquete_create_fs = adaptadorDePaquete(paquete_create_de_mp);
 
 
-			if(paquete_create_fs==NULL){
-				rta = 93;
-
-				if (send(cliente_fd, &rta, sizeof(uint16_t), MSG_DONTWAIT) <= 0)
-						puts("Error en envio de CODIGO DE RESPUESTA.");
-				break;
-			}
-
-			rta= APIcreateRESPUESTA(paquete_create_fs);
-			//printf("%d\n",rta);
+			if(paquete_create_fs!=NULL)
+			{
+//				rta = 93;
+//
+//				if (send(cliente_fd, &rta, sizeof(uint16_t), MSG_DONTWAIT) <= 0)
+//						puts("Error en envio de CODIGO DE RESPUESTA.");
+//				break;
+			APIcreateRESPUESTA(paquete_create_fs,cliente_fd);
 			//void* buffer = malloc(sizeof(uint16_t));
 			//memcpy(buffer, &rta, sizeof(uint16_t));
-
-
-			if (send(cliente_fd, &rta,sizeof(uint16_t), 0) <= 0)
-				puts("Error en envio de CODIGO DE RESPUESTA.");
-
+//			if (send(cliente_fd, &rta,sizeof(uint16_t), 0) <= 0)
+//				puts("Error en envio de CODIGO DE RESPUESTA.");
 			//loggear_request_create_mp(paquete_create_de_mp);
+			loggear_request_create_fs(paquete_create_fs);
+			}
 			break;
 
 		case DROP:;
 			t_paquete_drop* paquete_drop = deserializar_paquete_drop(cliente_fd);
-			if(paquete_drop==NULL)
+			if(paquete_drop!=NULL)
 			{
-				rta = 13;
-				if (send(cliente_fd, &rta, sizeof(uint16_t), 0) <= 0)
-					puts("Error en envio de CODIGO DE RESPUESTA.");
-				break;
-			}
-			rta = APIdropRESPUESTA(paquete_drop);
-
-			if (send(cliente_fd, &rta, sizeof(uint16_t), 0) <= 0)
-				puts("Error en envio de CODIGO DE RESPUESTA.");
+//				rta = 13;
+//				if (send(cliente_fd, &rta, sizeof(uint16_t), 0) <= 0)
+//					puts("Error en envio de CODIGO DE RESPUESTA.");
+//				break;
+			APIdropRESPUESTA(paquete_drop,cliente_fd);
 			loggear_request_drop(paquete_drop);
+			}
+
+//			if (send(cliente_fd, &rta, sizeof(uint16_t), 0) <= 0)
+//				puts("Error en envio de CODIGO DE RESPUESTA.");
 			break;
 
 		case DESCRIBE:;
@@ -114,41 +111,42 @@ void* recibir_paquetes(void *arg)
 		case SELECT:;
 
 			t_paquete_select *paquete_select=deserializar_paquete_select(cliente_fd);
-			if(paquete_select==NULL){
+			if(paquete_select!=NULL){
 
-				respuestaSELECT* rtaSELECT = malloc(sizeof(uint32_t) + sizeof(uint16_t));
-				rtaSELECT->keyHallada = malloc(1);
-				rtaSELECT->rta=34;
-				strcpy(rtaSELECT->keyHallada,"");
-				rtaSELECT->tamanio_key=1;
-
-				void* respuesta_a_enviar = serializar_respuesta_select(rtaSELECT);
-				if (send(cliente_fd, respuesta_a_enviar, sizeof(uint16_t)+ sizeof(uint32_t)+ rtaSELECT->tamanio_key, MSG_DONTWAIT) <= 0)
-						puts("Error en envio de CODIGO DE RESPUESTA.");
-				break;
+//				respuestaSELECT* rtaSELECT = malloc(sizeof(uint32_t) + sizeof(uint16_t));
+//				rtaSELECT->keyHallada = malloc(1);
+//				rtaSELECT->rta=34;
+//				strcpy(rtaSELECT->keyHallada,"");
+//				rtaSELECT->tamanio_key=1;
+//
+//				void* respuesta_a_enviar = serializar_respuesta_select(rtaSELECT);
+//				if (send(cliente_fd, respuesta_a_enviar, sizeof(uint16_t)+ sizeof(uint32_t)+ rtaSELECT->tamanio_key, MSG_DONTWAIT) <= 0)
+//						puts("Error en envio de CODIGO DE RESPUESTA.");
+				APIselectRESPUESTA(paquete_select,cliente_fd);
+				loggear_request_select(paquete_select);
 			}
 
-			loggear_request_select(paquete_select);
-			respuestaSELECT* rtaSELECT = APIselectRESPUESTA(paquete_select);
 
-			void* respuesta_a_enviar = serializar_respuesta_select(rtaSELECT);
-			if (send(cliente_fd, respuesta_a_enviar, sizeof(uint16_t)+ sizeof(uint32_t)+ rtaSELECT->tamanio_key, MSG_DONTWAIT) <= 0)
-				puts("Error en envio de CODIGO DE RESPUESTA.");
+
+//			void* respuesta_a_enviar = serializar_respuesta_select(rtaSELECT);
+//			if (send(cliente_fd, respuesta_a_enviar, sizeof(uint16_t)+ sizeof(uint32_t)+ rtaSELECT->tamanio_key, MSG_DONTWAIT) <= 0)
+//				puts("Error en envio de CODIGO DE RESPUESTA.");
 
 			break;
 
 		case INSERT:;
 
 			t_paquete_insert* paquete_insert = deserializar_paquete_insert(cliente_fd);
-			if(paquete_insert==NULL){
-				rta= 43;
-				if (send(cliente_fd, &rta, sizeof(uint16_t), MSG_DONTWAIT) <= 0)
-					puts("Error en envio de CODIGO DE RESPUESTA.");
-				break;
+			if(paquete_insert!=NULL){
+//				rta= 43;
+//				if (send(cliente_fd, &rta, sizeof(uint16_t), MSG_DONTWAIT) <= 0)
+//					puts("Error en envio de CODIGO DE RESPUESTA.");
+//				break;
+				APIinsertRESPUESTA(paquete_insert,cliente_fd);
 			}
-				rta= APIinsertRESPUESTA(paquete_insert);
-				if (send(cliente_fd, &rta, sizeof(uint16_t), MSG_DONTWAIT) <= 0)
-					puts("Error en envio de CODIGO DE RESPUESTA.");
+//				rta= APIinsertRESPUESTA(paquete_insert);
+//				if (send(cliente_fd, &rta, sizeof(uint16_t), MSG_DONTWAIT) <= 0)
+//					puts("Error en envio de CODIGO DE RESPUESTA.");
 			break;
 		case JOURNAL:;
 
@@ -178,7 +176,6 @@ void* recibir_paquetes(void *arg)
 
 
 }
-
 //----------------------------TIPO DE OPERACION RECIBIDA
 int recibir_operacion(int socket_cliente)
 {

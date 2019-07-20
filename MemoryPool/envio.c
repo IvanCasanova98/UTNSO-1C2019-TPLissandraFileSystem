@@ -286,8 +286,6 @@ void enviar_paquete_create(t_paquete_create* paquete, int socket_cliente,t_log* 
 	int bytes = paquete->nombre_tabla_long + paquete->consistencia_long + sizeof(uint32_t)*2 + sizeof(int)*2;
 	void* a_enviar = serializar_paquete_create(paquete);
 	if ( send(socket_cliente, a_enviar, bytes, 0) <= 0) puts("Error en envio de PAQUETE CREATE.");
-
-	printf("\nPAQUETE CREATE ENVIADO");
 	free(a_enviar);
 }
 
@@ -328,12 +326,13 @@ void enviar_describe_lissandra(t_paquete_describe_lfs* paquete,t_config* config,
 		loggearListaMetadatas(diccionario);
 		terminar_conexion(conexion);
 	}else{
-		protocolo_respuesta(rta,logger);
+	//	protocolo_respuesta(rta,logger);
 		terminar_conexion(conexion);
 	}
 }
 
-void enviar_select_lissandra(t_paquete_select* paquete, t_config* config, t_log* logger)
+
+void* enviar_select_lissandra(t_paquete_select* paquete, t_config* config, t_log* logger)
 {
 	int conexion = iniciar_conexion(config);
 	int cod = 3;
@@ -343,20 +342,19 @@ void enviar_select_lissandra(t_paquete_select* paquete, t_config* config, t_log*
 	free(paquete);
 
 	//------RESPUESTA DE LISSANDRA:
+	void* respuesta = recibir_mensaje_para_kernel(conexion);
 
-	respuestaSELECT_FS* rtaSelect= deserializar_respuesta_select(conexion);
-	if(rtaSelect->rta==30)
-		log_info(logger,"SELECT DE LA KEY %d es %s",rtaSelect->rta,rtaSelect->keyHallada);
-	else
-	protocolo_respuesta(rtaSelect->rta,logger);
-
-	free(rtaSelect);
 	terminar_conexion(conexion);
+	return respuesta;
+
 }
 
 void enviar_insert_lissandra(t_paquete_insert* paquete, t_config* config, t_log* logger)
 {
-	int conexion = iniciar_conexion(config);
+
+	int conexion;
+	conexion = iniciar_conexion(config);
+
 	int cod = 4;
 	if (send(conexion, &cod, sizeof(int), 0) <= 0)
 		puts("Error en envio de CODIGO DE OPERACION.");
@@ -364,11 +362,16 @@ void enviar_insert_lissandra(t_paquete_insert* paquete, t_config* config, t_log*
 	free(paquete);
 
 	//------RESPUESTA DE LISSANDRA:
-	uint16_t rta;
-	recv(conexion, &rta, sizeof(uint16_t) ,MSG_WAITALL);
-	protocolo_respuesta(rta,logger);
+
+	//------RESPUESTA DE LISSANDRA:
+//	void* respuesta = recibir_mensaje_para_kernel(conexion);
+
+//	uint16_t rta;
+//	recv(conexion, &rta, sizeof(uint16_t) ,MSG_WAITALL);
+	//protocolo_respuesta(rta,logger);
 
 	terminar_conexion(conexion);
+
 }
 
 void enviar_create_lissandra(t_paquete_create* paquete,t_config* config,t_log* logger)
@@ -385,7 +388,7 @@ void enviar_create_lissandra(t_paquete_create* paquete,t_config* config,t_log* l
 	recv(conexion, &rta,sizeof(uint16_t) ,0);
 
 
-	protocolo_respuesta(rta,logger);
+	//protocolo_respuesta(rta,logger);
 
 	terminar_conexion(conexion);
 }
@@ -403,7 +406,7 @@ void enviar_drop_lissandra(t_paquete_create* paquete,t_config* config,t_log* log
 
 	uint16_t rta;
 	recv(conexion, &rta, sizeof(uint16_t) ,0);
-	protocolo_respuesta(rta,logger);
+	//protocolo_respuesta(rta,logger);
 
 	terminar_conexion(conexion);
 

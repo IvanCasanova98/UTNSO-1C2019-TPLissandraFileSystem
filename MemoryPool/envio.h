@@ -43,7 +43,7 @@ void enviar_paquete_drop(t_paquete_drop* paquete, int socket_cliente,t_log* logg
 
 //----------------------------ENVIOS DE SERVIDOR A LISSANDRA
 
-void enviar_select_lissandra(t_paquete_select* paquete, t_config* config, t_log* logger);
+void* enviar_select_lissandra(t_paquete_select* paquete, t_config* config, t_log* logger);
 void enviar_insert_lissandra(t_paquete_insert* paquete, t_config* config, t_log* logger);
 void enviar_describe_lissandra(t_paquete_describe_lfs* paquete_describe_lfs,t_config* config,t_log* logger);
 void enviar_create_lissandra(t_paquete_create* paquete_c,t_config* config,t_log* logger);

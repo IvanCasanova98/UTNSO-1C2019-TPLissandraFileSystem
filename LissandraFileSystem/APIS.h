@@ -59,11 +59,12 @@ t_dictionary*  APIdescribe(t_paquete_describe*);
 t_dictionary*  APIdescribeTodasLasTablas();
 
 //-------------------------------RESPUESTAS
+void APIselectRESPUESTA(t_paquete_select* paquete_select,int cliente);
+void APIinsertRESPUESTA(t_paquete_insert* paquete_insert,int cliente);
+void APIcreateRESPUESTA(t_paquete_create* paquete_create,int cliente);
+void APIdropRESPUESTA(t_paquete_drop* paquete_drop,int cliente);
 
-respuestaSELECT* APIselectRESPUESTA(t_paquete_select* paquete_select);
-uint16_t APIinsertRESPUESTA(t_paquete_insert* paquete_insert);
-uint16_t APIcreateRESPUESTA(t_paquete_create* paquete_create);
-uint16_t APIdropRESPUESTA(t_paquete_drop* paquete_drop);
+
 void* APIdescribeTodasLasTablasRESPUESTA();
 respuestaDESCRIBE* APIdescribeRESPUESTA(t_paquete_describe* paquete_describe);
 
@@ -122,5 +123,8 @@ void RemoverCarpetaVaciaDeTabla(char *nombreTabla);
 void RemoverDeLaMemtable(char *nombreTabla);
 void RemoverParticionesDeTablaYSusBloques(char* nombreTabla);
 void RemoverParticionDeTablaEspecificaYSusBloques(char* nombreTabla,int nroParticionABorrar);
+
+void* serializar_mensaje(char* value, int bytes);
+
 
 #endif /* APIS_H_ */

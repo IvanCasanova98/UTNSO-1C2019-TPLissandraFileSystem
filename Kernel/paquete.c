@@ -195,14 +195,14 @@ void describe(int conexion, char* parametros){
 		char* buffer = "ALL";
 		send(conexion, &tamanio, sizeof(int), 0);
 		send(conexion, buffer, tamanio, 0);
-		logger_describe_all();
+		//logger_describe_all();
 	}
 	else
 	{
 		int tamanio = strlen(parametros)+1;
 		send(conexion, &tamanio, sizeof(int), 0);
 		send(conexion, parametros, tamanio, 0);
-		logger_describe_tabla(parametros);
+		//logger_describe_tabla(parametros);
 	}
 
 	deserealizar_metadata(conexion);

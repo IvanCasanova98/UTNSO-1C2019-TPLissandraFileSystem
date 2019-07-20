@@ -18,6 +18,14 @@ t_list* get_nodo_metadata(char* nombre_tabla)
 	list_destroy(nodo_metadata);
 }
 
+char * get_consistencia(char * nombre_tabla)
+{
+	t_list * lista_nodo = get_nodo_metadata(nombre_tabla);
+	t_metadata * nodo = list_get(lista_nodo,0);
+
+	return nodo->consistencia;
+}
+
 void agregar_tabla( char* nombre_tabla, t_list* tabla_paginas)//no debe recibir tabla_segmentos (variable global)
 {
 	dictionary_put(tabla_segmentos, nombre_tabla, tabla_paginas);
@@ -106,8 +114,7 @@ t_pagina_completa* crear_pagina_completa(t_pagina* pagina)
 {
 	t_pagina_completa* pagina_completa = malloc(sizeof(t_pagina_completa));
 	pagina_completa -> pagina = pagina;
-	pagina_completa -> flag = 0;
-
+	pagina_completa -> flag = 1;
 	return pagina_completa;
 }
 
@@ -163,6 +170,18 @@ t_list* paginas_sin_modificar(char* nombre_tabla)
 
 	return lista_pagina_sin_modificar;
 }
+
+t_list* paginas_modificadas(char* nombre_tabla)
+{
+	bool _modificadas(t_pagina_completa* elemento){return elemento->flag == 1;}
+
+	t_list* tabla_paginas = buscar_tabla_paginas(nombre_tabla);
+	t_list* lista_pagina_sin_modificar = list_filter(tabla_paginas, _modificadas);
+
+	return lista_pagina_sin_modificar;
+}
+
+
 
 bool comparar_timestamp(t_pagina_completa* pagina1, t_pagina_completa* pagina2)
 {
@@ -230,7 +249,6 @@ void mostrar_tabla_segmentos()
 }
 
 
-
 void startup_memoria()
 {
 	tabla_segmentos = dictionary_create();
@@ -241,11 +259,11 @@ void startup_memoria()
 	t_list* tabla_paginas1 = crear_tabla_paginas("TABLA1","SC",4);
 	t_list* tabla_paginas2 = crear_tabla_paginas("TABLA2","SC",7);
 
-	t_pagina* pagina0 = crear_pagina(0, "cero", 12);
-	t_pagina* pagina1 = crear_pagina(1, "uno", 34);
-	t_pagina* pagina2 = crear_pagina(2, "dos", 56);
-	t_pagina* pagina3 = crear_pagina(3, "tres", 178);
-	t_pagina* pagina4 = crear_pagina(4, "cuatro", 90);
+	t_pagina* pagina0 = crear_pagina(0, "CERO", 12);
+	t_pagina* pagina1 = crear_pagina(1, "UNO", 34);
+	t_pagina* pagina2 = crear_pagina(2, "DOS", 56);
+	t_pagina* pagina3 = crear_pagina(3, "TRES", 178);
+	t_pagina* pagina4 = crear_pagina(4, "CUATRO", 90);
 
 	t_pagina_completa* pagina_completa0 = crear_pagina_completa(pagina0);
 	t_pagina_completa* pagina_completa1 = crear_pagina_completa(pagina1);

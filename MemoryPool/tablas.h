@@ -34,7 +34,7 @@ typedef struct{
 	char* consistencia;
 }t_metadata;
 
-
+extern t_dictionary* tabla_segmentos;
 
 //----------------TABLA DE SEGMENTOS
 
@@ -45,6 +45,7 @@ t_list* buscar_tabla_paginas(char* nombre_tabla_paginas);
 
 t_list* get_tabla_particiones();
 t_list* get_nodo_metadata(char* nombre_tabla);
+char * get_consistencia(char * nombre_tabla);
 
 //----------------TABLA DE PAGINAS
 
@@ -69,6 +70,7 @@ bool tabla_buscada(t_metadata* nodo, char* nombre_tabla);
 uint16_t buscar_particion(char* nombre_tabla);
 bool puede_reemplazar(char* nombre_tabla);
 t_list* paginas_sin_modificar(char* nombre_tabla);
+t_list* paginas_modificadas(char* nombre_tabla);
 bool comparar_timestamp(t_pagina_completa* pagina1, t_pagina_completa* pagina2);
 void ordenar_lista(t_list* lista_paginas);
 t_pagina_completa* pagina_menor_timestamp(t_list* lista_paginas);

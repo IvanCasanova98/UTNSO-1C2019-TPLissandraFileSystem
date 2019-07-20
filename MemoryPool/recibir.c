@@ -272,58 +272,16 @@ t_dictionary* deserializar_respuesta_describe(int conexion){
 		i++;
 	}
 
-return diccionarioDescribe;
+	return diccionarioDescribe;
 }
 
-respuestaSELECT_FS *deserializar_respuesta_select(int socket_cliente){
-
-	int desplazamiento = 0;
-	uint16_t rta;
-
-	recv(socket_cliente, &rta, sizeof(uint16_t) ,MSG_WAITALL);
-	desplazamiento+= sizeof(uint16_t);
-
-	if(rta != 30 ) { //HUBO FALLO.
-
-		respuestaSELECT_FS* respuestaSELECT = malloc(sizeof(uint32_t) + sizeof(uint16_t));
-		respuestaSELECT->rta = rta;
-
-		respuestaSELECT->keyHallada = malloc(1);
-		respuestaSELECT->keyHallada = "";
-		respuestaSELECT->tamanio_key=1;
-
-		return respuestaSELECT;
-	}
-	else if(rta == 30) //EXITO
-	{
-		size_t tamanioKey;
-		recv(socket_cliente, &tamanioKey, sizeof(uint32_t) ,MSG_WAITALL);
-
-		respuestaSELECT_FS* respuestaSELECT= malloc(tamanioKey+sizeof(uint16_t)+sizeof(uint32_t));
-
-		void* buffer = malloc(tamanioKey);
-		respuestaSELECT->keyHallada= malloc(tamanioKey);
-
-		recv(socket_cliente, buffer, tamanioKey ,MSG_WAITALL);
 
 
-		memcpy(respuestaSELECT->keyHallada,buffer, tamanioKey);
-		respuestaSELECT->rta = rta;
-		respuestaSELECT->tamanio_key= tamanioKey;
 
-		free(buffer);
-		return respuestaSELECT;
-	} else{
-		respuestaSELECT_FS* respuestaSELECT = malloc(sizeof(uint32_t) + sizeof(uint16_t));
-				respuestaSELECT->rta = 34;
 
-				respuestaSELECT->keyHallada = malloc(1);
-				respuestaSELECT->keyHallada = "";
-				respuestaSELECT->tamanio_key=1;
-		return respuestaSELECT;
-	}
 
-}
+
+
 
 //------------------RECIBIR MENSAJES------------------
 void* recibir_buffer(int* size, int socket_cliente)
@@ -336,4 +294,28 @@ void* recibir_buffer(int* size, int socket_cliente)
 
 	return buffer;
 	free(buffer);
+}
+void recibir_mensaje(int socket_cliente)
+{
+	int size;
+	char* buffer = recibir_buffer(&size, socket_cliente);
+
+	t_log* logger = iniciar_logger();
+	log_info(logger, "Value recibido: %s\n", buffer);
+    log_destroy(logger);
+
+	free(buffer);
+}
+
+
+void* recibir_mensaje_para_kernel(int socket_cliente){
+	int size;
+	void* buffer = recibir_buffer(&size, socket_cliente);
+
+	t_log* logger = iniciar_logger();
+	log_info(logger, "\nValue recibido del filesystem: %s", buffer);
+	log_destroy(logger);
+
+	return buffer;
+
 }

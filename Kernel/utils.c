@@ -19,7 +19,7 @@ void recibir_numero_memoria(int conexion)
 	int numero_memoria;
 	recv(conexion, &numero_memoria, sizeof(int), 0);
 
-	printf("\nCONECTADO A LA MEMORIA %d", numero_memoria); //LOGGEAR, NO PRINTEAR
+	//printf("\nCONECTADO A LA MEMORIA %d", numero_memoria); //LOGGEAR, NO PRINTEAR
 }
 
 //-----------------------------------------RETARDOS

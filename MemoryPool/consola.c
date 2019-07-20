@@ -55,6 +55,9 @@ void ingresar_paquete(void * arg)
 				enviar_insert_lissandra(paquete_i,parametro->config,parametro->logger);
 				}
 				break;
+			case 5:;
+				journal(parametro->config,parametro->logger);
+				break;
 			default:
 			//	mostrar_tabla_segmentos();
 				printf("Operacion desconocida.");
