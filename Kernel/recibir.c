@@ -32,6 +32,16 @@ void recibir_mensaje(int socket_cliente)
 	free(buffer);
 }
 
+void recibir_paquete_create(int socket_cliente)
+{
+	int size;
+	char* respuesta_create =  recibir_buffer(&size, socket_cliente);
+
+	t_log* logger = iniciar_logger();
+	log_error(logger, "%s\n", respuesta_create);
+	log_destroy(logger);
+}
+
 SEED* deserealizar_seed(int socket_cliente)
 {
 

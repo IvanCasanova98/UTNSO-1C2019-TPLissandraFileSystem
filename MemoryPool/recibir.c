@@ -40,7 +40,7 @@ void recibir_paquetes(int cliente_fd, int server_fd, t_config* config, t_log* lo
 
 			loggear_paquete_create(paquete_create, logger);
 
-			create(paquete_create, config, logger);
+			create(cliente_fd, paquete_create, config, logger);
 
 			break;
 		case DROP:
@@ -50,13 +50,25 @@ void recibir_paquetes(int cliente_fd, int server_fd, t_config* config, t_log* lo
 			char* buffer = recibir_buffer(&tamanio, cliente_fd);
 			if(!strcmp(buffer,"ALL"))
 			{
-				t_list* tabla_particiones = get_tabla_particiones();
+
+				int size=strlen("ALL")+1;
+				t_paquete_describe_lfs* paquete_describe_lfs=malloc(sizeof(struct t_paquete_describe_lfs*));
+				paquete_describe_lfs->nombre_tabla=malloc(size);
+				strcpy(paquete_describe_lfs->nombre_tabla,"ALL");
+				paquete_describe_lfs->nombre_tabla_long=size;
+				t_list* tabla_particiones =enviar_describe_lissandra(paquete_describe_lfs,config,logger);
 				serializar_enviar_paquete_describe(cliente_fd, tabla_particiones);
 			}
 			else
 			{
-				t_list* nodo_metadata = get_nodo_metadata(buffer);
-				serializar_enviar_paquete_describe(cliente_fd, nodo_metadata);
+				int size=strlen(buffer)+1;
+				t_paquete_describe_lfs* paquete_describe_lfs=malloc(sizeof(struct t_paquete_describe_lfs*));
+				paquete_describe_lfs->nombre_tabla=malloc(size);
+				strcpy(paquete_describe_lfs->nombre_tabla,buffer);
+				paquete_describe_lfs->nombre_tabla_long=size;
+				t_list* tabla_particiones =enviar_describe_lissandra(paquete_describe_lfs,config,logger);
+
+				serializar_enviar_paquete_describe(cliente_fd, tabla_particiones);
 			}
 
 			break;
@@ -75,6 +87,9 @@ void recibir_paquetes(int cliente_fd, int server_fd, t_config* config, t_log* lo
 			insert(paquete_insert, config, logger);
 			break;
 		case JOURNAL:
+			journal(config,logger);
+			//FALTA LOGGEAR EL JOURNAL!!
+			//ACUERDENSE DE LOGGEAR LAS QUE NO SE PUDIERON INSERTAR PORQUE NO EXISTE LA TABLA EN EL FS
 			break;
 		case RUN:
 			break;
@@ -231,15 +246,16 @@ t_paquete_create* deserializar_paquete_create(int socket_cliente)
 	return paquete_create;
 }
 
-t_dictionary* deserializar_respuesta_describe(int conexion){
+t_list* deserializar_respuesta_describe(int conexion){
 	t_dictionary* diccionarioDescribe=dictionary_create();
-
+	t_metadata* metadata;
 	int cantidadDeTablas;
 	recv(conexion, &cantidadDeTablas, sizeof(int) ,MSG_WAITALL);
 	int i=0;
-
+	t_list* listaDescribe= list_create();
 	while(i<cantidadDeTablas)
 	{
+
 
 		int longNombreTabla;
 		int longConsistencia;
@@ -249,30 +265,30 @@ t_dictionary* deserializar_respuesta_describe(int conexion){
 		recv(conexion, &longConsistencia, sizeof(int) ,MSG_WAITALL);
 
 		void* buffer=malloc(sizeof(int)*2+longNombreTabla+longConsistencia);
-
+		int tiempoCompac;
 
 		recv(conexion, buffer,sizeof(int)*2+longNombreTabla+longConsistencia ,MSG_WAITALL);
 
-
-		char* nombreTabla=malloc(longNombreTabla);
-		t_metadataDescribe* metadata= malloc(sizeof(longConsistencia)+sizeof(int)*2); //CAMBIE ESTE MALLOC
+		t_metadata* metadata= malloc(sizeof(longConsistencia)+sizeof(int)*2);
+		metadata->nombre_tabla=malloc(longNombreTabla);
 		metadata->consistencia=malloc(longConsistencia);
 
-		memcpy(nombreTabla, buffer + desplazamiento, longNombreTabla);
+		memcpy(metadata->nombre_tabla, buffer + desplazamiento, longNombreTabla);
 		desplazamiento+= longNombreTabla;
 		memcpy(metadata->consistencia,buffer + desplazamiento, longConsistencia);
 		desplazamiento+= longConsistencia;
 		memcpy(&(metadata->particiones),buffer + desplazamiento, sizeof(int));
 		desplazamiento+= sizeof(int);
-		memcpy(&(metadata->tiempo_de_compactacion),buffer + desplazamiento, sizeof(int));
+		memcpy(&tiempoCompac,buffer + desplazamiento, sizeof(int));
 		desplazamiento+= sizeof(int);
 
-		dictionary_put(diccionarioDescribe,nombreTabla,metadata);
+		list_add(listaDescribe,metadata);
 
 		i++;
+		free(buffer);
 	}
 
-	return diccionarioDescribe;
+return listaDescribe;
 }
 
 t_pagina* deserializar_pagina (int socket_cliente)

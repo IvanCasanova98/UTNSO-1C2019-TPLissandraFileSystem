@@ -289,6 +289,26 @@ void enviar_paquete_create(t_paquete_create* paquete, int socket_cliente,t_log* 
 	free(a_enviar);
 }
 
+void enviar_respuesta_create(int conexion, int booleano, char* nombre_tabla)
+{
+	char* string = string_new();
+	if(booleano)
+	{
+		strcpy(string,"Ya existe la tabla: ");
+	}
+	else
+	{
+		strcpy(string,"Tabla creada: ");
+	}
+	char* value = strcat(string, nombre_tabla);
+	int tamanio_value = strlen(value) + 1;
+
+//	printf("VALUE A ENVIAR CREATE: %s", value);
+
+	send(conexion, &tamanio_value, sizeof(int), 0);
+	send(conexion, value, tamanio_value, 0);
+}
+
 void enviar_paquete_drop(t_paquete_drop* paquete, int socket_cliente,t_log* logger){
 	int bytes = paquete->nombre_tabla_long + sizeof(uint32_t);
 	void* a_enviar = serializar_paquete_drop(paquete);
@@ -307,7 +327,7 @@ void enviar_paquete_describe(t_paquete_describe_lfs* paquete,int socket_cliente,
 }
 
 //---------------------------ENVIOS DE SERVIDOR A LISSANDRA
-void enviar_describe_lissandra(t_paquete_describe_lfs* paquete,t_config* config,t_log* logger)
+t_list* enviar_describe_lissandra(t_paquete_describe_lfs* paquete,t_config* config,t_log* logger)
 {
 	int conexion = iniciar_conexion(config);
 	int cod = 2;
@@ -322,12 +342,14 @@ void enviar_describe_lissandra(t_paquete_describe_lfs* paquete,t_config* config,
 	recv(conexion, &rta, sizeof(uint16_t) ,0);
 	if(rta==20 || rta==25){
 		protocolo_respuesta(rta,logger);
-		t_dictionary* diccionario=deserializar_respuesta_describe(conexion);
-		loggearListaMetadatas(diccionario);
+		t_list* lista=deserializar_respuesta_describe(conexion);
+		loggearListaMetadatas(lista);
 		terminar_conexion(conexion);
+		return lista;
 	}else{
 	//	protocolo_respuesta(rta,logger);
 		terminar_conexion(conexion);
+		return NULL;
 	}
 }
 
@@ -376,11 +398,10 @@ void enviar_create_lissandra(t_paquete_create* paquete,t_config* config,t_log* l
 	free(paquete);
 
 	//------RESPUESTA DE LISSANDRA:
-	uint16_t rta;
-	recv(conexion, &rta,sizeof(uint16_t) ,0);
+//	uint16_t rta;
+//	recv(conexion, &rta,sizeof(uint16_t) ,0);
 
-
-	//protocolo_respuesta(rta,logger);
+//	protocolo_respuesta(rta,logger);
 
 	terminar_conexion(conexion);
 }
@@ -405,15 +426,15 @@ void enviar_drop_lissandra(t_paquete_create* paquete,t_config* config,t_log* log
 }
 
 //----------------------------------------------------------LOGGEAR METADATAS DE LFS
-void loggearListaMetadatas(t_dictionary * metadatas){
-	dictionary_iterator(metadatas,loggearMetadataTablas);
+void loggearListaMetadatas(t_list * metadatas){
+	list_iterate(metadatas,loggearMetadataTablas);
 }
 
-void loggearMetadataTablas(char*nombreTabla,void* elemento){
+void loggearMetadataTablas(void* elemento){
 
 	t_log* logger= iniciar_logger();
-	t_metadata_fs* metadataDeTablaPedida= (t_metadata_fs*)elemento;
-	log_info(logger,"%s %s %d %d ",nombreTabla,metadataDeTablaPedida->consistencia,metadataDeTablaPedida->particiones,metadataDeTablaPedida->tiempo_de_compactacion);
+	t_metadata* metadataDeTablaPedida= (t_metadata*)elemento;
+	log_info(logger,"%s %s %d",metadataDeTablaPedida->nombre_tabla,metadataDeTablaPedida->consistencia,metadataDeTablaPedida->particiones);
 	log_destroy(logger);
 
 }

@@ -32,6 +32,8 @@ t_paquete_insert* crear_paquete_insert(char *nombre_tabla, uint16_t valor_key, c
 	paquete->nombre_tabla_long= tamanio_tabla;
 	paquete->value_long= tamanio_value;
 
+
+
 	return paquete;
 	free(paquete);
 }
@@ -63,6 +65,11 @@ t_paquete_select* selectf(char** vector_parametros)
 	if(vector_parametros[1]==NULL)
 	{
 		falta_tabla();
+		return NULL;
+	}
+
+	if(!existe_tabla(vector_parametros[1]))
+	{
 		return NULL;
 	}
 
@@ -121,7 +128,6 @@ t_paquete_insert* insert(char** vector_parametros){
 	}
 
 	timestamp = get_timestamp();
-
 
 	t_paquete_insert* paquete = crear_paquete_insert(vector_parametros[1], valor_key, value_completo, timestamp);
 	loggear_paquete_insert(paquete);
@@ -222,15 +228,14 @@ void loggear_paquete_select(t_paquete_select* paquete){ //FALTA PASAR LOOGER
 void loggear_paquete_insert(t_paquete_insert* paquete){
 
 	t_log* logger = iniciar_logger();
-	//log_info(logger, "INSERT\nNombre tabla: %s\nValor KEY   : %d\nValue       : %s", paquete->nombre_tabla, paquete->valor_key, paquete->value);
-    log_info(logger,"INSERT  %s  %d  %s", paquete->nombre_tabla, paquete->valor_key, paquete->value);
+    log_info(logger,"INSERT  %s  %d  %s\n", paquete->nombre_tabla, paquete->valor_key, paquete->value);
 	log_destroy(logger);
 }
 
 void loggear_paquete_create(t_paquete_create* paquete)
 {
 	t_log* logger = iniciar_logger();
-	log_info(logger, "CREATE %s %s %d %d", paquete->nombre_tabla, paquete->consistencia, paquete->particiones, paquete->tiempo_compactacion);
+	log_info(logger, "CREATE %s %s %d %d\n", paquete->nombre_tabla, paquete->consistencia, paquete->particiones, paquete->tiempo_compactacion);
     log_destroy(logger);
 }
 void logger_describe_all(){

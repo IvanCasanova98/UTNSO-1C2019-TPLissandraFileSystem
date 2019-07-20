@@ -17,11 +17,11 @@ void ingresar_paquete(void * arg)
 		{
 			case 0:;
 				t_paquete_create* paquete_c = paquete_create(parametros_paquete, parametro->logger);
-//				create(paquete_c, parametro->config, parametro->logger);
-				if(paquete_c != NULL)
-				{
-				enviar_create_lissandra(paquete_c,parametro->config,parametro->logger);
-				}
+				create(0, paquete_c, parametro->config, parametro->logger);
+//				if(paquete_c != NULL)
+//				{
+//				enviar_create_lissandra(paquete_c,parametro->config,parametro->logger);
+//				}
 				break;
 			case 1:;
 				t_paquete_drop* paquete_d = paquete_drop(parametros_paquete,parametro->logger);
@@ -33,10 +33,7 @@ void ingresar_paquete(void * arg)
 				break;
 			case 2:;
 				t_paquete_describe_lfs* paquete_describe_lfs = paquete_describe_para_lfs(parametros_paquete,parametro->logger);
-				if(paquete_describe_lfs != NULL)
-				{
 				enviar_describe_lissandra(paquete_describe_lfs,parametro->config,parametro->logger);
-				}
 				break;
 			case 3:;
 				t_paquete_select* paquete_s = paquete_select(parametros_paquete, parametro->logger);
@@ -52,6 +49,7 @@ void ingresar_paquete(void * arg)
 				break;
 			case 5:;
 				journal(parametro->config,parametro->logger);
+				//FIJARSE SI LOGEAAA
 				break;
 			default:
 			//	mostrar_tabla_segmentos();

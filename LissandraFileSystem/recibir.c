@@ -26,17 +26,17 @@ void* recibir_paquetes(void *arg)
 			if(paquete_create_fs!=NULL)
 			{
 //				rta = 93;
-//
+
 //				if (send(cliente_fd, &rta, sizeof(uint16_t), MSG_DONTWAIT) <= 0)
 //						puts("Error en envio de CODIGO DE RESPUESTA.");
-//				break;
-			APIcreateRESPUESTA(paquete_create_fs,cliente_fd);
+				break;
+				APIcreateRESPUESTA(paquete_create_fs,cliente_fd);
 			//void* buffer = malloc(sizeof(uint16_t));
 			//memcpy(buffer, &rta, sizeof(uint16_t));
 //			if (send(cliente_fd, &rta,sizeof(uint16_t), 0) <= 0)
 //				puts("Error en envio de CODIGO DE RESPUESTA.");
 			//loggear_request_create_mp(paquete_create_de_mp);
-			loggear_request_create_fs(paquete_create_fs);
+
 			}
 			break;
 

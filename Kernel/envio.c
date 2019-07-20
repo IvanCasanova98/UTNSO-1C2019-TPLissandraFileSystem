@@ -98,12 +98,6 @@ void enviar_paquete_select(t_paquete_select* paquete, int socket_cliente) //DEBE
 	int bytes = sizeof(int) + sizeof(uint16_t) + paquete->nombre_tabla_long;
 	void* a_enviar = serializar_paquete_select(paquete);
 	if ( send(socket_cliente, a_enviar, bytes, 0) <= 0) puts("Error en envio de PAQUETE SELECT.");
-	else {
-//			t_log* logger = iniciar_logger();
-//			log_info(logger, "SELECT ENVIADO");
-//		    log_destroy(logger);
-
-	}
 	free(a_enviar);
 }
 

@@ -22,6 +22,7 @@ void recibir_numero_memoria(int conexion)
 	//printf("\nCONECTADO A LA MEMORIA %d", numero_memoria); //LOGGEAR, NO PRINTEAR
 }
 
+
 //-----------------------------------------RETARDOS
 
 void retardo_ejecucion(t_config* config)

@@ -40,11 +40,34 @@ void deserealizar_metadata(int socket){
 	int i=0;
 	while(i<cant_elementos){
 		t_metadata* nodo_metadata = deserealizar_nodo(socket);
+		loggearMetadataTablas(nodo_metadata);
 		agregar_datos(nodo_metadata->nombre_tabla, nodo_metadata->consistencia);
 		i++;
 	}
 
-//	dictionary_iterator(tabla_metadata,imprimir_diccionario);
+	dictionary_iterator(tabla_metadata,imprimir_diccionario);
+}
+
+void journal_memorias(t_log* logger)
+{
+	int i = 0;
+	int cod_ingresado = 5;
+	int size = list_size(lista_seeds);
+
+	while(i<size)
+	{
+		SEED * memoria_i = list_get(lista_seeds,i);
+
+		char * puerto_char = string_itoa(memoria_i->PUERTO);
+		char ** ip_sin_comillas = string_split(memoria_i->IP,"\"");
+
+		int conexion = crear_conexion(ip_sin_comillas[0],puerto_char);
+
+		if (send(conexion, &cod_ingresado, sizeof(int), 0) <= 0) puts("Error en envio de CODIGO DE OPERACION.");
+
+		close(conexion);
+		i++;
+	}
 }
 
 //---------------------------CONSISTENCIAS

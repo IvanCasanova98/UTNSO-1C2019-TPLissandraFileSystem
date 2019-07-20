@@ -47,7 +47,9 @@ t_list* crear_tabla_paginas(char* nombre_tabla,char* consistencia, uint16_t part
 	t_list* tabla_paginas = list_create();
 
 	t_metadata* metadata = malloc(strlen(nombre_tabla)+1+sizeof(uint16_t));
-	metadata->nombre_tabla = nombre_tabla;
+
+	metadata->nombre_tabla = malloc(strlen(nombre_tabla)+1);
+	strcpy(metadata->nombre_tabla, nombre_tabla);
 	metadata->particiones = particiones;
 	metadata->consistencia = consistencia;
 	list_add(tabla_particiones, metadata);
@@ -103,8 +105,10 @@ t_pagina* crear_pagina(uint16_t valor_key, char* value, long long timestamp)
 {
 	t_pagina* pagina = malloc(sizeof(t_pagina));
 
+
+	pagina-> value = malloc(strlen(value)+1);
 	pagina -> valor_key = valor_key;
-	pagina -> value = value;
+	strcpy(pagina -> value, value);
 	pagina -> timestamp = timestamp;
 
 	return pagina;
@@ -114,7 +118,11 @@ t_pagina_completa* crear_pagina_completa(t_pagina* pagina)
 {
 	t_pagina_completa* pagina_completa = malloc(sizeof(t_pagina_completa));
 	pagina_completa -> pagina = pagina;
-	pagina_completa -> flag = 0;
+
+	//CAMBIAR FLAG A 0!!
+	pagina_completa -> flag = 1;
+	//CAMBIAR FLAG A 0!!
+
 	return pagina_completa;
 }
 
@@ -161,6 +169,24 @@ bool puede_reemplazar(char* nombre_tabla)
 	return list_size(paginas_sin_modificar(nombre_tabla))>0;
 }
 
+t_list* paginas_modificadas(t_list * lista)
+{
+	bool _modificadas(t_pagina_completa* elemento){return elemento->flag == 1;}
+
+	int cantidad_paginas_modificadas= list_count_satisfying(lista,_modificadas);
+
+
+	t_list* lista_modificadas = list_create();
+	int i=0;
+	while(i<cantidad_paginas_modificadas){
+		t_pagina_completa* pagina_modificada =list_remove_by_condition(lista,_modificadas);
+		list_add(lista_modificadas,pagina_modificada);
+		i++;
+	}
+
+	return lista_modificadas;
+}
+
 t_list* paginas_sin_modificar(char* nombre_tabla)
 {
 	bool _sin_modificar(t_pagina_completa* elemento){return elemento->flag == 0;}
@@ -170,17 +196,6 @@ t_list* paginas_sin_modificar(char* nombre_tabla)
 
 	return lista_pagina_sin_modificar;
 }
-
-t_list* paginas_modificadas(char* nombre_tabla)
-{
-	bool _modificadas(t_pagina_completa* elemento){return elemento->flag == 1;}
-
-	t_list* tabla_paginas = buscar_tabla_paginas(nombre_tabla);
-	t_list* lista_pagina_sin_modificar = list_filter(tabla_paginas, _modificadas);
-
-	return lista_pagina_sin_modificar;
-}
-
 
 
 bool comparar_timestamp(t_pagina_completa* pagina1, t_pagina_completa* pagina2)

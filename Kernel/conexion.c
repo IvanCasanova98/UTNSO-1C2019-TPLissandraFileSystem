@@ -40,20 +40,57 @@ int conectarse_a_memoria(char** vector_request, t_log* logger)
 {
 	SEED * memoria;
 
-	if(strcmp(vector_request[0],"CREATE"))
+	int cod_ingresado = codigo_ingresado(vector_request[0]);
+
+	switch(cod_ingresado)
 	{
-		char * consistencia_tabla = get_consistencia(vector_request[1]);
-		memoria = elegir_memoria(vector_request[1],consistencia_tabla);
-	}
-	else
-	{
+	case 0:;
 		memoria = elegir_memoria(vector_request[1],vector_request[2]);
+		break;
+	case 1:;
+		//DROP
+		break;
+	case 2:;
+		if (vector_request[1]==NULL)
+		{
+			t_list * pool_especifico = get_pool("EC");
+
+			memoria = get_memoria_fifo(pool_especifico);
+			return 0;
+		}
+		else if(existe_tabla(vector_request[1]))
+		{
+			char * consistencia_tabla = get_consistencia(vector_request[1]);
+			memoria = elegir_memoria(vector_request[1],consistencia_tabla);
+		}
+		break;
+	case 3:;
+		if(existe_tabla(vector_request[1]))
+		{
+			char * consistencia_tabla = get_consistencia(vector_request[1]);
+			memoria = elegir_memoria(vector_request[1],consistencia_tabla);
+		}
+		else{return 0;}
+		break;
+	case 4:;
+		if(existe_tabla(vector_request[1]))
+		{
+			char * consistencia_tabla = get_consistencia(vector_request[1]);
+			memoria = elegir_memoria(vector_request[1],consistencia_tabla);
+		}
+		else{return 0;}
+
+		break;
+//	case 5:;
+//		return 0;
+//		break;
+	default:
+		return 0;
+		break;
 	}
 
 	char * puerto_char = string_itoa(memoria->PUERTO);
 	char ** ip_sin_comillas = string_split(memoria->IP,"\"");
-
-//	printf("\n IP %s, PUERTO %s", puerto_char, ip_sin_comillas);
 
 	int conexion_nueva = iniciar_conexion(logger, ip_sin_comillas[0], puerto_char);
 

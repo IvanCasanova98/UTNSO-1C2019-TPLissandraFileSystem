@@ -275,14 +275,14 @@ void APIcreateRESPUESTA(t_paquete_create* paquete_create,int cliente){ //0 memor
 		char* nombreTabla= malloc(strlen (nombreTablaMayuscula)+1);
 		strcpy(nombreTabla,nombreTablaMayuscula);
 		crearHiloCompactacion(nombreTabla);
-
+		loggear_request_create_fs(paquete_create);
 		liberarPaqueteCreate(paquete_create);
 
-		int bytes= sizeof(int)+strlen("TABLA CREADA EN EL FILESYSTEM")+1;
-		void* buffer= serializar_mensaje("TABLA CREADA EN EL FILESYSTEM",bytes);
-
-		send(cliente,buffer,bytes,0);
-		free(buffer);
+//		int bytes= sizeof(int)+strlen("TABLA CREADA EN EL FILESYSTEM")+1;
+//		void* buffer= serializar_mensaje("TABLA CREADA EN EL FILESYSTEM",bytes);
+//
+//		send(cliente,buffer,bytes,0);
+//		free(buffer);
 
 //		return 90;
 
@@ -290,11 +290,11 @@ void APIcreateRESPUESTA(t_paquete_create* paquete_create,int cliente){ //0 memor
 	} else {
 		liberarPaqueteCreate(paquete_create);
 
-		int bytes= sizeof(int)+strlen("YA EXISTE TABLA A CREAR")+1;
-		void* buffer= serializar_mensaje("YA EXISTE TABLA A CREAR",bytes);
+//		int bytes= sizeof(int)+strlen("YA EXISTE TABLA A CREAR")+1;
+//		void* buffer= serializar_mensaje("YA EXISTE TABLA A CREAR",bytes);
 
-		send(cliente,buffer,bytes,0);
-		free(buffer);
+//		send(cliente,buffer,bytes,0);
+//		free(buffer);
 //		LaTablaYaExiste(nombreTablaMayuscula);
 //		return 92;
 	}

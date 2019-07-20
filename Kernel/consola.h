@@ -18,7 +18,8 @@
 void consola();
 //---------------------INGRESO DE PAQUETE
 void request(void * arg);
-
+void loggearMetadataTablas(void* elemento);
+void loggearListaMetadatas(t_list * metadatas);
 //---------------------INGRESO DE PAQUETE(FUNC AUX)
 char* ingresar_request();
 

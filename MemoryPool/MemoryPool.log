@@ -1,30 +1,333 @@
-[INFO] 03:50:07:290 MemoryPool/(12787:12788): SELECT:
+[INFO] 05:32:07:618 MemoryPool/(14344:14345): CREATE:
+Nombre tabla       : TABLATRES
+Consistencia       : SC
+Particiones        : 1
+Tiempo compactacion: 12332
+[INFO] 05:32:07:622 MemoryPool/(14344:14345): Tabla creada: TABLATRES
+
+[INFO] 05:32:17:66 MemoryPool/(14344:14345): CREATE:
+Nombre tabla       : TABLATRES
+Consistencia       : SC
+Particiones        : 1
+Tiempo compactacion: 12332
+[ERROR] 05:32:17:66 MemoryPool/(14344:14345): Ya existe la tabla: TABLATRES
+
+[INFO] 05:32:24:934 MemoryPool/(14344:14345): CREATE:
+Nombre tabla       : TABLATRES4
+Consistencia       : SC
+Particiones        : 1
+Tiempo compactacion: 12332
+[INFO] 05:32:24:940 MemoryPool/(14344:14345): Tabla creada: TABLATRES4
+
+[INFO] 05:35:43:825 MemoryPool/(14344:14345): SELECT:
 Nombre tabla: TABLA0
 Valor KEY   : 0
-[INFO] 03:50:07:290 MemoryPool/(12787:12788): Respuesta enviada: CERO
+[INFO] 05:35:43:825 MemoryPool/(14344:14345): Respuesta enviada: CERO
 
-[INFO] 03:50:12:474 MemoryPool/(12787:12788): SELECT:
-Nombre tabla: TABLA0
-Valor KEY   : 12
-[INFO] 03:50:12:476 MemoryPool/(12787:12788): Respuesta enviada: Pagina no encontrada
+[INFO] 05:59:13:265 MemoryPool/(16157:16158): CREATE:
+Nombre tabla       : TABLA0
+Consistencia       : SC
+Particiones        : 1
+Tiempo compactacion: 123123
+[ERROR] 05:59:13:266 MemoryPool/(16157:16158): Ya existe la tabla: TABLA0
 
-[INFO] 03:50:15:473 MemoryPool/(12787:12788): SELECT:
-Nombre tabla: TABLA0
+[INFO] 06:02:34:458 MemoryPool/(16277:16278): CREATE:
+Nombre tabla       : TABLA0
+Consistencia       : SC
+Particiones        : 1
+Tiempo compactacion: 123123
+[ERROR] 06:02:34:458 MemoryPool/(16277:16278): Ya existe la tabla: TABLA0
+
+[INFO] 06:04:51:97 MemoryPool/(16388:16389): CREATE:
+Nombre tabla       : TABLA0
+Consistencia       : SC
+Particiones        : 1
+Tiempo compactacion: 123123
+[ERROR] 06:04:51:97 MemoryPool/(16388:16389): Ya existe la tabla: TABLA0
+
+[INFO] 06:06:21:962 MemoryPool/(16456:16457): CREATE:
+Nombre tabla       : TABLA0
+Consistencia       : SC
+Particiones        : 1
+Tiempo compactacion: 123123
+[ERROR] 06:06:21:962 MemoryPool/(16456:16457): Ya existe la tabla: TABLA0
+
+[INFO] 06:07:10:322 MemoryPool/(16514:16515): CREATE:
+Nombre tabla       : TABLA0
+Consistencia       : SC
+Particiones        : 1
+Tiempo compactacion: 123
+[ERROR] 06:07:10:322 MemoryPool/(16514:16515): Ya existe la tabla: TABLA0
+
+[INFO] 06:09:23:254 MemoryPool/(16623:16624): CREATE:
+Nombre tabla       : TABLA0
+Consistencia       : SC
+Particiones        : 1
+Tiempo compactacion: 123123
+[ERROR] 06:09:23:254 MemoryPool/(16623:16624): Ya existe la tabla: TABLA0
+
+[INFO] 06:10:43:935 MemoryPool/(16659:16660): CREATE:
+Nombre tabla       : TABLA0
+Consistencia       : SC
+Particiones        : 1
+Tiempo compactacion: 123123
+[ERROR] 06:10:43:982 MemoryPool/(16659:16660): Ya existe la tabla: TABLA0
+
+[INFO] 06:12:15:776 MemoryPool/(16714:16715): CREATE:
+Nombre tabla       : TABLA0
+Consistencia       : SC
+Particiones        : 1
+Tiempo compactacion: 112332
+[ERROR] 06:12:15:816 MemoryPool/(16714:16715): Ya existe la tabla: TABLA0
+
+[INFO] 06:13:03:612 MemoryPool/(16751:16752): CREATE:
+Nombre tabla       : TABLA0
+Consistencia       : SC
+Particiones        : 1
+Tiempo compactacion: 123123
+[ERROR] 06:13:03:660 MemoryPool/(16751:16752): Ya existe la tabla: TABLA0
+
+[INFO] 06:14:13:793 MemoryPool/(16798:16799): CREATE:
+Nombre tabla       : TABLA0
+Consistencia       : SC
+Particiones        : 1
+Tiempo compactacion: 12323
+[ERROR] 06:14:13:793 MemoryPool/(16798:16799): Ya existe la tabla: TABLA0
+
+[INFO] 06:14:19:37 MemoryPool/(16798:16799): CREATE:
+Nombre tabla       : TABLA0
+Consistencia       : SC
+Particiones        : 1
+Tiempo compactacion: 12323
+[ERROR] 06:14:19:37 MemoryPool/(16798:16799): Ya existe la tabla: TABLA0
+
+[INFO] 06:14:20:730 MemoryPool/(16798:16799): CREATE:
+Nombre tabla       : TABLA0
+Consistencia       : SC
+Particiones        : 1
+Tiempo compactacion: 12323
+[ERROR] 06:14:20:730 MemoryPool/(16798:16799): Ya existe la tabla: TABLA0
+
+[INFO] 06:14:21:442 MemoryPool/(16798:16799): CREATE:
+Nombre tabla       : TABLA0
+Consistencia       : SC
+Particiones        : 1
+Tiempo compactacion: 12323
+[ERROR] 06:14:21:442 MemoryPool/(16798:16799): Ya existe la tabla: TABLA0
+
+[INFO] 06:14:28:425 MemoryPool/(16798:16799): CREATE:
+Nombre tabla       : TABLA0
+Consistencia       : SC
+Particiones        : 1
+Tiempo compactacion: 12323
+[ERROR] 06:14:28:426 MemoryPool/(16798:16799): Ya existe la tabla: TABLA0
+
+[INFO] 06:15:45:434 MemoryPool/(16869:16870): CREATE:
+Nombre tabla       : TABLA0
+Consistencia       : SC
+Particiones        : 1
+Tiempo compactacion: 123123
+[ERROR] 06:15:45:434 MemoryPool/(16869:16870): Ya existe la tabla: TABLA0
+
+[INFO] 06:16:00:150 MemoryPool/(16869:16870): CREATE:
+Nombre tabla       : TABLA00
+Consistencia       : SC
+Particiones        : 1
+Tiempo compactacion: 123123
+[INFO] 06:16:00:154 MemoryPool/(16869:16870): Tabla creada: TABLA00
+
+[INFO] 06:20:33:502 MemoryPool/(17049:17050): CREATE:
+Nombre tabla       : TABLA4
+Consistencia       : SC
+Particiones        : 12
+Tiempo compactacion: 123123
+[INFO] 06:20:33:508 MemoryPool/(17049:17050): Tabla creada: TABLA4
+
+[INFO] 06:23:12:554 MemoryPool/(17155:17156): CREATE:
+Nombre tabla       : TABLA0
+Consistencia       : SC
+Particiones        : 1
+Tiempo compactacion: 123123
+[INFO] 06:25:31:213 MemoryPool/(17155:17156): CREATE:
+Nombre tabla       : TABLA0
+Consistencia       : SC
+Particiones        : 12
+Tiempo compactacion: 32323
+[INFO] 06:30:16:454 MemoryPool/(17492:17493): CREATE:
+Nombre tabla       : TABLA0
+Consistencia       : SC
+Particiones        : 1
+Tiempo compactacion: 12332
+[INFO] 06:32:09:66 MemoryPool/(17552:17553): CREATE:
+Nombre tabla       : TABLA0
+Consistencia       : SC
+Particiones        : 1
+Tiempo compactacion: 123
+[INFO] 06:35:04:850 MemoryPool/(17701:17702): CREATE:
+Nombre tabla       : TABLA0
+Consistencia       : SC
+Particiones        : 3
+Tiempo compactacion: 123123
+[INFO] 06:35:46:997 MemoryPool/(17701:17702): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SC
+Particiones        : 1
+Tiempo compactacion: 12332
+[INFO] 06:36:18:630 MemoryPool/(17734:17737): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SC
+Particiones        : 12
+Tiempo compactacion: 32323
+[INFO] 06:43:09:270 MemoryPool/(17885:17886): CREATE:
+Nombre tabla       : TABLA0
+Consistencia       : SC
+Particiones        : 1
+Tiempo compactacion: 123123
+[ERROR] 06:43:09:270 MemoryPool/(17885:17886): Ya existe la tabla: TABLA0
+
+[INFO] 06:45:17:790 MemoryPool/(17955:17956): CREATE:
+Nombre tabla       : TABLA0
+Consistencia       : SC
+Particiones        : 1
+Tiempo compactacion: 12332
+[ERROR] 06:45:17:790 MemoryPool/(17955:17956): Ya existe la tabla: TABLA0
+
+[INFO] 06:45:41:842 MemoryPool/(17955:17956): CREATE:
+Nombre tabla       : TABLA
+Consistencia       : SC
+Particiones        : 1
+Tiempo compactacion: 12332
+[INFO] 06:45:41:842 MemoryPool/(17955:17956): Tabla creada: TABLA
+
+[INFO] 06:45:56:350 MemoryPool/(17955:17956): CREATE:
+Nombre tabla       : TABLAS
+Consistencia       : SC
+Particiones        : 1
+Tiempo compactacion: 12332
+[INFO] 06:45:56:350 MemoryPool/(17955:17956): Tabla creada: TABLAS
+
+[INFO] 07:15:03:924 MemoryPool/(19051:19053): DESCRIBE de tabla:
+[INFO] 07:15:03:925 MemoryPool/(19051:19053): TABLANUEVA EC 4
+[INFO] 07:15:33:660 MemoryPool/(19051:19053): DESCRIBE de todas las tablas:
+[INFO] 07:15:33:660 MemoryPool/(19051:19053): TABLA00 SC 1
+[INFO] 07:15:33:660 MemoryPool/(19051:19053): TABLATRES SC 1
+[INFO] 07:15:33:660 MemoryPool/(19051:19053): TABLATRES4 SC 1
+[INFO] 07:15:33:660 MemoryPool/(19051:19053): TABLANUEVA EC 4
+[INFO] 07:15:33:660 MemoryPool/(19051:19053): TABLA4 SC 12
+[INFO] 07:23:55:898 MemoryPool/(19365:19366): DESCRIBE de todas las tablas:
+[INFO] 07:23:55:898 MemoryPool/(19365:19366): TABLA00 SC 1
+[INFO] 07:23:55:898 MemoryPool/(19365:19366): TABLATRES SC 1
+[INFO] 07:23:55:898 MemoryPool/(19365:19366): TABLATRES4 SC 1
+[INFO] 07:23:55:898 MemoryPool/(19365:19366): TABLANUEVA EC 4
+[INFO] 07:23:55:898 MemoryPool/(19365:19366): TABLA4 SC 12
+[INFO] 07:24:55:369 MemoryPool/(19402:19403): INSERT:
+Nombre tabla: 
 Valor KEY   : 0
-[INFO] 03:50:15:473 MemoryPool/(12787:12788): Respuesta enviada: CERO
+Value       : 
+Timestamp   : 0
+[ERROR] 07:24:55:435 MemoryPool/(19402:19403): NO EXISTE LA TABLA
 
-[INFO] 03:51:02:717 MemoryPool/(12787:12789): SELECT:
-Nombre tabla: TABLA1
-Valor KEY   : 23
-[ERROR] 03:51:02:720 MemoryPool/(12787:12789): Respuesta: Pagina no encontrada
+[INFO] 07:25:33:918 MemoryPool/(19413:19414): DESCRIBE de todas las tablas:
+[INFO] 07:25:33:946 MemoryPool/(19413:19414): TABLA00 SC 1
+[INFO] 07:25:33:948 MemoryPool/(19413:19414): TABLATRES SC 1
+[INFO] 07:25:33:948 MemoryPool/(19413:19414): TABLATRES4 SC 1
+[INFO] 07:25:33:948 MemoryPool/(19413:19414): TABLANUEVA EC 4
+[INFO] 07:25:33:949 MemoryPool/(19413:19414): TABLA4 SC 12
+[INFO] 07:26:42:599 MemoryPool/(19467:19468): DESCRIBE de todas las tablas:
+[INFO] 07:26:42:600 MemoryPool/(19467:19468): TABLA00 SC 1
+[INFO] 07:26:42:600 MemoryPool/(19467:19468): TABLATRES SC 1
+[INFO] 07:26:42:600 MemoryPool/(19467:19468): TABLATRES4 SC 1
+[INFO] 07:26:42:600 MemoryPool/(19467:19468): TABLANUEVA EC 4
+[INFO] 07:26:42:600 MemoryPool/(19467:19468): TABLA4 SC 12
+[INFO] 07:31:10:689 MemoryPool/(19709:19710): DESCRIBE de todas las tablas:
+[INFO] 07:31:10:689 MemoryPool/(19709:19710): TABLA00 SC 1
+[INFO] 07:31:10:689 MemoryPool/(19709:19710): TABLATRES SC 1
+[INFO] 07:31:10:689 MemoryPool/(19709:19710): TABLATRES4 SC 1
+[INFO] 07:31:10:689 MemoryPool/(19709:19710): TABLANUEVA EC 4
+[INFO] 07:31:10:689 MemoryPool/(19709:19710): TABLA4 SC 12
+[INFO] 07:54:12:477 MemoryPool/(20751:20752): DESCRIBE de todas las tablas:
+[INFO] 07:54:12:477 MemoryPool/(20751:20752): TABLA0 SC 3
+[INFO] 07:54:12:481 MemoryPool/(20751:20752): TABLA1 SC 5
+[INFO] 07:54:12:482 MemoryPool/(20751:20752): TABLA2 SC 1
+[INFO] 07:54:12:482 MemoryPool/(20751:20752): TABLA00 SC 1
+[INFO] 07:54:12:482 MemoryPool/(20751:20752): TABLATRES SC 1
+[INFO] 07:54:12:482 MemoryPool/(20751:20752): TABLATRES4 SC 1
+[INFO] 07:54:12:482 MemoryPool/(20751:20752): TABLANUEVA EC 4
+[INFO] 07:54:12:482 MemoryPool/(20751:20752): TABLA4 SC 12
+[INFO] 08:07:21:403 MemoryPool/(21636:21637): DESCRIBE de todas las tablas:
+[INFO] 08:07:21:404 MemoryPool/(21636:21637): TABLA0 SC 3
+[INFO] 08:07:21:404 MemoryPool/(21636:21637): TABLA1 SC 5
+[INFO] 08:07:21:404 MemoryPool/(21636:21637): TABLA2 SC 1
+[INFO] 08:07:21:404 MemoryPool/(21636:21637): TABLA00 SC 1
+[INFO] 08:07:21:404 MemoryPool/(21636:21637): TABLATRES SC 1
+[INFO] 08:07:21:404 MemoryPool/(21636:21637): TABLATRES4 SC 1
+[INFO] 08:07:21:404 MemoryPool/(21636:21637): TABLANUEVA EC 4
+[INFO] 08:07:21:404 MemoryPool/(21636:21637): TABLA4 SC 12
+[INFO] 08:07:37:974 MemoryPool/(21636:21637): DESCRIBE de todas las tablas:
+[INFO] 08:07:37:974 MemoryPool/(21636:21637): TABLA0 SC 3
+[INFO] 08:07:37:974 MemoryPool/(21636:21637): TABLA1 SC 5
+[INFO] 08:07:37:974 MemoryPool/(21636:21637): TABLA2 SC 1
+[INFO] 08:07:37:974 MemoryPool/(21636:21637): TABLA00 SC 1
+[INFO] 08:07:37:974 MemoryPool/(21636:21637): TABLATRES SC 1
+[INFO] 08:07:37:974 MemoryPool/(21636:21637): TABLATRES4 SC 1
+[INFO] 08:07:37:974 MemoryPool/(21636:21637): TABLANUEVA EC 4
+[INFO] 08:07:37:974 MemoryPool/(21636:21637): TABLA4 SC 12
+[INFO] 08:11:57:668 MemoryPool/(21897:21898): DESCRIBE de todas las tablas:
+[INFO] 08:11:57:668 MemoryPool/(21897:21898): TABLA0 SC 3
+[INFO] 08:11:57:668 MemoryPool/(21897:21898): TABLA1 SC 5
+[INFO] 08:11:57:668 MemoryPool/(21897:21898): TABLA2 SC 1
+[INFO] 08:11:57:668 MemoryPool/(21897:21898): TABLA00 SC 1
+[INFO] 08:11:57:668 MemoryPool/(21897:21898): TABLATRES SC 1
+[INFO] 08:11:57:668 MemoryPool/(21897:21898): TABLATRES4 SC 1
+[INFO] 08:11:57:668 MemoryPool/(21897:21898): TABLANUEVA EC 4
+[INFO] 08:11:57:668 MemoryPool/(21897:21898): TABLA4 SC 12
+[INFO] 08:13:40:133 MemoryPool/(21897:21898): DESCRIBE de todas las tablas:
+[INFO] 08:13:40:133 MemoryPool/(21897:21898): TABLA0 SC 3
+[INFO] 08:13:40:133 MemoryPool/(21897:21898): TABLA1 SC 5
+[INFO] 08:13:40:133 MemoryPool/(21897:21898): TABLA2 SC 1
+[INFO] 08:13:40:133 MemoryPool/(21897:21898): TABLA00 SC 1
+[INFO] 08:13:40:133 MemoryPool/(21897:21898): TABLATRES SC 1
+[INFO] 08:13:40:133 MemoryPool/(21897:21898): TABLATRES4 SC 1
+[INFO] 08:13:40:133 MemoryPool/(21897:21898): TABLANUEVA EC 4
+[INFO] 08:13:40:133 MemoryPool/(21897:21898): TABLA4 SC 12
+[INFO] 08:13:48:978 MemoryPool/(21897:21898): DESCRIBE de todas las tablas:
+[INFO] 08:13:48:978 MemoryPool/(21897:21898): TABLA0 SC 3
+[INFO] 08:13:48:978 MemoryPool/(21897:21898): TABLA1 SC 5
+[INFO] 08:13:48:978 MemoryPool/(21897:21898): TABLA2 SC 1
+[INFO] 08:13:48:978 MemoryPool/(21897:21898): TABLA00 SC 1
+[INFO] 08:13:48:978 MemoryPool/(21897:21898): TABLATRES SC 1
+[INFO] 08:13:48:978 MemoryPool/(21897:21898): TABLATRES4 SC 1
+[INFO] 08:13:48:978 MemoryPool/(21897:21898): TABLANUEVA EC 4
+[INFO] 08:13:48:978 MemoryPool/(21897:21898): TABLA4 SC 12
+[INFO] 08:13:49:57 MemoryPool/(21897:21898): CREATE:
+Nombre tabla       : EQUIPOS
+Consistencia       : SC
+Particiones        : 10
+Tiempo compactacion: 10
+[INFO] 08:13:49:58 MemoryPool/(21897:21898): Tabla creada: EQUIPOS
 
-[INFO] 03:51:10:45 MemoryPool/(12787:12789): SELECT:
-Nombre tabla: TABLA0
-Valor KEY   : 0
-[INFO] 03:51:10:45 MemoryPool/(12787:12789): Respuesta: CERO
-A
-[INFO] 03:51:23:661 MemoryPool/(12787:12789): SELECT:
-Nombre tabla: TABLA1
-Valor KEY   : 32
-[ERROR] 03:51:23:666 MemoryPool/(12787:12789): Respuesta: Pagina no encontrada
+[INFO] 08:15:16:91 MemoryPool/(22045:22046): DESCRIBE de todas las tablas:
+[INFO] 08:15:16:92 MemoryPool/(22045:22046): TABLA0 SC 3
+[INFO] 08:15:16:92 MemoryPool/(22045:22046): TABLA1 SC 5
+[INFO] 08:15:16:92 MemoryPool/(22045:22046): TABLA2 SC 1
+[INFO] 08:15:16:92 MemoryPool/(22045:22046): TABLA00 SC 1
+[INFO] 08:15:16:92 MemoryPool/(22045:22046): TABLATRES SC 1
+[INFO] 08:15:16:92 MemoryPool/(22045:22046): TABLATRES4 SC 1
+[INFO] 08:15:16:92 MemoryPool/(22045:22046): TABLANUEVA EC 4
+[INFO] 08:15:16:92 MemoryPool/(22045:22046): TABLA4 SC 12
+[INFO] 08:15:24:686 MemoryPool/(22045:22046): DESCRIBE de todas las tablas:
+[INFO] 08:15:24:686 MemoryPool/(22045:22046): TABLA0 SC 3
+[INFO] 08:15:24:686 MemoryPool/(22045:22046): TABLA1 SC 5
+[INFO] 08:15:24:686 MemoryPool/(22045:22046): TABLA2 SC 1
+[INFO] 08:15:24:686 MemoryPool/(22045:22046): TABLA00 SC 1
+[INFO] 08:15:24:686 MemoryPool/(22045:22046): TABLATRES SC 1
+[INFO] 08:15:24:686 MemoryPool/(22045:22046): TABLATRES4 SC 1
+[INFO] 08:15:24:686 MemoryPool/(22045:22046): TABLANUEVA EC 4
+[INFO] 08:15:24:686 MemoryPool/(22045:22046): TABLA4 SC 12
+[INFO] 08:15:24:797 MemoryPool/(22045:22046): CREATE:
+Nombre tabla       : EQUIPOS
+Consistencia       : SC
+Particiones        : 10
+Tiempo compactacion: 10
+[INFO] 08:15:24:798 MemoryPool/(22045:22046): Tabla creada: EQUIPOS
 

@@ -39,18 +39,19 @@ void enviar_memorias(int socket_cliente, t_config* config);
 void enviar_paquete_select(t_paquete_select* paquete, int socket_cliente, t_log* logger);
 void enviar_paquete_insert(t_paquete_insert* paquete, int socket_cliente, t_log* logger);
 void enviar_paquete_create(t_paquete_create* paquete, int socket_cliente, t_log* logger);
+void enviar_respuest_create(int conexion, int booleano, char* nombre_tabla);
 void enviar_paquete_drop(t_paquete_drop* paquete, int socket_cliente,t_log* logger);
 
 //----------------------------ENVIOS DE SERVIDOR A LISSANDRA
 
 void enviar_select_lissandra(int conexion, t_paquete_select* paquete, t_log* logger);
 void enviar_insert_lissandra(t_paquete_insert* paquete, t_config* config, t_log* logger);
-void enviar_describe_lissandra(t_paquete_describe_lfs* paquete_describe_lfs,t_config* config,t_log* logger);
+t_list* enviar_describe_lissandra(t_paquete_describe_lfs* paquete_describe_lfs,t_config* config,t_log* logger);
 void enviar_create_lissandra(t_paquete_create* paquete_c,t_config* config,t_log* logger);
 void enviar_drop_lissandra(t_paquete_create* paquete,t_config* config,t_log* logger);
 
 //----------------------------EXTRAS LFS
-void loggearListaMetadatas(t_dictionary * metadatas);
-void loggearMetadataTablas(char*nombreTabla,void* elemento);
+void loggearListaMetadatas(t_list * metadatas);
+void loggearMetadataTablas(void* elemento);
 
 #endif /* ENVIO_H_ */
