@@ -25,7 +25,8 @@ typedef enum op_code
 	INSERT,
 	JOURNAL,
 	RUN,
-	ADD
+	ADD,
+	HS
 }op_code;
 
 typedef enum consistency

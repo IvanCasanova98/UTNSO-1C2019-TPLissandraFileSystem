@@ -77,6 +77,8 @@ void* APIdescribeTodasLasTablasRESPUESTA();
 respuestaDESCRIBE* APIdescribeRESPUESTA(t_paquete_describe* paquete_describe);
 
 //*************************************
+bool hayMetadata();
+bool hayBitmap();
 void liberarRegistro(void* registro);
 void verificarSemaforoMemTable();
 void verificarSemaforoCompactacion(char* nombreTabla);

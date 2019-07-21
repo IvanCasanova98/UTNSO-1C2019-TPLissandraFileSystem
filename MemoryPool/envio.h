@@ -49,6 +49,7 @@ void enviar_insert_lissandra(t_paquete_insert* paquete, t_config* config, t_log*
 t_list* enviar_describe_lissandra(t_paquete_describe_lfs* paquete_describe_lfs,t_config* config,t_log* logger);
 void enviar_create_lissandra(t_paquete_create* paquete_c,t_config* config,t_log* logger);
 void enviar_drop_lissandra(t_paquete_create* paquete,t_config* config,t_log* logger);
+int recibir_max_value_del_fs(t_config* config,t_log* logger);
 
 //----------------------------EXTRAS LFS
 void loggearListaMetadatas(t_list * metadatas);

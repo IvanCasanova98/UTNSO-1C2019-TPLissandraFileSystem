@@ -14,8 +14,9 @@ int main(void)
 	logger = iniciar_logger();
 	sem_init(&SemaforoMemtable,0,1);
 	t_config* config = leer_config();
-//	crearMetadataDePuntoDeMontaje();
-//	crearArchivoBitmap();
+	if(hayMetadata() == 0) crearMetadataDePuntoDeMontaje();
+	if(hayBitmap()   == 0) crearArchivoBitmap();
+
 	crearBitMap();
 	pthread_t consola,dumpeo,dump,compactar,hiloListener;
 

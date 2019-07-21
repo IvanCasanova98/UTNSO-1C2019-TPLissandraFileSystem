@@ -425,6 +425,21 @@ void enviar_drop_lissandra(t_paquete_create* paquete,t_config* config,t_log* log
 
 }
 
+int recibir_max_value_del_fs(t_config* config,t_log* logger)
+{
+	int conexion = iniciar_conexion(config);
+	int cod = 8;
+	if (send(conexion, &cod, sizeof(int), 0) <= 0)
+			puts("Error en envio de CODIGO DE OPERACION.");
+
+	//------RESPUESTA DE LISSANDRA:
+	int max_value_lfs;
+	recv(conexion, &max_value_lfs, sizeof(int) ,0);
+	terminar_conexion(conexion);
+	return max_value_lfs;
+
+}
+
 //----------------------------------------------------------LOGGEAR METADATAS DE LFS
 void loggearListaMetadatas(t_list * metadatas){
 	list_iterate(metadatas,loggearMetadataTablas);

@@ -331,3 +331,4 @@ Particiones        : 10
 Tiempo compactacion: 10
 [INFO] 08:15:24:798 MemoryPool/(22045:22046): Tabla creada: EQUIPOS
 
+[INFO] 14:11:25:5 MemoryPool/(6312:6312): MAX VALUE RECIBIDO: 255

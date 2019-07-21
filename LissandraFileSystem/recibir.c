@@ -186,6 +186,12 @@ void* recibir_paquetes(void *arg)
 		case ADD:;
 			log_info(logger, "Se recibio paquete tipo: ADD");
 			break;
+		case HS:;
+			t_config* config = leer_config();
+			int max_value = config_get_int_value(config,"TAMAÑO_VALUE");
+			send(cliente_fd,&max_value,sizeof(int),0);
+			log_info(logger, "HANDSHAKE con memoria realizado.");
+			break;
 		case -1:
 			log_info(logger, "FIN CONEXION.\n");
 			cliente_fd=0;

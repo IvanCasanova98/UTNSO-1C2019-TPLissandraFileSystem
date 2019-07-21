@@ -1489,6 +1489,26 @@ void listarTablas(){ //0 ml
 	  }
 }
 
+bool hayMetadata(){
+
+	  DIR *d;
+	  char *directorioMetadata= DirectorioDeMetadata();
+	  d = opendir(directorioMetadata);
+	  if (d == NULL) return 0; //NO EXISTE METADATA
+	  else return 1; //EXISTE LA METADATA
+}
+
+
+bool hayBitmap(){
+
+	  DIR *d;
+	  char *directorioBitmap= DirectorioBitMap();
+
+	  d = opendir(directorioBitmap);
+	  if (d == NULL) return 0; //NO EXISTE EL BITMAP
+	  else return 1; //EXISTE EL BITMAP
+}
+
 
 void verificarSemaforoTabla(char* nombreTabla){
 	int valorSemaforo;
