@@ -29,7 +29,6 @@ void* funcionCompactar(void* arg){
 					estaCompactando=0;
 					}
 				}else{
-					printf("cerrando hilo tabla");
 					bool _buscarSemaforo(void* elemento){
 								return buscarSemaforo(elemento,nombreTabla);
 					}

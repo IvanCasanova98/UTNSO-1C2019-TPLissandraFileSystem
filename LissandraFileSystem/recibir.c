@@ -29,8 +29,8 @@ void* recibir_paquetes(void *arg)
 
 //				if (send(cliente_fd, &rta, sizeof(uint16_t), MSG_DONTWAIT) <= 0)
 //						puts("Error en envio de CODIGO DE RESPUESTA.");
-				break;
 				APIcreateRESPUESTA(paquete_create_fs,cliente_fd);
+
 			//void* buffer = malloc(sizeof(uint16_t));
 			//memcpy(buffer, &rta, sizeof(uint16_t));
 //			if (send(cliente_fd, &rta,sizeof(uint16_t), 0) <= 0)
@@ -294,6 +294,7 @@ t_paquete_insert* deserializar_paquete_insert(int socket_cliente)
 	recv(socket_cliente, buffer, sizeof(long long)+ sizeof(uint16_t) +tamanioTabla+tamanioValue ,MSG_WAITALL);
 
 	memcpy(paquete_insert->nombre_tabla,buffer + desplazamiento,tamanioTabla);
+	string_to_upper(paquete_insert->nombre_tabla);
 	desplazamiento+= tamanioTabla;
 	memcpy(paquete_insert->value,buffer + desplazamiento, tamanioValue);
 	desplazamiento+= tamanioValue;
@@ -330,6 +331,7 @@ t_paquete_create_de_mp* deserializar_paquete_create_de_mp(int socket_cliente)
 	recv(socket_cliente, buffer, sizeof(int)*2 +tamanio_tabla+tamanio_consistencia ,MSG_WAITALL);
 
 	memcpy(paquete_create->nombre_tabla,buffer + desplazamiento, tamanio_tabla);
+
 	desplazamiento+= tamanio_tabla;
 
 	memcpy(paquete_create->consistencia,buffer + desplazamiento, tamanio_consistencia);
@@ -367,17 +369,12 @@ void* serializar_respuesta_select(respuestaSELECT* respuestaSELECT){
 }
 
 t_paquete_create* adaptadorDePaquete(t_paquete_create_de_mp* paquete_create_mp){
+	string_to_upper(paquete_create_mp->consistencia);
 	t_paquete_create* paquete_adaptado = crear_paquete_create(
 			paquete_create_mp->nombre_tabla,
 			pasarAConsistenciaINT(paquete_create_mp->consistencia),
 			paquete_create_mp->particiones,
 			paquete_create_mp->tiempo_compactacion);
-	//printf("\nEL TIEMPO DE COMPACTACION ES: %d\n",paquete_create_mp->tiempo_compactacion);
-
-//	memcpy(paquete_adaptado->nombre_tabla,paquete_create_mp->nombre_tabla,sizeof(paquete_create_mp->nombre_tabla));
-//	paquete_adaptado->metadata.particiones = paquete_create_mp->particiones;
-//	paquete_adaptado->metadata.tiempo_de_compactacion = paquete_create_mp->tiempo_compactacion;
-//	paquete_adaptado->metadata.consistencia = pasarAConsistenciaINT(paquete_create_mp->consistencia);
 
 	return paquete_adaptado;
 }

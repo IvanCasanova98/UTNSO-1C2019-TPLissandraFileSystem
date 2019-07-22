@@ -246,7 +246,9 @@ t_paquete_insert* LeerInsert(char* parametros){
 		faltaTabla();
 		return NULL;
 	}
+
 	nombre_tabla = parametros;
+	string_to_upper(nombre_tabla);
 
 	parametros = strtok(NULL, " ");
 	if(parametros==NULL || !validarNumero(parametros)){
@@ -442,10 +444,12 @@ t_paquete_create* LeerCreate(char* parametros){
 	}
 	nombre_tabla = parametros;
 	parametros = strtok(NULL, " ");
+	if(parametros != NULL) string_to_upper(parametros);
 	if(parametros==NULL || !validarConsistencia(parametros)){
 		faltaConsistencia();
 		return NULL;
 	}
+
 	consistencia = pasarAConsistenciaINT(parametros);
 	parametros = strtok(NULL, " ");
 	if(parametros==NULL || !validarNumero(parametros) || !strcmp(parametros,"0")){

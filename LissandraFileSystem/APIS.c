@@ -1494,8 +1494,17 @@ bool hayMetadata(){
 	  DIR *d;
 	  char *directorioMetadata= DirectorioDeMetadata();
 	  d = opendir(directorioMetadata);
-	  if (d == NULL) return 0; //NO EXISTE METADATA
-	  else return 1; //EXISTE LA METADATA
+
+	  if (d == NULL){
+		  free(directorioMetadata);
+		  return 0; //NO EXISTE METADATA
+	  }
+	  else {
+		  free(directorioMetadata);
+		  return 1; //EXISTE LA METADATA
+	  }
+
+
 }
 
 
@@ -1505,8 +1514,15 @@ bool hayBitmap(){
 	  char *directorioBitmap= DirectorioBitMap();
 
 	  d = opendir(directorioBitmap);
-	  if (d == NULL) return 0; //NO EXISTE EL BITMAP
-	  else return 1; //EXISTE EL BITMAP
+	  if (d == NULL) {
+		  free(directorioBitmap);
+		  return 0; //NO EXISTE EL BITMAP
+	  }
+	  else {
+		  free(directorioBitmap);
+		  return 1; //EXISTE EL BITMAP
+	  }
+
 }
 
 
