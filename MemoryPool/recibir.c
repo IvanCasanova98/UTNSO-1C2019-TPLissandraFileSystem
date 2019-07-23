@@ -56,7 +56,13 @@ void recibir_paquetes(int cliente_fd, int server_fd, t_config* config, t_log* lo
 				strcpy(paquete_describe_lfs->nombre_tabla,"ALL");
 				paquete_describe_lfs->nombre_tabla_long=size;
 				t_list* tabla_particiones =enviar_describe_lissandra(paquete_describe_lfs,config,logger);
+
+				if (tabla_particiones!=NULL){
 				serializar_enviar_paquete_describe(cliente_fd, tabla_particiones);
+				}else {
+					int rta=0;
+					send(cliente_fd,&rta,sizeof(int),0);
+				}
 			}
 			else
 			{
@@ -68,7 +74,12 @@ void recibir_paquetes(int cliente_fd, int server_fd, t_config* config, t_log* lo
 				paquete_describe_lfs->nombre_tabla_long=size;
 				t_list* tabla_particiones =enviar_describe_lissandra(paquete_describe_lfs,config,logger);
 
+				if (tabla_particiones!=NULL){
 				serializar_enviar_paquete_describe(cliente_fd, tabla_particiones);
+				}else {
+					int rta=0;
+					send(cliente_fd,&rta,sizeof(int),0);
+				}
 			}
 
 			break;

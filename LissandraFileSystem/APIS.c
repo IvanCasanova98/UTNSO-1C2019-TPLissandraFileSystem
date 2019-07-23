@@ -527,6 +527,7 @@ void* APIdescribeTodasLasTablasRESPUESTA(){
 
 	    }
 
+
 	    closedir(dir);
 	    closedir(d);
 

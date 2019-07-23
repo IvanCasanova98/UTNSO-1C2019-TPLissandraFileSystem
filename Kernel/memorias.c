@@ -37,7 +37,18 @@ bool existe_tabla(char* nombre_tabla){
 void deserealizar_metadata(int socket){
 	int cant_elementos;
 	recv(socket,&cant_elementos,sizeof(int),MSG_WAITALL);
-
+	if(cant_elementos<=0){
+		if(cant_elementos==0){
+			t_log* logger=iniciar_logger();
+			log_warning(logger,"FILE SYSTEM NO TIENE TABLAS");
+			log_destroy(logger);
+		}
+		if(cant_elementos==-1){
+			t_log* logger=iniciar_logger();
+			log_warning(logger,"FILE SYSTEM CAIDO");
+			log_destroy(logger);
+		}
+	}else{
 	int i=0;
 	while(i<cant_elementos){
 		t_metadata* nodo_metadata = deserealizar_nodo(socket);
@@ -45,7 +56,7 @@ void deserealizar_metadata(int socket){
 		agregar_datos(nodo_metadata->nombre_tabla, nodo_metadata->consistencia);
 		i++;
 	}
-
+}
 //	dictionary_iterator(tabla_metadata,imprimir_diccionario);
 }
 
