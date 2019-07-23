@@ -15,23 +15,36 @@ int crear_conexion(char* ip, char* puerto)
 	int socket_cliente = socket(server_info->ai_family, server_info->ai_socktype, server_info->ai_protocol);
 
 	if(connect(socket_cliente, server_info->ai_addr, server_info->ai_addrlen) == -1)
-		printf("error");
+	{
+//		printf("error");
+		return -1;
+	}
 
 	freeaddrinfo(server_info);
 
 	return socket_cliente;
 }
 
-int iniciar_conexion(t_log* logger, char* ip, char* puerto) //tiene que llegar logger, archivo config y numero de conexion (int)
+int iniciar_conexion_inicial(t_log* logger, char* ip, char* puerto) //tiene que llegar logger, archivo config y numero de conexion (int)
 {
-	//log_info(logger, "CONECTANDO A LA MEMORIA");
+	int conexion = -1;
 
-	int conexion = crear_conexion(ip,puerto);
-
-	recibir_numero_memoria(conexion);
-
+	while(conexion == -1){
+		conexion = crear_conexion(ip,puerto);
+		sleep(1);
+	}
+//	recibir_numero_memoria(conexion);
 	describe(conexion,NULL);
 
+	return conexion;
+}
+
+int iniciar_conexion_request(t_log* logger, char* ip, char* puerto) //tiene que llegar logger, archivo config y numero de conexion (int)
+{
+	int conexion = crear_conexion(ip,puerto);
+
+//	recibir_numero_memoria(conexion);
+//	describe(conexion,NULL);
 
 	return conexion;
 }
@@ -39,13 +52,19 @@ int iniciar_conexion(t_log* logger, char* ip, char* puerto) //tiene que llegar l
 int conectarse_a_memoria(char** vector_request, t_log* logger)
 {
 	SEED * memoria;
+	int conexion_nueva;
 
 	int cod_ingresado = codigo_ingresado(vector_request[0]);
 
 	switch(cod_ingresado)
 	{
 	case 0:;
-		memoria = elegir_memoria(vector_request[1],vector_request[2]);
+		int cons_ingresada = consistencia_ingresada(vector_request[2]);
+		memoria = elegir_memoria(vector_request[1],cons_ingresada);
+		if(memoria==NULL)
+		{
+			conexion_nueva = -1;
+		}
 		break;
 	case 1:;
 		//DROP
@@ -53,22 +72,28 @@ int conectarse_a_memoria(char** vector_request, t_log* logger)
 	case 2:;
 		if (vector_request[1]==NULL)
 		{
-			t_list * pool_especifico = get_pool("EC");
-
-			memoria = get_memoria_fifo(pool_especifico);
-			return 0;
+			int num_random = numero_random(2);
+			t_list * pool_especifico = get_pool(num_random);
+			int numero_memoria = list_get(pool_especifico,0);
+			memoria = get_seed_especifica(numero_memoria);
 		}
 		else if(existe_tabla(vector_request[1]))
 		{
 			char * consistencia_tabla = get_consistencia(vector_request[1]);
-			memoria = elegir_memoria(vector_request[1],consistencia_tabla);
+			int cons_ingresada = consistencia_ingresada(consistencia_tabla);
+			memoria = elegir_memoria(vector_request[1],cons_ingresada);
 		}
 		break;
 	case 3:;
 		if(existe_tabla(vector_request[1]))
 		{
 			char * consistencia_tabla = get_consistencia(vector_request[1]);
-			memoria = elegir_memoria(vector_request[1],consistencia_tabla);
+			int cons_ingresada = consistencia_ingresada(consistencia_tabla);
+			memoria = elegir_memoria(vector_request[1],cons_ingresada);
+			if(memoria==NULL)
+			{
+				conexion_nueva = -1;
+			}
 		}
 		else{return 0;}
 		break;
@@ -76,23 +101,30 @@ int conectarse_a_memoria(char** vector_request, t_log* logger)
 		if(existe_tabla(vector_request[1]))
 		{
 			char * consistencia_tabla = get_consistencia(vector_request[1]);
-			memoria = elegir_memoria(vector_request[1],consistencia_tabla);
+			int cons_ingresada = consistencia_ingresada(consistencia_tabla);
+			memoria = elegir_memoria(vector_request[1],cons_ingresada);
+			if(memoria==NULL)
+			{
+				conexion_nueva = -1;
+			}
 		}
 		else{return 0;}
 
 		break;
-//	case 5:;
-//		return 0;
-//		break;
 	default:
 		return 0;
 		break;
 	}
 
-	char * puerto_char = string_itoa(memoria->PUERTO);
-	char ** ip_sin_comillas = string_split(memoria->IP,"\"");
 
-	int conexion_nueva = iniciar_conexion(logger, ip_sin_comillas[0], puerto_char);
+	if(conexion_nueva != -1)
+	{
+		char * puerto_char = string_itoa(memoria->PUERTO);
+		char ** ip_sin_comillas = string_split(memoria->IP,"\"");
+
+		conexion_nueva = iniciar_conexion_request(logger, ip_sin_comillas[0], puerto_char);
+	}
+
 
 	return conexion_nueva;
 }
@@ -104,10 +136,9 @@ void pedir_seed(int conexion)
 	recibir_seed(conexion);
 }
 
-void terminar_kernel(t_log* logger, t_config* config, int conexion)
+void terminar_kernel(t_log* logger, t_config* config)
 {
 	log_info(logger, "DESCONECTADO DE MEMORY POOL\n");
 	log_destroy(logger);
 	config_destroy(config);
-	close(conexion);
 }

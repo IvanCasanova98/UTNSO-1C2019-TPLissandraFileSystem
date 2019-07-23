@@ -7,8 +7,8 @@
 #include "kernel.h"
 
 
-int main(void){
-
+int main(void)
+{
 	startup_diccionario();
 	startup_cola_ready();
 	startup_lista_seeds();
@@ -18,21 +18,7 @@ int main(void){
 	parametro.config = leer_config();
 	parametro.logger = iniciar_logger();
 
-	char* ip = config_get_string_value(parametro.config, "IP_MEMORIA");
-	char* puerto = config_get_string_value(parametro.config, "PUERTO_MEMORIA");
-
-	int conexion = iniciar_conexion(parametro.logger, ip, puerto);
-	//parametro.conexion = conexion;
-
-	pedir_seed(conexion);
-	mostrar_lista_seeds();
-
-
-	close(conexion);
-//	SEED memoria = elegir_memoria();
-
-//	conexion = iniciar_conexion(logger, memoria.IP, memoria.PUERTO);//conectar a la memoria elegida
-
+	levantar_kernel(parametro.config, parametro.logger);
 
 	pthread_t hilo_consola;
 	pthread_t hilo_planificador;
@@ -43,9 +29,21 @@ int main(void){
 	pthread_join(hilo_consola,NULL);
 	pthread_join(hilo_planificador,NULL);
 
-
-	terminar_kernel(parametro.logger,parametro.config,conexion);
+	terminar_kernel(parametro.logger,parametro.config);
 
 	return 1;
+}
+
+void levantar_kernel(t_config* config, t_log* logger)
+{
+	char* ip = config_get_string_value(config, "IP_MEMORIA");
+	char* puerto = config_get_string_value(config, "PUERTO_MEMORIA");
+
+	int conexion = iniciar_conexion_inicial(logger, ip, puerto);
+
+	pedir_seed(conexion);
+	mostrar_lista_seeds();
+
+	close(conexion);
 }
 

@@ -22,6 +22,11 @@ void request(void * arg) //RECIBIR LOGGER
 
 	int conexion_nueva = conectarse_a_memoria(vector_request, parametro->logger); //ELIGE UNA MEMORIA, SEGUN EL CRITERIO BASADO EN LA TABLA
 
+	if(conexion_nueva==-1)
+	{
+		return;
+	}
+
 	retardo_ejecucion(parametro->config);
 		switch(cod_ingresado){
 			case 0:;
@@ -35,10 +40,10 @@ void request(void * arg) //RECIBIR LOGGER
 					enviar_paquete_create(paquete_create,conexion_nueva);
 				}
 
-				char* nombre_tabla = paquete_create->nombre_tabla;
+				usleep(500);
+				describe(conexion_nueva,paquete_create->nombre_tabla);
 
-				describe(conexion_nueva,nombre_tabla);
-
+				//exit(-1);
 				free(paquete_create);
 
 				break;

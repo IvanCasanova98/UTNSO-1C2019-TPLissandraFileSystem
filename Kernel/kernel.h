@@ -16,4 +16,6 @@
 #include "planificador.h"
 
 
+void levantar_kernel(t_config* config, t_log* logger);
+
 #endif /* KERNEL_H_ */

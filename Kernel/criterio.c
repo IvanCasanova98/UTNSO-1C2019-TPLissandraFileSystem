@@ -4,14 +4,18 @@ t_list* lista_seeds;
 int referencia_memoria_ec; //PUNTERO A LA ULTIMA MEMORIA UTILIZADA POR EVENTUAL CONSISTENCY
 
 
-SEED * elegir_memoria(char* nombre_tabla, char * consistencia_tabla)
+SEED * elegir_memoria(char* nombre_tabla, int cons_ingresada)
 {
-	t_list * pool_especifico = get_pool(consistencia_tabla); //Tengo todas LOS NUMEROS DE MEMORIA asociados a una consistencia
+	t_list * pool_especifico = get_pool(cons_ingresada); //Tengo todas LOS NUMEROS DE MEMORIA asociados a una consistencia
 
 	SEED * seed_i;
 	int numero_memoria;
 
-	int cons_ingresada = consistencia_ingresada(consistencia_tabla);
+//	if (list_size(pool_especifico)==0)
+//	{
+//		return NULL;
+//	}
+
 	switch(cons_ingresada)
 	{
 	case SC:;

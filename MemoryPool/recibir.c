@@ -50,7 +50,6 @@ void recibir_paquetes(int cliente_fd, int server_fd, t_config* config, t_log* lo
 			char* buffer = recibir_buffer(&tamanio, cliente_fd);
 			if(!strcmp(buffer,"ALL"))
 			{
-
 				int size=strlen("ALL")+1;
 				t_paquete_describe_lfs* paquete_describe_lfs=malloc(sizeof(struct t_paquete_describe_lfs*));
 				paquete_describe_lfs->nombre_tabla=malloc(size);
@@ -61,6 +60,7 @@ void recibir_paquetes(int cliente_fd, int server_fd, t_config* config, t_log* lo
 			}
 			else
 			{
+				puts("DESCRIBE DE UNA SOLA TABLA");
 				int size=strlen(buffer)+1;
 				t_paquete_describe_lfs* paquete_describe_lfs=malloc(sizeof(struct t_paquete_describe_lfs*));
 				paquete_describe_lfs->nombre_tabla=malloc(size);

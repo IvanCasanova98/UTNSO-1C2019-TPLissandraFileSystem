@@ -18,10 +18,11 @@ void startup_diccionario()
 
 	agregar_consistencia(0, "SC");
 	agregar_consistencia(0, "EC");
-	agregar_consistencia(1, "SHC");
-	agregar_consistencia(2, "SHC");
-	agregar_consistencia(2, "EC");
-	agregar_consistencia(3, "EC");
+	agregar_consistencia(0, "SHC");
+//	agregar_consistencia(1, "SHC");
+//	agregar_consistencia(2, "SHC");
+//	agregar_consistencia(2, "EC");
+//	agregar_consistencia(3, "EC");
 }
 
 void agregar_datos(char* nombre_tabla, char* consistencia){
@@ -40,12 +41,12 @@ void deserealizar_metadata(int socket){
 	int i=0;
 	while(i<cant_elementos){
 		t_metadata* nodo_metadata = deserealizar_nodo(socket);
-		loggearMetadataTablas(nodo_metadata);
+//		loggearMetadataTablas(nodo_metadata);
 		agregar_datos(nodo_metadata->nombre_tabla, nodo_metadata->consistencia);
 		i++;
 	}
 
-	dictionary_iterator(tabla_metadata,imprimir_diccionario);
+//	dictionary_iterator(tabla_metadata,imprimir_diccionario);
 }
 
 void journal_memorias(t_log* logger)
@@ -99,9 +100,8 @@ bool verificar_consistencias()
 	return (list_is_empty(vector_consistencia[0]) && list_is_empty(vector_consistencia[1]) && list_is_empty(vector_consistencia[2]));
 }
 
-t_list* get_pool(char* tipo_consistencia) //FUNCION QUE DEVUELVE SOLO LA LISTA DE CONSISTENCIAS ESPECIFICAS
+t_list* get_pool(int cons_ingresada) //FUNCION QUE DEVUELVE SOLO LA LISTA DE CONSISTENCIAS ESPECIFICAS
 {
-	int cons_ingresada = consistencia_ingresada(tipo_consistencia);
 	switch(cons_ingresada)
 	{
 	case SC:

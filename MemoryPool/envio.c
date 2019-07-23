@@ -397,12 +397,6 @@ void enviar_create_lissandra(t_paquete_create* paquete,t_config* config,t_log* l
 	else{enviar_paquete_create(paquete, conexion, logger);}
 	free(paquete);
 
-	//------RESPUESTA DE LISSANDRA:
-//	uint16_t rta;
-//	recv(conexion, &rta,sizeof(uint16_t) ,0);
-
-//	protocolo_respuesta(rta,logger);
-
 	terminar_conexion(conexion);
 }
 

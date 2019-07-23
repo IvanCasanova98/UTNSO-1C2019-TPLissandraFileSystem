@@ -1,64 +1,27 @@
-[INFO] 12:48:51:953 MemoryPool/(6026:6026): MAX VALUE RECIBIDO: 255
-[INFO] 12:49:08:535 MemoryPool/(6026:6029): CREATE:
-Nombre tabla       : TABLOTA
-Consistencia       : SC
-Particiones        : 2
-Tiempo compactacion: 15000
-[INFO] 12:52:02:51 MemoryPool/(6026:6029): CREATE:
-Nombre tabla       : PRUEBA
-Consistencia       : SHC
-Particiones        : 9
-Tiempo compactacion: 27000
-[INFO] 12:52:16:458 MemoryPool/(6026:6029): CREATE:
-Nombre tabla       : PRUEBA
-Consistencia       : shc
-Particiones        : 9
-Tiempo compactacion: 27000
-[INFO] 12:52:36:303 MemoryPool/(6026:6029): CREATE:
-Nombre tabla       : PRUEBAs
-Consistencia       : ec
-Particiones        : 9
-Tiempo compactacion: 27000
-[INFO] 12:52:58:186 MemoryPool/(6026:6029): CREATE:
-Nombre tabla       : AVER
-Consistencia       : EC
-Particiones        : 9
-Tiempo compactacion: 27000
-[INFO] 12:53:13:33 MemoryPool/(6026:6029): CREATE:
-Nombre tabla       : HOLA
-Consistencia       : SHC
-Particiones        : 1
-Tiempo compactacion: 27000
-[INFO] 12:53:29:727 MemoryPool/(6026:6029): CREATE:
-Nombre tabla       : EVEN
-Consistencia       : EC
-Particiones        : 1
-Tiempo compactacion: 27000
-[INFO] 12:55:51:762 MemoryPool/(8232:8232): MAX VALUE RECIBIDO: 255
-[INFO] 13:00:09:310 MemoryPool/(8362:8362): MAX VALUE RECIBIDO: 255
-[INFO] 13:00:20:954 MemoryPool/(8362:8365): CREATE:
-Nombre tabla       : HACIO
-Consistencia       : SHC
-Particiones        : 3
-Tiempo compactacion: 20000
-[INFO] 13:00:28:532 MemoryPool/(8362:8365): CREATE:
-Nombre tabla       : asio
-Consistencia       : SHC
-Particiones        : 3
-Tiempo compactacion: 20000
-[INFO] 13:04:37:980 MemoryPool/(9659:9659): MAX VALUE RECIBIDO: 255
-[INFO] 13:04:46:390 MemoryPool/(9659:9662): CREATE:
-Nombre tabla       : prueba
-Consistencia       : shc
-Particiones        : 3
-Tiempo compactacion: 20000
-[INFO] 13:05:09:370 MemoryPool/(9659:9662): CREATE:
-Nombre tabla       : prueba2
-Consistencia       : ec
-Particiones        : 2
-Tiempo compactacion: 10000
-[INFO] 13:05:18:931 MemoryPool/(9659:9662): CREATE:
-Nombre tabla       : prueba3
-Consistencia       : sc
-Particiones        : 2
-Tiempo compactacion: 10000
+[INFO] 18:18:55:53 MemoryPool/(17402:17402): MAX VALUE RECIBIDO: 255
+[INFO] 18:18:58:772 MemoryPool/(17402:17410): DESCRIBE de todas las tablas:
+[INFO] 18:18:58:772 MemoryPool/(17402:17410): TABLA0 SC 8
+[INFO] 18:18:58:772 MemoryPool/(17402:17410): POSTRES SC 3
+[INFO] 18:18:58:772 MemoryPool/(17402:17410): LIGAS SC 30
+[INFO] 18:18:58:772 MemoryPool/(17402:17410): TABLA1 SC 8
+[INFO] 18:18:58:772 MemoryPool/(17402:17410): TABLANUEVA2XD SC 1
+[INFO] 18:18:58:772 MemoryPool/(17402:17410): TABLAHS SC 3
+[INFO] 18:18:58:772 MemoryPool/(17402:17410): TABLA2 SC 8
+[INFO] 18:18:58:772 MemoryPool/(17402:17410): TABLAAAA SC 2
+[INFO] 18:18:58:772 MemoryPool/(17402:17410): FRUTAS SC 2
+[INFO] 18:18:58:772 MemoryPool/(17402:17410): TABLANUEVAXD SC 1
+[INFO] 18:18:58:772 MemoryPool/(17402:17410): TABLASD SC 8
+[INFO] 18:18:58:772 MemoryPool/(17402:17410): TABLAOO SC 8
+[INFO] 18:18:58:772 MemoryPool/(17402:17410): JUEGOS SC 4
+[INFO] 18:18:58:772 MemoryPool/(17402:17410): EQUIPOS SC 10
+[INFO] 18:18:58:772 MemoryPool/(17402:17410): TABLAII SC 8
+[INFO] 18:18:58:772 MemoryPool/(17402:17410): TABLAPOJ SC 9
+[INFO] 18:18:58:772 MemoryPool/(17402:17410): TABLAUY SC 3
+[INFO] 18:18:58:772 MemoryPool/(17402:17410): BEBIDAS SC 6
+[INFO] 18:18:58:772 MemoryPool/(17402:17410): TABLANN SC 9
+[INFO] 18:18:58:772 MemoryPool/(17402:17410): TABLACASLA SC 3
+[INFO] 18:18:58:772 MemoryPool/(17402:17410): TASSS EC 9
+[INFO] 18:18:58:772 MemoryPool/(17402:17410): TABLAQQ SC 8
+[INFO] 18:19:22:418 MemoryPool/(17402:17410): SELECT:
+Nombre tabla: TABLA0
+Valor KEY   : 0
