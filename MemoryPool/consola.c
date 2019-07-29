@@ -8,6 +8,7 @@ void ingresar_paquete(void * arg)
 	parametro = ( struct parametros *) arg ;
 
 	char* lineaRequest = ingresar_request();
+	string_to_upper(lineaRequest);
 	char* parametros_paquete = strtok(lineaRequest, " ");
 	int cod_ingresado = codigo_ingresado(parametros_paquete);
 
@@ -38,7 +39,7 @@ void ingresar_paquete(void * arg)
 				break;
 			case 4:;
 				t_paquete_insert* paquete_i = paquete_insert(parametros_paquete, parametro->logger);
-				insert(paquete_i, parametro->config,  parametro->logger);
+				insert(paquete_i, parametro->config,  parametro->logger, 1);
 //				if(paquete_i != NULL)
 //				{
 //				enviar_insert_lissandra(paquete_i,parametro->config,parametro->logger);

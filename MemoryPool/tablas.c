@@ -1,7 +1,7 @@
 #include "tablas.h"
 
 //----------------TABLA DE SEGMENTOS
-
+int tamanio_memoria_ocupada;
 t_dictionary* tabla_segmentos;
 t_list* tabla_particiones;
 
@@ -46,7 +46,7 @@ t_list* crear_tabla_paginas(char* nombre_tabla,char* consistencia, uint16_t part
 {
 	t_list* tabla_paginas = list_create();
 
-	t_metadata* metadata = malloc(strlen(nombre_tabla)+1+sizeof(uint16_t));
+	t_metadata* metadata = malloc(strlen(nombre_tabla)+1+sizeof(uint16_t)+strlen(consistencia)+1);
 
 	metadata->nombre_tabla = malloc(strlen(nombre_tabla)+1);
 	strcpy(metadata->nombre_tabla, nombre_tabla);
@@ -55,23 +55,32 @@ t_list* crear_tabla_paginas(char* nombre_tabla,char* consistencia, uint16_t part
 	list_add(tabla_particiones, metadata);
 
 	agregar_tabla(nombre_tabla, tabla_paginas); //la agrega a la tabla de segmentos
-	return tabla_paginas;
 	free(metadata);
+	return tabla_paginas;
 }
 
 void agregar_pagina(char* nombre_tabla, t_pagina_completa* pagina_completa) //a tabla de paginas
 {
 	t_list* tabla_paginas = buscar_tabla_paginas(nombre_tabla);
 	list_add(tabla_paginas, pagina_completa);
+
+	int tamanio_pagina = strlen(pagina_completa->pagina->value) + sizeof(long long) + sizeof(int) + sizeof(uint16_t);
+	tamanio_memoria_ocupada += tamanio_pagina;
 }
 
 bool existe_pagina(char* nombre_tabla, uint16_t valor_key)
 {
 
 	bool _tiene_key(void* elemento){return tiene_key(valor_key, elemento);}
-	t_list* tabla_paginas = buscar_tabla_paginas(nombre_tabla);
-
-	return list_any_satisfy(tabla_paginas, _tiene_key);
+	if(existe_tabla_paginas(nombre_tabla))
+	{
+		t_list* tabla_paginas = buscar_tabla_paginas(nombre_tabla);
+		return list_any_satisfy(tabla_paginas, _tiene_key);
+	}
+	else
+	{
+		return false;
+	}
 }
 
 t_pagina* buscar_pagina(char* nombre_tabla, uint16_t valor_key)
@@ -120,7 +129,7 @@ t_pagina_completa* crear_pagina_completa(t_pagina* pagina)
 	pagina_completa -> pagina = pagina;
 
 	//CAMBIAR FLAG A 0!!
-	pagina_completa -> flag = 1;
+	pagina_completa -> flag = 0;
 	//CAMBIAR FLAG A 0!!
 
 	return pagina_completa;
@@ -135,19 +144,30 @@ t_pagina* devolver_pagina(t_pagina_completa* pagina_completa)
 
 bool condicion_select(char* nombre_tabla, uint16_t valor_key) //Verifica la existencia de la tabla y luego de la pagina que contenga la KEY
 {
-	return existe_tabla_paginas(nombre_tabla) && existe_pagina(nombre_tabla, valor_key);
+//	return existe_tabla_paginas(nombre_tabla) && existe_pagina(nombre_tabla, valor_key);
+	return existe_pagina(nombre_tabla, valor_key);
 }
 
-bool condicion_insert(char* nombre_tabla)
+bool condicion_insert(t_paquete_insert * paquete, t_config * config)
 {
-	return verificar_particiones(nombre_tabla);
+	return verificar_tamanio_value(paquete->value_long,config);
 }
 
-bool verificar_particiones(char* nombre_tabla)
+bool verificar_espacio_memoria(t_paquete_insert * paquete,t_config * config)
 {
-	int cantidad_paginas = cant_paginas(nombre_tabla);
-	uint16_t particion_max = buscar_particion(nombre_tabla);
-	return particion_max>cantidad_paginas;
+	int tam_max_memoria = config_get_int_value(config, "TAM_MEM");
+	int tamanio_paquete;
+
+	tamanio_paquete = paquete->value_long + sizeof(long long) + sizeof(uint16_t) + sizeof(int);
+
+	return (tam_max_memoria - tamanio_memoria_ocupada) >= tamanio_paquete;
+}
+
+bool verificar_tamanio_value(uint32_t * value_long,t_config * config)
+{
+	int tam_max_value = config_get_int_value(config, "TAM_MAX_VALUE");
+
+	return ((int) value_long) < tam_max_value;
 }
 
 uint16_t buscar_particion(char* nombre_tabla)
@@ -173,13 +193,19 @@ t_list* paginas_modificadas(t_list * lista)
 {
 	bool _modificadas(t_pagina_completa* elemento){return elemento->flag == 1;}
 
-	int cantidad_paginas_modificadas= list_count_satisfying(lista,_modificadas);
+	int cantidad_paginas_modificadas = list_count_satisfying(lista,_modificadas);
 
 
 	t_list* lista_modificadas = list_create();
 	int i=0;
 	while(i<cantidad_paginas_modificadas){
-		t_pagina_completa* pagina_modificada =list_remove_by_condition(lista,_modificadas);
+		t_pagina_completa * pagina_modificada = list_remove_by_condition(lista,_modificadas);
+
+		//						flag 		- timestamp 		- key 					- value
+		int tamanio_liberado = sizeof(int) + sizeof(long long) + sizeof(uint16_t) + strlen(pagina_modificada->pagina->value);
+
+		tamanio_memoria_ocupada -= tamanio_liberado;
+
 		list_add(lista_modificadas,pagina_modificada);
 		i++;
 	}
@@ -222,8 +248,10 @@ t_pagina_completa* pagina_mayor_timestamp(t_list* lista_paginas)
 }
 
 
-void reemplazar_pagina(char* nombre_tabla, t_pagina_completa* pagina_completa)
+int reemplazar_pagina(char* nombre_tabla, t_pagina_completa* pagina_completa, t_config* config)
 {
+	int respuesta;
+
 	t_list* lista_paginas_sin_modificar = paginas_sin_modificar(nombre_tabla);
 	t_pagina_completa* pagina_con_menor_timestamp = pagina_menor_timestamp(lista_paginas_sin_modificar);
 
@@ -236,7 +264,25 @@ void reemplazar_pagina(char* nombre_tabla, t_pagina_completa* pagina_completa)
 		i++;
 		pagina_A_Reemplazar = list_get(tabla_paginas,i);
 	}
-	list_replace(tabla_paginas,i,pagina_completa);
+
+	int max_memoria = config_get_int_value(config, "TAM_MEM");
+
+
+	tamanio_memoria_ocupada  += strlen(pagina_A_Reemplazar->pagina->value);
+	tamanio_memoria_ocupada  -= strlen(pagina_completa->pagina->value);
+
+	if(tamanio_memoria_ocupada<=max_memoria)
+	{
+		list_replace(tabla_paginas,i,pagina_completa);
+		return respuesta = 1;
+	}
+	else
+	{
+		tamanio_memoria_ocupada  -= strlen(pagina_A_Reemplazar->pagina->value);
+		tamanio_memoria_ocupada  += strlen(pagina_completa->pagina->value);
+		return respuesta = 0;
+	}
+
 }
 //-----------------------MOSTRAR ELEMENTOS
 
@@ -263,12 +309,17 @@ void mostrar_tabla_segmentos()
 	printf("\n");
 }
 
+void mostrar_tamanio_memoria_ocupada()
+{
+	printf("\n Tamanio memoria ocupada: %d", tamanio_memoria_ocupada);
+}
 
 void startup_memoria()
 {
 	tabla_segmentos = dictionary_create();
 	tabla_particiones = list_create();
 
+	tamanio_memoria_ocupada = 0;
 
 	t_list* tabla_paginas0 = crear_tabla_paginas("TABLA0","SC",4);
 	t_list* tabla_paginas1 = crear_tabla_paginas("TABLA1","SC",4);
@@ -292,6 +343,21 @@ void startup_memoria()
 	agregar_pagina("TABLA1", pagina_completa1);
 	agregar_pagina("TABLA2", pagina_completa2);
 
-//	mostrar_tabla_segmentos();
 
+
+//	int tamanio0 = sizeof(int) + sizeof(long long) + sizeof(uint16_t) + strlen(pagina_completa0->pagina->value);
+//	int tamanio3 = sizeof(int) + sizeof(long long) + sizeof(uint16_t) + strlen(pagina_completa3->pagina->value);
+//	int tamanio4 = sizeof(int) + sizeof(long long) + sizeof(uint16_t) + strlen(pagina_completa4->pagina->value);
+
+//	int x = sizeof(int);
+//	int y = sizeof(pagina_completa0->pagina->valor_key);
+//	printf("\ntamanio sizeof paginacompleta: %d",x); NO DAN IGUAL
+//	printf("\ntamanio suma a extraer: %d",tamanio0+tamanio3+tamanio4);
+//
+//	pagina_completa0->flag = 1;
+//	pagina_completa3->flag = 1;
+//	pagina_completa4->flag = 1;
+//
+//	mostrar_tabla_segmentos();
+//	mostrar_tamanio_memoria_ocupada();
 }

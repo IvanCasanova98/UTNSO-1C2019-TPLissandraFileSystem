@@ -19,8 +19,10 @@ t_paquete_insert* crear_paquete_insert(char *nombre_tabla, uint16_t valor_key, c
 	uint32_t tamanio_tabla = strlen(nombre_tabla)+1;
 	uint32_t tamanio_value = strlen(value)+1;
 	t_paquete_insert* paquete = malloc(sizeof(long long) + sizeof(int)*2 + tamanio_tabla + tamanio_value + sizeof(uint16_t));
+	paquete->nombre_tabla = malloc(tamanio_tabla);
+	paquete->value = malloc(tamanio_value);
 
-	paquete->nombre_tabla= nombre_tabla;
+	strcpy(paquete->nombre_tabla,nombre_tabla);
 	paquete->value = value;
 	paquete->valor_key = valor_key;
 	paquete->timestamp = timestamp;

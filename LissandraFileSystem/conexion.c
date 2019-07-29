@@ -65,6 +65,8 @@ void* hiloEscucha(){
 
 					//chekearDumpeo()
 					pthread_create(&recibidorPaquetes,NULL,recibir_paquetes,arg);
+					pthread_detach(recibidorPaquetes);
+
 
 				}
 

@@ -13,7 +13,7 @@ void* recibir_paquetes(void *arg)
 
 		if (cliente_fd==0){
 			printf("Error al conectarse para intentar recibir paquete\ņ");
-			pthread_exit(NULL);
+//			pthread_exit(NULL);
 		}
 		switch(cod_op){
 
@@ -25,19 +25,12 @@ void* recibir_paquetes(void *arg)
 
 			if(paquete_create_fs!=NULL)
 			{
-//				rta = 93;
 
-//				if (send(cliente_fd, &rta, sizeof(uint16_t), MSG_DONTWAIT) <= 0)
-//						puts("Error en envio de CODIGO DE RESPUESTA.");
 				APIcreateRESPUESTA(paquete_create_fs,cliente_fd);
 
-			//void* buffer = malloc(sizeof(uint16_t));
-			//memcpy(buffer, &rta, sizeof(uint16_t));
-//			if (send(cliente_fd, &rta,sizeof(uint16_t), 0) <= 0)
-//				puts("Error en envio de CODIGO DE RESPUESTA.");
-			//loggear_request_create_mp(paquete_create_de_mp);
 
 			}
+//			pthread_exit(NULL);
 			break;
 
 		case DROP:;
@@ -54,6 +47,7 @@ void* recibir_paquetes(void *arg)
 
 //			if (send(cliente_fd, &rta, sizeof(uint16_t), 0) <= 0)
 //				puts("Error en envio de CODIGO DE RESPUESTA.");
+//			pthread_exit(NULL);
 			break;
 
 		case DESCRIBE:;
@@ -72,6 +66,8 @@ void* recibir_paquetes(void *arg)
 
 	//					imprimirListaMetadatas(metadatasDeTablasPedidas); SI DESCOMENTAS ESTO ROMPE PORQUE ES TIPO respuestaDESCRIBE*
 						serealizar_respuesta_describe(metadatasDeTablasPedidas,cliente_fd);
+
+//						free(metadatasDeTablasPedidas);
 					}
 					if(metadatasDeTablasPedidas->rta == 23){
 						uint16_t rta=23;
@@ -80,7 +76,6 @@ void* recibir_paquetes(void *arg)
 					break;
 					}
 					//ME FALTA SI LA RTA ES ERRONEA.
-					//dictionary_destroy_and_destroy_elements(metadatasDeTablasPedidas,free);
 
 				} else{
 
@@ -98,6 +93,7 @@ void* recibir_paquetes(void *arg)
 
 	//				imprimirListaMetadatas(metadataDeTablaPedida->tablas);
 					serealizar_respuesta_describe(metadataDeTablaPedida,cliente_fd);
+					free(metadataDeTablaPedida);
 					//dictionary_destroy_and_destroy_elements(metadataDeTablaPedida,free);
 					}
 				}
@@ -106,6 +102,8 @@ void* recibir_paquetes(void *arg)
 				uint16_t rta=24;
 				send(cliente_fd, &rta, sizeof(uint16_t), 0);
 			}
+
+//			pthread_exit(NULL);
 			break;
 
 		case SELECT:;
@@ -116,47 +114,36 @@ void* recibir_paquetes(void *arg)
 
 				t_respuesta_pagina* rta_pagina= APIselectRESPUESTA(paquete_select,cliente_fd);
 
-				int bytes = rta_pagina->tamanioPaquete;
+				//printf("%d,%d,%d,%s,%lli",rta_pagina->bit,rta_pagina->long_value,rta_pagina->tamanioPaquete,rta_pagina->value,rta_pagina->timestamp);
+
+				size_t bytes = sizeof(uint16_t)+sizeof(size_t) + sizeof(long long) +rta_pagina->long_value;
 
 
 				if(rta_pagina->bit != 1)
 				{
 					void * buffer = serializar_respuesta_pagina(rta_pagina);
-					if (send(cliente_fd, &rta_pagina->tamanioPaquete, sizeof(size_t), MSG_DONTWAIT) <= 0)
+
+
+					if (send(cliente_fd, &bytes, sizeof(size_t), 0) <= 0)
 						puts("Error en envio de CODIGO DE RESPUESTA.");
 
-					if (send(cliente_fd, buffer, bytes, MSG_DONTWAIT) <= 0)
+					if (send(cliente_fd, buffer, bytes, 0) <= 0)
 						puts("Error en envio de CODIGO DE RESPUESTA.");
 					free(buffer);
 				}
 				else
 				{
 					uint16_t bit_error = 1;
-					size_t tamanio_buffer = sizeof(uint16_t);
+					size_t tamanio_buffer = 4;
 
 					send(cliente_fd,&tamanio_buffer,sizeof(size_t),0);
 					send(cliente_fd,&bit_error,tamanio_buffer,0);
 				}
 				free(rta_pagina);
 
-//				respuestaSELECT* rtaSELECT = malloc(sizeof(uint32_t) + sizeof(uint16_t));
-//				rtaSELECT->keyHallada = malloc(1);
-//				rtaSELECT->rta=34;
-//				strcpy(rtaSELECT->keyHallada,"");
-//				rtaSELECT->tamanio_key=1;
-//
-//				void* respuesta_a_enviar = serializar_respuesta_select(rtaSELECT);
-//				if (send(cliente_fd, respuesta_a_enviar, sizeof(uint16_t)+ sizeof(uint32_t)+ rtaSELECT->tamanio_key, MSG_DONTWAIT) <= 0)
-//						puts("Error en envio de CODIGO DE RESPUESTA.");
-//				loggear_request_select(paquete_select);
 			}
 
-
-
-//			void* respuesta_a_enviar = serializar_respuesta_select(rtaSELECT);
-//			if (send(cliente_fd, respuesta_a_enviar, sizeof(uint16_t)+ sizeof(uint32_t)+ rtaSELECT->tamanio_key, MSG_DONTWAIT) <= 0)
-//				puts("Error en envio de CODIGO DE RESPUESTA.");
-
+//			pthread_exit(NULL);
 			break;
 
 		case INSERT:;
@@ -172,40 +159,44 @@ void* recibir_paquetes(void *arg)
 //				rta= APIinsertRESPUESTA(paquete_insert);
 //				if (send(cliente_fd, &rta, sizeof(uint16_t), MSG_DONTWAIT) <= 0)
 //					puts("Error en envio de CODIGO DE RESPUESTA.");
+//			pthread_exit(NULL);
 			break;
 		case JOURNAL:;
 
 			cliente_fd=0;
 			log_info(logger, "Se recibio paquete tipo: JOURNAL");
-			pthread_exit(NULL);
+//			pthread_exit(NULL);
 
 			break;
 		case RUN:;
 			log_info(logger, "Se recibio paquete tipo: RUN");
+//			pthread_exit(NULL);
 			break;
 		case ADD:;
 			log_info(logger, "Se recibio paquete tipo: ADD");
+//			pthread_exit(NULL);
 			break;
 		case HS:;
 			t_config* config = leer_config();
 			int max_value = config_get_int_value(config,"TAMAÑO_VALUE");
 			send(cliente_fd,&max_value,sizeof(int),0);
 			log_info(logger, "HANDSHAKE con memoria realizado.");
+//			pthread_exit(NULL);
 			break;
 		case -1:
 			log_info(logger, "FIN CONEXION.\n");
 			cliente_fd=0;
-			pthread_exit(NULL);
+//			pthread_exit(NULL);
 			break;
 		default:
 			log_warning(logger, "Operacion desconocida.");
 			break;
 
 		//salgo mutex
-		pthread_exit(NULL);
+//		pthread_exit(NULL);
 		}
 
-
+//		pthread_exit(NULL);
 }
 //----------------------------TIPO DE OPERACION RECIBIDA
 int recibir_operacion(int socket_cliente)
@@ -417,7 +408,7 @@ void pasarAvaloresDescribe(char* key, void* metadata,int conexion){
 	desplazamiento+=sizeof(int);
 
 	send(conexion, buffer, longNombreTabla+longConsistencia +sizeof(int)*4, 0);
-
+	free(buffer);
 
 
 }

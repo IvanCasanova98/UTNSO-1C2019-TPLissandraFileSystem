@@ -40,10 +40,9 @@ void request(void * arg) //RECIBIR LOGGER
 					enviar_paquete_create(paquete_create,conexion_nueva);
 				}
 
-				usleep(500);
+				sleep(1);
 				describe(conexion_nueva,paquete_create->nombre_tabla);
 
-				//exit(-1);
 				free(paquete_create);
 
 				break;
@@ -54,6 +53,7 @@ void request(void * arg) //RECIBIR LOGGER
 
 			case 3:;
 				if(existe_tabla(vector_request[1]))
+//				if(1)
 				{
 					t_paquete_select* paquete_select = selectf(vector_request);
 

@@ -265,11 +265,11 @@ void enviar_memorias(int socket_cliente, t_config* config)
 
 void enviar_paquete_select(t_paquete_select* paquete, int socket_cliente, t_log* logger)
 {
-	int bytes = 8 + paquete->nombre_tabla_long;
+	int bytes = sizeof(uint16_t) +sizeof(uint32_t)+ paquete->nombre_tabla_long;
 	void* a_enviar = serializar_paquete_select(paquete);
 	if ( send(socket_cliente, a_enviar, bytes, 0) <= 0) puts("Error en envio de PAQUETE SELECT.");
 
-	free(a_enviar);
+	//free(a_enviar);
 }
 
 void enviar_paquete_insert(t_paquete_insert* paquete, int socket_cliente, t_log* logger)
@@ -360,7 +360,7 @@ void enviar_select_lissandra(int conexion, t_paquete_select* paquete, t_log* log
 	if (send(conexion, &cod, sizeof(int), 0) <= 0)
 		puts("Error en envio de CODIGO DE OPERACION.");
 	else{enviar_paquete_select(paquete, conexion, logger);}
-	free(paquete);
+
 }
 
 void enviar_insert_lissandra(t_paquete_insert* paquete, t_config* config, t_log* logger)

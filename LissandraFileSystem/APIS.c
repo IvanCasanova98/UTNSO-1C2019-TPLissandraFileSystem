@@ -303,7 +303,6 @@ void APIcreateRESPUESTA(t_paquete_create* paquete_create,int cliente){ //0 memor
 
 t_respuesta_pagina* APIselectRESPUESTA(t_paquete_select* paquete_select,int cliente){ // bastante ml revisar
 
-
 	char* nombreTablaMayuscula=malloc(strlen(paquete_select->nombre_tabla)+1);
 	strcpy(nombreTablaMayuscula,paquete_select->nombre_tabla);
 
@@ -339,44 +338,45 @@ t_respuesta_pagina* APIselectRESPUESTA(t_paquete_select* paquete_select,int clie
 			}
 
 			if(!list_is_empty(RegistrosEncontrados)){
-			char* valueEncontrado = elegirMayorTimeStamp(RegistrosEncontrados);
+			t_registro* registroBuscado = elegirRegistroDeMayorTimeStamp(RegistrosEncontrados);
 
-			long long mayorTimestamp= retornarElMayorTimeStamp(RegistrosEncontrados);
+//			char * valueEncontrado = string_new();
+//			valueEncontrado =malloc(strlen(registroBuscado->value)+1);
+//			long long mayorTimestamp= registroBuscado->timestamp;
+
+			t_respuesta_pagina* pagina= malloc(sizeof(t_respuesta_pagina));
+
+//			strcpy(valueEncontrado,registroBuscado->value);
+//			memcpy(valueEncontrado,registroBuscado->value,strlen(registroBuscado->value)+1);
+
+
+
+//			size_t long_value= strlen(valueEncontrado)+1;
+
+			pagina->value=malloc(strlen(registroBuscado->value)+1);
+
+			pagina->bit=0;
+			pagina->long_value=strlen(registroBuscado->value)+1;
+
+			memcpy(pagina->value,registroBuscado->value,pagina->long_value);
+			pagina->timestamp= registroBuscado->timestamp;
+
+			size_t tamanio = pagina->long_value+sizeof(uint16_t)+sizeof(size_t)*2+sizeof(long long);
+			pagina->tamanioPaquete= tamanio;
+
 
 			list_clean_and_destroy_elements(RegistrosEncontrados,liberarRegistro);
 			list_destroy(RegistrosEncontrados);
 
-			valueExiste(nombreTablaMayuscula,paquete_select->valor_key,valueEncontrado);
+//			valueExiste(nombreTablaMayuscula,paquete_select->valor_key,valueEncontrado);
 
 			liberarPaqueteSelect(paquete_select);
 
 			free(metadataDeTabla);
 			free(nombreTablaMayuscula);
 
-			t_respuesta_pagina* pagina= malloc(strlen(valueEncontrado)+1+sizeof(uint16_t)+sizeof(size_t)+sizeof(long long));
-
-			pagina->value=malloc(strlen(valueEncontrado)+1);
-			pagina->bit=0;
-			pagina->long_value=strlen(valueEncontrado)+1;
-			memcpy(pagina->value,valueEncontrado,pagina->long_value);
-			pagina->timestamp= mayorTimestamp;
-
 
 			return pagina;
-
-//			int bytes= sizeof(int)+strlen(valueEncontrado)+1;
-//			void* buffer= serializar_mensaje(valueEncontrado,bytes);
-
-//			send(cliente,buffer,bytes,0);
-//			free(buffer);
-
-//			respuestaSELECT* rtaSELECT = malloc(sizeof(uint32_t) + sizeof(uint16_t) + strlen(valueEncontrado)+1);
-//			rtaSELECT->keyHallada = malloc(strlen(valueEncontrado)+1);
-//			rtaSELECT->rta=30;
-//			strcpy(rtaSELECT->keyHallada,valueEncontrado);
-//			rtaSELECT->tamanio_key= strlen(valueEncontrado)+1;
-//			return rtaSELECT;
-//			return NULL;
 			}else{
 				valueNoExiste(paquete_select->nombre_tabla,paquete_select->valor_key);
 
@@ -385,23 +385,11 @@ t_respuesta_pagina* APIselectRESPUESTA(t_paquete_select* paquete_select,int clie
 				free(metadataDeTabla);
 				liberarPaqueteSelect(paquete_select);
 
-//				int bytes= sizeof(int)+strlen("NO EXISTE EL VALUE BUSCADO")+1;
-//				void* buffer= serializar_mensaje("NO EXISTE EL VALUE BUSCADO",bytes);
-//
-//				send(cliente,buffer,bytes,0);
-//				free(buffer);
 
-				t_respuesta_pagina* pagina= malloc(sizeof(uint16_t));
+				t_respuesta_pagina* pagina= malloc(sizeof(t_respuesta_pagina));
 
 				pagina->bit=1;
 				return pagina;
-//				return NULL;
-//				respuestaSELECT* rtaSELECT = malloc(sizeof(uint32_t) + sizeof(uint16_t));
-//				rtaSELECT->keyHallada = malloc(1);
-//				rtaSELECT->rta=32;
-//				strcpy(rtaSELECT->keyHallada,"");
-//				rtaSELECT->tamanio_key=1;
-//				return rtaSELECT;
 		}
 
 		}else
@@ -410,23 +398,11 @@ t_respuesta_pagina* APIselectRESPUESTA(t_paquete_select* paquete_select,int clie
 		free(nombreTablaMayuscula);
 		liberarPaqueteSelect(paquete_select);
 
-		t_respuesta_pagina* pagina= malloc(sizeof(uint16_t));
+		t_respuesta_pagina* pagina= malloc(sizeof(t_respuesta_pagina));
 
 		pagina->bit=1;
 		return pagina;
 
-//		int bytes= sizeof(int)+strlen("NO EXISTE LA TABLA")+1;
-//		void* buffer= serializar_mensaje("NO EXISTE LA TABLA",bytes);
-//
-//		send(cliente,buffer,bytes,0);
-//		free(buffer);
-//		return NULL;
-//		respuestaSELECT* rtaSELECT = malloc(sizeof(uint32_t) + sizeof(uint16_t));
-//		rtaSELECT->keyHallada = malloc(1);
-//		strcpy(rtaSELECT->keyHallada,"");
-//		rtaSELECT->tamanio_key=1;
-//		rtaSELECT->rta=33;
-//		return rtaSELECT;
 		}
 }
 
@@ -510,12 +486,15 @@ void* APIdescribeTodasLasTablasRESPUESTA(){
 	  t_dictionary *diccionarioDeTablas = dictionary_create();
 
 	  int contadorDeCantTablas=0;
+
+	  int bytesDiccionarioTablas=0;
 	  if (d != NULL)
 	  {
 		free(directorioTablas);
 	    while ((dir = readdir(d)) != NULL) {
 
 	    	if (!string_contains(dir->d_name,".")){
+	    		bytesDiccionarioTablas+=strlen(dir->d_name)+1;
 	    		contadorDeCantTablas++;
 				char* nombreTabla = malloc(sizeof(dir->d_name)+1);
 				strcpy(nombreTabla,dir->d_name);
@@ -533,7 +512,9 @@ void* APIdescribeTodasLasTablasRESPUESTA(){
 
 	    logearDescribeTodasLasTablas();
 
-	    respuestaDESCRIBE* rtaDESCRIBE = malloc(sizeof(respuestaDESCRIBE));
+	    respuestaDESCRIBE* rtaDESCRIBE;
+
+	    rtaDESCRIBE = malloc(sizeof(respuestaDESCRIBE));
 
 	    if(contadorDeCantTablas>0){
 
@@ -623,10 +604,11 @@ t_list* listarTablasExistentes() {
 
 }
 
-long long retornarElMayorTimeStamp(t_list* RegistrosEncontrados){
+t_registro* elegirRegistroDeMayorTimeStamp(t_list* RegistrosEncontrados){
 	list_sort(RegistrosEncontrados,mayorTimeStamp);
 	t_registro* registroConMayorTimeStamp = (t_registro*)list_remove(RegistrosEncontrados,0);
-	return registroConMayorTimeStamp->timestamp;
+
+	return registroConMayorTimeStamp;
 }
 
 char* elegirMayorTimeStamp(t_list* RegistrosEncontrados){
@@ -635,7 +617,7 @@ char* elegirMayorTimeStamp(t_list* RegistrosEncontrados){
 
 	char * value =malloc(strlen(registroConMayorTimeStamp->value)+1);
 	strcpy(value,registroConMayorTimeStamp->value);
-	liberarRegistro(registroConMayorTimeStamp);
+//	liberarRegistro(registroConMayorTimeStamp);
 	return value;
 }
 
@@ -1225,9 +1207,9 @@ t_registro* buscarEnParticion(char* nombreTabla, int nroParticion,int key){
 					free(arrayBloques[i]);
 					free(arrayBloques);
 
-					for(int i=0;registrosSeparados[i];i++)
-					free(registrosSeparados[i]);
-					free(registrosSeparados);
+					//for(int i=0;registrosSeparados[i];i++)
+					//free(registrosSeparados[i]);
+					//free(registrosSeparados);
 
 					for(int i=0;RegistroActual[i];i++)
 					free(RegistroActual[i]);
@@ -1611,10 +1593,7 @@ void* serializar_respuesta_pagina(t_respuesta_pagina* t_respuesta_pag){
 	void * buffer = malloc(sizeof(uint16_t)+sizeof(size_t) + sizeof(long long) +t_respuesta_pag->long_value);
 
 	int desplazamiento = 0;
-	size_t tamanioTotal= sizeof(uint16_t)+sizeof(size_t)*2 + sizeof(long long) +t_respuesta_pag->long_value;
-
-	memcpy(buffer + desplazamiento,&(t_respuesta_pag->tamanioPaquete),tamanioTotal);
-	desplazamiento +=tamanioTotal;
+//	size_t tamanioTotal= sizeof(uint16_t)+sizeof(size_t)*2 + sizeof(long long) +t_respuesta_pag->long_value;
 
 	memcpy(buffer + desplazamiento, &(t_respuesta_pag->bit), sizeof(uint16_t));
 	desplazamiento+= sizeof(uint16_t);
@@ -1628,6 +1607,10 @@ void* serializar_respuesta_pagina(t_respuesta_pagina* t_respuesta_pag){
 	memcpy(buffer + desplazamiento, &(t_respuesta_pag->timestamp), sizeof(long long));
 	desplazamiento+=  sizeof(long long);
 
+	//CAMBIAMOS ESTO, NO HACE FALTA MANDAR ESO, no lo serialices
+
+//	memcpy(buffer + desplazamiento,&(t_respuesta_pag->tamanioPaquete),tamanioTotal);
+//	desplazamiento +=tamanioTotal;
 	return buffer;
 
 }

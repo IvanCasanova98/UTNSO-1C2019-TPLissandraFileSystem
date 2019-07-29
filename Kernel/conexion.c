@@ -82,6 +82,14 @@ int conectarse_a_memoria(char** vector_request, t_log* logger)
 			char * consistencia_tabla = get_consistencia(vector_request[1]);
 			int cons_ingresada = consistencia_ingresada(consistencia_tabla);
 			memoria = elegir_memoria(vector_request[1],cons_ingresada);
+			if(memoria==NULL)
+			{
+				conexion_nueva = -1;
+			}
+		}
+		else
+		{
+			conexion_nueva = -1;
 		}
 		break;
 	case 3:;
@@ -116,7 +124,6 @@ int conectarse_a_memoria(char** vector_request, t_log* logger)
 		break;
 	}
 
-
 	if(conexion_nueva != -1)
 	{
 		char * puerto_char = string_itoa(memoria->PUERTO);
@@ -124,7 +131,6 @@ int conectarse_a_memoria(char** vector_request, t_log* logger)
 
 		conexion_nueva = iniciar_conexion_request(logger, ip_sin_comillas[0], puerto_char);
 	}
-
 
 	return conexion_nueva;
 }

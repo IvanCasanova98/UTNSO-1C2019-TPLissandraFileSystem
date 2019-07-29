@@ -46,12 +46,13 @@ void recibir_paquetes(int cliente_fd, int server_fd, t_config* config, t_log* lo
 		case DROP:
 			break;
 		case DESCRIBE:;
+
 			int tamanio;
 			char* buffer = recibir_buffer(&tamanio, cliente_fd);
 			if(!strcmp(buffer,"ALL"))
 			{
 				int size=strlen("ALL")+1;
-				t_paquete_describe_lfs* paquete_describe_lfs=malloc(sizeof(struct t_paquete_describe_lfs*));
+				t_paquete_describe_lfs* paquete_describe_lfs=malloc(sizeof(uint32_t)+size);
 				paquete_describe_lfs->nombre_tabla=malloc(size);
 				strcpy(paquete_describe_lfs->nombre_tabla,"ALL");
 				paquete_describe_lfs->nombre_tabla_long=size;
@@ -66,7 +67,6 @@ void recibir_paquetes(int cliente_fd, int server_fd, t_config* config, t_log* lo
 			}
 			else
 			{
-				puts("DESCRIBE DE UNA SOLA TABLA");
 				int size=strlen(buffer)+1;
 				t_paquete_describe_lfs* paquete_describe_lfs=malloc(sizeof(struct t_paquete_describe_lfs*));
 				paquete_describe_lfs->nombre_tabla=malloc(size);
@@ -95,7 +95,7 @@ void recibir_paquetes(int cliente_fd, int server_fd, t_config* config, t_log* lo
 
 			loggear_paquete_insert(paquete_insert, logger);
 
-			insert(paquete_insert, config, logger);
+			insert(paquete_insert, config, logger, 1);
 			break;
 		case JOURNAL:
 			journal(config,logger);
@@ -318,16 +318,20 @@ t_pagina* deserializar_pagina (int socket_cliente)
 
 	t_pagina* pagina;
 
+//	puts("EN DESERIALIZAR");
 	recv(socket_cliente, &tamanio_paquete, sizeof(size_t) ,MSG_WAITALL);
 
+//	puts("RECV 1");
 	void *buffer = malloc(tamanio_paquete);
 	recv(socket_cliente, buffer, tamanio_paquete,MSG_WAITALL);
 
+//	puts("RECV 2");
 	memcpy(&bit_error,buffer + desplazamiento, sizeof(uint16_t));
 	desplazamiento+= sizeof(uint16_t);
 
 	if(bit_error == 0)
 	{
+//		puts("BIT DE ERROR 0");
 		memcpy(&(tamanio_value),buffer + desplazamiento, sizeof(size_t));
 		desplazamiento+= sizeof(size_t);
 
@@ -335,24 +339,34 @@ t_pagina* deserializar_pagina (int socket_cliente)
 		memcpy(value,buffer + desplazamiento, tamanio_value);
 		desplazamiento+= tamanio_value;
 
-		memcpy(timestamp,buffer + desplazamiento, sizeof(long long));
+		memcpy(&timestamp,buffer + desplazamiento, sizeof(long long));
 		desplazamiento+= sizeof(long long);
 
-		pagina= malloc(sizeof(uint16_t)+tamanio_value+sizeof(long long));
+		//pagina= malloc(sizeof(uint16_t)+tamanio_value+sizeof(long long));
+		pagina= malloc(sizeof(t_pagina));
+
+
+		pagina->value = malloc(tamanio_value);
+
 
 		strcpy(pagina->value,value);
 		pagina->timestamp = timestamp;
+
+
 	}
 	else
 	{
-		char* value = "Pagina no encontrada";
-		pagina= malloc(sizeof(uint16_t)+strlen(value)+1+sizeof(long long));
-		pagina->value=malloc(strlen(value)+1);
-		strcpy(pagina->value,value);
+//		puts("BIT DE ERROR 1");
+		char* value = string_new();
+		pagina= malloc(sizeof(uint16_t)+strlen("Pagina no encontrada")+1+sizeof(long long));
+		pagina->value=malloc(strlen("Pagina no encontrada")+1);
+		strcpy(pagina->value,"Pagina no encontrada");
 		pagina->timestamp = 0;
 	}
 
 	free(buffer);
+	printf("VALUE: %s\n",pagina->value);
+	printf("TIMESTAMP: %lli\n",pagina->timestamp);
 	return pagina;
 }
 

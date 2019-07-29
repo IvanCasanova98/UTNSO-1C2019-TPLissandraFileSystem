@@ -8,7 +8,7 @@
 #include<pthread.h>
 
 void selectf(int cliente_fd, t_paquete_select* paquete, t_config* config, t_log* logger);
-void insert(t_paquete_insert* paquete, t_config* config, t_log* logger);
+void insert(t_paquete_insert* paquete, t_config* config, t_log* logger, int flag_modificado);
 void create(int conexion, t_paquete_create* paquete, t_config* config, t_log* logger);
 void journal(t_config* config, t_log* logger);
 void time_journal(void * arg);

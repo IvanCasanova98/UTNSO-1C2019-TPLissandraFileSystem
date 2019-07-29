@@ -48,16 +48,20 @@ void deserealizar_metadata(int socket){
 			log_warning(logger,"FILE SYSTEM CAIDO");
 			log_destroy(logger);
 		}
-	}else{
-	int i=0;
-	while(i<cant_elementos){
-		t_metadata* nodo_metadata = deserealizar_nodo(socket);
-//		loggearMetadataTablas(nodo_metadata);
-		agregar_datos(nodo_metadata->nombre_tabla, nodo_metadata->consistencia);
-		i++;
 	}
-}
-//	dictionary_iterator(tabla_metadata,imprimir_diccionario);
+	else
+	{
+	int i=0;
+		while(i<cant_elementos)
+		{
+			t_metadata* nodo_metadata = deserealizar_nodo(socket);
+	//		loggearMetadataTablas(nodo_metadata);
+			agregar_datos(nodo_metadata->nombre_tabla, nodo_metadata->consistencia);
+			i++;
+		}
+	}
+
+	//dictionary_iterator(tabla_metadata,imprimir_diccionario);
 }
 
 void journal_memorias(t_log* logger)

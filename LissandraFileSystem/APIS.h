@@ -107,7 +107,7 @@ t_registro* buscarEnTemporalesCompactando(char* nombreTabla,int key);
 int existe_temporal(char* path);
 char* DirectorioDeBloque(int numeroBloque);
 void crearParticiones(char*nombreTabla ,int nroParticiones);
-long long retornarElMayorTimeStamp(t_list* RegistrosEncontrados);
+t_registro* elegirRegistroDeMayorTimeStamp(t_list* RegistrosEncontrados);
 char* elegirMayorTimeStamp(t_list* RegistrosEncontrados);
 t_registro* crearRegistro (char*value,uint16_t key,long long timestamp);
 int particionDeKey(int key,int particiones);

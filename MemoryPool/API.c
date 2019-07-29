@@ -5,34 +5,52 @@ pthread_mutex_t mutex;
 void selectf(int cliente,t_paquete_select* paquete, t_config* config, t_log* logger)
 {
 
-
-	pthread_mutex_lock(&mutex);
 	if(!(condicion_select(paquete -> nombre_tabla,paquete -> valor_key)))
 	{
+//		puts("ENTRO EN NOT CONDICION SELECT");
 		int conexion = iniciar_conexion(config);
 		enviar_select_lissandra(conexion, paquete, logger);
+
+//		puts("EMPEZANDO DESERIALIZACION");
 		t_pagina* pagina_lissandra = deserializar_pagina(conexion);
+
 		terminar_conexion(conexion);
 
 		if(pagina_lissandra->timestamp!=0)
 		{
+//			puts("TIMESTAMP BIEN RECIBIDO");
 			pagina_lissandra->valor_key = paquete->valor_key;
+
 			t_pagina_completa* pagina_completa_lissandra = crear_pagina_completa(pagina_lissandra);
 
-			if(condicion_insert(paquete->nombre_tabla))
+			t_paquete_insert* paquete_insert = crear_paquete_insert(paquete->nombre_tabla, pagina_lissandra->valor_key,pagina_lissandra->value, pagina_lissandra->timestamp);
+
+			insert(paquete_insert,config,logger, 0);
+
+
+			if(!existe_tabla_paginas(paquete->nombre_tabla))
 			{
-				agregar_pagina(paquete->nombre_tabla, pagina_completa_lissandra);
+				//NO SE INSERTA EN MP
+
+				if (cliente != NULL){
+					int bytes = sizeof(int) + strlen(pagina_lissandra -> value) + 1;
+					void* a_enviar = serializar_mensaje(pagina_lissandra -> value, bytes);
+					send(cliente,a_enviar,bytes,0);
+					free(a_enviar);
+					log_info(logger,"Respuesta enviada: %s\n", pagina_lissandra -> value);
+				}
+				else{log_info(logger,"Respuesta: %s\n", pagina_lissandra -> value);}
+				free(pagina_completa_lissandra);
+				free(paquete_insert);
+				return;
 			}
-			else
-			{
-				journal(config, logger);
-				agregar_pagina(paquete->nombre_tabla, pagina_completa_lissandra);
-			}
+
 		}
 		else
 		{
-			char* value_error = pagina_lissandra->value;
-			size_t tamanio_value_error = strlen(value_error)+1;
+			char* value_error = string_new();
+			size_t tamanio_value_error = strlen(pagina_lissandra->value)+1;
+			memcpy(value_error,pagina_lissandra->value,tamanio_value_error);
 
 			if(cliente!=NULL)
 			{
@@ -45,57 +63,79 @@ void selectf(int cliente,t_paquete_select* paquete, t_config* config, t_log* log
 				log_error(logger,"Respuesta: %s\n", value_error);
 			}
 
-
+			free(pagina_lissandra);
 			return;
 		}
 	}
-
+	puts("BUSCANDO PAGINA EN MP");
 	t_pagina* pagina_encontrada = buscar_pagina(paquete -> nombre_tabla, paquete -> valor_key);
+	puts("PAGINA ENCONTRADA EN MP");
+	printf("\nNOMBRE TABLA: %s, KEY: %d\n", paquete -> nombre_tabla, paquete -> valor_key);
 
 	int bytes = sizeof(int) + strlen(pagina_encontrada -> value) + 1;
 	void* a_enviar = serializar_mensaje(pagina_encontrada -> value, bytes);
 	if (cliente != NULL){
 		send(cliente,a_enviar,bytes,0);
+		free(a_enviar);
 		log_info(logger,"Respuesta enviada: %s\n", pagina_encontrada -> value);
 	}
 	else{log_info(logger,"Respuesta: %s\n", pagina_encontrada -> value);}
 
-	pthread_mutex_unlock(&mutex);
+	//pthread_mutex_unlock(&mutex);
 }
 
-void insert(t_paquete_insert* paquete, t_config* config, t_log* logger)
+void insert(t_paquete_insert* paquete, t_config* config, t_log* logger, int flag_modificado)
 {
-	pthread_mutex_lock(&mutex);
+	//pthread_mutex_lock(&mutex);
 	t_pagina* pagina = crear_pagina(paquete -> valor_key, paquete -> value, paquete -> timestamp);
 	t_pagina_completa* pagina_completa = crear_pagina_completa(pagina);
 
-	if(existe_tabla_paginas(paquete->nombre_tabla))
+	if(condicion_insert(paquete,config))
 	{
-		if(condicion_insert(paquete->nombre_tabla))
+		if(existe_tabla_paginas(paquete->nombre_tabla))
 		{
-			pagina_completa->flag=1;
-			agregar_pagina(paquete -> nombre_tabla, pagina_completa);
-			log_info(logger,"Pagina agregada en: %s\n", paquete->nombre_tabla);
-
-		}else if(puede_reemplazar(paquete -> nombre_tabla))
-		{
-			pagina_completa->flag=1;
-			reemplazar_pagina(paquete->nombre_tabla, pagina_completa);
-			log_info(logger,"Pagina reemplazada en: %s\n", paquete->nombre_tabla);
+			if(verificar_espacio_memoria(paquete,config))
+			{
+				pagina_completa->flag=flag_modificado;
+				agregar_pagina(paquete -> nombre_tabla, pagina_completa);
+				log_info(logger,"Pagina agregada en: %s\n", paquete->nombre_tabla);
+			}
+			else
+			{
+				if(puede_reemplazar(paquete->nombre_tabla))
+				{
+					pagina_completa->flag = flag_modificado;
+					int reemplazo_exitoso = reemplazar_pagina(paquete->nombre_tabla, pagina_completa, config);
+					if (reemplazo_exitoso)
+					{
+						log_info(logger,"Pagina agregada en: %s\n", paquete->nombre_tabla);
+					}
+					else
+					{
+						journal(config,logger);
+						agregar_pagina(paquete -> nombre_tabla, pagina_completa);
+						log_info(logger,"Pagina agregada en: %s\n", paquete->nombre_tabla);
+					}
+				}
+				else
+				{
+					journal(config,logger);
+					agregar_pagina(paquete -> nombre_tabla, pagina_completa);
+					log_info(logger,"Pagina agregada en: %s\n", paquete->nombre_tabla);
+				}
+			}
 		}
 		else
 		{
-			journal(config,logger);
-			agregar_pagina(paquete -> nombre_tabla, pagina_completa);
-//			log_error(logger,"NO HAY MAS LUGAR EN %s\n", paquete->nombre_tabla);
+			log_error(logger,"No existe la tabla.");
 		}
 	}
 	else
 	{
-		log_error(logger,"NO EXISTE LA TABLA\n");
-
+		log_error(logger,"Value invalido");
 	}
-	pthread_mutex_unlock(&mutex);
+
+
 }
 
 void create(int conexion, t_paquete_create* paquete, t_config* config, t_log* logger)
@@ -119,8 +159,13 @@ void create(int conexion, t_paquete_create* paquete, t_config* config, t_log* lo
 //-------------------------------------JOURNAL-----
 ///////////////////////////////////////////////////
 
+
+//AGREGAR QUE BAJE EL ESPACIO DISPONIBLE X INSERT CON JOURNAL
 void journal(t_config* config, t_log* logger)
 {
+
+	log_info(logger, "COMENZO JOURNAL");
+
 	int conexion_LFS = iniciar_conexion(config);
 
 	void _enviar_modificados(void * nombre_tabla, void * lista){enviar_modificados(nombre_tabla,lista,conexion_LFS,config,logger);}
@@ -128,6 +173,10 @@ void journal(t_config* config, t_log* logger)
 	pthread_mutex_lock(&mutex);
 	dictionary_iterator(tabla_segmentos, _enviar_modificados);
 	pthread_mutex_unlock(&mutex);
+
+//	mostrar_tabla_segmentos();
+//	mostrar_tamanio_memoria_ocupada();
+	log_info(logger, "FINALIZO JOURNAL");
 }
 
 
@@ -141,10 +190,12 @@ void time_journal(void * arg)
 
 	while(1)
 	{
-		sleep(time/1000);
+		usleep(time);
 		journal(parametro->config, parametro->logger);
 	}
 }
+
+//-------------------UTILS JOURNAL
 
 void enviar(t_pagina_completa* pagina_completa, char * nombre_tabla, int conexion_LFS,t_config* config, t_log* logger)
 {
@@ -152,16 +203,16 @@ void enviar(t_pagina_completa* pagina_completa, char * nombre_tabla, int conexio
 	enviar_insert_lissandra(paquete,config,logger);
 }
 
-//-------------------UTILS JOURNAL
 void enviar_modificados(char * nombre_tabla, t_list* lista ,int conexion_LFS, t_config* config, t_log* logger)
 {
 	t_list* lista_paginas_modificadas = paginas_modificadas(lista);
 
 	if (!list_is_empty(lista_paginas_modificadas))
 	{
-		int i =0;
+		int i = 0;
 
-		void _enviar(void * elemento){
+		void _enviar(void * elemento)
+		{
 			enviar(elemento,nombre_tabla,conexion_LFS,config, logger);
 		}
 
