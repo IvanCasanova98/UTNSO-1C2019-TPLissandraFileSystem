@@ -15,186 +15,194 @@ void* recibir_paquetes(void *arg)
 			printf("Error al conectarse para intentar recibir paquete\ņ");
 //			pthread_exit(NULL);
 		}
-		switch(cod_op){
+		switch(cod_op)
 
-		case CREATE:;
-			t_paquete_create_de_mp* paquete_create_de_mp = deserializar_paquete_create_de_mp(cliente_fd);
-			t_paquete_create* paquete_create_fs;
-			paquete_create_fs = adaptadorDePaquete(paquete_create_de_mp);
+		{
 
-
-			if(paquete_create_fs!=NULL)
-			{
-
-				APIcreateRESPUESTA(paquete_create_fs,cliente_fd);
+			case CREATE:;
+				t_paquete_create_de_mp* paquete_create_de_mp = deserializar_paquete_create_de_mp(cliente_fd);
+				t_paquete_create* paquete_create_fs;
+				paquete_create_fs = adaptadorDePaquete(paquete_create_de_mp);
 
 
-			}
-//			pthread_exit(NULL);
-			break;
+				if(paquete_create_fs!=NULL)
+				{
 
-		case DROP:;
-			t_paquete_drop* paquete_drop = deserializar_paquete_drop(cliente_fd);
-			if(paquete_drop!=NULL)
-			{
-//				rta = 13;
-//				if (send(cliente_fd, &rta, sizeof(uint16_t), 0) <= 0)
-//					puts("Error en envio de CODIGO DE RESPUESTA.");
-//				break;
-			APIdropRESPUESTA(paquete_drop,cliente_fd);
-			loggear_request_drop(paquete_drop);
-			}
+					APIcreateRESPUESTA(paquete_create_fs,cliente_fd);
 
-//			if (send(cliente_fd, &rta, sizeof(uint16_t), 0) <= 0)
-//				puts("Error en envio de CODIGO DE RESPUESTA.");
-//			pthread_exit(NULL);
-			break;
 
-		case DESCRIBE:;
-			t_paquete_describe* paquete_describe= deserializar_paquete_describe(cliente_fd);
+				}
+	//			pthread_exit(NULL);
+				break;
 
-			if(paquete_describe != NULL)
-			{
+			case DROP:;
+				t_paquete_drop* paquete_drop = deserializar_paquete_drop(cliente_fd);
+				if(paquete_drop!=NULL)
+				{
+	//				rta = 13;
+	//				if (send(cliente_fd, &rta, sizeof(uint16_t), 0) <= 0)
+	//					puts("Error en envio de CODIGO DE RESPUESTA.");
+	//				break;
+				APIdropRESPUESTA(paquete_drop,cliente_fd);
+				loggear_request_drop(paquete_drop);
+				}
 
-				if(strcmp(paquete_describe->nombre_tabla,"ALL") == 0){
+	//			if (send(cliente_fd, &rta, sizeof(uint16_t), 0) <= 0)
+	//				puts("Error en envio de CODIGO DE RESPUESTA.");
+	//			pthread_exit(NULL);
+				break;
 
-					respuestaDESCRIBE* metadatasDeTablasPedidas = APIdescribeTodasLasTablasRESPUESTA();
+			case DESCRIBE:;
+				t_paquete_describe* paquete_describe= deserializar_paquete_describe(cliente_fd);
 
-					if(metadatasDeTablasPedidas->rta == 25){
-						uint16_t rta=25;
+				if(paquete_describe != NULL)
+				{
+
+					if(strcmp(paquete_describe->nombre_tabla,"ALL") == 0){
+
+						respuestaDESCRIBE* metadatasDeTablasPedidas = APIdescribeTodasLasTablasRESPUESTA();
+
+						if(metadatasDeTablasPedidas->rta == 25){
+							uint16_t rta=25;
+							send(cliente_fd, &rta, sizeof(uint16_t), 0);
+
+		//					imprimirListaMetadatas(metadatasDeTablasPedidas); SI DESCOMENTAS ESTO ROMPE PORQUE ES TIPO respuestaDESCRIBE*
+							serealizar_respuesta_describe(metadatasDeTablasPedidas,cliente_fd);
+
+	//						free(metadatasDeTablasPedidas);
+						}
+						if(metadatasDeTablasPedidas->rta == 23){
+							uint16_t rta=23;
+						send(cliente_fd, &rta, sizeof(uint16_t), 0);
+						free(metadatasDeTablasPedidas);
+						break;
+						}
+						//ME FALTA SI LA RTA ES ERRONEA.
+
+					} else{
+
+						respuestaDESCRIBE* metadataDeTablaPedida = APIdescribeRESPUESTA(paquete_describe);
+						if(metadataDeTablaPedida->rta == 22){
+							uint16_t rta=22;
+						send(cliente_fd, &rta, sizeof(uint16_t), 0);
+						free(metadataDeTablaPedida);
+						break;
+						}
+
+						if(metadataDeTablaPedida->rta == 20){
+							uint16_t rta=20;
 						send(cliente_fd, &rta, sizeof(uint16_t), 0);
 
-	//					imprimirListaMetadatas(metadatasDeTablasPedidas); SI DESCOMENTAS ESTO ROMPE PORQUE ES TIPO respuestaDESCRIBE*
-						serealizar_respuesta_describe(metadatasDeTablasPedidas,cliente_fd);
-
-//						free(metadatasDeTablasPedidas);
+		//				imprimirListaMetadatas(metadataDeTablaPedida->tablas);
+						serealizar_respuesta_describe(metadataDeTablaPedida,cliente_fd);
+						free(metadataDeTablaPedida);
+						//dictionary_destroy_and_destroy_elements(metadataDeTablaPedida,free);
+						}
 					}
-					if(metadatasDeTablasPedidas->rta == 23){
-						uint16_t rta=23;
-					send(cliente_fd, &rta, sizeof(uint16_t), 0);
-					free(metadatasDeTablasPedidas);
-					break;
-					}
-					//ME FALTA SI LA RTA ES ERRONEA.
-
-				} else{
-
-					respuestaDESCRIBE* metadataDeTablaPedida = APIdescribeRESPUESTA(paquete_describe);
-					if(metadataDeTablaPedida->rta == 22){
-						uint16_t rta=22;
-					send(cliente_fd, &rta, sizeof(uint16_t), 0);
-					free(metadataDeTablaPedida);
-					break;
-					}
-
-					if(metadataDeTablaPedida->rta == 20){
-						uint16_t rta=20;
-					send(cliente_fd, &rta, sizeof(uint16_t), 0);
-
-	//				imprimirListaMetadatas(metadataDeTablaPedida->tablas);
-					serealizar_respuesta_describe(metadataDeTablaPedida,cliente_fd);
-					free(metadataDeTablaPedida);
-					//dictionary_destroy_and_destroy_elements(metadataDeTablaPedida,free);
-					}
-				}
-			} else
-			{
-				uint16_t rta=24;
-				send(cliente_fd, &rta, sizeof(uint16_t), 0);
-			}
-
-//			pthread_exit(NULL);
-			break;
-
-		case SELECT:;
-
-			t_paquete_select *paquete_select=deserializar_paquete_select(cliente_fd);
-
-			if(paquete_select!=NULL){
-
-				t_respuesta_pagina* rta_pagina= APIselectRESPUESTA(paquete_select,cliente_fd);
-
-				//printf("%d,%d,%d,%s,%lli",rta_pagina->bit,rta_pagina->long_value,rta_pagina->tamanioPaquete,rta_pagina->value,rta_pagina->timestamp);
-
-				size_t bytes = sizeof(uint16_t)+sizeof(size_t) + sizeof(long long) +rta_pagina->long_value;
-
-
-				if(rta_pagina->bit != 1)
+				} else
 				{
-					void * buffer = serializar_respuesta_pagina(rta_pagina);
-
-
-					if (send(cliente_fd, &bytes, sizeof(size_t), 0) <= 0)
-						puts("Error en envio de CODIGO DE RESPUESTA.");
-
-					if (send(cliente_fd, buffer, bytes, 0) <= 0)
-						puts("Error en envio de CODIGO DE RESPUESTA.");
-					free(buffer);
+					uint16_t rta=24;
+					send(cliente_fd, &rta, sizeof(uint16_t), 0);
 				}
-				else
-				{
-					uint16_t bit_error = 1;
-					size_t tamanio_buffer = 4;
 
-					send(cliente_fd,&tamanio_buffer,sizeof(size_t),0);
-					send(cliente_fd,&bit_error,tamanio_buffer,0);
+	//			pthread_exit(NULL);
+				break;
+
+			case SELECT:;
+
+				t_paquete_select *paquete_select=deserializar_paquete_select(cliente_fd);
+
+				if(paquete_select!=NULL){
+
+					t_respuesta_pagina* rta_pagina= APIselectRESPUESTA(paquete_select,cliente_fd);
+
+					//printf("%d,%d,%d,%s,%lli",rta_pagina->bit,rta_pagina->long_value,rta_pagina->tamanioPaquete,rta_pagina->value,rta_pagina->timestamp);
+
+					size_t bytes = sizeof(size_t) + sizeof(long long) +rta_pagina->long_value;
+
+
+					if(rta_pagina->bit == 0)
+					{
+						void * buffer = serializar_respuesta_pagina(rta_pagina);
+
+						if (send(cliente_fd, &rta_pagina->bit, sizeof(uint16_t), 0) <= 0)
+							puts("Error en envio de CODIGO DE RESPUESTA.");
+
+						if (send(cliente_fd, &bytes, sizeof(size_t), 0) <= 0)
+							puts("Error en envio de CODIGO DE RESPUESTA.");
+
+						if (send(cliente_fd, buffer, bytes, 0) <= 0)
+							puts("Error en envio de CODIGO DE RESPUESTA.");
+						free(buffer);
+					}
+					else
+					{
+	//					uint16_t bit_error = 1;
+	//					size_t tamanio_buffer = 2;
+
+						if (send(cliente_fd, &rta_pagina->bit, sizeof(uint16_t), 0) <= 0)
+							puts("Error en envio de CODIGO DE RESPUESTA.");
+
+					}
+					free(rta_pagina);
+
 				}
-				free(rta_pagina);
 
-			}
+	//			pthread_exit(NULL);
+				break;
 
-//			pthread_exit(NULL);
-			break;
+			case INSERT:;
 
-		case INSERT:;
+				t_paquete_insert* paquete_insert = deserializar_paquete_insert(cliente_fd);
+				if(paquete_insert!=NULL){
+	//				rta= 43;
+	//				if (send(cliente_fd, &rta, sizeof(uint16_t), MSG_DONTWAIT) <= 0)
+	//					puts("Error en envio de CODIGO DE RESPUESTA.");
+	//				break;
+					APIinsertRESPUESTA(paquete_insert,cliente_fd);
+				}
+	//				rta= APIinsertRESPUESTA(paquete_insert);
+	//				if (send(cliente_fd, &rta, sizeof(uint16_t), MSG_DONTWAIT) <= 0)
+	//					puts("Error en envio de CODIGO DE RESPUESTA.");
+	//			pthread_exit(NULL);
+				break;
+			case JOURNAL:;
 
-			t_paquete_insert* paquete_insert = deserializar_paquete_insert(cliente_fd);
-			if(paquete_insert!=NULL){
-//				rta= 43;
-//				if (send(cliente_fd, &rta, sizeof(uint16_t), MSG_DONTWAIT) <= 0)
-//					puts("Error en envio de CODIGO DE RESPUESTA.");
-//				break;
-				APIinsertRESPUESTA(paquete_insert,cliente_fd);
-			}
-//				rta= APIinsertRESPUESTA(paquete_insert);
-//				if (send(cliente_fd, &rta, sizeof(uint16_t), MSG_DONTWAIT) <= 0)
-//					puts("Error en envio de CODIGO DE RESPUESTA.");
-//			pthread_exit(NULL);
-			break;
-		case JOURNAL:;
+				cliente_fd=0;
+				log_info(logger, "Se recibio paquete tipo: JOURNAL");
+	//			pthread_exit(NULL);
 
-			cliente_fd=0;
-			log_info(logger, "Se recibio paquete tipo: JOURNAL");
-//			pthread_exit(NULL);
+				break;
+			case RUN:;
+				log_info(logger, "Se recibio paquete tipo: RUN");
+	//			pthread_exit(NULL);
+				break;
+			case ADD:;
+				log_info(logger, "Se recibio paquete tipo: ADD");
+	//			pthread_exit(NULL);
+				break;
+			case HS:;
+				t_config* config = leer_config();
+				int max_value = config_get_int_value(config,"TAMAÑO_VALUE");
+				send(cliente_fd,&max_value,sizeof(int),0);
+				log_info(logger, "HANDSHAKE con memoria realizado.");
+	//			pthread_exit(NULL);
+				break;
+			case -1:
+				log_info(logger, "FIN CONEXION.\n");
+				cliente_fd=0;
+	//			pthread_exit(NULL);
+				break;
+			default:
+				log_warning(logger, "Operacion desconocida.");
+				break;
 
-			break;
-		case RUN:;
-			log_info(logger, "Se recibio paquete tipo: RUN");
-//			pthread_exit(NULL);
-			break;
-		case ADD:;
-			log_info(logger, "Se recibio paquete tipo: ADD");
-//			pthread_exit(NULL);
-			break;
-		case HS:;
-			t_config* config = leer_config();
-			int max_value = config_get_int_value(config,"TAMAÑO_VALUE");
-			send(cliente_fd,&max_value,sizeof(int),0);
-			log_info(logger, "HANDSHAKE con memoria realizado.");
-//			pthread_exit(NULL);
-			break;
-		case -1:
-			log_info(logger, "FIN CONEXION.\n");
-			cliente_fd=0;
-//			pthread_exit(NULL);
-			break;
-		default:
-			log_warning(logger, "Operacion desconocida.");
-			break;
-
-		//salgo mutex
-//		pthread_exit(NULL);
+			//salgo mutex
+	//		pthread_exit(NULL);
 		}
+
+		close(cliente_fd);
+
 
 //		pthread_exit(NULL);
 }
@@ -312,7 +320,7 @@ t_paquete_create_de_mp* deserializar_paquete_create_de_mp(int socket_cliente)
 
 	memcpy(&tamanio_tabla ,buffer_para_longitudes,sizeof(uint32_t));
 	memcpy(&tamanio_consistencia ,buffer_para_longitudes+sizeof(uint32_t),sizeof(uint32_t));
-	t_paquete_create_de_mp* paquete_create = malloc(tamanio_tabla + tamanio_consistencia + sizeof(uint32_t)*2 + sizeof(int)*2);
+	t_paquete_create_de_mp* paquete_create = malloc(tamanio_tabla + tamanio_consistencia + sizeof(t_paquete_create_de_mp));
 
 	paquete_create->nombre_tabla = malloc(tamanio_tabla);
 	paquete_create->consistencia = malloc(tamanio_consistencia);

@@ -22,13 +22,10 @@ void ingresar_paquete(void * arg)
 
 				break;
 			case 1:;
-				t_paquete_drop* paquete_d = paquete_drop(parametros_paquete,parametro->logger);
-
-//				if(paquete_d != NULL)
-//				{
-//					enviar_drop_lissandra(paquete_d,parametro->config,parametro->logger);
-//				}
+				parametros_paquete= strtok(NULL, " ");
+				drop(parametros_paquete,parametro->config,parametro->logger);
 				break;
+
 			case 2:;
 				t_paquete_describe_lfs* paquete_describe_lfs = paquete_describe_para_lfs(parametros_paquete,parametro->logger);
 				enviar_describe_lissandra(paquete_describe_lfs,parametro->config,parametro->logger);

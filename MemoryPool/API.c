@@ -7,21 +7,21 @@ void selectf(int cliente,t_paquete_select* paquete, t_config* config, t_log* log
 
 	if(!(condicion_select(paquete -> nombre_tabla,paquete -> valor_key)))
 	{
-//		puts("ENTRO EN NOT CONDICION SELECT");
+
 		int conexion = iniciar_conexion(config);
 		enviar_select_lissandra(conexion, paquete, logger);
 
-//		puts("EMPEZANDO DESERIALIZACION");
+
 		t_pagina* pagina_lissandra = deserializar_pagina(conexion);
 
 		terminar_conexion(conexion);
 
 		if(pagina_lissandra->timestamp!=0)
 		{
-//			puts("TIMESTAMP BIEN RECIBIDO");
+
 			pagina_lissandra->valor_key = paquete->valor_key;
 
-			t_pagina_completa* pagina_completa_lissandra = crear_pagina_completa(pagina_lissandra);
+			//t_pagina_completa* pagina_completa_lissandra = crear_pagina_completa(pagina_lissandra);
 
 			t_paquete_insert* paquete_insert = crear_paquete_insert(paquete->nombre_tabla, pagina_lissandra->valor_key,pagina_lissandra->value, pagina_lissandra->timestamp);
 
@@ -30,7 +30,7 @@ void selectf(int cliente,t_paquete_select* paquete, t_config* config, t_log* log
 
 			if(!existe_tabla_paginas(paquete->nombre_tabla))
 			{
-				//NO SE INSERTA EN MP
+
 
 				if (cliente != NULL){
 					int bytes = sizeof(int) + strlen(pagina_lissandra -> value) + 1;
@@ -40,16 +40,26 @@ void selectf(int cliente,t_paquete_select* paquete, t_config* config, t_log* log
 					log_info(logger,"Respuesta enviada: %s\n", pagina_lissandra -> value);
 				}
 				else{log_info(logger,"Respuesta: %s\n", pagina_lissandra -> value);}
-				free(pagina_completa_lissandra);
+				//free(pagina_completa_lissandra);
+				free(paquete_insert->nombre_tabla);
+				free(paquete_insert->value);
 				free(paquete_insert);
+
+				free(pagina_lissandra->value);
+				free(pagina_lissandra);
 				return;
 			}
+			free(paquete_insert->nombre_tabla);
+			free(paquete_insert->value);
+			free(paquete_insert);
 
+//			free(pagina_lissandra->value);
+//			free(pagina_lissandra);
 		}
 		else
 		{
-			char* value_error = string_new();
 			size_t tamanio_value_error = strlen(pagina_lissandra->value)+1;
+			char* value_error = malloc(strlen(pagina_lissandra->value)+1);
 			memcpy(value_error,pagina_lissandra->value,tamanio_value_error);
 
 			if(cliente!=NULL)
@@ -63,13 +73,13 @@ void selectf(int cliente,t_paquete_select* paquete, t_config* config, t_log* log
 				log_error(logger,"Respuesta: %s\n", value_error);
 			}
 
+			free(pagina_lissandra->value);
 			free(pagina_lissandra);
 			return;
 		}
 	}
-	puts("BUSCANDO PAGINA EN MP");
+
 	t_pagina* pagina_encontrada = buscar_pagina(paquete -> nombre_tabla, paquete -> valor_key);
-	puts("PAGINA ENCONTRADA EN MP");
 	printf("\nNOMBRE TABLA: %s, KEY: %d\n", paquete -> nombre_tabla, paquete -> valor_key);
 
 	int bytes = sizeof(int) + strlen(pagina_encontrada -> value) + 1;
@@ -148,10 +158,25 @@ void create(int conexion, t_paquete_create* paquete, t_config* config, t_log* lo
 	else
 	{
 		crear_tabla_paginas(paquete->nombre_tabla,paquete->consistencia,paquete->particiones);
-		enviar_create_lissandra(paquete, config, logger);
 		log_info(logger,"Tabla creada: %s\n", paquete->nombre_tabla);
+		enviar_create_lissandra(paquete, config, logger);
 	}
 //	if(conexion!=NULL){enviar_respuesta_create(conexion, boolean, paquete->nombre_tabla);}
+}
+
+void drop(char * nombre_tabla, t_config* config, t_log* logger)
+{
+	if(existe_tabla_paginas(nombre_tabla))
+	{
+		eliminar_segmento(nombre_tabla);
+		enviar_drop_lissandra(nombre_tabla,config,logger);
+		log_info(logger, "Tabla %s eliminada de memoria", nombre_tabla);
+		mostrar_tabla_segmentos();
+	}
+	else
+	{
+		log_error(logger,"No existe dicha tabla");
+	}
 }
 
 
@@ -218,7 +243,7 @@ void enviar_modificados(char * nombre_tabla, t_list* lista ,int conexion_LFS, t_
 
 		list_iterate(lista_paginas_modificadas,_enviar);
 
-		list_clean_and_destroy_elements(lista_paginas_modificadas,eliminar_pagina_completa);
+//		list_clean_and_destroy_elements(lista_paginas_modificadas,eliminar_pagina_completa);
 	}
 }
 

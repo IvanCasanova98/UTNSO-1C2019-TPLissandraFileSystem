@@ -109,6 +109,8 @@ void* compactar(void * arg){
 
 				crearParticionNueva(nombreTabla,TodosLosRegistrosActualizados,i);
 
+
+				RemoverTemporalesCompactadosDeTablaYSusBloques(nombreTabla);
 				free(TodosLosRegistrosActualizados);
 				}
 
@@ -332,7 +334,7 @@ t_list* LiberarTmpc(char *nombreTabla){
 		free(registrosCompletos);
 
 
-		RemoverTemporalesCompactadosDeTablaYSusBloques(nombreTabla);
+
 
 
 

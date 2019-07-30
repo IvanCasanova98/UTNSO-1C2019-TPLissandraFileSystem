@@ -46,16 +46,16 @@ t_list* crear_tabla_paginas(char* nombre_tabla,char* consistencia, uint16_t part
 {
 	t_list* tabla_paginas = list_create();
 
-	t_metadata* metadata = malloc(strlen(nombre_tabla)+1+sizeof(uint16_t)+strlen(consistencia)+1);
-
-	metadata->nombre_tabla = malloc(strlen(nombre_tabla)+1);
-	strcpy(metadata->nombre_tabla, nombre_tabla);
-	metadata->particiones = particiones;
-	metadata->consistencia = consistencia;
-	list_add(tabla_particiones, metadata);
+//	t_metadata* metadata = malloc(strlen(nombre_tabla)+1+sizeof(uint16_t)+strlen(consistencia)+1);
+//
+//	metadata->nombre_tabla = malloc(strlen(nombre_tabla)+1);
+//	strcpy(metadata->nombre_tabla, nombre_tabla);
+//	metadata->particiones = particiones;
+//	metadata->consistencia = consistencia;
+//	list_add(tabla_particiones, metadata);
 
 	agregar_tabla(nombre_tabla, tabla_paginas); //la agrega a la tabla de segmentos
-	free(metadata);
+//	free(metadata);
 	return tabla_paginas;
 }
 
@@ -94,6 +94,8 @@ t_pagina* buscar_pagina(char* nombre_tabla, uint16_t valor_key)
 	t_pagina_completa* pagina_completa = pagina_mayor_timestamp(lista_paginas);//en este caso devuelve el primero de la lista, pero debe elegir por timestamp.
 
 	t_pagina* pagina = pagina_completa -> pagina;
+
+	list_destroy(lista_paginas);
 
 	return pagina;
 }
@@ -186,7 +188,13 @@ bool tabla_buscada(t_metadata* nodo, char* nombre_tabla)
 
 bool puede_reemplazar(char* nombre_tabla)
 {
-	return list_size(paginas_sin_modificar(nombre_tabla))>0;
+	t_list * lista_paginas_sin_modificar = paginas_sin_modificar(nombre_tabla);
+
+	int size = list_size(lista_paginas_sin_modificar);
+
+	//list_destroy_and_destroy_elements(lista_paginas_sin_modificar,eliminar_filter);
+
+	return size>0;
 }
 
 t_list* paginas_modificadas(t_list * lista)
@@ -248,6 +256,38 @@ t_pagina_completa* pagina_mayor_timestamp(t_list* lista_paginas)
 }
 
 
+//---------------------------ELIMINACION DE DATOS
+void eliminar_segmento(char * nombre_tabla)
+{
+	void _eliminar_tabla_paginas(void * tabla_paginas){eliminar_tabla_paginas(tabla_paginas);}
+
+	dictionary_remove_and_destroy(tabla_segmentos,nombre_tabla,_eliminar_tabla_paginas);
+}
+
+void eliminar_tabla_paginas(t_list * tabla_paginas)
+{
+	list_destroy_and_destroy_elements(tabla_paginas,eliminar);
+}
+
+void eliminar(void * pagina_completa)
+{
+	int long_value = strlen(((t_pagina_completa *) pagina_completa)->pagina->value);
+	int tamanio_pagina = long_value + sizeof(long long) + sizeof(int) + sizeof(uint16_t);
+
+	tamanio_memoria_ocupada -=  tamanio_pagina;
+
+	free(((t_pagina_completa *) pagina_completa)->pagina->value);
+	free(((t_pagina_completa *) pagina_completa)->pagina);
+	free(((t_pagina_completa *) pagina_completa));
+}
+
+void eliminar_filter(void * pagina_completa)
+{
+	free(((t_pagina_completa *) pagina_completa)->pagina->value);
+	free(((t_pagina_completa *) pagina_completa)->pagina);
+	free(((t_pagina_completa *) pagina_completa));
+}
+
 int reemplazar_pagina(char* nombre_tabla, t_pagina_completa* pagina_completa, t_config* config)
 {
 	int respuesta;
@@ -268,21 +308,24 @@ int reemplazar_pagina(char* nombre_tabla, t_pagina_completa* pagina_completa, t_
 	int max_memoria = config_get_int_value(config, "TAM_MEM");
 
 
-	tamanio_memoria_ocupada  += strlen(pagina_A_Reemplazar->pagina->value);
-	tamanio_memoria_ocupada  -= strlen(pagina_completa->pagina->value);
+	//si la pagina a remplazar es la q voy a sacar, ese tamanio tengo que liberarlo y sumarle la nueva
+	tamanio_memoria_ocupada  -= strlen(pagina_A_Reemplazar->pagina->value);
+	tamanio_memoria_ocupada  += strlen(pagina_completa->pagina->value);
 
 	if(tamanio_memoria_ocupada<=max_memoria)
 	{
 		list_replace(tabla_paginas,i,pagina_completa);
+		//list_destroy_and_destroy_elements(lista_paginas_sin_modificar,eliminar_filter);
 		return respuesta = 1;
 	}
 	else
 	{
-		tamanio_memoria_ocupada  -= strlen(pagina_A_Reemplazar->pagina->value);
-		tamanio_memoria_ocupada  += strlen(pagina_completa->pagina->value);
+		tamanio_memoria_ocupada  += strlen(pagina_A_Reemplazar->pagina->value);
+		tamanio_memoria_ocupada  -= strlen(pagina_completa->pagina->value);
+		//list_destroy_and_destroy_elements(lista_paginas_sin_modificar,eliminar_filter);
 		return respuesta = 0;
+		//estaba al reves
 	}
-
 }
 //-----------------------MOSTRAR ELEMENTOS
 

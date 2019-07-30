@@ -303,6 +303,8 @@ void APIcreateRESPUESTA(t_paquete_create* paquete_create,int cliente){ //0 memor
 
 t_respuesta_pagina* APIselectRESPUESTA(t_paquete_select* paquete_select,int cliente){ // bastante ml revisar
 
+
+
 	char* nombreTablaMayuscula=malloc(strlen(paquete_select->nombre_tabla)+1);
 	strcpy(nombreTablaMayuscula,paquete_select->nombre_tabla);
 
@@ -310,15 +312,23 @@ t_respuesta_pagina* APIselectRESPUESTA(t_paquete_select* paquete_select,int clie
 	string_to_upper(nombreTablaMayuscula);
 
 		if(existeTabla(nombreTablaMayuscula)){
+
 			verificarSemaforoTabla(nombreTablaMayuscula);
 			verificarSemaforoMemTable();
+
+			waitearSemTable(nombreTablaMayuscula);
+
+
+
 			t_metadata_fs* metadataDeTabla=obtenerMetadataTabla(nombreTablaMayuscula);
 			int particionKey;
 			particionKey =	particionDeKey(paquete_select->valor_key,metadataDeTabla->particiones);
 			t_list* RegistrosEncontrados=list_create();
 
 			void* RegistroParticion 		  = buscarEnParticion(nombreTablaMayuscula,particionKey,paquete_select->valor_key);
+			waitearMemTable();
 			void* RegistroMemTable  		  = buscarMemTable(nombreTablaMayuscula,paquete_select->valor_key); // 8 bytes ml
+			postearMemTable();
 			void* RegistroTemporal  		  = buscarEnTemporales(nombreTablaMayuscula,paquete_select->valor_key);
 			void* RegistroTemporalCompactando = buscarEnTemporalesCompactando(nombreTablaMayuscula,paquete_select->valor_key);
 
@@ -340,18 +350,11 @@ t_respuesta_pagina* APIselectRESPUESTA(t_paquete_select* paquete_select,int clie
 			if(!list_is_empty(RegistrosEncontrados)){
 			t_registro* registroBuscado = elegirRegistroDeMayorTimeStamp(RegistrosEncontrados);
 
-//			char * valueEncontrado = string_new();
-//			valueEncontrado =malloc(strlen(registroBuscado->value)+1);
-//			long long mayorTimestamp= registroBuscado->timestamp;
-
-			t_respuesta_pagina* pagina= malloc(sizeof(t_respuesta_pagina));
-
-//			strcpy(valueEncontrado,registroBuscado->value);
-//			memcpy(valueEncontrado,registroBuscado->value,strlen(registroBuscado->value)+1);
 
 
+			t_respuesta_pagina* pagina= malloc(sizeof(t_respuesta_pagina)+strlen(registroBuscado->value)+1);
 
-//			size_t long_value= strlen(valueEncontrado)+1;
+
 
 			pagina->value=malloc(strlen(registroBuscado->value)+1);
 
@@ -373,15 +376,16 @@ t_respuesta_pagina* APIselectRESPUESTA(t_paquete_select* paquete_select,int clie
 			liberarPaqueteSelect(paquete_select);
 
 			free(metadataDeTabla);
+
+			postearSemTable(nombreTablaMayuscula);
+
 			free(nombreTablaMayuscula);
-
-
 			return pagina;
 			}else{
 				valueNoExiste(paquete_select->nombre_tabla,paquete_select->valor_key);
 
 				list_destroy(RegistrosEncontrados);
-				free(nombreTablaMayuscula);
+
 				free(metadataDeTabla);
 				liberarPaqueteSelect(paquete_select);
 
@@ -389,18 +393,24 @@ t_respuesta_pagina* APIselectRESPUESTA(t_paquete_select* paquete_select,int clie
 				t_respuesta_pagina* pagina= malloc(sizeof(t_respuesta_pagina));
 
 				pagina->bit=1;
+				postearSemTable(nombreTablaMayuscula);
+
+				free(nombreTablaMayuscula);
 				return pagina;
 		}
 
 		}else
 		{
 		LaTablaNoExisteSelect(nombreTablaMayuscula);
-		free(nombreTablaMayuscula);
+
 		liberarPaqueteSelect(paquete_select);
 
 		t_respuesta_pagina* pagina= malloc(sizeof(t_respuesta_pagina));
 
 		pagina->bit=1;
+		postearSemTable(nombreTablaMayuscula);
+
+		free(nombreTablaMayuscula);
 		return pagina;
 
 		}
@@ -606,8 +616,8 @@ t_list* listarTablasExistentes() {
 
 t_registro* elegirRegistroDeMayorTimeStamp(t_list* RegistrosEncontrados){
 	list_sort(RegistrosEncontrados,mayorTimeStamp);
-	t_registro* registroConMayorTimeStamp = (t_registro*)list_remove(RegistrosEncontrados,0);
-
+	t_registro* registroMem=(t_registro*)list_remove(RegistrosEncontrados,0);
+	t_registro* registroConMayorTimeStamp = crearRegistro(registroMem->value,registroMem->key,registroMem->timestamp);
 	return registroConMayorTimeStamp;
 }
 
@@ -1362,6 +1372,7 @@ t_registro* buscarEnTemporalesCompactando(char* nombreTabla,int key){
 	int temporales=1;
 	char* directorioTemporalcompactando= DirectorioDeTemporalCompactacion(nombreTabla,temporales);
 	char* registrosCompletos=string_new();
+
 	while(existe_temporal(directorioTemporalcompactando)){
 		int i=0;
 		t_config* config = config_create(directorioTemporalcompactando);
@@ -1526,6 +1537,37 @@ void verificarSemaforoTabla(char* nombreTabla){
 
 }
 
+void waitearSemTable(char* nombreTabla){
+	int valorSemaforo;
+	bool _buscarSemaforo(void* elemento){
+					return buscarSemaforo(elemento,nombreTabla);
+		}
+	semaforoTabla* Tablasemaforo = list_find(ListaSem,_buscarSemaforo);
+
+		sem_wait(&(Tablasemaforo->semaforoCompactacion));
+
+
+	}
+
+
+
+
+void postearSemTable(char* nombreTabla){
+	int valorSemaforo;
+	bool _buscarSemaforo(void* elemento){
+					return buscarSemaforo(elemento,nombreTabla);
+		}
+	semaforoTabla* Tablasemaforo = list_find(ListaSem,_buscarSemaforo);
+
+		sem_post(&(Tablasemaforo->semaforoCompactacion));
+
+
+	}
+
+void waitearMemTable(){sem_wait(&(SemaforoMemtable));}
+void postearMemTable(){sem_post(&(SemaforoMemtable));}
+
+
 void verificarSemaforoCompactacion(char* nombreTabla){
 	int valorSemaforo;
 	bool _buscarSemaforo(void* elemento){
@@ -1572,31 +1614,11 @@ void* serializar_mensaje(char* value, int bytes)
 	return buffer;
 }
 
-//void notificarCambioRetardo(){
-//
-//	char buffer [2*sizeof(struct inotify_event )+24];
-//	int file_descriptor = inotify_init();
-//
-//	int watch_descriptor = inotify_add_watch(file_descriptor, "Lissandra.config", IN_MODIFY | IN_CREATE | IN_DELETE);
-//	int length = read(file_descriptor, buffer, sizeof(struct inotify_event )+24);
-//	int offset = 0;
-//	while (offset < length) {
-//	struct inotify_event *event = (struct inotify_event *) &buffer[offset];
-//	if (event->len) {
-//
-//	}
-//	}
-//}
-
 void* serializar_respuesta_pagina(t_respuesta_pagina* t_respuesta_pag){
 
-	void * buffer = malloc(sizeof(uint16_t)+sizeof(size_t) + sizeof(long long) +t_respuesta_pag->long_value);
+	void * buffer = malloc(sizeof(size_t) + sizeof(long long) +t_respuesta_pag->long_value);
 
 	int desplazamiento = 0;
-//	size_t tamanioTotal= sizeof(uint16_t)+sizeof(size_t)*2 + sizeof(long long) +t_respuesta_pag->long_value;
-
-	memcpy(buffer + desplazamiento, &(t_respuesta_pag->bit), sizeof(uint16_t));
-	desplazamiento+= sizeof(uint16_t);
 
 	memcpy(buffer + desplazamiento, &(t_respuesta_pag->long_value), sizeof(size_t));
 	desplazamiento+= sizeof(size_t);
@@ -1607,10 +1629,6 @@ void* serializar_respuesta_pagina(t_respuesta_pagina* t_respuesta_pag){
 	memcpy(buffer + desplazamiento, &(t_respuesta_pag->timestamp), sizeof(long long));
 	desplazamiento+=  sizeof(long long);
 
-	//CAMBIAMOS ESTO, NO HACE FALTA MANDAR ESO, no lo serialices
-
-//	memcpy(buffer + desplazamiento,&(t_respuesta_pag->tamanioPaquete),tamanioTotal);
-//	desplazamiento +=tamanioTotal;
 	return buffer;
 
 }

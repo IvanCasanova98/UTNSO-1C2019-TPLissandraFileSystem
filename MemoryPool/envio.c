@@ -258,6 +258,7 @@ void enviar_memorias(int socket_cliente, t_config* config)
 		void* envio = serealizar_seed_completa(memory_number[j],puertos[j],IP_SEEDS[j],tamanio_total);
 
 		send(socket_cliente,envio,tamanio_total,MSG_WAITALL);
+		free(envio);
 	}
 }
 
@@ -269,7 +270,7 @@ void enviar_paquete_select(t_paquete_select* paquete, int socket_cliente, t_log*
 	void* a_enviar = serializar_paquete_select(paquete);
 	if ( send(socket_cliente, a_enviar, bytes, 0) <= 0) puts("Error en envio de PAQUETE SELECT.");
 
-	//free(a_enviar);
+	free(a_enviar);
 }
 
 void enviar_paquete_insert(t_paquete_insert* paquete, int socket_cliente, t_log* logger)
@@ -334,7 +335,7 @@ t_list* enviar_describe_lissandra(t_paquete_describe_lfs* paquete,t_config* conf
 	if (send(conexion, &cod, sizeof(int), 0) <= 0)
 		puts("Error en envio de CODIGO DE OPERACION.");
 	else{enviar_paquete_describe(paquete, conexion, logger);}
-	free(paquete);
+//	free(paquete);
 
 	//------RESPUESTA DE LISSANDRA:
 
@@ -373,16 +374,11 @@ void enviar_insert_lissandra(t_paquete_insert* paquete, t_config* config, t_log*
 	if (send(conexion, &cod, sizeof(int), 0) <= 0)
 		puts("Error en envio de CODIGO DE OPERACION.");
 	else{enviar_paquete_insert(paquete, conexion, logger);}
+	free(paquete->nombre_tabla);
+	free(paquete->value);
 	free(paquete);
 
-	//------RESPUESTA DE LISSANDRA:
 
-	//------RESPUESTA DE LISSANDRA:
-//	void* respuesta = recibir_mensaje_para_kernel(conexion);
-
-//	uint16_t rta;
-//	recv(conexion, &rta, sizeof(uint16_t) ,MSG_WAITALL);
-	//protocolo_respuesta(rta,logger);
 
 	terminar_conexion(conexion);
 
@@ -395,7 +391,7 @@ void enviar_create_lissandra(t_paquete_create* paquete,t_config* config,t_log* l
 	if (send(conexion, &cod, sizeof(int), 0) <= 0)
 			puts("Error en envio de CODIGO DE OPERACION.");
 	else{enviar_paquete_create(paquete, conexion, logger);}
-	free(paquete);
+//	free(paquete);
 
 	terminar_conexion(conexion);
 }
