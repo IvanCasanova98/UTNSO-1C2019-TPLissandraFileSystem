@@ -16,6 +16,9 @@ int consistencia_to_int(char* parametros)
 }
 
 
+
+
+
 //-----------------------------ENVIO NUMERO DE MEMORIA
 
 void envio_numero_memoria(t_config* config, int conexion)

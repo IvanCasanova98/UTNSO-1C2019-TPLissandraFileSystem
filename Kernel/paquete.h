@@ -88,6 +88,7 @@ t_paquete_select* crear_paquete_select(char *nombretabla,uint16_t valor_key);
 t_paquete_insert* crear_paquete_insert(char *nombretabla,uint16_t valor_key, char *value, long long timestamp);
 t_paquete_create* crear_paquete_create(char* nombre_tabla, char* consistencia, int particiones, int tiempo_compactacion);
 void describe(int conexion, char* parametros);
+void drop(int conexion, char * nombre_tabla);
 
 //---------------------ARMAR PAQUETE
 t_paquete_select* selectf(char** vector_parametros);
@@ -102,6 +103,7 @@ void loggear_paquete_create(t_paquete_create* paquete);
 
 void logger_describe_tabla(char* nombre_tabla);
 void logger_describe_all();
+void logger_drop(char * nombre_tabla);
 
 //----------------------------------------------------ELIMINAR PAQUETE
 //void eliminar_paquete_select(t_paquete_select* paquete);

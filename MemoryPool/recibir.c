@@ -35,106 +35,115 @@ void recibir_paquetes(int cliente_fd, int server_fd, t_config* config, t_log* lo
 
 		switch(cod_op)
 		{
-			case CREATE:;
-				t_paquete_create* paquete_create = deserializar_paquete_create(cliente_fd);
+		case CREATE:;
+			t_paquete_create* paquete_create = deserializar_paquete_create(cliente_fd);
 
-				loggear_paquete_create(paquete_create, logger);
+			loggear_paquete_create(paquete_create, logger);
 
-				create(cliente_fd, paquete_create, config, logger);
-				free(paquete_create->nombre_tabla);
-				free(paquete_create->consistencia);
-				free(paquete_create);
-				break;
-			case DROP:;
-					int tamanio_buffer;
-					char * nombre_tabla = recibir_buffer(&tamanio_buffer, cliente_fd);
-					drop(nombre_tabla,config,logger);
-					break;
-			case DESCRIBE:;
+			create(paquete_create, config, logger);
 
-				int tamanio;
-				char* buffer = recibir_buffer(&tamanio, cliente_fd);
-				if(!strcmp(buffer,"ALL"))
-				{
-					int size=strlen("ALL")+1;
-					t_paquete_describe_lfs* paquete_describe_lfs=malloc(sizeof(uint32_t)+size);
-					paquete_describe_lfs->nombre_tabla=malloc(size);
-					strcpy(paquete_describe_lfs->nombre_tabla,"ALL");
-					paquete_describe_lfs->nombre_tabla_long=size;
-					t_list* tabla_particiones =enviar_describe_lissandra(paquete_describe_lfs,config,logger);
+			free(paquete_create->nombre_tabla);
+			free(paquete_create->consistencia);
+			free(paquete_create);
 
-					if (tabla_particiones!=NULL){
-					serializar_enviar_paquete_describe(cliente_fd, tabla_particiones);
-					}else {
-						int rta=0;
-						send(cliente_fd,&rta,sizeof(int),0);
-					}
-					free(paquete_describe_lfs->nombre_tabla);
-//					free(paquete_describe_lfs);
+			break;
+		case DROP:;
+			int tamanio_buffer;
+			char * nombre_tabla = recibir_buffer(&tamanio_buffer, cliente_fd);
+
+			drop(nombre_tabla,config,logger);
+			break;
+		case DESCRIBE:;
+
+			int tamanio;
+			char* buffer = recibir_buffer(&tamanio, cliente_fd);
+			if(!strcmp(buffer,"ALL"))
+			{
+				int size=strlen("ALL")+1;
+
+				t_paquete_describe_lfs* paquete_describe_lfs=malloc(sizeof(uint32_t)+size);
+				paquete_describe_lfs->nombre_tabla=malloc(size);
+				strcpy(paquete_describe_lfs->nombre_tabla,"ALL");
+				paquete_describe_lfs->nombre_tabla_long=size;
+
+				t_list* tabla_particiones = enviar_describe_lissandra(paquete_describe_lfs,config,logger);
+
+				if (tabla_particiones!=NULL){
+				serializar_enviar_paquete_describe(cliente_fd, tabla_particiones);
+				}else {
+					int rta=0;
+					send(cliente_fd,&rta,sizeof(int),0);
 				}
-				else
-				{
-					int size=strlen(buffer)+1;
-					t_paquete_describe_lfs* paquete_describe_lfs=malloc(sizeof(t_paquete_describe_lfs)+size);
-					paquete_describe_lfs->nombre_tabla=malloc(size);
-					strcpy(paquete_describe_lfs->nombre_tabla,buffer);
-					paquete_describe_lfs->nombre_tabla_long=size;
-					t_list* tabla_particiones =enviar_describe_lissandra(paquete_describe_lfs,config,logger);
+				free(paquete_describe_lfs->nombre_tabla);
+				free(paquete_describe_lfs);
+				//BORRAR TABLA DE PARTICIONES
 
-					if (tabla_particiones!=NULL){
-					serializar_enviar_paquete_describe(cliente_fd, tabla_particiones);
-					}else {
-						int rta=0;
-						send(cliente_fd,&rta,sizeof(int),0);
-					}
+			}
+			else
+			{
+				int size=strlen(buffer)+1;
+				t_paquete_describe_lfs* paquete_describe_lfs=malloc(sizeof(t_paquete_describe_lfs)+size);
+				paquete_describe_lfs->nombre_tabla=malloc(size);
+				strcpy(paquete_describe_lfs->nombre_tabla,buffer);
+				paquete_describe_lfs->nombre_tabla_long=size;
+				t_list* tabla_particiones = enviar_describe_lissandra(paquete_describe_lfs,config,logger);
 
-					free(paquete_describe_lfs->nombre_tabla);
-//					free(paquete_describe_lfs);
+				if (tabla_particiones!=NULL){
+				serializar_enviar_paquete_describe(cliente_fd, tabla_particiones);
+				}else {
+					int rta=0;
+					send(cliente_fd,&rta,sizeof(int),0);
 				}
+				//BORRAR TABLA DE PARTICIONES
 
-				break;
-			case SELECT:;
-				t_paquete_select *paquete_select = deserializar_paquete_select(cliente_fd);
+				free(paquete_describe_lfs->nombre_tabla);
+				free(paquete_describe_lfs);
+			}
 
-				loggear_paquete_select(paquete_select, logger);
+			break;
+		case SELECT:;
+			t_paquete_select *paquete_select = deserializar_paquete_select(cliente_fd);
 
-				selectf(cliente_fd, paquete_select, config, logger);
-				free(paquete_select->nombre_tabla);
-							free(paquete_select);
+			loggear_paquete_select(paquete_select, logger);
 
-				break;
-			case INSERT:;
-				t_paquete_insert* paquete_insert = deserializar_paquete_insert(cliente_fd);
+			selectf(cliente_fd, paquete_select, config, logger);
 
-				loggear_paquete_insert(paquete_insert, logger);
+			free(paquete_select->nombre_tabla);
+			free(paquete_select);
 
-				insert(paquete_insert, config, logger, 1);
+			break;
+		case INSERT:;
+			t_paquete_insert* paquete_insert = deserializar_paquete_insert(cliente_fd);
 
-				free(paquete_insert->nombre_tabla);
-							free(paquete_insert->value);
-							free(paquete_insert);
-				break;
-			case JOURNAL:
-				journal(config,logger);
-				//FALTA LOGGEAR EL JOURNAL!!
-				//ACUERDENSE DE LOGGEAR LAS QUE NO SE PUDIERON INSERTAR PORQUE NO EXISTE LA TABLA EN EL FS
-				break;
-			case RUN:
-				break;
-			case ADD:
-				break;
-			case HS:
-				enviar_memorias(cliente_fd, config);
-				cliente_fd=0;
-				break;
-			case -1:
-				cliente_fd=0;
-				break;
-			default:
-				puts("operacion desconocida.");
-				break;
+			loggear_paquete_insert(paquete_insert, logger);
+
+			insert(paquete_insert, config, logger, 1);
+
+			free(paquete_insert->nombre_tabla);
+			free(paquete_insert->value);
+			free(paquete_insert);
+
+			break;
+		case JOURNAL:
+			journal(config,logger);
+			//FALTA LOGGEAR EL JOURNAL!!
+			//ACUERDENSE DE LOGGEAR LAS QUE NO SE PUDIERON INSERTAR PORQUE NO EXISTE LA TABLA EN EL FS
+			break;
+		case RUN:
+			break;
+		case ADD:
+			break;
+		case HS:
+			enviar_memorias(cliente_fd, config);
+			cliente_fd=0;
+			break;
+		case -1:
+			cliente_fd=0;
+			break;
+		default:
+			puts("operacion desconocida.");
+			break;
 		}
-
 	}
 }
 
@@ -153,26 +162,7 @@ int recibir_operacion(int socket_cliente)
 
 //----------------------------DESERIALIZAR PAQUETES
 
-t_paquete_drop* deserializar_paquete_drop(int socket_cliente){
-	int desplazamiento = 0;
-	size_t tamanioNombreTabla;
 
-	recv(socket_cliente, &tamanioNombreTabla, sizeof(int) ,MSG_WAITALL);
-
-	t_paquete_drop* paqueteDrop = malloc(tamanioNombreTabla+sizeof(uint32_t));
-	paqueteDrop->nombre_tabla = malloc(tamanioNombreTabla);
-
-	void *buffer = malloc(tamanioNombreTabla);
-
-	recv(socket_cliente, buffer, tamanioNombreTabla ,MSG_WAITALL);
-
-	memcpy(paqueteDrop->nombre_tabla,buffer + desplazamiento, tamanioNombreTabla);
-	desplazamiento+= tamanioNombreTabla;
-
-	free(buffer);
-	return paqueteDrop;
-
-}
 
 t_paquete_select* deserializar_paquete_select(int socket_cliente)
 {
@@ -181,7 +171,7 @@ t_paquete_select* deserializar_paquete_select(int socket_cliente)
 
 	recv(socket_cliente, &tamanioTabla, sizeof(int) ,MSG_WAITALL);
 
-	t_paquete_select *paqueteSelect= malloc(tamanioTabla+sizeof(uint16_t)+sizeof(int));
+	t_paquete_select *paqueteSelect = malloc(tamanioTabla+sizeof(uint16_t)+sizeof(int));
 	paqueteSelect->nombre_tabla = malloc(tamanioTabla);
 
 	void *buffer = malloc(tamanioTabla+sizeof(uint16_t));
@@ -276,8 +266,6 @@ t_paquete_create* deserializar_paquete_create(int socket_cliente)
 }
 
 t_list* deserializar_respuesta_describe(int conexion){
-	t_dictionary* diccionarioDescribe=dictionary_create();
-	t_metadata* metadata;
 	int cantidadDeTablas;
 	recv(conexion, &cantidadDeTablas, sizeof(int) ,MSG_WAITALL);
 	int i=0;
@@ -317,7 +305,7 @@ t_list* deserializar_respuesta_describe(int conexion){
 		free(buffer);
 	}
 
-return listaDescribe;
+	return listaDescribe;
 }
 
 t_pagina* deserializar_pagina (int socket_cliente)
@@ -374,7 +362,9 @@ t_pagina* deserializar_pagina (int socket_cliente)
 
 		strcpy(pagina->value,value);
 		pagina->timestamp = timestamp;
+		free(value);
 		free(buffer);
+
 
 	}
 	else
@@ -388,11 +378,9 @@ t_pagina* deserializar_pagina (int socket_cliente)
 	}
 
 
-	printf("VALUE: %s\n",pagina->value);
-	printf("TIMESTAMP: %lli\n",pagina->timestamp);
+
 	return pagina;
 }
-
 
 //------------------RECIBIR MENSAJES------------------
 void* recibir_buffer(int* size, int socket_cliente)

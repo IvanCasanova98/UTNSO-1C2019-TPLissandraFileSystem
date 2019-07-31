@@ -77,21 +77,6 @@ void* serializar_paquete_select(t_paquete_select* paquete)
 	//free(buffer);
 }
 
-void* serializar_paquete_drop(t_paquete_drop* paquete){
-
-	void* buffer = malloc(paquete->nombre_tabla_long + sizeof(uint32_t));
-	int desplazamiento = 0;
-
-	memcpy(buffer + desplazamiento, &paquete->nombre_tabla_long, sizeof(uint32_t));
-	desplazamiento+= sizeof(uint32_t);
-
-	memcpy(buffer + desplazamiento, paquete->nombre_tabla, paquete->nombre_tabla_long);
-	desplazamiento+= paquete->nombre_tabla_long;
-
-
-	return buffer;
-
-}
 
 void* serializar_paquete_describe(t_paquete_describe_lfs* paquete){
 
@@ -259,6 +244,7 @@ void enviar_memorias(int socket_cliente, t_config* config)
 
 		send(socket_cliente,envio,tamanio_total,MSG_WAITALL);
 		free(envio);
+
 	}
 }
 
@@ -309,15 +295,6 @@ void enviar_respuesta_create(int conexion, int booleano, char* nombre_tabla)
 	send(conexion, &tamanio_value, sizeof(int), 0);
 	send(conexion, value, tamanio_value, 0);
 }
-
-void enviar_paquete_drop(t_paquete_drop* paquete, int socket_cliente,t_log* logger){
-	int bytes = paquete->nombre_tabla_long + sizeof(uint32_t);
-	void* a_enviar = serializar_paquete_drop(paquete);
-	if ( send(socket_cliente, a_enviar, bytes, 0) <= 0) puts("Error en envio de PAQUETE DROP.");
-
-	free(a_enviar);
-}
-
 void enviar_paquete_describe(t_paquete_describe_lfs* paquete,int socket_cliente, t_log* logger){
 
 	int bytes = paquete->nombre_tabla_long + sizeof(uint32_t);
@@ -335,7 +312,6 @@ t_list* enviar_describe_lissandra(t_paquete_describe_lfs* paquete,t_config* conf
 	if (send(conexion, &cod, sizeof(int), 0) <= 0)
 		puts("Error en envio de CODIGO DE OPERACION.");
 	else{enviar_paquete_describe(paquete, conexion, logger);}
-//	free(paquete);
 
 	//------RESPUESTA DE LISSANDRA:
 
@@ -347,8 +323,9 @@ t_list* enviar_describe_lissandra(t_paquete_describe_lfs* paquete,t_config* conf
 		loggearListaMetadatas(lista);
 		terminar_conexion(conexion);
 		return lista;
-	}else{
-	//	protocolo_respuesta(rta,logger);
+	}
+	else
+	{
 		terminar_conexion(conexion);
 		return NULL;
 	}
@@ -374,11 +351,10 @@ void enviar_insert_lissandra(t_paquete_insert* paquete, t_config* config, t_log*
 	if (send(conexion, &cod, sizeof(int), 0) <= 0)
 		puts("Error en envio de CODIGO DE OPERACION.");
 	else{enviar_paquete_insert(paquete, conexion, logger);}
+
 	free(paquete->nombre_tabla);
 	free(paquete->value);
 	free(paquete);
-
-
 
 	terminar_conexion(conexion);
 
@@ -391,26 +367,23 @@ void enviar_create_lissandra(t_paquete_create* paquete,t_config* config,t_log* l
 	if (send(conexion, &cod, sizeof(int), 0) <= 0)
 			puts("Error en envio de CODIGO DE OPERACION.");
 	else{enviar_paquete_create(paquete, conexion, logger);}
-//	free(paquete);
 
 	terminar_conexion(conexion);
 }
 
-void enviar_drop_lissandra(t_paquete_create* paquete,t_config* config,t_log* logger)
+void enviar_drop_lissandra(char * nombre_tabla,t_config* config,t_log* logger)
 {
 	int conexion = iniciar_conexion(config);
 	int cod = 1;
 	if (send(conexion, &cod, sizeof(int), 0) <= 0)
-			puts("Error en envio de CODIGO DE OPERACION.");
-	else{enviar_paquete_drop(paquete, conexion, logger);}
-	free(paquete);
-
-	//------RESPUESTA DE LISSANDRA:
-
-	uint16_t rta;
-	recv(conexion, &rta, sizeof(uint16_t) ,0);
-	//protocolo_respuesta(rta,logger);
-
+		puts("Error en envio de CODIGO DE OPERACION.");
+	else
+	{
+		int tamanio = strlen(nombre_tabla)+1;
+		send(conexion, &tamanio, sizeof(int), 0);
+		send(conexion, nombre_tabla, tamanio, 0);
+	}
+	log_info(logger, "Drop tabla %s enviado a lissandra", nombre_tabla);
 	terminar_conexion(conexion);
 
 }

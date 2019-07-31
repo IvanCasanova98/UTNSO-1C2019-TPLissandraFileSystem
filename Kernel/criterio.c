@@ -11,7 +11,7 @@ SEED * elegir_memoria(char* nombre_tabla, int cons_ingresada)
 	SEED * seed_i;
 	int numero_memoria;
 
-	if (list_size(pool_especifico)==0)
+	if (list_is_empty(pool_especifico))
 	{
 		return NULL;
 	}

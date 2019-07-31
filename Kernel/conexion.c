@@ -67,17 +67,7 @@ int conectarse_a_memoria(char** vector_request, t_log* logger)
 		}
 		break;
 	case 1:;
-		//DROP
-		break;
-	case 2:;
-		if (vector_request[1]==NULL)
-		{
-			int num_random = numero_random(2);
-			t_list * pool_especifico = get_pool(num_random);
-			int numero_memoria = list_get(pool_especifico,0);
-			memoria = get_seed_especifica(numero_memoria);
-		}
-		else if(existe_tabla(vector_request[1]))
+		if(existe_tabla(vector_request[1]))
 		{
 			char * consistencia_tabla = get_consistencia(vector_request[1]);
 			int cons_ingresada = consistencia_ingresada(consistencia_tabla);
@@ -87,10 +77,13 @@ int conectarse_a_memoria(char** vector_request, t_log* logger)
 				conexion_nueva = -1;
 			}
 		}
-		else
-		{
-			conexion_nueva = -1;
-		}
+		else{return -1;}
+		break;
+	case 2:;
+		int num_random = numero_random(2);
+		t_list * pool_especifico = get_pool(num_random);
+		int numero_memoria = list_get(pool_especifico,0);
+		memoria = get_seed_especifica(numero_memoria);
 		break;
 	case 3:;
 		if(existe_tabla(vector_request[1]))
@@ -103,7 +96,7 @@ int conectarse_a_memoria(char** vector_request, t_log* logger)
 				conexion_nueva = -1;
 			}
 		}
-		else{return 0;}
+		else{return -1;}
 		break;
 	case 4:;
 		if(existe_tabla(vector_request[1]))
@@ -116,11 +109,16 @@ int conectarse_a_memoria(char** vector_request, t_log* logger)
 				conexion_nueva = -1;
 			}
 		}
-		else{return 0;}
-
+		else{return -1;}
+		break;
+	case 5:
+		return 0;
+		break;
+	case 7:
+		return 0;
 		break;
 	default:
-		return 0;
+		return -1;
 		break;
 	}
 
@@ -131,6 +129,8 @@ int conectarse_a_memoria(char** vector_request, t_log* logger)
 
 		conexion_nueva = iniciar_conexion_request(logger, ip_sin_comillas[0], puerto_char);
 	}
+
+	printf("\nCONECTADO A MEMORIA: %d", memoria->NUMBER);
 
 	return conexion_nueva;
 }

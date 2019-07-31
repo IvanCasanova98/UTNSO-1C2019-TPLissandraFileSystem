@@ -40,6 +40,38 @@ t_list* buscar_tabla_paginas(char* nombre_tabla_paginas){
 	return dictionary_get(tabla_segmentos, nombre_tabla_paginas);
 }
 
+//---------ELIMINACION DE DATOS
+void eliminar_segmento(char * nombre_tabla)
+{
+	void _eliminar_tabla_paginas(void * tabla_paginas){eliminar_tabla_paginas(tabla_paginas);}
+
+	dictionary_remove_and_destroy(tabla_segmentos,nombre_tabla,_eliminar_tabla_paginas);
+}
+
+void eliminar_tabla_paginas(t_list * tabla_paginas)
+{
+	list_destroy_and_destroy_elements(tabla_paginas,eliminar);
+}
+
+void eliminar(void * pagina_completa)
+{
+	int long_value = strlen(((t_pagina_completa *) pagina_completa)->pagina->value);
+	int tamanio_pagina = long_value + sizeof(long long) + sizeof(int) + sizeof(uint16_t);
+
+	tamanio_memoria_ocupada -=  tamanio_pagina;
+
+	free(((t_pagina_completa *) pagina_completa)->pagina->value);
+	free(((t_pagina_completa *) pagina_completa)->pagina);
+	free(((t_pagina_completa *) pagina_completa));
+}
+
+void eliminar_filter(void * pagina_completa)
+{
+	free(((t_pagina_completa *) pagina_completa)->pagina->value);
+	free(((t_pagina_completa *) pagina_completa)->pagina);
+	free(((t_pagina_completa *) pagina_completa));
+}
+
 //----------------TABLA DE PAGINAS
 
 t_list* crear_tabla_paginas(char* nombre_tabla,char* consistencia, uint16_t particiones)
@@ -47,15 +79,17 @@ t_list* crear_tabla_paginas(char* nombre_tabla,char* consistencia, uint16_t part
 	t_list* tabla_paginas = list_create();
 
 //	t_metadata* metadata = malloc(strlen(nombre_tabla)+1+sizeof(uint16_t)+strlen(consistencia)+1);
-//
 //	metadata->nombre_tabla = malloc(strlen(nombre_tabla)+1);
+//
 //	strcpy(metadata->nombre_tabla, nombre_tabla);
 //	metadata->particiones = particiones;
 //	metadata->consistencia = consistencia;
 //	list_add(tabla_particiones, metadata);
 
 	agregar_tabla(nombre_tabla, tabla_paginas); //la agrega a la tabla de segmentos
+
 //	free(metadata);
+
 	return tabla_paginas;
 }
 
@@ -129,10 +163,7 @@ t_pagina_completa* crear_pagina_completa(t_pagina* pagina)
 {
 	t_pagina_completa* pagina_completa = malloc(sizeof(t_pagina_completa));
 	pagina_completa -> pagina = pagina;
-
-	//CAMBIAR FLAG A 0!!
 	pagina_completa -> flag = 0;
-	//CAMBIAR FLAG A 0!!
 
 	return pagina_completa;
 }
@@ -192,7 +223,7 @@ bool puede_reemplazar(char* nombre_tabla)
 
 	int size = list_size(lista_paginas_sin_modificar);
 
-	//list_destroy_and_destroy_elements(lista_paginas_sin_modificar,eliminar_filter);
+//	list_destroy_and_destroy_elements(lista_paginas_sin_modificar,eliminar_filter);
 
 	return size>0;
 }
@@ -229,6 +260,7 @@ t_list* paginas_sin_modificar(char* nombre_tabla)
 	t_list* lista_pagina_sin_modificar = list_filter(tabla_paginas, _sin_modificar);
 
 	return lista_pagina_sin_modificar;
+
 }
 
 
@@ -255,38 +287,6 @@ t_pagina_completa* pagina_mayor_timestamp(t_list* lista_paginas)
 	return list_get(lista_paginas, ultimo);
 }
 
-
-//---------------------------ELIMINACION DE DATOS
-void eliminar_segmento(char * nombre_tabla)
-{
-	void _eliminar_tabla_paginas(void * tabla_paginas){eliminar_tabla_paginas(tabla_paginas);}
-
-	dictionary_remove_and_destroy(tabla_segmentos,nombre_tabla,_eliminar_tabla_paginas);
-}
-
-void eliminar_tabla_paginas(t_list * tabla_paginas)
-{
-	list_destroy_and_destroy_elements(tabla_paginas,eliminar);
-}
-
-void eliminar(void * pagina_completa)
-{
-	int long_value = strlen(((t_pagina_completa *) pagina_completa)->pagina->value);
-	int tamanio_pagina = long_value + sizeof(long long) + sizeof(int) + sizeof(uint16_t);
-
-	tamanio_memoria_ocupada -=  tamanio_pagina;
-
-	free(((t_pagina_completa *) pagina_completa)->pagina->value);
-	free(((t_pagina_completa *) pagina_completa)->pagina);
-	free(((t_pagina_completa *) pagina_completa));
-}
-
-void eliminar_filter(void * pagina_completa)
-{
-	free(((t_pagina_completa *) pagina_completa)->pagina->value);
-	free(((t_pagina_completa *) pagina_completa)->pagina);
-	free(((t_pagina_completa *) pagina_completa));
-}
 
 int reemplazar_pagina(char* nombre_tabla, t_pagina_completa* pagina_completa, t_config* config)
 {
@@ -315,14 +315,14 @@ int reemplazar_pagina(char* nombre_tabla, t_pagina_completa* pagina_completa, t_
 	if(tamanio_memoria_ocupada<=max_memoria)
 	{
 		list_replace(tabla_paginas,i,pagina_completa);
-		//list_destroy_and_destroy_elements(lista_paginas_sin_modificar,eliminar_filter);
+//		list_destroy_and_destroy_elements(lista_paginas_sin_modificar,eliminar_filter);
 		return respuesta = 1;
 	}
 	else
 	{
 		tamanio_memoria_ocupada  += strlen(pagina_A_Reemplazar->pagina->value);
 		tamanio_memoria_ocupada  -= strlen(pagina_completa->pagina->value);
-		//list_destroy_and_destroy_elements(lista_paginas_sin_modificar,eliminar_filter);
+//		list_destroy_and_destroy_elements(lista_paginas_sin_modificar,eliminar_filter);
 		return respuesta = 0;
 		//estaba al reves
 	}
@@ -360,7 +360,7 @@ void mostrar_tamanio_memoria_ocupada()
 void startup_memoria()
 {
 	tabla_segmentos = dictionary_create();
-	tabla_particiones = list_create();
+//	tabla_particiones = list_create();
 
 	tamanio_memoria_ocupada = 0;
 
@@ -401,6 +401,6 @@ void startup_memoria()
 //	pagina_completa3->flag = 1;
 //	pagina_completa4->flag = 1;
 //
-//	mostrar_tabla_segmentos();
+	mostrar_tabla_segmentos();
 //	mostrar_tamanio_memoria_ocupada();
 }

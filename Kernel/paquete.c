@@ -60,23 +60,10 @@ t_paquete_create* crear_paquete_create(char* nombre_tabla, char* consistencia, i
 
 t_paquete_select* selectf(char** vector_parametros)
 {
+	if(!verif_select(vector_parametros)){return NULL;}
+
 	uint16_t valor_key;;
 
-	if(vector_parametros[1]==NULL)
-	{
-		falta_tabla();
-		return NULL;
-	}
-
-	if(!existe_tabla(vector_parametros[1]))
-	{
-		return NULL;
-	}
-
-	if(vector_parametros[2]==NULL || !validar_numero(vector_parametros[2])){
-		falta_key();
-		return NULL;
-	}
 	valor_key = atoi(vector_parametros[2]);
 
 	t_paquete_select* paquete = crear_paquete_select(vector_parametros[1], valor_key);
@@ -86,47 +73,18 @@ t_paquete_select* selectf(char** vector_parametros)
 	return paquete;
 }
 
-t_paquete_insert* insert(char** vector_parametros){
+t_paquete_insert* insert(char** vector_parametros)
+{
+	if(!verif_insert(vector_parametros)){return NULL;}
 
 	uint16_t valor_key;
 
 	char* value_completo;
 	long long timestamp=0;
-
-
-	if(vector_parametros[1]==NULL)
-	{
-		falta_tabla();
-		return NULL;
-	}
-
-	if(vector_parametros[2]==NULL || !validar_numero(vector_parametros[2]))
-	{
-		falta_key();
-		return NULL;
-	}
 	valor_key = atoi(vector_parametros[2]);
 
-
-	if(vector_parametros[3]==NULL)
-	{
-		falta_value();
-		return NULL;
-	}
-	else
-	{
-		value_completo = concatenar_value(vector_parametros);
-		if((string_starts_with(value_completo, "\"") && string_ends_with(value_completo, "\"")))
-		{
-			value_completo = strtok(value_completo, "\"");
-		}
-		else
-		{
-			falta_value();
-			return NULL;
-		}
-	}
-
+	value_completo = concatenar_value(vector_parametros);
+	value_completo = strtok(value_completo, "\"");
 	timestamp = get_timestamp();
 
 	t_paquete_insert* paquete = crear_paquete_insert(vector_parametros[1], valor_key, value_completo, timestamp);
@@ -147,41 +105,12 @@ long long get_timestamp(){
 
 t_paquete_create* create(char** vector_parametros) //ARREGLAR VERIFICACIONES POR "FALTAN DATOS"
 {
+	if(!verif_create(vector_parametros)){return NULL;}
+
 	int particiones;
 	int tiempo_compactacion;
 
-
-	if(vector_parametros[1]==NULL)
-	{
-		falta_tabla();
-		return NULL;
-	}
-
-	if(vector_parametros[2]==NULL)
-	{
-		falta_consistencia();
-		return NULL;
-	}
-	if(!strcmp(vector_parametros[2],"SC") || !strcmp(vector_parametros[2],"SHC") || !strcmp(vector_parametros[2],"EC")){}
-	else
-	{
-		falta_consistencia();
-		return NULL;
-	}
-
-	if(vector_parametros[3]==NULL || !validar_numero(vector_parametros[3]) || !strcmp(vector_parametros[3],"0"))
-	{
-		falta_particiones();
-		return NULL;
-	}
 	particiones = atoi(vector_parametros[3]);
-
-
-	if(vector_parametros[4]==NULL || !validar_numero(vector_parametros[4]) || !strcmp(vector_parametros[4],"0"))
-	{
-		falta_tiempo_compactacion();
-		return NULL;
-	}
 	tiempo_compactacion = atoi(vector_parametros[4]);
 
 	t_paquete_create* paquete = crear_paquete_create(vector_parametros[1], vector_parametros[2], particiones, tiempo_compactacion);
@@ -214,6 +143,20 @@ void describe(int conexion, char* parametros){
 
 	deserealizar_metadata(conexion);
 }
+
+void drop(int conexion, char * nombre_tabla)
+{
+	int cod_ingresado = 1;
+	send(conexion, &cod_ingresado, sizeof(int), 0);
+
+	int tamanio = strlen(nombre_tabla)+1;
+	send(conexion, &tamanio, sizeof(int), 0);
+	send(conexion, nombre_tabla, tamanio, 0);
+
+	logger_drop(nombre_tabla);
+	//logear
+}
+
 
 //-------------------------LOGGERS
 
@@ -250,7 +193,11 @@ void logger_describe_tabla(char* nombre_tabla){
     log_destroy(logger);
 }
 
-
+void logger_drop(char * nombre_tabla){
+	t_log* logger = iniciar_logger();
+	log_info(logger, "DROP TABLA %s ENVIADO\n",nombre_tabla);
+    log_destroy(logger);
+}
 
 
 

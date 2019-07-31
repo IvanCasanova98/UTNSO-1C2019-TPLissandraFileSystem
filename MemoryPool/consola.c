@@ -9,7 +9,8 @@ void ingresar_paquete(void * arg)
 
 	char* lineaRequest = ingresar_request();
 	string_to_upper(lineaRequest);
-	char* parametros_paquete = strtok(lineaRequest, " ");
+	char * parametros_paquete = strtok(lineaRequest, " ");
+
 	int cod_ingresado = codigo_ingresado(parametros_paquete);
 
 	while(1)
@@ -18,36 +19,32 @@ void ingresar_paquete(void * arg)
 		{
 			case 0:;
 				t_paquete_create* paquete_c = paquete_create(parametros_paquete, parametro->logger);
-				create(0, paquete_c, parametro->config, parametro->logger);
-
+				if(paquete_c == NULL){break;}
+				create(paquete_c, parametro->config, parametro->logger);
 				break;
 			case 1:;
 				parametros_paquete= strtok(NULL, " ");
 				drop(parametros_paquete,parametro->config,parametro->logger);
 				break;
-
 			case 2:;
+//				describe(parametros_paquete, parametro->logger, parametro->config);
 				t_paquete_describe_lfs* paquete_describe_lfs = paquete_describe_para_lfs(parametros_paquete,parametro->logger);
 				enviar_describe_lissandra(paquete_describe_lfs,parametro->config,parametro->logger);
 				break;
 			case 3:;
 				t_paquete_select* paquete_s = paquete_select(parametros_paquete, parametro->logger);
+				if(paquete_s == NULL){break;}
 				selectf(NULL,paquete_s, parametro->config, parametro->logger);
 				break;
 			case 4:;
 				t_paquete_insert* paquete_i = paquete_insert(parametros_paquete, parametro->logger);
+				if (paquete_i == NULL){break;}
 				insert(paquete_i, parametro->config,  parametro->logger, 1);
-//				if(paquete_i != NULL)
-//				{
-//				enviar_insert_lissandra(paquete_i,parametro->config,parametro->logger);
-//				}
 				break;
 			case 5:;
 				journal(parametro->config,parametro->logger);
-				//FIJARSE SI LOGEAAA
 				break;
 			default:
-			//	mostrar_tabla_segmentos();
 				printf("Operacion desconocida.");
 				break;
 			}

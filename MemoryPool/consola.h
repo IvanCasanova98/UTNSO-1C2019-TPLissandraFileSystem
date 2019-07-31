@@ -30,4 +30,7 @@ void ingresar_paquete(void * arg);
 char* ingresar_request();
 int codigo_ingresado(char* lineaRequest);
 
+
+//---------------------VERIFICACIONES
+bool verificar_create(char * linea_request, t_log * logger);
 #endif /* CONSOLA_H_ */

@@ -38,4 +38,7 @@ void* pop_elemento();
 //HAY ELEMENTOS EN LA COLA
 bool elementos_en_la_cola();
 
+void abortar_proceso(t_proceso *proceso, t_log * logger);
+void eliminar_request(char * request);
+
 #endif /* PLANIFICADOR_H_ */

@@ -35,18 +35,23 @@ void retardo_ejecucion(t_config* config)
 int codigo_ingresado(char* parametros)
 {
 	if (strcmp(parametros, "CREATE")==0) {
+		puts("CREATE");
 		return 0;
 	}
 	else if (strcmp(parametros, "DROP")==0) {
+		puts("DROP");
 		return 1;
 	}
 	else if (strcmp(parametros, "DESCRIBE")==0) {
+		puts("DESCRIBE");
 		return 2;
 	}
 	else if (strcmp(parametros, "SELECT")==0) {
+		puts("SELECT");
 		return 3;
 	}
 	else if (strcmp(parametros, "INSERT")==0) {
+		puts("INSERT");
 		return 4;
 	}
 	else if (strcmp(parametros, "JOURNAL")==0) {
@@ -99,7 +104,30 @@ char * concatenar_value(char ** vector)
 	return value;
 
 }
-//---------------------------------------------FUNCIONES PARA VALIDAR
+
+//---------------------------------------------VALIDACION GENERAL
+
+bool verificar_request(int cod_ingresado, char** vector_parametros) //DEVUELVE FALSE CON ERROR
+{
+	switch(cod_ingresado)
+	{
+	case 0:
+		return verif_create(vector_parametros);
+		break;
+	case 1:
+		return verif_drop(vector_parametros);
+		break;
+	case 3:
+		return verif_select(vector_parametros);
+		break;
+	case 4:
+		return verif_insert(vector_parametros);
+		break;
+	default:
+		return true;
+		break;
+	}
+}
 
 bool validar_numero(char* parametro){
 	for(int i=0;i<string_length(parametro);i++){
@@ -108,18 +136,99 @@ bool validar_numero(char* parametro){
 	return true;
 }
 
-//bool validar_nombre_alfanumerico(char* parametro){
-//	int x=0;
-//	for(int i=0;i<string_length(parametro);i++){
-//		if(isdigit(parametro[i])) x++;
-//	}
-//	if(x==string_length(parametro)){
-//		return true;
-//	}else{
-//		return false;
-//	}
-//}
+//CREATE
+bool verif_create(char** vector_parametros)
+{
+	if(vector_parametros[1]==NULL)
+	{
+		falta_tabla();
+		return false;
+	}
+	else if(vector_parametros[2]==NULL)
+	{
+		falta_consistencia();
+		return false;
+	}
+	else if(!(strcmp(vector_parametros[2],"SC") || strcmp(vector_parametros[2],"SHC") || strcmp(vector_parametros[2],"EC")))
+	{
+		falta_consistencia();
+		return false;
+	}
+	else if(vector_parametros[3]==NULL || !validar_numero(vector_parametros[3]) || !strcmp(vector_parametros[3],"0"))
+	{
+		falta_particiones();
+		return false;
+	}
+	else if(vector_parametros[4]==NULL || !validar_numero(vector_parametros[4]) || !strcmp(vector_parametros[4],"0"))
+	{
+		falta_tiempo_compactacion();
+		return false;
+	}
+	else{return true;}
+}
 
+//DROP
+bool verif_drop(char** vector_parametros)
+{
+	return existe_tabla(vector_parametros[1]);
+}
+
+
+//SELECT
+bool verif_select(char** vector_parametros)
+{
+	if(vector_parametros[1]==NULL)
+	{
+		falta_tabla();
+		return false;
+	}
+	else if(!existe_tabla(vector_parametros[1]))
+	{
+		return false;
+	}
+	else if(vector_parametros[2]==NULL || !validar_numero(vector_parametros[2])){
+		falta_key();
+		return false;
+	}
+	else{return true;}
+}
+
+//INSERT
+bool verif_insert(char** vector_parametros)
+{
+	char* value_completo;
+
+	if(vector_parametros[1]==NULL)
+	{
+		falta_tabla();
+		return false;
+	}
+	else if(vector_parametros[2]==NULL || !validar_numero(vector_parametros[2]))
+	{
+		falta_key();
+		return false;
+	}
+	else if(vector_parametros[3]==NULL)
+	{
+		falta_value();
+		return false;
+	}
+	else
+	{
+		value_completo = concatenar_value(vector_parametros);
+		if((string_starts_with(value_completo, "\"") && string_ends_with(value_completo, "\"")))
+		{
+			return true;
+		}
+		else
+		{
+			falta_value();
+			return false;
+		}
+	}
+}
+
+//---------------------------------------------LOGGER DE VALIDACION
 void falta_tabla(){
 
 	t_log* logger=iniciar_logger();

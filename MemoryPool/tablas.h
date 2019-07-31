@@ -50,6 +50,13 @@ t_list* get_tabla_particiones();
 t_list* get_nodo_metadata(char* nombre_tabla);
 char * get_consistencia(char * nombre_tabla);
 
+//---------ELIMINACION DE DATOS
+
+void eliminar_segmento(char * nombre_tabla);
+void eliminar_tabla_paginas(t_list * tabla_paginas);
+void eliminar(void * pagina_completa);
+void eliminar_filter(void * pagina_completa);
+
 //----------------TABLA DE PAGINAS
 
 bool existe_pagina(char* nombre_tabla, uint16_t valor_key);
@@ -80,14 +87,12 @@ void ordenar_lista(t_list* lista_paginas);
 t_pagina_completa* pagina_menor_timestamp(t_list* lista_paginas);
 t_pagina_completa* pagina_mayor_timestamp(t_list* lista_paginas);
 int reemplazar_pagina(char* nombre_tabla, t_pagina_completa* pagina_completa,t_config * config);
-void eliminar(void * pagina_completa);
-void eliminar_filter(void * pagina_completa);
-void eliminar_tabla_paginas(t_list * tabla_paginas);
+
+
 void mostrar_pagina(t_pagina* pagina);
 void mostrar_pagina_completa(t_pagina_completa* pagina_completa);
 void mostrar_tabla_paginas(char* tabla_paginas);
 void mostrar_tabla_segmentos();
-void eliminar_segmento(char * nombre_tabla);
 void mostrar_tamanio_memoria_ocupada();
 void startup_memoria();
 

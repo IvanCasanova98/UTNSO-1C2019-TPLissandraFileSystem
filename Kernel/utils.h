@@ -40,13 +40,24 @@ void recibir_numero_memoria(int conexion);
 int codigo_ingresado(char* parametros);
 int consistencia_ingresada(char* parametros);
 int numero_random(int max);
+
 //--------------------------------------------------
 void retardo_ejecucion(t_config* config);
-
 char * concatenar_value(char ** vector);
 
 //---------------------------VALIDACIONES
+bool verificar_request(int cod_ingresado, char** vector_parametros);
+
 bool validarNumero(char* parametro);
+//CREATE
+bool verif_create(char** vector_parametros);
+//DROP
+bool verif_drop(char** vector_parametros);
+//SELECT
+bool verif_select(char** vector_parametros);
+//INSERT
+bool verif_insert(char** vector_parametros);
+//----------------------LOGGER DE VALIDACION
 void falta_tabla();
 void falta_key();
 void falta_value();

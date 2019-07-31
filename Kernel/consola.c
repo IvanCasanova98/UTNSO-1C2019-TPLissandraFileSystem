@@ -10,24 +10,21 @@ void consola()
 }
 
 //------------------------------INGRESO DE PAQUETES------------------------------------
-void request(void * arg) //RECIBIR LOGGER
+int request(void * arg) //RECIBIR LOGGER
 {
-
 	struct parametros * parametro;
 	parametro = ( struct parametros *) arg;
-
 	char** vector_request = string_split(parametro->parametros," ");
-
 	int cod_ingresado = codigo_ingresado(vector_request[0]);
 
-	int conexion_nueva = conectarse_a_memoria(vector_request, parametro->logger); //ELIGE UNA MEMORIA, SEGUN EL CRITERIO BASADO EN LA TABLA
+	bool verificacion = verificar_request(cod_ingresado, vector_request);
+	if(!verificacion){return 0;}
 
-	if(conexion_nueva==-1)
-	{
-		return;
-	}
+	int conexion_nueva = conectarse_a_memoria(vector_request, parametro->logger); //ELIGE UNA MEMORIA, SEGUN EL CRITERIO BASADO EN LA TABLA
+	if(conexion_nueva==-1){return 0;}
 
 	retardo_ejecucion(parametro->config);
+
 		switch(cod_ingresado){
 			case 0:;
 				t_paquete_create* paquete_create = create(vector_request);
@@ -46,18 +43,25 @@ void request(void * arg) //RECIBIR LOGGER
 				free(paquete_create);
 
 				break;
-
+			case 1:;
+				drop(conexion_nueva,vector_request[1]);
+				break;
 			case 2:;
 				describe(conexion_nueva,vector_request[1]);
 				break;
 
 			case 3:;
 				if(existe_tabla(vector_request[1]))
-//				if(1)
 				{
 					t_paquete_select* paquete_select = selectf(vector_request);
 
-					if(paquete_select==NULL){break;}
+					if(paquete_select==NULL){return 0;}
+
+					if(conexion_nueva==-1)
+					{
+						return 0;
+					}
+
 
 					if (send(conexion_nueva, &cod_ingresado, sizeof(int), 0) <= 0) puts("Error en envio de CODIGO DE OPERACION.");
 					else
@@ -102,13 +106,10 @@ void request(void * arg) //RECIBIR LOGGER
 				break;
 		}
 
-
-		//----------------------------------------------------------------------------------------
-		//esto no va para mi, pero bueno era para probar todo
 		if(conexion_nueva!=0){
 			close(conexion_nueva);
 		}
-		//----------------------------------------------------------------------------------------
+		return 1;
 }
 
 char* ingresar_request()

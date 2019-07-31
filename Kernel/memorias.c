@@ -16,9 +16,9 @@ void startup_diccionario()
 	t_list* lista_ec = list_create();
 	vector_consistencia[2] = lista_ec;
 
-	agregar_consistencia(0, "SC");
-	agregar_consistencia(0, "EC");
-	agregar_consistencia(0, "SHC");
+//	agregar_consistencia(0, "SC");
+//	agregar_consistencia(1, "EC");
+//	agregar_consistencia(1, "SHC");
 //	agregar_consistencia(1, "SHC");
 //	agregar_consistencia(2, "SHC");
 //	agregar_consistencia(2, "EC");
@@ -55,13 +55,13 @@ void deserealizar_metadata(int socket){
 		while(i<cant_elementos)
 		{
 			t_metadata* nodo_metadata = deserealizar_nodo(socket);
-	//		loggearMetadataTablas(nodo_metadata);
+//			loggearMetadataTablas(nodo_metadata);
 			agregar_datos(nodo_metadata->nombre_tabla, nodo_metadata->consistencia);
 			i++;
 		}
 	}
 
-	//dictionary_iterator(tabla_metadata,imprimir_diccionario);
+//	dictionary_iterator(tabla_metadata,imprimir_diccionario);
 }
 
 void journal_memorias(t_log* logger)
@@ -107,6 +107,7 @@ void agregar_consistencia(int memoria, char* consistencia)
 		printf("\nconsistencia erronea");
 		break;
 	}
+
 //	imprimir_consistencias();
 }
 

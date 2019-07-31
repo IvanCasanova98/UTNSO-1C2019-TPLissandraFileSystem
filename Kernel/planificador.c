@@ -35,8 +35,9 @@ void dispatcher(void* arg)
 	char * valor_quantum = config_get_string_value(parametro->config,"QUANTUM");
 	int quantum = atoi(valor_quantum);
 
-
 	t_proceso* proceso = queue_pop(cola_ready);
+
+	int request_exitosa;
 
 	if (proceso->boolean)
 	{
@@ -46,7 +47,13 @@ void dispatcher(void* arg)
 			{
 				char* linea_request = queue_pop(proceso->elemento);
 				parametro->parametros = linea_request;
-				request(parametro);
+				request_exitosa = request(parametro);
+
+				if(!request_exitosa)
+				{
+					abortar_proceso(proceso, parametro->logger);
+				}
+
 				free(linea_request);
 			}
 		}
@@ -155,4 +162,19 @@ void* pop_elemento()
 bool elementos_en_la_cola()
 {
 	return list_size(cola_ready->elements)>0;
+}
+
+void abortar_proceso(t_proceso *proceso, t_log * logger)
+{
+	void _eliminar_request(void * request){eliminar_request(request);}
+	queue_destroy_and_destroy_elements(proceso->elemento, _eliminar_request);
+	free(proceso);
+	hilos_ejecutando--;
+	log_error(logger, "Proceso abortado");
+	pthread_exit(NULL);
+}
+
+void eliminar_request(char * request)
+{
+	free(request);
 }

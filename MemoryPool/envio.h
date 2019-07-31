@@ -28,7 +28,6 @@ void* serealizar_seed_completa(int memoria, int puerto, char* IP,int tamanio_tot
 void* serializar_paquete_select(t_paquete_select* paquete);
 void* serializar_paquete_insert(t_paquete_insert* paquete);
 void* serializar_paquete_create(t_paquete_create* paquete);
-void* serializar_paquete_drop(t_paquete_drop* paquete);
 void* serializar_paquete_describe(t_paquete_describe_lfs* paquete);
 //---------------------------ENVIOS DE MEMORIAS
 
@@ -40,7 +39,7 @@ void enviar_paquete_select(t_paquete_select* paquete, int socket_cliente, t_log*
 void enviar_paquete_insert(t_paquete_insert* paquete, int socket_cliente, t_log* logger);
 void enviar_paquete_create(t_paquete_create* paquete, int socket_cliente, t_log* logger);
 void enviar_respuest_create(int conexion, int booleano, char* nombre_tabla);
-void enviar_paquete_drop(t_paquete_drop* paquete, int socket_cliente,t_log* logger);
+void enviar_paquete_describe(t_paquete_describe_lfs* paquete,int socket_cliente, t_log* logger);
 
 //----------------------------ENVIOS DE SERVIDOR A LISSANDRA
 
@@ -48,7 +47,7 @@ void enviar_select_lissandra(int conexion, t_paquete_select* paquete, t_log* log
 void enviar_insert_lissandra(t_paquete_insert* paquete, t_config* config, t_log* logger);
 t_list* enviar_describe_lissandra(t_paquete_describe_lfs* paquete_describe_lfs,t_config* config,t_log* logger);
 void enviar_create_lissandra(t_paquete_create* paquete_c,t_config* config,t_log* logger);
-void enviar_drop_lissandra(t_paquete_create* paquete,t_config* config,t_log* logger);
+void enviar_drop_lissandra(char * nombre_tabla,t_config* config,t_log* logger);
 int recibir_max_value_del_fs(t_config* config,t_log* logger);
 
 //----------------------------EXTRAS LFS
