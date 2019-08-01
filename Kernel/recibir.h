@@ -23,6 +23,8 @@ void recibir_mensaje(int socket_cliente);
 void recibir_seed(int socket_cliente);
 t_metadata* deserealizar_nodo(int socket);
 
+bool table_has_memory(int numero_memoria);
+
 SEED* deserealizar_seed(int socket_cliente);
 
 #endif /* RECIBIR_H_ */

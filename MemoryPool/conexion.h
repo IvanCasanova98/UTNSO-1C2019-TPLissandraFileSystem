@@ -21,6 +21,7 @@ int esperar_cliente(t_config* config, int);
 
 //----------------------------CONEXION COMO CLIENTE
 int iniciar_conexion(t_config* config);
+int iniciar_conexion_gossiping(char * ip, char * puerto);
 int crear_conexion(char *ip, char* puerto);
 void terminar_conexion(int conexion);
 

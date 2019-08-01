@@ -15,8 +15,8 @@ extern t_list* lista_seeds;
 void startup_lista_seeds();
 
 
-void mostrar_lista_seeds();
-void imprimir(SEED * seed);
+void mostrar_lista_seeds(t_log * logger);
+void imprimir(SEED * seed, t_log * logger);
 SEED * elegir_memoria(char* nombre_tabla, int cons_ingresada);
 
 SEED * get_seed_especifica(int numero_memoria);

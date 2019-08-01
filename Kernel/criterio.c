@@ -92,12 +92,15 @@ void startup_lista_seeds()
 	lista_seeds = list_create();
 }
 
-void mostrar_lista_seeds()
+void mostrar_lista_seeds(t_log * logger)
 {
-	list_iterate(lista_seeds,imprimir);
+	void _loggear(SEED * seed){imprimir(seed,logger);}
+	list_iterate(lista_seeds,_loggear);
 }
 
-void imprimir(SEED * seed){
-	printf("\nMemoria: %d - Puerto: %d - Ip: %s", seed->NUMBER,seed->PUERTO,seed->IP);
+void imprimir(SEED * seed, t_log * logger)
+{
+	log_info(logger, "Memoria: %d - Puerto: %d - Ip: %s", seed->NUMBER,seed->PUERTO,seed->IP);
+//	log_info(logger, "Handshake realizado")
 }
 

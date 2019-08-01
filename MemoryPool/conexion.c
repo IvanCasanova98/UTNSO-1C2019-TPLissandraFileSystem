@@ -65,7 +65,9 @@ int crear_conexion(char *ip, char* puerto)
 	int socket_cliente = socket(server_info->ai_family, server_info->ai_socktype, server_info->ai_protocol);
 
 	if(connect(socket_cliente, server_info->ai_addr, server_info->ai_addrlen) == -1)
-		printf("error");
+	{
+		return 0;
+	}
 
 	freeaddrinfo(server_info);
 
@@ -81,6 +83,11 @@ int iniciar_conexion(t_config* config)
 	);
 
 	return conexion;
+}
+
+int iniciar_conexion_gossiping(char * ip, char * puerto)
+{
+	return crear_conexion(ip,puerto);
 }
 
 void terminar_conexion(int conexion)

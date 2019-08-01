@@ -137,6 +137,10 @@ void recibir_paquetes(int cliente_fd, int server_fd, t_config* config, t_log* lo
 			enviar_memorias(cliente_fd, config);
 			cliente_fd=0;
 			break;
+		case GOSSIPING:;
+			recibir_seed(cliente_fd);
+			enviar_memorias(cliente_fd,config);
+			break;
 		case -1:
 			cliente_fd=0;
 			break;
@@ -162,6 +166,32 @@ int recibir_operacion(int socket_cliente)
 
 //----------------------------DESERIALIZAR PAQUETES
 
+SEED* deserealizar_seed(int socket_cliente)
+{
+	int tamanio_ip;
+	recv(socket_cliente, &tamanio_ip, sizeof(int), 0);
+
+	int size=tamanio_ip+2*sizeof(int);
+	void * buffer = malloc(size);
+
+	recv(socket_cliente, buffer, size, 0);
+
+	int desplazamiento = 0;
+
+	SEED* aux = malloc(size);
+	aux->IP = malloc(tamanio_ip);
+
+	memcpy(aux->IP,buffer + desplazamiento, tamanio_ip);
+	desplazamiento+=tamanio_ip;
+
+	memcpy(&(aux->NUMBER),buffer + desplazamiento, sizeof(int));
+	desplazamiento+=sizeof(int);
+
+	memcpy(&(aux->PUERTO),buffer + desplazamiento, sizeof(int));
+	desplazamiento+=sizeof(int);
+
+	return aux;
+}
 
 
 t_paquete_select* deserializar_paquete_select(int socket_cliente)
@@ -324,13 +354,6 @@ t_pagina* deserializar_pagina (int socket_cliente)
 
 	t_pagina* pagina;
 
-//	puts("EN DESERIALIZAR");
-
-
-//	puts("RECV 1");
-
-
-//	puts("RECV 2");
 	recv(socket_cliente, &bit_error, sizeof(uint16_t) ,MSG_WAITALL);
 
 
@@ -338,8 +361,7 @@ t_pagina* deserializar_pagina (int socket_cliente)
 	{
 
 		recv(socket_cliente, &tamanio_paquete, sizeof(size_t) ,MSG_WAITALL);
-		void *buffer = malloc(tamanio_paquete);
-//		puts("BIT DE ERROR 0");
+		void *buffer = malloc(tamanio_paquete);;
 
 		recv(socket_cliente, buffer, tamanio_paquete ,MSG_WAITALL);
 
@@ -369,7 +391,6 @@ t_pagina* deserializar_pagina (int socket_cliente)
 	}
 	else
 	{
-//		puts("BIT DE ERROR 1");
 		char* value = string_new();
 		pagina= malloc(sizeof(uint16_t)+strlen("Pagina no encontrada")+1+sizeof(long long));
 		pagina->value=malloc(strlen("Pagina no encontrada")+1);
@@ -383,6 +404,31 @@ t_pagina* deserializar_pagina (int socket_cliente)
 }
 
 //------------------RECIBIR MENSAJES------------------
+
+void recibir_seed(int socket_cliente)
+{
+	int i=0, cant,rta;
+
+//	recv(socket_cliente, &rta, sizeof(int), 0);
+
+	recv(socket_cliente, &cant, sizeof(int), 0);
+
+	while(i<cant)
+	{
+		SEED *memoria_i = deserealizar_seed(socket_cliente);
+
+		if(!table_has_memory(memoria_i->NUMBER))
+		{
+			list_add(tabla_gossip,memoria_i);
+		}
+
+		i++;
+	}
+
+//	return rta;
+}
+
+
 void* recibir_buffer(int* size, int socket_cliente)
 {
 	void * buffer;

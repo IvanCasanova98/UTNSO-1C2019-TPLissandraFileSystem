@@ -77,16 +77,26 @@ SEED* deserealizar_seed(int socket_cliente)
 void recibir_seed(int socket_cliente)
 {
 	int size1, i=0, j=0, k=0;
+	int cant,aux;
 
-	int cant;
 	recv(socket_cliente, &cant, sizeof(int), 0);
 
 	while(i<cant){
 		SEED *memoria_i = deserealizar_seed(socket_cliente);
-		list_add(lista_seeds,memoria_i);
+
+		if(!table_has_memory(memoria_i->NUMBER))
+		{
+			list_add(lista_seeds,memoria_i);
+		}
+
 		i++;
-	//printf("\nMemoria: %d - Puerto: %d - Ip: %s", memoria_i->NUMBER,memoria_i->PUERTO,memoria_i->IP);
 	}
+}
+
+bool table_has_memory(int numero_memoria)
+{
+	bool _comparar_numero(SEED * elemento){return numero_memoria == elemento->NUMBER;}
+	return list_any_satisfy(lista_seeds, _comparar_numero);
 }
 
 t_metadata* deserealizar_nodo(int socket){

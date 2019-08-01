@@ -26,6 +26,14 @@ typedef struct
 	void* stream;
 } t_buffer;
 
+typedef struct SEED
+{
+	char* IP;
+	int PUERTO;
+	int NUMBER;
+}SEED;
+
+
 typedef enum
 {
 	CREATE,
@@ -36,7 +44,8 @@ typedef enum
 	JOURNAL,
 	RUN,
 	ADD,
-	HS //HandShake
+	HS, //HandShake
+	GOSSIPING
 }op_code;
 
 typedef enum consistency

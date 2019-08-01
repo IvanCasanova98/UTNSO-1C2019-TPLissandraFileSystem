@@ -15,6 +15,7 @@
 #include "paquete.h"
 #include "conexion.h"
 #include "utils.h"
+#include "gossiping.h"
 
 //----------------------------SERIALIZAR PAQUETES
 
@@ -32,7 +33,7 @@ void* serializar_paquete_describe(t_paquete_describe_lfs* paquete);
 //---------------------------ENVIOS DE MEMORIAS
 
 void enviar_memorias(int socket_cliente, t_config* config);
-
+void enviar_memorias_rta(int socket_cliente, t_config* config);
 //----------------------------ENVIAR PAQUETES
 
 void enviar_paquete_select(t_paquete_select* paquete, int socket_cliente, t_log* logger);

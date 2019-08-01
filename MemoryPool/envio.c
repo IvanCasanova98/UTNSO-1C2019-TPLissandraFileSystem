@@ -217,34 +217,39 @@ void* serealizar_seed_completa(int memoria, int puerto, char* IP,int tamanio_tot
 }
 //---------------------------ENVIOS DE MEMORIAS
 
-void enviar_memorias(int socket_cliente, t_config* config)
+void enviar_memorias(int socket_cliente, t_config* config)//, int respuesta)
 {
-	char** MEMORY_NUMBERS = config_get_array_value(config, "MEMORY_NUMBERS");
-	char** IP_SEEDS = config_get_array_value(config, "IP_SEEDS");
-	char** PUERTO_SEEDS = config_get_array_value(config, "PUERTO_SEEDS");
-
-	int cant_elementos = cant_elementos_array(IP_SEEDS);
-
-	int puertos[cant_elementos];
-	int memory_number[cant_elementos];
-
-	for (int i=0; i<cant_elementos;i++)
-	{
-		puertos[i] = atoi(PUERTO_SEEDS[i]);
-		memory_number[i] = atoi(MEMORY_NUMBERS[i]);
-	}
+	int cant_elementos = list_size(tabla_gossip);
 
 	send(socket_cliente,&cant_elementos,sizeof(int),MSG_WAITALL);
 
-	for(int j=0;j<cant_elementos;j++)
+	for(int i=0;i<cant_elementos;i++)
 	{
-		int tamanio_total = 3*sizeof(int) + strlen(IP_SEEDS[j])+1;
+		SEED * seed_i = list_get(tabla_gossip,i);
 
-		void* envio = serealizar_seed_completa(memory_number[j],puertos[j],IP_SEEDS[j],tamanio_total);
+		int tamanio_total = 3*sizeof(int) + strlen(seed_i->IP)+1;
 
+		void * envio = serealizar_seed_completa(seed_i->NUMBER,seed_i->PUERTO,seed_i->IP,tamanio_total);
 		send(socket_cliente,envio,tamanio_total,MSG_WAITALL);
 		free(envio);
+	}
+}
+void enviar_memorias_rta(int socket_cliente, t_config* config)//, int respuesta)
+{
+	int cant_elementos = list_size(tabla_gossip);
 
+	send(socket_cliente,&cant_elementos,sizeof(int),MSG_WAITALL);
+
+	for(int i=0;i<cant_elementos;i++)
+	{
+		SEED * seed_i = list_get(tabla_gossip,i);
+
+		int tamanio_total = 3*sizeof(int) + strlen(seed_i->IP)+1;
+
+		void * envio = serealizar_seed_completa(seed_i->NUMBER,seed_i->PUERTO,seed_i->IP,tamanio_total);
+		puts("llego aca");
+		send(socket_cliente,envio,tamanio_total,MSG_WAITALL);
+		free(envio);
 	}
 }
 

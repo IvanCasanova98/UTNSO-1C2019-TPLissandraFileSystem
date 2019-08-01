@@ -24,12 +24,15 @@ int main(void)
 
 	pthread_t hilo_consola;
 	pthread_t hilo_planificador;
+	pthread_t hilo_handshake;
 
 	pthread_create(&hilo_consola, NULL, consola, NULL);
 	pthread_create(&hilo_planificador, NULL, planificador, (void *) &parametro);
+	pthread_create(&hilo_handshake,NULL,handshake,(void *) &parametro);
 
 	pthread_join(hilo_consola,NULL);
 	pthread_join(hilo_planificador,NULL);
+	pthread_join(hilo_handshake,NULL);
 
 	terminar_kernel(parametro.logger,parametro.config);
 
@@ -44,7 +47,8 @@ void levantar_kernel(t_config* config, t_log* logger)
 	int conexion = iniciar_conexion_inicial(logger, ip, puerto);
 
 	pedir_seed(conexion);
-	mostrar_lista_seeds();
+	log_info(logger, "Handshake inicial realizado");
+//	mostrar_lista_seeds(logger);
 
 	close(conexion);
 }

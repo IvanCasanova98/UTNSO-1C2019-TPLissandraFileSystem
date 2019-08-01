@@ -135,6 +135,29 @@ int conectarse_a_memoria(char** vector_request, t_log* logger)
 	return conexion_nueva;
 }
 
+void handshake(void * arg)
+{
+	struct parametros * parametro;
+	parametro = ( struct parametros *) arg;
+
+	char* ip = config_get_string_value(parametro->config, "IP_MEMORIA");
+	char* puerto = config_get_string_value(parametro->config, "PUERTO_MEMORIA");
+
+
+//	printf("\nconexion %d",conexion);
+
+	while(1)
+	{
+		int conexion = iniciar_conexion_request(parametro->logger,ip,puerto);
+		pedir_seed(conexion);
+		//mostrar_lista_seeds(parametro->logger);
+		log_info(parametro->logger, "Handshake realizado");
+		close(conexion);
+		sleep(7);
+	}
+
+}
+
 void pedir_seed(int conexion)
 {
 	int cod_operacion=HS;

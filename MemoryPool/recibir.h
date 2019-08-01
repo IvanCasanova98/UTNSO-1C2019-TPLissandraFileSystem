@@ -47,11 +47,14 @@ t_paquete_select* deserializar_paquete_select(int socket_cliente);
 t_paquete_insert* deserializar_paquete_insert(int socket_cliente);
 t_paquete_create* deserializar_paquete_create(int socket_cliente);
 t_list* deserializar_respuesta_describe(int conexion);
+SEED* deserealizar_seed(int socket_cliente);
 
 //------------------RECIBIR MENSAJES------------------
+void recibir_seed(int socket_cliente);
 void* recibir_buffer(int* size, int socket_cliente);
 void* recibir_mensaje_para_kernel(int socket_cliente);
 void recibir_mensaje(int socket_cliente);
+
 //--------------------ARCHIVO CONEXION.C
 int esperar_cliente(t_config* config,int); //conexion.c ya incluye a "recibir.h", por lo que no puedo agregar a "conexion.h" en este header
 
