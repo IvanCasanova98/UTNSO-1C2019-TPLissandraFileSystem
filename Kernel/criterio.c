@@ -2,7 +2,7 @@
 
 t_list* lista_seeds;
 int referencia_memoria_ec; //PUNTERO A LA ULTIMA MEMORIA UTILIZADA POR EVENTUAL CONSISTENCY
-
+pthread_mutex_t mutex_handshake;
 
 SEED * elegir_memoria(char* nombre_tabla, int cons_ingresada)
 {
@@ -45,9 +45,14 @@ void memory_off(SEED * memoria)
 //----------------------------------------------UTILS------------------------------
 SEED * get_seed_especifica(int numero_memoria)
 {
-	bool _seed_buscada(void * elemento) {return seed_buscada(elemento,numero_memoria);}
 
-	return list_find(lista_seeds, _seed_buscada);
+	pthread_mutex_lock(&mutex_handshake);
+	bool _seed_buscada(void * elemento) {return seed_buscada(elemento,numero_memoria);}
+	SEED * memoria_i = list_find(lista_seeds, _seed_buscada);
+	pthread_mutex_unlock(&mutex_handshake);
+
+	return memoria_i;
+
 }
 
 bool seed_buscada(SEED * memoria_i , int numero_memoria)
@@ -94,6 +99,7 @@ void startup_lista_seeds()
 {
 	referencia_memoria_ec = -1;
 	lista_seeds = list_create();
+	pthread_mutex_init(&mutex_handshake,NULL);
 }
 
 void mostrar_lista_seeds(t_log * logger)

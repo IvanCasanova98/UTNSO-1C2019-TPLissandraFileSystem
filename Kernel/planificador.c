@@ -15,6 +15,7 @@ void planificador(void * arg)
 
 	while(1)
 	{
+		sleep(1);
 		if(elementos_ready>0)
 		{
 			if(hilos_ejecutando<hilos_disponibles)
@@ -105,6 +106,7 @@ void agregar_a_cola(char* request)
 	char ** vector_parametros;
 	vector_parametros=string_split(request, " ");
 
+
 	int cod_ingresado = codigo_ingresado(vector_parametros[0]);
 
 
@@ -113,10 +115,16 @@ void agregar_a_cola(char* request)
 	case 6:;
 		t_queue* proceso_lql = queue_create();
 
-
-		char * path = strcat(vector_parametros[1], ".LQL");
+		char * path = malloc(strlen(vector_parametros[1])+1 + strlen(".LQL"));
+		strcpy(path,vector_parametros[1]);
+		strcat(path, ".LQL");
 
 		string_to_lower(path);
+
+		if(no_existe_lql(path)){
+			return;
+		}
+
 		proceso_lql = lql_to_queue(path);
 
 		int tamanio = tamanio_lql(proceso_lql);
@@ -184,4 +192,16 @@ void abortar_proceso(t_proceso *proceso, t_log * logger)
 void eliminar_request(char * request)
 {
 	free(request);
+}
+
+int no_existe_lql(char * path)
+{
+	if(access(path,F_OK)!=-1)
+	{
+		return 0;
+	}
+	else
+	{
+		return 1;
+	}
 }

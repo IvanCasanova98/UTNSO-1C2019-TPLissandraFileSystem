@@ -185,7 +185,7 @@ SEED* deserealizar_seed(int socket_cliente)
 
 	int desplazamiento = 0;
 
-	SEED* aux = malloc(size);
+	SEED* aux = malloc(sizeof(SEED) + tamanio_ip);
 	aux->IP = malloc(tamanio_ip);
 
 	memcpy(aux->IP,buffer + desplazamiento, tamanio_ip);

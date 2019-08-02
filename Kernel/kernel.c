@@ -15,6 +15,7 @@ int main(void)
 	startup_cola_ready();
 	startup_lista_seeds();
 
+
 	struct parametros parametro;
 
 	parametro.config = leer_config();
@@ -53,8 +54,8 @@ void levantar_kernel(t_config* config, t_log* logger)
 	recibir_seed(conexion);
 
 //	pedir_seed(conexion);
-//	log_info(logger, "Handshake inicial realizado");
-	mostrar_lista_seeds(logger);
+	log_info(logger, "Handshake inicial realizado");
+//	mostrar_lista_seeds(logger);
 
 	close(conexion);
 }

@@ -8,6 +8,7 @@
 #include<commons/log.h>
 #include<commons/string.h>
 #include<commons/config.h>
+#include<pthread.h>
 
 #include "paquete.h"
 #include "recibir.h"

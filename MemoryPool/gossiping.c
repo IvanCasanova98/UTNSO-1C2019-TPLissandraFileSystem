@@ -132,7 +132,7 @@ int index_memory(int numero_memoria)//DEVUELVE EL NUMERO DE INDEX DE UNA MEMORIA
 void cambiar_estado_memoria(int numero_memoria, int on)
 {
 	bool _get_memoria(SEED* elemento){return elemento->NUMBER == numero_memoria;}
-	SEED* memoria_a_editar = list_remove_by_condition(tabla_gossip, _get_memoria);
+	SEED* memoria_a_editar = (SEED *) list_remove_by_condition(tabla_gossip, _get_memoria);
 
 	if(memoria_a_editar==NULL){}
 	else

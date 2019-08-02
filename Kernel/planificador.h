@@ -8,6 +8,7 @@
 #include<stdbool.h>
 #include<commons/collections/queue.h>
 #include<pthread.h>
+ #include <fcntl.h>
 
 #include "utils.h"
 
@@ -40,5 +41,7 @@ bool elementos_en_la_cola();
 
 void abortar_proceso(t_proceso *proceso, t_log * logger);
 void eliminar_request(char * request);
+
+int no_existe_lql(char * path);
 
 #endif /* PLANIFICADOR_H_ */

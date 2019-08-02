@@ -74,7 +74,7 @@ int conectarse_a_memoria(char** vector_request, t_log* logger)
 			memoria = elegir_memoria(vector_request[1],cons_ingresada);
 			if(memoria==NULL)
 			{
-				conexion_nueva = -1;
+				conexion_nueva = 0;
 			}
 		}
 		else
@@ -97,7 +97,7 @@ int conectarse_a_memoria(char** vector_request, t_log* logger)
 			memoria = elegir_memoria(vector_request[1],cons_ingresada);
 			if(memoria==NULL)
 			{
-				conexion_nueva = -1;
+				conexion_nueva = 0;
 			}
 		}
 		else
@@ -114,7 +114,7 @@ int conectarse_a_memoria(char** vector_request, t_log* logger)
 			memoria = elegir_memoria(vector_request[1],cons_ingresada);
 			if(memoria==NULL)
 			{
-				conexion_nueva = -1;
+				conexion_nueva = 0;
 			}
 		}
 		else
@@ -134,7 +134,7 @@ int conectarse_a_memoria(char** vector_request, t_log* logger)
 		break;
 	}
 
-	if(conexion_nueva != -1)
+	if(conexion_nueva != 0)
 	{
 		char * puerto_char = string_itoa(memoria->PUERTO);
 		char ** ip_sin_comillas = string_split(memoria->IP,"\"");
@@ -147,6 +147,7 @@ int conectarse_a_memoria(char** vector_request, t_log* logger)
 			memory_off(memoria);
 			remover_memoria_consistencia(memoria);
 			puts("Fallo conexion");
+			conexion_nueva = 0;
 		}
 
 		string_iterate_lines(ip_sin_comillas,free);
@@ -175,10 +176,11 @@ void handshake(void * arg)
 
 		send(conexion, &cod_operacion, sizeof(int), 0);
 
+		pthread_mutex_lock(&mutex_handshake);
 		enviar_memorias(conexion,parametro->config);
-		puts("Memorias enviadas");
 		recibir_seed(conexion);
-		puts("Memorias recibidas");
+		pthread_mutex_unlock(&mutex_handshake);
+
 		log_info(parametro->logger, "Handshake realizado");
 
 		close(conexion);
@@ -189,7 +191,6 @@ void handshake(void * arg)
 void enviar_memorias(int socket_cliente, t_config* config)//, int respuesta)
 {
 	int cant_elementos = list_size(lista_seeds);
-	printf("/nCANTIDAD DE ELEMENTOS DE LISTA SEEDS: %d/n", cant_elementos);
 
 	send(socket_cliente,&cant_elementos,sizeof(int),MSG_WAITALL);
 
@@ -198,17 +199,17 @@ void enviar_memorias(int socket_cliente, t_config* config)//, int respuesta)
 	while(i<cant_elementos)
 	{
 		SEED * seed_i = list_get(lista_seeds,i);
-//		if(seed_i ->ON == 0)
-//		{
-			int tamanio_total = 4*sizeof(int) + strlen(seed_i->IP)+1;
 
-			void * envio = serealizar_seed_completa(seed_i->NUMBER,seed_i->PUERTO,seed_i->IP, seed_i->ON, tamanio_total);
-			send(socket_cliente,envio,tamanio_total,MSG_WAITALL);
-			free(envio);
-			puts("memoria enviada");
-//		}
+		int tamanio_total = 4*sizeof(int) + strlen(seed_i->IP)+1;
+
+		void * envio = serealizar_seed_completa(seed_i->NUMBER,seed_i->PUERTO,seed_i->IP, seed_i->ON, tamanio_total);
+		send(socket_cliente,envio,tamanio_total,MSG_WAITALL);
+		free(envio);
+
 		i++;
 	}
+
+//	bool _apagadas(SEED * seed){return seed->ON == 0;}
 	list_clean_and_destroy_elements(lista_seeds,_eliminar_seed);
 }
 
@@ -247,7 +248,6 @@ void eliminar_seed(SEED * seed)
 	free(seed->IP);
 	free(seed);
 }
-
 
 
 void terminar_kernel(t_log* logger, t_config* config)

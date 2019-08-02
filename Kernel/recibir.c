@@ -83,7 +83,7 @@ void recibir_seed(int socket_cliente)
 		SEED *memoria_i = deserealizar_seed(socket_cliente);
 		list_add(lista_seeds,memoria_i);
 		i++;
-		puts("memoria recibida");
+		//puts("memoria recibida");
 	}
 }
 

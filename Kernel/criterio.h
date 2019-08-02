@@ -11,6 +11,7 @@
 #include "memorias.h"
 
 extern t_list* lista_seeds;
+extern pthread_mutex_t mutex_handshake;
 
 void startup_lista_seeds();
 
