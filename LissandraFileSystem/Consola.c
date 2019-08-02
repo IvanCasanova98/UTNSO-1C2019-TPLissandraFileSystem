@@ -63,12 +63,12 @@ void* prenderConsola(void* arg){
 
 				t_paquete_select* paquete_select =LeerSelect(parametros) ;
 				if(paquete_select==NULL) break;
-				void* value=APIselect(paquete_select);
+				char* value=APIselect(paquete_select);
 				if(value!=NULL){
 					//tendria que hacer el send aca
-					free(value);
-				}
 
+				}
+				free(value);
 				break;
 			case 4:;
 

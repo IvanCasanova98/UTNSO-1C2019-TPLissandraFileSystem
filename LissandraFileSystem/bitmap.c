@@ -27,9 +27,13 @@ void crearArchivoBitmap(){
 	fp=fopen(directorioBitmap,"w");
 	fwrite(arrayCreador->bitarray,1,bytes,fp);
 	fclose(fp);
+
 	free(directorioMetadata);
 	free(directorioBitmap);
 	config_destroy(config);
+	bitarray_destroy(arrayCreador); //si no anda borrar
+
+	free(bitsVacios); // si no anda borrar
 }
 
 void imprimirBITARRAY(t_bitarray* bitarray){

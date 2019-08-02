@@ -21,6 +21,7 @@ typedef struct{
 void* recibir_buffer(int* size, int socket_cliente);
 void recibir_mensaje(int socket_cliente);
 void recibir_seed(int socket_cliente);
+void _eliminar_seed(SEED* memoria);
 t_metadata* deserealizar_nodo(int socket);
 
 bool table_has_memory(int numero_memoria);

@@ -36,6 +36,10 @@ SEED * elegir_memoria(char* nombre_tabla, int cons_ingresada)
 	return seed_i;
 }
 
+void memory_off(SEED * memoria)
+{
+	memoria->ON = 0;
+}
 
 
 //----------------------------------------------UTILS------------------------------

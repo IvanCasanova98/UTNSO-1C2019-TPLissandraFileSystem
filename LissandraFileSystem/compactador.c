@@ -137,6 +137,20 @@ void* compactar(void * arg){
 		LogCompactacionTerminada(nombreTabla,tiempoTranscurrido);
 		sem_post(&(Tablasemaforo->semaforoCompactacion));
 		//estaCompactando=0;
+
+
+
+		list_destroy_and_destroy_elements(ListaRegistrosTemporales,liberarRegistro);
+
+		for(int i =0; i<NumeroParticiones;i++)
+		{
+		list_destroy_and_destroy_elements(ListaRegistrosParticion[i],liberarRegistro);
+		//list_destroy(ListaRegistrosParticion[i]);
+		list_destroy(ListaRegistrosTemporalCompactados[i]);
+		//list_destroy(RegistrosACargar[i]);
+		//list_destroy_and_destroy_elements(RegistrosACargar[i],liberarRegistro);
+		}
+
 	}
 
 	//free(nombreTabla);
@@ -217,6 +231,7 @@ void* imprimirRegistro(void*registro){
 t_list* ActualizarRegistrosParticion(t_list* ListaRegistrosParticion,t_list* ListaRegistrosTemporalCompactados){
 
 
+
 	void* _CompararRegistros(void*registro){
 		CompararRegistros(registro,ListaRegistrosParticion);
 	}
@@ -243,16 +258,20 @@ void* CompararRegistros(void*registroTemporal,t_list* ListaRegistrosParticion){
 		}
 
 		int sizeActual =list_size(ListaRegistrosParticion);
-		list_remove_by_condition(ListaRegistrosParticion,_CambiarRegistro);
+		list_remove_by_condition(ListaRegistrosParticion,_CambiarRegistro); //malloquear registro nuevo
+
+
 		int sizeNuevo=list_size(ListaRegistrosParticion);
 		if(sizeNuevo != sizeActual){
-			list_add(ListaRegistrosParticion,registroTemporal);
+			t_registro* registroACargar= crearRegistro(registroTemporalCasteado->value,registroTemporalCasteado->key,registroTemporalCasteado->timestamp);
+			list_add(ListaRegistrosParticion,registroACargar);
 		}//else liberarRegistro(registroTemporalCasteado);
 
 
 	}else
 	{
-		list_add(ListaRegistrosParticion,registroTemporal);
+		t_registro* registroACargar= crearRegistro(registroTemporalCasteado->value,registroTemporalCasteado->key,registroTemporalCasteado->timestamp);
+		list_add(ListaRegistrosParticion,registroACargar);
 	}
 
 }
@@ -301,7 +320,7 @@ t_list* LiberarTmpc(char *nombreTabla){
 			int nroBloque = atoi(arrayBloques[i]);
 			char* registrosDeBloque= ObtenerContenidoBloque(nroBloque);
 			string_append(&registrosCompletos,registrosDeBloque);
-			//free(registrosDeBloque);
+			free(registrosDeBloque);
 			i++;
 		}
 		config_destroy(config);
@@ -371,6 +390,7 @@ void RemoverTemporalesCompactadosDeTablaYSusBloques(char* nombretabla){
 		string_iterate_lines(arrayBloques,removerBloque);
 		remove(directorioAux);
 		config_destroy(directorioTemporal); //AGREGADO
+		LogearNombreTemporalDestruido(NombreTmp,i,nombretabla);
 
 		i++;
 		string_iterate_lines(arrayBloques,free);
@@ -404,7 +424,7 @@ t_list* LiberarBin(char *nombreTabla,int NroBin){
 			int nroBloque = atoi(arrayBloques[i]);
 			char* registrosDeBloque= ObtenerContenidoBloque(nroBloque);
 			string_append(&registrosCompletos,registrosDeBloque);
-//			free(registrosDeBloque);
+			free(registrosDeBloque);
 			i++;
 		}
 		config_destroy(config);
@@ -474,6 +494,7 @@ char* serializarRegistroBarraN(char* value,uint16_t key,long long timestamp){
 	strcat(registro,";");
 	strcat(registro,value);
 	strcat(registro,"\n");
+	free(keyChar);
 	//printf("%s",registro);
 	return registro;
 
@@ -507,11 +528,13 @@ void* crearParticionNueva(char* nombreTabla,char* registros,int nroParticion){
 	int bloquesDisponibles[nroBloques];
 	int i=0;
 	int bloquesOcupados=0;
+	sem_wait(&SemaforobitArray);
 	while(bloquesOcupados<nroBloques){
 		while(i<blockNum){
 			if(!bitarray_test_bit(bitmap,i)){
 				bitarray_set_bit(bitmap,i);
 				crearBloque(i);
+				LogearBloqueEnUso(i,nombreTabla);
 				//pruebasSet();
 				break;
 			}
@@ -520,7 +543,7 @@ void* crearParticionNueva(char* nombreTabla,char* registros,int nroParticion){
 	bloquesDisponibles[bloquesOcupados]=i;
 	bloquesOcupados++;
 	}
-
+	sem_post(&SemaforobitArray);
 	crearArchivobin(nombreTabla,sizeTotal,bloquesDisponibles,nroBloques,nroParticion);
 
 	free(directorioMetadata);
@@ -581,7 +604,7 @@ void cargarRegistros(char* registroActual, int* bloquesDisponibles){
 //		desplazamiento+=cargarRegistro(parteQueNoEntra,tamanioBloque,bloquesDisponibles,bloquesEnUso);
 	}else{
 
-	escribirEnBloque(bloquesDisponibles[bloquesEnUso], registroActual,1);
+	escribirEnBloque(bloquesDisponibles[bloquesEnUso], registroActual,0);
 
 	}
 	free(directorioMetadata);

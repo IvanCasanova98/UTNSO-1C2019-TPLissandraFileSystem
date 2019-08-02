@@ -18,6 +18,7 @@ void startup_lista_seeds();
 void mostrar_lista_seeds(t_log * logger);
 void imprimir(SEED * seed, t_log * logger);
 SEED * elegir_memoria(char* nombre_tabla, int cons_ingresada);
+void memory_off(SEED * memoria);
 
 SEED * get_seed_especifica(int numero_memoria);
 bool seed_buscada(SEED * memoria_i , int numero_memoria);

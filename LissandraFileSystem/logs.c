@@ -175,6 +175,32 @@ void LogCompactacionTerminada(char* nombreTabla,int TiempoTranscurrido){
 	log_destroy(logger);
 }
 
+void LogearBloqueEnUso(int nroBloque,char* nombreTabla){
+	t_log* logger=iniciar_logger();
+	log_info(logger,"SE OCUPO BLOQUE %d TABLA: %s",nroBloque,nombreTabla);
+	log_destroy(logger);
+}
+void LogearBloqueLiberado(int nroBloque){
+	t_log* logger=iniciar_logger();
+	log_info(logger,"SE LIBERO BLOQUE %d",nroBloque);
+	log_destroy(logger);
+
+
+}
+
+void LogearNombreTemporal(char* nombreTemporal,int numero,char*nombreTabla){
+	t_log* logger=iniciar_logger();
+	log_info(logger,"SE CREO TEMPORAL %s%d.tmp  TABLA: %s",nombreTemporal,numero,nombreTabla);
+	log_destroy(logger);
+
+}
+
+void LogearNombreTemporalDestruido(char* nombreTemporal,int numero,char*nombreTabla){
+	t_log* logger=iniciar_logger();
+	log_info(logger,"SE ELIMINO %s%d.tmpc  TABLA: %s",nombreTemporal,numero,nombreTabla);
+	log_destroy(logger);
+}
+
 
 
 

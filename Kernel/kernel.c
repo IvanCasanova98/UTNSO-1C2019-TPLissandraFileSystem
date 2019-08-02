@@ -44,11 +44,17 @@ void levantar_kernel(t_config* config, t_log* logger)
 	char* ip = config_get_string_value(config, "IP_MEMORIA");
 	char* puerto = config_get_string_value(config, "PUERTO_MEMORIA");
 
+	int cod_operacion = 8;
 	int conexion = iniciar_conexion_inicial(logger, ip, puerto);
 
-	pedir_seed(conexion);
-	log_info(logger, "Handshake inicial realizado");
-//	mostrar_lista_seeds(logger);
+	send(conexion, &cod_operacion, sizeof(int), 0);
+
+	enviar_memorias(conexion, config);
+	recibir_seed(conexion);
+
+//	pedir_seed(conexion);
+//	log_info(logger, "Handshake inicial realizado");
+	mostrar_lista_seeds(logger);
 
 	close(conexion);
 }

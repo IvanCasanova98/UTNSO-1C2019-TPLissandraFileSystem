@@ -158,8 +158,7 @@ void* crearTemporal(char* nombreTabla,t_list* registros){  //dictionary_iterator
 
 		i++;
 	}
-	list_clean_and_destroy_elements(registros, liberarNodo);
-	list_destroy(registros);
+
 	char* directorioMetadata=DirectorioDeMetadata();
 	t_config* config = config_create(directorioMetadata);
 	int sizeBloque = atoi(config_get_string_value(config,"BLOCK_SIZE"));
@@ -176,11 +175,14 @@ void* crearTemporal(char* nombreTabla,t_list* registros){  //dictionary_iterator
 	int bloquesDisponibles[nroBloques];
 	i=0;
 	int bloquesOcupados=0;
+	sem_wait(&SemaforobitArray);
 	while(bloquesOcupados<nroBloques){
 		while(i<blockNum){
 			if(!bitarray_test_bit(bitmap,i)){
 				bitarray_set_bit(bitmap,i);
+
 				crearBloque(i);
+				LogearBloqueEnUso(i,nombreTabla);
 				//pruebasSet();
 				break;
 			}
@@ -189,7 +191,7 @@ void* crearTemporal(char* nombreTabla,t_list* registros){  //dictionary_iterator
 	bloquesDisponibles[bloquesOcupados]=i;
 	bloquesOcupados++;
 	}
-
+	sem_post(&SemaforobitArray);
 
 	crearArchivotmp(nombreTabla, sizeTotal, bloquesDisponibles,nroBloques);
 
@@ -202,7 +204,7 @@ void* crearTemporal(char* nombreTabla,t_list* registros){  //dictionary_iterator
 	int desplazamiento=0;
 	int bloquesEnUso=0;
 	int registrosCargados=0;
-	while(registrosCargados<registroCharTotales){
+	//while(registrosCargados<registroCharTotales){
 
 
 
@@ -211,10 +213,11 @@ void* crearTemporal(char* nombreTabla,t_list* registros){  //dictionary_iterator
 
 		//printf("%d\n",bytesEnBloque);
 
-		char* registroActual= list_get(listaDeRegistros, registrosCargados);
+		char* registroActual= crearRegistroACargar(registros);
 		//printf("%s\n",registroActual);
 		//int tamanioRegistro = string_length(registroActual) +1;
-		desplazamiento=cargarRegistro(registroActual,bytesEnBloque,bloquesDisponibles,bloquesEnUso);
+
+		cargarRegistros(registroActual,bloquesDisponibles);
 
 
 		bloquesEnUso = bloquesEnUso + desplazamiento;
@@ -226,8 +229,10 @@ void* crearTemporal(char* nombreTabla,t_list* registros){  //dictionary_iterator
 
 		//desplazamiento=0;
 
-	}
-
+	//}
+	list_clean_and_destroy_elements(registros, liberarNodo);
+	list_destroy(registros);
+	free(registroActual);
 	list_clean_and_destroy_elements(listaDeRegistros, liberarBloque);
 	list_destroy(listaDeRegistros);
 

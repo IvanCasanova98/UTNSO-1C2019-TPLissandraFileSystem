@@ -1,0 +1,45 @@
+[INFO] 21:31:38:433 Kernel/(15602:15602): DESCRIBE ALL
+
+[INFO] 21:31:39:513 Kernel/(15602:15602): Memoria: 0 - Puerto: 6668 - Ip: 127.0.0.1
+[INFO] 21:31:39:514 Kernel/(15602:15602): Memoria: 1 - Puerto: 6669 - Ip: 127.0.0.1
+[INFO] 21:31:47:518 Kernel/(15602:15611): Handshake realizado
+[INFO] 21:31:47:518 Kernel/(15602:15611): Memoria: 0 - Puerto: 6668 - Ip: 127.0.0.1
+[INFO] 21:31:47:518 Kernel/(15602:15611): Memoria: 1 - Puerto: 6669 - Ip: 127.0.0.1
+[INFO] 21:31:55:519 Kernel/(15602:15611): Handshake realizado
+[INFO] 21:31:55:519 Kernel/(15602:15611): Memoria: 0 - Puerto: 6668 - Ip: 127.0.0.1
+[INFO] 21:31:55:519 Kernel/(15602:15611): Memoria: 1 - Puerto: 6669 - Ip: 127.0.0.1
+[INFO] 21:32:03:520 Kernel/(15602:15611): Handshake realizado
+[INFO] 21:32:03:520 Kernel/(15602:15611): Memoria: 0 - Puerto: 6668 - Ip: 127.0.0.1
+[INFO] 21:32:03:520 Kernel/(15602:15611): Memoria: 1 - Puerto: 6669 - Ip: 127.0.0.1
+[INFO] 21:32:11:521 Kernel/(15602:15611): Handshake realizado
+[INFO] 21:32:11:521 Kernel/(15602:15611): Memoria: 0 - Puerto: 6668 - Ip: 127.0.0.1
+[INFO] 21:32:11:521 Kernel/(15602:15611): Memoria: 1 - Puerto: 6669 - Ip: 127.0.0.1
+[INFO] 21:32:19:522 Kernel/(15602:15611): Handshake realizado
+[INFO] 21:32:19:522 Kernel/(15602:15611): Memoria: 0 - Puerto: 6668 - Ip: 127.0.0.1
+[INFO] 21:32:19:522 Kernel/(15602:15611): Memoria: 1 - Puerto: 6669 - Ip: 127.0.0.1
+[INFO] 21:32:27:523 Kernel/(15602:15611): Handshake realizado
+[INFO] 21:32:27:523 Kernel/(15602:15611): Memoria: 0 - Puerto: 6668 - Ip: 127.0.0.1
+[INFO] 21:32:27:523 Kernel/(15602:15611): Memoria: 1 - Puer[INFO] 21:28:48:217 Kernel/(15468:15472): Handshake realizado
+[INFO] 21:28:48:218 Kernel/(15468:15472): Memoria: 0 - Puerto: 6668 - Ip: 127.0.0.1
+[INFO] 21:28:48:218 Kernel/(15468:15472): Memoria: -1251998384 - Puerto: 774909488 - Ip: 
+to: 6669 - Ip: 127.0.0.1
+[INFO] 21:32:35:524 Kernel/(15602:15611): Handshake realizado
+[INFO] 21:32:35:524 Kernel/(15602:15611): Memoria: 0 - Puerto: 6668 - Ip: 127.0.0.1
+[INFO] 21:32:35:524 Kernel/(15602:15611): Memoria: 1 - Puerto: 6669 - Ip: 127.0.0.1
+[ERROR] 21:32:40:821 Kernel/(15602:15630): ERROR NO SE INGRESO PARAMETRO TIEMPO DE COMPACTACION CORRECTAMENTE
+
+[INFO] 21:32:43:525 Kernel/(15602:15611): Handshake realizado
+[INFO] 21:32:43:525 Kernel/(15602:15611): Memoria: 0 - Puerto: 6668 - Ip: 127.0.0.1
+[INFO] 21:32:43:525 Kernel/(15602:15611): Memoria: 1 - Puerto: 6669 - Ip: 127.0.0.1
+[INFO] 21:32:51:530 Kernel/(15602:15611): Handshake realizado
+[INFO] 21:32:51:531 Kernel/(15602:15611): Memoria: 0 - Puerto: 6668 - Ip: 127.0.0.1
+[INFO] 21:32:51:531 Kernel/(15602:15611): Memoria: 1 - Puerto: 6669 - Ip: 127.0.0.1
+[INFO] 21:32:59:532 Kernel/(15602:15611): Handshake realizado
+[INFO] 21:32:59:532 Kernel/(15602:15611): Memoria: 0 - Puerto: 6668 - Ip: 127.0.0.1
+[INFO] 21:32:59:532 Kernel/(15602:15611): Memoria: 1 - Puerto: 6669 - Ip: 127.0.0.1
+[INFO] 21:33:07:533 Kernel/(15602:15611): Handshake realizado
+[INFO] 21:33:07:533 Kernel/(15602:15611): Memoria: 0 - Puerto: 6668 - Ip: 127.0.0.1
+[INFO] 21:33:07:533 Kernel/(15602:15611): Memoria: 1 - Puerto: 6669 - Ip: 127.0.0.1
+[INFO] 21:37:23:600 Kernel/(15602:15611): Handshake realizado
+[INFO] 21:37:23:600 Kernel/(15602:15611): Memoria: 0 - Puerto: 6668 - Ip: 127.0.0.1
+[INFO] 21:37:23:600 Kernel/(15602:15611): Memoria: 1 - Puerto: 6669 - Ip: 127.0.0.1

@@ -17,15 +17,21 @@
 
 
 extern t_list * tabla_gossip;
-
+extern pthread_mutex_t mutex_gossip;
+extern pthread_mutex_t mutex_gossip_send;
+pthread_mutex_t mutex_gossip_recv;
+extern pthread_mutex_t mutex_gossip_edit;
 //--------------------------GOSSIPING
 void startup_tabla_gossip(t_config * config);
 t_list * get_tabla_gossip();
 
 void gossiping(void * arg);
 
+void agregar_memoria(SEED* nueva_memoria);
+void reemplazar_memoria(SEED* memoria_nueva);
 void mostrar_tabla_gossip();
 void imprimir_memoria(SEED * seed);
+int index_memory(int numero_memoria);
 
 bool table_has_memory(int numero_memoria);
 

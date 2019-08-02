@@ -63,7 +63,7 @@ int conectarse_a_memoria(char** vector_request, t_log* logger)
 		memoria = elegir_memoria(vector_request[1],cons_ingresada);
 		if(memoria==NULL)
 		{
-			conexion_nueva = -1;
+			return 0;
 		}
 		break;
 	case 1:;
@@ -77,7 +77,11 @@ int conectarse_a_memoria(char** vector_request, t_log* logger)
 				conexion_nueva = -1;
 			}
 		}
-		else{return -1;}
+		else
+		{
+			log_error(logger, "No existe la tabla");
+			return -1;
+		}
 		break;
 	case 2:;
 		int num_random = numero_random(2);
@@ -96,7 +100,11 @@ int conectarse_a_memoria(char** vector_request, t_log* logger)
 				conexion_nueva = -1;
 			}
 		}
-		else{return -1;}
+		else
+		{
+			log_error(logger, "No existe la tabla");
+			return -1;
+		}
 		break;
 	case 4:;
 		if(existe_tabla(vector_request[1]))
@@ -109,7 +117,11 @@ int conectarse_a_memoria(char** vector_request, t_log* logger)
 				conexion_nueva = -1;
 			}
 		}
-		else{return -1;}
+		else
+		{
+			log_error(logger, "No existe la tabla");
+			return -1;
+		}
 		break;
 	case 5:
 		return 0;
@@ -118,7 +130,7 @@ int conectarse_a_memoria(char** vector_request, t_log* logger)
 		return 0;
 		break;
 	default:
-		return -1;
+		return 0;
 		break;
 	}
 
@@ -128,9 +140,21 @@ int conectarse_a_memoria(char** vector_request, t_log* logger)
 		char ** ip_sin_comillas = string_split(memoria->IP,"\"");
 
 		conexion_nueva = iniciar_conexion_request(logger, ip_sin_comillas[0], puerto_char);
+
+		//ACA SERIA EL CASO Q ME CONECTE, TENIENDOLA Y LA HAYAN BAJADO.
+		if(conexion_nueva == -1)
+		{
+			memory_off(memoria);
+			remover_memoria_consistencia(memoria);
+			puts("Fallo conexion");
+		}
+
+		string_iterate_lines(ip_sin_comillas,free);
+		free(ip_sin_comillas);
+
 	}
 
-	printf("\nCONECTADO A MEMORIA: %d", memoria->NUMBER);
+//	printf("\nCONECTADO A MEMORIA: %d", memoria->NUMBER);
 
 	return conexion_nueva;
 }
@@ -142,28 +166,89 @@ void handshake(void * arg)
 
 	char* ip = config_get_string_value(parametro->config, "IP_MEMORIA");
 	char* puerto = config_get_string_value(parametro->config, "PUERTO_MEMORIA");
-
-
-//	printf("\nconexion %d",conexion);
+	int cod_operacion=8;
 
 	while(1)
 	{
-		int conexion = iniciar_conexion_request(parametro->logger,ip,puerto);
-		pedir_seed(conexion);
-		//mostrar_lista_seeds(parametro->logger);
-		log_info(parametro->logger, "Handshake realizado");
-		close(conexion);
 		sleep(7);
+		int conexion = iniciar_conexion_request(parametro->logger,ip,puerto);
+
+		send(conexion, &cod_operacion, sizeof(int), 0);
+
+		enviar_memorias(conexion,parametro->config);
+		puts("Memorias enviadas");
+		recibir_seed(conexion);
+		puts("Memorias recibidas");
+		log_info(parametro->logger, "Handshake realizado");
+
+		close(conexion);
+		mostrar_lista_seeds(parametro->logger);
 	}
-
 }
 
-void pedir_seed(int conexion)
+void enviar_memorias(int socket_cliente, t_config* config)//, int respuesta)
 {
-	int cod_operacion=HS;
-	send(conexion, &cod_operacion, sizeof(int), 0);
-	recibir_seed(conexion);
+	int cant_elementos = list_size(lista_seeds);
+	printf("/nCANTIDAD DE ELEMENTOS DE LISTA SEEDS: %d/n", cant_elementos);
+
+	send(socket_cliente,&cant_elementos,sizeof(int),MSG_WAITALL);
+
+	int i=0;
+
+	while(i<cant_elementos)
+	{
+		SEED * seed_i = list_get(lista_seeds,i);
+//		if(seed_i ->ON == 0)
+//		{
+			int tamanio_total = 4*sizeof(int) + strlen(seed_i->IP)+1;
+
+			void * envio = serealizar_seed_completa(seed_i->NUMBER,seed_i->PUERTO,seed_i->IP, seed_i->ON, tamanio_total);
+			send(socket_cliente,envio,tamanio_total,MSG_WAITALL);
+			free(envio);
+			puts("memoria enviada");
+//		}
+		i++;
+	}
+	list_clean_and_destroy_elements(lista_seeds,_eliminar_seed);
 }
+
+
+void* serealizar_seed_completa(int memoria, int puerto, char* IP, int on, int tamanio_total)
+{
+
+	int bytes_ip = strlen(IP)+1;
+	//3 size of int porque so 2 de memoria y puerto, y otro de tamanio de ip
+	void* buffer = malloc(tamanio_total);
+
+	int desplazamiento = 0;
+
+	memcpy(buffer + desplazamiento, &bytes_ip, sizeof(int));
+	desplazamiento+= sizeof(int);
+
+	memcpy(buffer + desplazamiento, IP, bytes_ip);
+	desplazamiento+= bytes_ip;
+
+	memcpy(buffer + desplazamiento, &memoria, sizeof(int));
+	desplazamiento+= sizeof(int);
+
+	memcpy(buffer + desplazamiento, &puerto, sizeof(int));
+	desplazamiento+= sizeof(int);
+
+	memcpy(buffer + desplazamiento, &on, sizeof(int));
+	desplazamiento+= sizeof(int);
+
+	return buffer;
+
+}
+
+
+void eliminar_seed(SEED * seed)
+{
+	free(seed->IP);
+	free(seed);
+}
+
+
 
 void terminar_kernel(t_log* logger, t_config* config)
 {

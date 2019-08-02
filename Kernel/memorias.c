@@ -64,6 +64,16 @@ void deserealizar_metadata(int socket){
 //	dictionary_iterator(tabla_metadata,imprimir_diccionario);
 }
 
+void remover_memoria_consistencia(SEED * memoria)
+{
+	bool _boolean(int numero_memoria){return numero_memoria == memoria->NUMBER;}
+
+	for(int i = 0; i<3 ; i++)
+	{
+		list_remove_by_condition(vector_consistencia[i], _boolean);
+	}
+}
+
 void journal_memorias(t_log* logger)
 {
 	int i = 0;

@@ -75,7 +75,7 @@ t_pagina* devolver_pagina(t_pagina_completa* pagina_completa);
 //---------------------AUXILIAR
 bool condicion_select(char* nombre_tabla, uint16_t valor_key);
 bool condicion_insert(t_paquete_insert * paquete, t_config * config);
-bool verificar_espacio_memoria(t_paquete_insert * paquete,t_config * config);
+bool verificar_espacio_memoria();
 bool verificar_tamanio_value(uint32_t * value_long,t_config * config);
 bool tabla_buscada(t_metadata* nodo, char* nombre_tabla);
 uint16_t buscar_particion(char* nombre_tabla);
@@ -86,7 +86,7 @@ bool comparar_timestamp(t_pagina_completa* pagina1, t_pagina_completa* pagina2);
 void ordenar_lista(t_list* lista_paginas);
 t_pagina_completa* pagina_menor_timestamp(t_list* lista_paginas);
 t_pagina_completa* pagina_mayor_timestamp(t_list* lista_paginas);
-int reemplazar_pagina(char* nombre_tabla, t_pagina_completa* pagina_completa,t_config * config);
+void reemplazar_pagina(char* nombre_tabla, t_pagina_completa* pagina_completa,t_config * config);
 
 
 void mostrar_pagina(t_pagina* pagina);
@@ -95,5 +95,7 @@ void mostrar_tabla_paginas(char* tabla_paginas);
 void mostrar_tabla_segmentos();
 void mostrar_tamanio_memoria_ocupada();
 void startup_memoria();
+void set_tamanio_memoria(int max_value_FS, t_config * config);
+void remplazo_especifico(char* nombre_tabla, t_pagina_completa* pagina_completa, t_config* config);
 
 #endif /* TABLAS_H_ */

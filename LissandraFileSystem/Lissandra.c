@@ -7,15 +7,17 @@ t_dictionary* memTable=NULL;
 t_bitarray* bitmap;
 t_list* ListaSem=NULL;
 sem_t SemaforoMemtable;
+sem_t SemaforobitArray;
 bool estaDump =0;
 
 int main(void)
 {
 	logger = iniciar_logger();
 	sem_init(&SemaforoMemtable,0,1);
+	sem_init(&SemaforobitArray,0,1);
 	t_config* config = leer_config();
 	if(hayMetadata() == 0) crearMetadataDePuntoDeMontaje();
-	if(hayBitmap()   == 0) crearArchivoBitmap();
+	//if(!hayBitmap()) crearArchivoBitmap();
 
 	crearBitMap();
 	pthread_t consola,dumpeo,dump,compactar,hiloListener;

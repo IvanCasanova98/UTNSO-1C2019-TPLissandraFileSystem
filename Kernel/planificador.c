@@ -113,7 +113,8 @@ void agregar_a_cola(char* request)
 	case 6:;
 		t_queue* proceso_lql = queue_create();
 
-		char * path = strcat(vector_parametros[1], ".lql");
+
+		char * path = strcat(vector_parametros[1], ".LQL");
 
 		string_to_lower(path);
 		proceso_lql = lql_to_queue(path);
@@ -125,6 +126,12 @@ void agregar_a_cola(char* request)
 		lql_proceso->elemento = proceso_lql;
 		queue_push(cola_ready,lql_proceso);
 		elementos_ready++;
+
+//		free(path);
+//		string_iterate_lines(vector_parametros,free);
+//		free(vector_parametros);
+
+
 		break;
 	case 8:
 		puts("Operacion desconocida.");

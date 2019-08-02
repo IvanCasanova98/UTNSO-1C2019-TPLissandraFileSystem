@@ -27,6 +27,8 @@ int request(void * arg) //RECIBIR LOGGER
 
 		switch(cod_ingresado){
 			case 0:;
+				if(conexion_nueva==0){break;}
+
 				t_paquete_create* paquete_create = create(vector_request);
 
 				if(paquete_create==NULL){break;}
@@ -72,12 +74,7 @@ int request(void * arg) //RECIBIR LOGGER
 
 					free(paquete_select);
 				}
-				else
-				{
-					t_log* logger = iniciar_logger();
-					log_error(logger, "Error: no existe la tabla\n");
-					log_destroy(logger);
-				}
+
 				break;
 
 			case 4:;
@@ -87,12 +84,6 @@ int request(void * arg) //RECIBIR LOGGER
 					if (send(conexion_nueva, &cod_ingresado, sizeof(int), 0) <= 0) puts("Error en envio de CODIGO DE OPERACION.");
 					else{enviar_paquete_insert(paquete_insert, conexion_nueva);}
 					free(paquete_insert);
-				}
-				else
-				{
-					t_log* logger = iniciar_logger();
-					log_error(logger, "Error: no existe la tabla\n");
-					log_destroy(logger);
 				}
 				break;
 			case 5:;
@@ -109,6 +100,10 @@ int request(void * arg) //RECIBIR LOGGER
 		if(conexion_nueva!=0){
 			close(conexion_nueva);
 		}
+
+		string_iterate_lines(vector_request,free);
+		free(vector_request);
+
 		return 1;
 }
 

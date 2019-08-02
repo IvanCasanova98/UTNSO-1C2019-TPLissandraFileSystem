@@ -1,97 +1,97 @@
-[INFO] 22:58:26:883 MemoryPool/(3933:3933): MAX VALUE RECIBIDO: 60
-[INFO] 22:58:29:152 MemoryPool/(3939:3939): MAX VALUE RECIBIDO: 60
-[INFO] 23:10:58:12 MemoryPool/(4372:4372): MAX VALUE RECIBIDO: 60
-[INFO] 23:11:25:958 MemoryPool/(4394:4394): MAX VALUE RECIBIDO: 60
-[INFO] 23:12:11:790 MemoryPool/(4412:4412): MAX VALUE RECIBIDO: 60
-[INFO] 23:12:41:262 MemoryPool/(4495:4495): MAX VALUE RECIBIDO: 60
-[INFO] 23:13:29:602 MemoryPool/(4525:4525): MAX VALUE RECIBIDO: 60
-[INFO] 23:13:38:778 MemoryPool/(4532:4532): MAX VALUE RECIBIDO: 60
-[INFO] 23:14:06:700 MemoryPool/(4551:4551): MAX VALUE RECIBIDO: 60
-[INFO] 23:14:45:788 MemoryPool/(4532:4534): DESCRIBE de todas las tablas:
-[INFO] 23:14:45:789 MemoryPool/(4532:4534): TABLA0 SC 4
-[INFO] 23:14:45:789 MemoryPool/(4532:4534): POSTRES SC 3
-[INFO] 23:14:45:789 MemoryPool/(4532:4534): FRUTAS SC 2
-[INFO] 23:14:45:789 MemoryPool/(4532:4534): PLATOS_PRINCIPALES SC 2
-[INFO] 23:14:45:789 MemoryPool/(4532:4534): BEBIDAS SC 6
-[INFO] 23:15:07:902 MemoryPool/(4532:4534): CREATE COLORS SC 4 600000
-
-[INFO] 23:15:07:902 MemoryPool/(4532:4534): Tabla creada: COLORS
-
-[INFO] 23:15:08:905 MemoryPool/(4532:4534): DESCRIBE de tabla:
-[INFO] 23:15:08:908 MemoryPool/(4532:4534): COLORS SC 4
-[INFO] 23:15:08:910 MemoryPool/(4532:4534): INSERT COLORS 1 Blue 1564625708909
-
-[INFO] 23:15:08:910 MemoryPool/(4532:4534): Pagina agregada en: COLORS
-
-[INFO] 23:15:08:910 MemoryPool/(4532:4534): SELECT COLORS 1
-
-[INFO] 23:15:08:911 MemoryPool/(4532:4534): Respuesta enviada: Blue
-
-[INFO] 23:15:08:912 MemoryPool/(4532:4534): INSERT COLORS 2 Red 1564625708911
-
-[INFO] 23:15:08:912 MemoryPool/(4532:4534): Pagina agregada en: COLORS
-
-[INFO] 23:15:08:917 MemoryPool/(4532:4534): SELECT COLORS 2
-
-[INFO] 23:15:08:917 MemoryPool/(4532:4534): Respuesta enviada: Red
-
-[INFO] 23:15:08:918 MemoryPool/(4532:4534): SELECT COLORS 2
-
-[INFO] 23:15:08:918 MemoryPool/(4532:4534): Respuesta enviada: Red
-
-[INFO] 23:15:08:920 MemoryPool/(4532:4534): SELECT COLORS 1
-
-[INFO] 23:15:08:921 MemoryPool/(4532:4534): Respuesta enviada: Blue
-
-[INFO] 23:15:08:922 MemoryPool/(4532:4534): INSERT COLORS 1 Black 1564625708922
-
-[INFO] 23:15:08:922 MemoryPool/(4532:4534): Pagina agregada en: COLORS
-
-[INFO] 23:15:08:930 MemoryPool/(4532:4534): SELECT COLORS 1
-
-[INFO] 23:15:08:930 MemoryPool/(4532:4534): Respuesta enviada: Black
-
-[INFO] 00:12:28:352 MemoryPool/(5378:5378): MAX VALUE RECIBIDO: 60
-[INFO] 00:12:33:281 MemoryPool/(5378:5380): DESCRIBE de todas las tablas:
-[INFO] 00:12:33:282 MemoryPool/(5378:5380): TABLA0 SC 4
-[INFO] 00:12:33:283 MemoryPool/(5378:5380): POSTRES SC 3
-[INFO] 00:12:33:283 MemoryPool/(5378:5380): FRUTAS SC 2
-[INFO] 00:12:33:283 MemoryPool/(5378:5380): PLATOS_PRINCIPALES SC 2
-[INFO] 00:12:33:283 MemoryPool/(5378:5380): COLORS SC 4
-[INFO] 00:12:33:283 MemoryPool/(5378:5380): BEBIDAS SC 6
-[INFO] 00:15:33:274 MemoryPool/(5529:5529): MAX VALUE RECIBIDO: 60
-[INFO] 00:15:39:297 MemoryPool/(5529:5531): DESCRIBE de todas las tablas:
-[INFO] 00:15:39:301 MemoryPool/(5529:5531): TABLA0 SC 4
-[INFO] 00:15:39:301 MemoryPool/(5529:5531): POSTRES SC 3
-[INFO] 00:15:39:301 MemoryPool/(5529:5531): FRUTAS SC 2
-[INFO] 00:15:39:301 MemoryPool/(5529:5531): PLATOS_PRINCIPALES SC 2
-[INFO] 00:15:39:301 MemoryPool/(5529:5531): COLORS SC 4
-[INFO] 00:15:39:301 MemoryPool/(5529:5531): BEBIDAS SC 6
-[INFO] 00:17:34:8 MemoryPool/(5619:5619): MAX VALUE RECIBIDO: 60
-[INFO] 00:17:37:435 MemoryPool/(5619:5621): DESCRIBE de todas las tablas:
-[INFO] 00:17:37:435 MemoryPool/(5619:5621): TABLA0 SC 4
-[INFO] 00:17:37:436 MemoryPool/(5619:5621): POSTRES SC 3
-[INFO] 00:17:37:436 MemoryPool/(5619:5621): FRUTAS SC 2
-[INFO] 00:17:37:436 MemoryPool/(5619:5621): PLATOS_PRINCIPALES SC 2
-[INFO] 00:17:37:436 MemoryPool/(5619:5621): COLORS SC 4
-[INFO] 00:17:37:436 MemoryPool/(5619:5621): BEBIDAS SC 6
-[INFO] 00:18:56:713 MemoryPool/(5651:5651): MAX VALUE RECIBIDO: 60
-[INFO] 00:22:02:761 MemoryPool/(5792:5792): MAX VALUE RECIBIDO: 60
-[INFO] 00:22:07:475 MemoryPool/(5800:5800): MAX VALUE RECIBIDO: 60
-[INFO] 00:22:22:222 MemoryPool/(5800:5802): DESCRIBE de todas las tablas:
-[INFO] 00:22:22:224 MemoryPool/(5800:5802): TABLA0 SC 4
-[INFO] 00:22:22:224 MemoryPool/(5800:5802): POSTRES SC 3
-[INFO] 00:22:22:224 MemoryPool/(5800:5802): FRUTAS SC 2
-[INFO] 00:22:22:224 MemoryPool/(5800:5802): PLATOS_PRINCIPALES SC 2
-[INFO] 00:22:22:224 MemoryPool/(5800:5802): COLORS SC 4
-[INFO] 00:22:22:224 MemoryPool/(5800:5802): BEBIDAS SC 6
-[INFO] 00:22:47:626 MemoryPool/(5875:5875): MAX VALUE RECIBIDO: 60
-[INFO] 00:30:17:59 MemoryPool/(6172:6172): MAX VALUE RECIBIDO: 60
-[INFO] 00:30:18:525 MemoryPool/(6172:6174): DESCRIBE de todas las tablas:
-[INFO] 00:30:18:526 MemoryPool/(6172:6174): TABLA0 SC 4
-[INFO] 00:30:18:526 MemoryPool/(6172:6174): POSTRES SC 3
-[INFO] 00:30:18:526 MemoryPool/(6172:6174): FRUTAS SC 2
-[INFO] 00:30:18:526 MemoryPool/(6172:6174): PLATOS_PRINCIPALES SC 2
-[INFO] 00:30:18:526 MemoryPool/(6172:6174): COLORS SC 4
-[INFO] 00:30:18:526 MemoryPool/(6172:6174): BEBIDAS SC 6
-[INFO] 00:31:00:997 MemoryPool/(6203:6203): MAX VALUE RECIBIDO: 60
+[INFO] 21:31:29:349 MemoryPool/(15580:15580): MAX VALUE RECIBIDO: 60
+[INFO] 21:31:29:350 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:31:31:984 MemoryPool/(15590:15590): MAX VALUE RECIBIDO: 60
+[INFO] 21:31:31:985 MemoryPool/(15590:15594): Gossiping abortado
+[INFO] 21:31:33:350 MemoryPool/(15580:15584): Gossiping realizado
+[INFO] 21:31:37:351 MemoryPool/(15580:15584): Gossiping realizado
+[INFO] 21:31:38:435 MemoryPool/(15580:15582): DESCRIBE de todas las tablas:
+[INFO] 21:31:38:435 MemoryPool/(15580:15582): TABLA0 SC 4
+[INFO] 21:31:38:435 MemoryPool/(15580:15582): POSTRES SC 3
+[INFO] 21:31:41:352 MemoryPool/(15580:15584): Gossiping realizado
+[INFO] 21:31:45:353 MemoryPool/(15580:15584): Gossiping realizado
+[INFO] 21:31:49:354 MemoryPool/(15580:15584): Gossiping realizado
+[INFO] 21:31:51:987 MemoryPool/(15590:15594): Gossiping abortado
+[INFO] 21:31:53:354 MemoryPool/(15580:15584): Gossiping realizado
+[INFO] 21:31:57:355 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:32:01:355 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:32:05:356 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:32:09:356 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:32:13:356 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:32:17:356 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:32:21:357 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:32:25:358 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:32:29:359 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:32:33:359 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:32:37:359 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:32:41:360 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:32:45:360 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:32:49:360 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:32:53:361 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:32:57:361 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:33:01:362 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:33:05:362 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:33:09:366 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:33:13:366 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:33:17:368 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:33:21:368 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:33:25:368 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:33:29:369 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:33:33:371 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:33:37:372 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:33:41:377 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:33:45:378 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:33:49:378 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:33:53:378 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:33:57:379 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:34:01:380 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:34:05:380 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:34:09:381 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:34:13:381 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:34:17:382 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:34:21:383 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:34:25:384 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:34:29:384 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:34:33:384 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:34:37:384 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:34:41:384 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:34:45:385 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:34:49:386 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:34:53:386 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:34:57:387 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:35:01:387 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:35:05:388 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:35:09:388 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:35:13:388 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:35:17:393 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:35:21:394 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:35:25:394 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:35:29:395 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:35:33:396 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:35:37:396 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:35:41:396 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:35:45:398 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:35:49:400 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:35:53:401 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:35:57:402 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:36:01:406 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:36:05:406 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:36:09:407 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:36:13:407 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:36:17:409 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:36:21:409 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:36:25:410 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:36:29:410 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:36:33:411 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:36:37:411 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:36:41:418 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:36:45:418 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:36:49:419 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:36:53:420 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:36:57:420 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:37:01:420 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:37:05:421 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:37:09:421 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:37:13:422 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:37:17:422 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:37:21:422 MemoryPool/(15580:15584): Gossiping abortado
+[INFO] 21:37:25:423 MemoryPool/(15580:15584): Gossiping abortado

@@ -627,7 +627,7 @@ char* elegirMayorTimeStamp(t_list* RegistrosEncontrados){
 
 	char * value =malloc(strlen(registroConMayorTimeStamp->value)+1);
 	strcpy(value,registroConMayorTimeStamp->value);
-//	liberarRegistro(registroConMayorTimeStamp);
+	liberarRegistro(registroConMayorTimeStamp);
 	return value;
 }
 
@@ -894,6 +894,7 @@ char* DirectorioDeTemporalNuevo(char* nombretabla){ //0 ml
 	strcat(directorioTablas,buffer);
 	strcat(directorioTablas,".tmp");
 	config_destroy(config);
+	LogearNombreTemporal(NombreTmp,i,nombretabla);
 	free(directorioAux);
 	free(nombreDadoVueltao);
 	free(NombreTmp);
@@ -1035,6 +1036,7 @@ void crearParticion(char*nombreTabla ,int nroParticion){ //0 ml
 
 
 	int i=0;
+	sem_wait(&SemaforobitArray);
 	while(i<blockNum){
 
 	if(!bitarray_test_bit(bitmap,i)){
@@ -1046,6 +1048,7 @@ void crearParticion(char*nombreTabla ,int nroParticion){ //0 ml
 		fflush(particionBin);
 		bitarray_set_bit(bitmap,i);
 		crearBloque(i);
+		LogearBloqueEnUso(i,nombreTabla);
 		free(Script);
 		free(directorioParticion);
 		//ActualizarBitmap();
@@ -1053,6 +1056,7 @@ void crearParticion(char*nombreTabla ,int nroParticion){ //0 ml
 	}
 	i++;
 	}
+	sem_post(&SemaforobitArray);
 	free(directorioMetadata);
 	free(directorioBitmap);
 	fclose(particionBin);
@@ -1100,7 +1104,9 @@ void RemoverParticionDeTablaEspecificaYSusBloques(char* nombreTabla,int nroParti
 		t_config* directorio = config_create(directorioDeTablaABorrar);
 
 		char **arrayBloques = string_get_string_as_array(config_get_string_value(directorio,"BLOCKS"));
+		sem_wait(&SemaforobitArray);
 		string_iterate_lines(arrayBloques,removerBloque);
+		sem_post(&SemaforobitArray);
 		//ESTA FUNCION REMUEVE CADA BLOQUE ASIGNADO A ESA PARTICION.
 
 		remove(directorioDeTablaABorrar); //ESTE REMOVE REMUEVE LA PARTICION.
@@ -1124,9 +1130,14 @@ void RemoverParticionesDeTablaYSusBloques(char* nombreTabla){
 		t_config* directorio = config_create(directorioDeTablaABorrar);
 
 		char **arrayBloques = string_get_string_as_array(config_get_string_value(directorio,"BLOCKS"));
+		sem_wait(&SemaforobitArray);
+
+
+
+
 		string_iterate_lines(arrayBloques,removerBloque);
 		//ESTA FUNCION REMUEVE CADA BLOQUE ASIGNADO A ESA PARTICION.
-
+		sem_post(&SemaforobitArray);
 		remove(directorioDeTablaABorrar); //ESTE REMOVE REMUEVE LA PARTICION.
 		for(int i=0;arrayBloques[i];i++)
 			free(arrayBloques[i]);
@@ -1139,7 +1150,9 @@ void RemoverParticionesDeTablaYSusBloques(char* nombreTabla){
 
 void removerBloque(char* nroBloque){
 	char *directorioDeBloque = DirectorioDeBloque(atoi(nroBloque));
+
 	bitarray_clean_bit(bitmap,atoi(nroBloque));
+	LogearBloqueLiberado(atoi(nroBloque));
 	remove(directorioDeBloque);
 	free(directorioDeBloque);
 }
@@ -1155,6 +1168,11 @@ t_registro* buscarEnParticion(char* nombreTabla, int nroParticion,int key){
 
 			int nroBloque = atoi(arrayBloques[i]);
 			char* registrosDeBloque= ObtenerContenidoBloque(nroBloque);
+
+
+			//printf("%s \n",registrosDeBloque);
+			//printf("%d \n",string_length(registrosDeBloque));
+			//printf("%d \n",string_ends_with(registrosDeBloque,"\n"));
 			if(string_is_empty(registrosDeBloque)){
 				free(registrosDeBloque);
 				free(registrosCompletos);
@@ -1197,17 +1215,25 @@ t_registro* buscarEnParticion(char* nombreTabla, int nroParticion,int key){
 					i++;
 					nroBloque = atoi(arrayBloques[i]);
 					registrosDeBloque= ObtenerContenidoBloque(nroBloque);
+
 					string_append(&registrosCompletos,registrosDeBloque);
 					free(registrosDeBloque);
 
 					for(int i=0;registrosSeparados[i];i++)
 					free(registrosSeparados[i]);
 					free(registrosSeparados);
+
 					registrosSeparados=string_split(registrosCompletos,"\n");
+
+
 					}
 				}
 
 				char** RegistroActual;
+
+
+				if(!string_ends_with(registrosCompletos, "\n")){
+
 				while(registrosSeparados[registrosRecorridos+1]!=NULL){
 				char** RegistroActual =string_split(registrosSeparados[registrosRecorridos],";");
 
@@ -1217,25 +1243,82 @@ t_registro* buscarEnParticion(char* nombreTabla, int nroParticion,int key){
 					free(arrayBloques[i]);
 					free(arrayBloques);
 
-					//for(int i=0;registrosSeparados[i];i++)
-					//free(registrosSeparados[i]);
-					//free(registrosSeparados);
+					free(registrosCompletos);
+
+					for(int i=0;registrosSeparados[i];i++)
+					free(registrosSeparados[i]);
+					free(registrosSeparados);
 
 					for(int i=0;RegistroActual[i];i++)
 					free(RegistroActual[i]);
 					free(RegistroActual);
 
-	//				free(registrosCompletos);
+
 					free(directorioParticion);
 					config_destroy(config);
 					return registroEncontrado;
 				}
 				registrosRecorridos++;
+//				free(registrosCompletos);
+//				registrosCompletos=string_new();
+//				registrosCompletos=registrosSeparados[registrosRecorridos];
+
 				free(registrosCompletos);
 				registrosCompletos=string_new();
-				registrosCompletos=registrosSeparados[registrosRecorridos];
+				string_append(&registrosCompletos,registrosSeparados[registrosRecorridos]);
+				for(int i=0;RegistroActual[i];i++)
+				free(RegistroActual[i]);
+				free(RegistroActual);
+				}
+
+
+
+				}else{
+					while(registrosSeparados[registrosRecorridos]!=NULL){
+					char** RegistroActual =string_split(registrosSeparados[registrosRecorridos],";");
+
+					if(atoi(RegistroActual[1])==key){
+					t_registro* registroEncontrado=crearRegistro(RegistroActual[2],atoi(RegistroActual[1]),atoll(RegistroActual[0]));
+					for(int i=0;arrayBloques[i];i++)
+					free(arrayBloques[i]);
+					free(arrayBloques);
+
+					free(registrosCompletos);
+
+					for(int i=0;registrosSeparados[i];i++)
+					free(registrosSeparados[i]);
+					free(registrosSeparados);
+
+					for(int i=0;RegistroActual[i];i++)
+					free(RegistroActual[i]);
+					free(RegistroActual);
+
+
+					free(directorioParticion);
+					config_destroy(config);
+					return registroEncontrado;
+									}
+									registrosRecorridos++;
+									for(int i=0;RegistroActual[i];i++)
+									free(RegistroActual[i]);
+									free(RegistroActual);
+									}
+					free(registrosCompletos);
+					registrosCompletos=string_new();
+
+
+
+				}
+
+
+
+				for(int i=0;registrosSeparados[i];i++)
+				free(registrosSeparados[i]);
+				free(registrosSeparados);
+
 
 			}
+
 
 			i++;
 
@@ -1244,7 +1327,7 @@ t_registro* buscarEnParticion(char* nombreTabla, int nroParticion,int key){
 		}
 
 	}
-}
+
 
 
 
@@ -1509,6 +1592,7 @@ bool hayBitmap(){
 
 	  d = opendir(directorioBitmap);
 	  if (d == NULL) {
+
 		  free(directorioBitmap);
 		  return 0; //NO EXISTE EL BITMAP
 	  }
@@ -1632,5 +1716,8 @@ void* serializar_respuesta_pagina(t_respuesta_pagina* t_respuesta_pag){
 	return buffer;
 
 }
+
+
+
 
 

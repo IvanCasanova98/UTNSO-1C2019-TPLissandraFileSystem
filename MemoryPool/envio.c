@@ -189,7 +189,7 @@ void* serializar_enviar_paquete_describe(int socket_cliente, t_list* metadata)
 
 }
 
-void* serealizar_seed_completa(int memoria, int puerto, char* IP,int tamanio_total)
+void* serealizar_seed_completa(int memoria, int puerto, char* IP, int on, int tamanio_total)
 {
 
 	int bytes_ip = strlen(IP)+1;
@@ -210,46 +210,50 @@ void* serealizar_seed_completa(int memoria, int puerto, char* IP,int tamanio_tot
 	memcpy(buffer + desplazamiento, &puerto, sizeof(int));
 	desplazamiento+= sizeof(int);
 
-
+	memcpy(buffer + desplazamiento, &on, sizeof(int));
+	desplazamiento+= sizeof(int);
 
 	return buffer;
 
 }
 //---------------------------ENVIOS DE MEMORIAS
 
-void enviar_memorias(int socket_cliente, t_config* config)//, int respuesta)
-{
-	int cant_elementos = list_size(tabla_gossip);
+void enviar_memorias_kernel(int socket_cliente, t_config* config){
 
+//	int cant_elementos = list_size(tabla_gossip);
+	bool _prendidas(SEED * seed){return seed->ON == 1;}
+	int cant_elementos = list_count_satisfying(tabla_gossip, _prendidas);
 	send(socket_cliente,&cant_elementos,sizeof(int),MSG_WAITALL);
 
 	for(int i=0;i<cant_elementos;i++)
 	{
 		SEED * seed_i = list_get(tabla_gossip,i);
+		if(seed_i->ON == 1){
+			int tamanio_total = 4*sizeof(int) + strlen(seed_i->IP)+1;
 
-		int tamanio_total = 3*sizeof(int) + strlen(seed_i->IP)+1;
-
-		void * envio = serealizar_seed_completa(seed_i->NUMBER,seed_i->PUERTO,seed_i->IP,tamanio_total);
-		send(socket_cliente,envio,tamanio_total,MSG_WAITALL);
-		free(envio);
+			void * envio = serealizar_seed_completa(seed_i->NUMBER,seed_i->PUERTO,seed_i->IP, seed_i->ON, tamanio_total);
+			send(socket_cliente,envio,tamanio_total,MSG_WAITALL);
+			free(envio);
+		}
 	}
 }
-void enviar_memorias_rta(int socket_cliente, t_config* config)//, int respuesta)
-{
-	int cant_elementos = list_size(tabla_gossip);
 
+void enviar_memorias(int socket_cliente, t_config* config)//, int respuesta)
+{
+
+	int cant_elementos = list_size(tabla_gossip);
 	send(socket_cliente,&cant_elementos,sizeof(int),MSG_WAITALL);
 
 	for(int i=0;i<cant_elementos;i++)
 	{
 		SEED * seed_i = list_get(tabla_gossip,i);
 
-		int tamanio_total = 3*sizeof(int) + strlen(seed_i->IP)+1;
+		int tamanio_total = 4*sizeof(int) + strlen(seed_i->IP)+1;
 
-		void * envio = serealizar_seed_completa(seed_i->NUMBER,seed_i->PUERTO,seed_i->IP,tamanio_total);
-		puts("llego aca");
+		void * envio = serealizar_seed_completa(seed_i->NUMBER,seed_i->PUERTO,seed_i->IP, seed_i->ON, tamanio_total);
 		send(socket_cliente,envio,tamanio_total,MSG_WAITALL);
 		free(envio);
+
 	}
 }
 

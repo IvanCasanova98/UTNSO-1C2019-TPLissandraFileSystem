@@ -27,6 +27,7 @@ void agregar_datos(char* nombre_tabla, char* consistencia);
 void agregar_consistencia(int memoria, char* consistencia);
 t_list * get_pool(int cons_ingresada);
 char * get_consistencia(char * nombre_tabla);
+void remover_memoria_consistencia(SEED * memoria);
 
 bool existe_tabla(char* nombre_tabla);
 bool verificar_consistencias();

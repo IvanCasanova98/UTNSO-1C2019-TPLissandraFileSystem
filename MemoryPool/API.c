@@ -90,58 +90,71 @@ void selectf(int cliente,t_paquete_select* paquete, t_config* config, t_log* log
 
 void insert(t_paquete_insert* paquete, t_config* config, t_log* logger, int flag_modificado)
 {
-	//pthread_mutex_lock(&mutex);
 	t_pagina* pagina = crear_pagina(paquete -> valor_key, paquete -> value, paquete -> timestamp);
-	t_pagina_completa* pagina_completa = crear_pagina_completa(pagina);
-	puts("INSERT RECIBIDO");
-	if(condicion_insert(paquete,config))
-	{
-		if(existe_tabla_paginas(paquete->nombre_tabla))
+		t_pagina_completa* pagina_completa = crear_pagina_completa(pagina);
+
+		if(condicion_insert(paquete,config))
 		{
-			if(verificar_espacio_memoria(paquete,config))
+			if(verificar_espacio_memoria())
 			{
-				pagina_completa->flag=flag_modificado;
-				agregar_pagina(paquete -> nombre_tabla, pagina_completa);
-				log_info(logger,"Pagina agregada en: %s\n", paquete->nombre_tabla);
-			}
-			else
-			{
-				if(puede_reemplazar(paquete->nombre_tabla))
+				if(existe_tabla_paginas(paquete->nombre_tabla))
 				{
-					pagina_completa->flag = flag_modificado;
-					int reemplazo_exitoso = reemplazar_pagina(paquete->nombre_tabla, pagina_completa, config);
-					if (reemplazo_exitoso)
+					if(existe_pagina(paquete->nombre_tabla,paquete->valor_key)) //REMPLAZA KEY IGUAL A UNA
 					{
-						log_info(logger,"Pagina agregada en: %s\n", paquete->nombre_tabla);
+						pagina_completa->flag = flag_modificado; // 1
+						remplazo_especifico(paquete->nombre_tabla,pagina_completa,config);
+						log_info(logger,"Pagina remplazada en: %s\n", paquete->nombre_tabla);
+
+
 					}
-					else
+					else //CASO BASE TENGO LUGAR Y KEY NUEVA
 					{
-						journal(config,logger);
+						pagina_completa->flag=flag_modificado;
 						agregar_pagina(paquete -> nombre_tabla, pagina_completa);
 						log_info(logger,"Pagina agregada en: %s\n", paquete->nombre_tabla);
+
 					}
 				}
 				else
 				{
-					journal(config,logger);
-					agregar_pagina(paquete -> nombre_tabla, pagina_completa);
-					log_info(logger,"Pagina agregada en: %s\n", paquete->nombre_tabla);
+					crear_tabla_paginas(paquete->nombre_tabla, "EC", NULL);
+					insert(paquete, config, logger, flag_modificado);
+					free(pagina->value);
+					free(pagina);
+					free(pagina_completa);
 				}
+			}
+			else
+			{
+				if(existe_pagina(paquete->nombre_tabla,paquete->valor_key)) //REMPLAZA KEY IGUAL A UNA
+				{
+					pagina_completa->flag = flag_modificado; // 1
+					remplazo_especifico(paquete->nombre_tabla,pagina_completa,config);
+					log_info(logger,"Pagina remplazada en: %s\n", paquete->nombre_tabla);
+
+
+				}
+				else if(puede_reemplazar(paquete->nombre_tabla)) //LRU
+					{
+						pagina_completa->flag = flag_modificado;
+						reemplazar_pagina(paquete->nombre_tabla, pagina_completa, config);
+						log_info(logger,"Pagina reemplazada en: %s\n", paquete->nombre_tabla);
+
+					}
+					else//MEMORIA EN ESTADO FULL, no hay ninguna con flag 0
+					{
+						journal(config,logger);
+						pagina_completa -> flag = flag_modificado;
+						agregar_pagina(paquete -> nombre_tabla, pagina_completa);
+						log_info(logger,"Pagina agregada en: %s\n", paquete->nombre_tabla);
+
+					}
 			}
 		}
 		else
 		{
-			crear_tabla_paginas(paquete->nombre_tabla, "EC", NULL);
-			insert(paquete, config, logger, flag_modificado);
-			free(pagina->value);
-			free(pagina);
-			free(pagina_completa);
+			log_error(logger,"Value invalido");
 		}
-	}
-	else
-	{
-		log_error(logger,"Value invalido");
-	}
 }
 
 void create(t_paquete_create* paquete, t_config* config, t_log* logger)

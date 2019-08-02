@@ -2,6 +2,8 @@
 
 //---------------------------LEVANTAR SERVIDOR
 
+
+
 void* servidor(void * arg)
 {
 	struct parametros * parametro;
@@ -134,12 +136,17 @@ void recibir_paquetes(int cliente_fd, int server_fd, t_config* config, t_log* lo
 		case ADD:
 			break;
 		case HS:
-			enviar_memorias(cliente_fd, config);
+			recibir_seed(cliente_fd);
+			sleep(1);
+			enviar_memorias_kernel(cliente_fd, config);
 			cliente_fd=0;
 			break;
 		case GOSSIPING:;
-			recibir_seed(cliente_fd);
+			pthread_mutex_lock(&mutex_gossip);
 			enviar_memorias(cliente_fd,config);
+			sleep(1);
+			recibir_seed(cliente_fd);
+			pthread_mutex_unlock(&mutex_gossip);
 			break;
 		case -1:
 			cliente_fd=0;
@@ -171,7 +178,7 @@ SEED* deserealizar_seed(int socket_cliente)
 	int tamanio_ip;
 	recv(socket_cliente, &tamanio_ip, sizeof(int), 0);
 
-	int size=tamanio_ip+2*sizeof(int);
+	int size=tamanio_ip+3*sizeof(int);
 	void * buffer = malloc(size);
 
 	recv(socket_cliente, buffer, size, 0);
@@ -188,6 +195,9 @@ SEED* deserealizar_seed(int socket_cliente)
 	desplazamiento+=sizeof(int);
 
 	memcpy(&(aux->PUERTO),buffer + desplazamiento, sizeof(int));
+	desplazamiento+=sizeof(int);
+
+	memcpy(&(aux->ON),buffer + desplazamiento, sizeof(int));
 	desplazamiento+=sizeof(int);
 
 	return aux;
@@ -407,25 +417,26 @@ t_pagina* deserializar_pagina (int socket_cliente)
 
 void recibir_seed(int socket_cliente)
 {
-	int i=0, cant,rta;
-
-//	recv(socket_cliente, &rta, sizeof(int), 0);
+	int i=0, cant;
 
 	recv(socket_cliente, &cant, sizeof(int), 0);
 
 	while(i<cant)
 	{
 		SEED *memoria_i = deserealizar_seed(socket_cliente);
-
 		if(!table_has_memory(memoria_i->NUMBER))
 		{
-			list_add(tabla_gossip,memoria_i);
+			agregar_memoria(memoria_i);
 		}
-
+		else
+		{
+			pthread_mutex_lock(&mutex_gossip_edit);
+			reemplazar_memoria(memoria_i);
+			pthread_mutex_unlock(&mutex_gossip_edit);
+		}
 		i++;
 	}
 
-//	return rta;
 }
 
 
