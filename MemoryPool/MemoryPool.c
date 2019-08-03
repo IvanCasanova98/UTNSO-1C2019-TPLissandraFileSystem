@@ -20,7 +20,7 @@ int main(int argc, char* archivo[])
 	pthread_t hilo_consola;
 	pthread_t hilo_journal;
 	pthread_t hilo_gossiping;
-	//pthread_t hilo_gossiping_aux;
+//	pthread_t hilo_gossiping_aux;
 
 
 	//HANDSHAKE CON EL FS.
@@ -29,13 +29,14 @@ int main(int argc, char* archivo[])
 	log_info(parametro.logger,"MAX VALUE RECIBIDO: %d",max_value_FS);
 	config_set_value(parametro.config, "TAM_MAX_VALUE", max_value);
 	config_save(parametro.config);
+
 	set_tamanio_memoria(max_value_FS,parametro.config);
 
 	pthread_create(&hilo_servidor, NULL, servidor,  (void *) &parametro); //Falta verificacion de error en la creacion de hilos
 	pthread_create(&hilo_consola, NULL, ingresar_paquete,  (void *) &parametro);
 //	pthread_create(&hilo_journal, NULL, time_journal,  (void *) &parametro);
 	pthread_create(&hilo_gossiping, NULL, gossiping, (void *) &parametro);
-	//pthread_create(&hilo_gossiping_aux, NULL, mostrar_tabla_gossip, NULL);
+//	pthread_create(&hilo_gossiping_aux, NULL, mostrar_tabla_gossip, NULL);
 
 
 
@@ -43,7 +44,7 @@ int main(int argc, char* archivo[])
 	pthread_join(hilo_consola,NULL);
 //	pthread_join(hilo_journal,NULL);
 	pthread_join(hilo_gossiping,NULL);
-	//pthread_join(hilo_gossiping_aux,NULL);
+//	pthread_join(hilo_gossiping_aux,NULL);
 
 
 	config_destroy(parametro.config);

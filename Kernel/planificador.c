@@ -15,7 +15,7 @@ void planificador(void * arg)
 
 	while(1)
 	{
-		sleep(1);
+//		usleep(100000);
 		if(elementos_ready>0)
 		{
 			if(hilos_ejecutando<hilos_disponibles)

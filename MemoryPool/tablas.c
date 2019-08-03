@@ -96,7 +96,16 @@ bool existe_pagina(char* nombre_tabla, uint16_t valor_key)
 {
 	bool _tiene_key(void* elemento){return tiene_key(valor_key, elemento);}
 	t_list* tabla_paginas = buscar_tabla_paginas(nombre_tabla);
-	return list_any_satisfy(tabla_paginas, _tiene_key);
+
+	if(existe_tabla_paginas(nombre_tabla))
+	{
+		return list_any_satisfy(tabla_paginas, _tiene_key);
+	}
+	else
+	{
+		return false;
+	}
+
 }
 
 

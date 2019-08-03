@@ -16,8 +16,18 @@ int main(void)
 	sem_init(&SemaforoMemtable,0,1);
 	sem_init(&SemaforobitArray,0,1);
 	t_config* config = leer_config();
-	if(hayMetadata() == 0) crearMetadataDePuntoDeMontaje();
-	//if(!hayBitmap()) crearArchivoBitmap();
+
+	if(hayMetadata()){
+		printf("%s\nCreando Metadata...\n",CYAN);
+		crearMetadataDePuntoDeMontaje();
+		printf("Metadata Creada con exito.\n%s",NORMAL_COLOR);
+	}
+
+	if(hayBitmap()){
+		printf("%s\nCreando Bitmap...\n",CYAN);
+		crearArchivoBitmap();
+		printf("Bitmap Creado con exito.\n%s",NORMAL_COLOR);
+	}
 
 	crearBitMap();
 	pthread_t consola,dumpeo,dump,compactar,hiloListener;

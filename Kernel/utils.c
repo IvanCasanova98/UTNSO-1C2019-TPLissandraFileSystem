@@ -28,30 +28,30 @@ void recibir_numero_memoria(int conexion)
 void retardo_ejecucion(t_config* config)
 {
 	int retardo_ejecucion = config_get_int_value(config, "SLEEP_EJECUCION");
-	usleep(retardo_ejecucion);
+	usleep(retardo_ejecucion * 1000);
 }
 
 //-------------------------------------------------------
 int codigo_ingresado(char* parametros)
 {
 	if (strcmp(parametros, "CREATE")==0) {
-		puts("CREATE");
+//		puts("CREATE");
 		return 0;
 	}
 	else if (strcmp(parametros, "DROP")==0) {
-		puts("DROP");
+//		puts("DROP");
 		return 1;
 	}
 	else if (strcmp(parametros, "DESCRIBE")==0) {
-		puts("DESCRIBE");
+//		puts("DESCRIBE");
 		return 2;
 	}
 	else if (strcmp(parametros, "SELECT")==0) {
-		puts("SELECT");
+//		puts("SELECT");
 		return 3;
 	}
 	else if (strcmp(parametros, "INSERT")==0) {
-		puts("INSERT");
+//		puts("INSERT");
 		return 4;
 	}
 	else if (strcmp(parametros, "JOURNAL")==0) {
@@ -84,11 +84,18 @@ int consistencia_ingresada(char* parametros)
 
 int numero_random(int max)
 {
-	srand (getpid());
-	int rnd = rand() % max;
+	int rnd = rand() % 2;
+	if(rnd==1)
+	{
+		rnd =2;
+	}
+	else
+	{
+		rnd = 0;
+	}
+
 	return rnd;
 }
-
 char * concatenar_value(char ** vector)
 {
 	int i=3;

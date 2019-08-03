@@ -77,8 +77,8 @@ void* APIdescribeTodasLasTablasRESPUESTA();
 respuestaDESCRIBE* APIdescribeRESPUESTA(t_paquete_describe* paquete_describe);
 
 //*************************************
-bool hayMetadata();
-bool hayBitmap();
+int hayMetadata();
+int hayBitmap();
 void liberarRegistro(void* registro);
 void waitearSemTable(char* nombreTabla);
 void postearSemTable(char* nombreTabla);

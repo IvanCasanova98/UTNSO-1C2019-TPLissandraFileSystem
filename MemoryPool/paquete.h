@@ -31,7 +31,6 @@ typedef struct SEED
 	char* IP;
 	int PUERTO;
 	int NUMBER;
-	int ON;
 }SEED;
 
 

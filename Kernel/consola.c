@@ -14,6 +14,13 @@ int request(void * arg) //RECIBIR LOGGER
 {
 	struct parametros * parametro;
 	parametro = ( struct parametros *) arg;
+
+	pthread_mutex_lock(&mutex_handshake);
+//	handshake(arg);
+	pthread_mutex_unlock(&mutex_handshake);
+
+	retardo_ejecucion(parametro->config);
+
 	char** vector_request = string_split(parametro->parametros," ");
 	int cod_ingresado = codigo_ingresado(vector_request[0]);
 
@@ -23,7 +30,6 @@ int request(void * arg) //RECIBIR LOGGER
 	int conexion_nueva = conectarse_a_memoria(vector_request, parametro->logger); //ELIGE UNA MEMORIA, SEGUN EL CRITERIO BASADO EN LA TABLA
 	if(conexion_nueva==-1){return 0;}
 
-	retardo_ejecucion(parametro->config);
 
 		switch(cod_ingresado){
 			case 0:;

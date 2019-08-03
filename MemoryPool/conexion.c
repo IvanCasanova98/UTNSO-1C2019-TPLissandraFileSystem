@@ -66,7 +66,7 @@ int crear_conexion(char *ip, char* puerto)
 
 	if(connect(socket_cliente, server_info->ai_addr, server_info->ai_addrlen) == -1)
 	{
-		return -1;
+		return 0;
 	}
 
 	freeaddrinfo(server_info);

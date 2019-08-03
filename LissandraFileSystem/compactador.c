@@ -258,8 +258,8 @@ void* CompararRegistros(void*registroTemporal,t_list* ListaRegistrosParticion){
 		}
 
 		int sizeActual =list_size(ListaRegistrosParticion);
-		list_remove_by_condition(ListaRegistrosParticion,_CambiarRegistro); //malloquear registro nuevo
-
+		t_registro* registroRemovido=list_remove_by_condition(ListaRegistrosParticion,_CambiarRegistro); //malloquear registro nuevo
+		if(registroRemovido!=NULL) liberarRegistro(registroRemovido);
 
 		int sizeNuevo=list_size(ListaRegistrosParticion);
 		if(sizeNuevo != sizeActual){

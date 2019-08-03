@@ -21,9 +21,9 @@ int conectarse_a_memoria(char** vector_request, t_log* logger);
 void terminar_kernel(t_log* logger, t_config* config);
 
 void enviar_memorias(int socket_cliente, t_config* config);
-void pedir_seed(int conexion);
 void handshake(void * arg);
-void eliminar_seed(SEED * seed);
-void* serealizar_seed_completa(int memoria, int puerto, char* IP, int on, int tamanio_total);
+void pedir_seed(int conexion);
+//void* serealizar_seed_completa(int memoria, int puerto, char* IP, int on, int tamanio_total);
+//void eliminar_seed(SEED * seed);
 
 #endif /* CONEXION_H_ */

@@ -151,6 +151,25 @@ char * get_consistencia(char * nombre_tabla) //FUNCION QUE DEVUELVE LA CONSISTEN
 	return dictionary_get(tabla_metadata,nombre_tabla);
 }
 
+void metadata_refresh(void* arg)
+{
+	struct parametros * parametro;
+	parametro = ( struct parametros *) arg;
+
+	char* request = "DESCRIBE";
+	char** vector_request = string_split(request," ");
+	while(1)
+	{
+		int conexion_nueva = conectarse_a_memoria(vector_request, parametro->logger);
+		if(conexion_nueva!=0)
+		{
+			describe(conexion_nueva,0);
+			close(conexion_nueva);
+		}
+		sleep(2);
+	}
+
+}
 
 //-------------------------UTILIDADES
 void imprimir_consistencias()

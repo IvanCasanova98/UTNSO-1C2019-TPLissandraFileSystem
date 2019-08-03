@@ -23,7 +23,7 @@ void* serializar_mensaje(char* value, int bytes);
 void* serializar_array_int(int array[], int bytes, int cant_elementos);
 void* serializar_array(char** array, int bytes, int cant_elementos);
 void* serializar_enviar_paquete_describe(int socket_cliente, t_list* metadata);
-void* serealizar_seed_completa(int memoria, int puerto, char* IP, int on, int tamanio_total);
+void* serealizar_seed_completa(int memoria, int puerto, char* IP,int tamanio_total);
 
 
 void* serializar_paquete_select(t_paquete_select* paquete);
@@ -31,9 +31,9 @@ void* serializar_paquete_insert(t_paquete_insert* paquete);
 void* serializar_paquete_create(t_paquete_create* paquete);
 void* serializar_paquete_describe(t_paquete_describe_lfs* paquete);
 //---------------------------ENVIOS DE MEMORIAS
-void enviar_memorias_kernel(int socket_cliente, t_config* config);
-void enviar_memorias(int socket_cliente, t_config* config);
 
+void enviar_memorias(int socket_cliente, t_config* config);
+void enviar_memorias_rta(int socket_cliente, t_config* config);
 //----------------------------ENVIAR PAQUETES
 
 void enviar_paquete_select(t_paquete_select* paquete, int socket_cliente, t_log* logger);

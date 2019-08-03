@@ -37,6 +37,8 @@ void deserealizar_metadata(int socket);
 void imprimir_consistencias();
 void imprimir_diccionario(char* nombre_tabla,char* consistencia);
 
+
+void metadata_refresh(void* arg);
 void journal_memorias(t_log* logger);
 
 #endif /* MEMORIAS_H_ */

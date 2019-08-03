@@ -4,7 +4,7 @@ pthread_mutex_t mutex;
 
 void selectf(int cliente,t_paquete_select* paquete, t_config* config, t_log* logger)
 {
-	puts("SELECT RECIBIDO");
+//	puts("SELECT RECIBIDO");
 	if(!(condicion_select(paquete -> nombre_tabla,paquete -> valor_key)))
 	{
 		int conexion = iniciar_conexion(config);

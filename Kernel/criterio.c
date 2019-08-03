@@ -36,10 +36,10 @@ SEED * elegir_memoria(char* nombre_tabla, int cons_ingresada)
 	return seed_i;
 }
 
-void memory_off(SEED * memoria)
-{
-	memoria->ON = 0;
-}
+//void memory_off(SEED * memoria)
+//{
+//	memoria->ON = 0;
+//}
 
 
 //----------------------------------------------UTILS------------------------------
@@ -80,7 +80,9 @@ int get_memoria_fifo(t_list* pool)
 	int tope_lista = list_size(pool) - 1;
 	int numero_memoria = 0;
 
-	if (referencia_memoria_ec == tope_lista)
+	printf("\nTOPE LISTA: %d", tope_lista);
+
+	if (referencia_memoria_ec >= tope_lista)
 	{
 		referencia_memoria_ec = 0;
 	}
@@ -89,6 +91,7 @@ int get_memoria_fifo(t_list* pool)
 		referencia_memoria_ec ++;
 	}
 
+	printf("\nNUMERO MEMORIA: %d", numero_memoria);
 	numero_memoria = list_get(pool, referencia_memoria_ec);
 
 	return numero_memoria;

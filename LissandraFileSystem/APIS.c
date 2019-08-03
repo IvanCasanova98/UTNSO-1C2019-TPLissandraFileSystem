@@ -618,6 +618,7 @@ t_registro* elegirRegistroDeMayorTimeStamp(t_list* RegistrosEncontrados){
 	list_sort(RegistrosEncontrados,mayorTimeStamp);
 	t_registro* registroMem=(t_registro*)list_remove(RegistrosEncontrados,0);
 	t_registro* registroConMayorTimeStamp = crearRegistro(registroMem->value,registroMem->key,registroMem->timestamp);
+	liberarRegistro(registroMem);
 	return registroConMayorTimeStamp;
 }
 
@@ -1525,7 +1526,7 @@ t_registro* buscarRegistroTemporalMasReciente(char* todosLosRegistrosTemporales,
 		}
 		string_iterate_lines(arrayRegistros,free);
 		free(arrayRegistros);
-		list_clean_and_destroy_elements(listaDeRegistros,liberarBloque);
+		list_clean_and_destroy_elements(listaDeRegistros,liberarRegistro);
 		list_destroy(listaDeRegistros);
 		free(todosLosRegistrosTemporales);
 		//free(arrayRegistros);
@@ -1566,41 +1567,32 @@ void listarTablas(){ //0 ml
 	  }
 }
 
-bool hayMetadata(){
+int hayMetadata(){
 
-	  DIR *d;
-	  char *directorioMetadata= DirectorioDeMetadata();
-	  d = opendir(directorioMetadata);
+	const char *directorioMetadata= DirectorioDeMetadata();
 
-	  if (d == NULL){
-		  free(directorioMetadata);
-		  return 0; //NO EXISTE METADATA
-	  }
-	  else {
-		  free(directorioMetadata);
-		  return 1; //EXISTE LA METADATA
-	  }
-
+	if( access( directorioMetadata, F_OK ) != -1 ) {
+		free(directorioMetadata);
+	    return 0; // LA METADATA EXISTE
+	} else {
+		free(directorioMetadata);
+		return 1; // LA METADATA NO EXISTE
+	}
 
 }
 
 
-bool hayBitmap(){
+int hayBitmap(){
 
-	  DIR *d;
-	  char *directorioBitmap= DirectorioBitMap();
+	  const char *directorioBitmap= DirectorioBitMap();
 
-	  d = opendir(directorioBitmap);
-	  if (d == NULL) {
-
-		  free(directorioBitmap);
-		  return 0; //NO EXISTE EL BITMAP
+	  if( access( directorioBitmap, F_OK ) != -1 ) {
+		free(directorioBitmap);
+		return 0; // EL BITMAP EXISTE
+	  } else {
+		free(directorioBitmap);
+		return 1; // EL BITMAP NO EXISTE
 	  }
-	  else {
-		  free(directorioBitmap);
-		  return 1; //EXISTE EL BITMAP
-	  }
-
 }
 
 

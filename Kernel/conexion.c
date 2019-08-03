@@ -52,7 +52,7 @@ int iniciar_conexion_request(t_log* logger, char* ip, char* puerto) //tiene que 
 int conectarse_a_memoria(char** vector_request, t_log* logger)
 {
 	SEED * memoria;
-	int conexion_nueva;
+	int conexion_nueva=1;
 
 	int cod_ingresado = codigo_ingresado(vector_request[0]);
 
@@ -85,9 +85,11 @@ int conectarse_a_memoria(char** vector_request, t_log* logger)
 		break;
 	case 2:;
 		int num_random = numero_random(2);
-		t_list * pool_especifico = get_pool(num_random);
-		int numero_memoria = list_get(pool_especifico,0);
-		memoria = get_seed_especifica(numero_memoria);
+		memoria = elegir_memoria(vector_request[1],num_random);
+		if(memoria==NULL)
+		{
+			conexion_nueva = 0;
+		}
 		break;
 	case 3:;
 		if(existe_tabla(vector_request[1]))
@@ -144,7 +146,7 @@ int conectarse_a_memoria(char** vector_request, t_log* logger)
 		//ACA SERIA EL CASO Q ME CONECTE, TENIENDOLA Y LA HAYAN BAJADO.
 		if(conexion_nueva == -1)
 		{
-			memory_off(memoria);
+//			memory_off(memoria);
 			remover_memoria_consistencia(memoria);
 			puts("Fallo conexion");
 			conexion_nueva = 0;
@@ -167,87 +169,89 @@ void handshake(void * arg)
 
 	char* ip = config_get_string_value(parametro->config, "IP_MEMORIA");
 	char* puerto = config_get_string_value(parametro->config, "PUERTO_MEMORIA");
-	int cod_operacion=8;
+
+
+//	printf("\nconexion %d",conexion);
 
 	while(1)
 	{
-		sleep(7);
 		int conexion = iniciar_conexion_request(parametro->logger,ip,puerto);
-
-		send(conexion, &cod_operacion, sizeof(int), 0);
-
-		pthread_mutex_lock(&mutex_handshake);
-		enviar_memorias(conexion,parametro->config);
-		recibir_seed(conexion);
-		pthread_mutex_unlock(&mutex_handshake);
-
-		log_info(parametro->logger, "Handshake realizado");
-
-		close(conexion);
+		pedir_seed(conexion);
 		mostrar_lista_seeds(parametro->logger);
-	}
-}
-
-void enviar_memorias(int socket_cliente, t_config* config)//, int respuesta)
-{
-	int cant_elementos = list_size(lista_seeds);
-
-	send(socket_cliente,&cant_elementos,sizeof(int),MSG_WAITALL);
-
-	int i=0;
-
-	while(i<cant_elementos)
-	{
-		SEED * seed_i = list_get(lista_seeds,i);
-
-		int tamanio_total = 4*sizeof(int) + strlen(seed_i->IP)+1;
-
-		void * envio = serealizar_seed_completa(seed_i->NUMBER,seed_i->PUERTO,seed_i->IP, seed_i->ON, tamanio_total);
-		send(socket_cliente,envio,tamanio_total,MSG_WAITALL);
-		free(envio);
-
-		i++;
+		log_info(parametro->logger, "Handshake realizado");
+		close(conexion);
+		sleep(7);
 	}
 
-//	bool _apagadas(SEED * seed){return seed->ON == 0;}
-	list_clean_and_destroy_elements(lista_seeds,_eliminar_seed);
 }
 
-
-void* serealizar_seed_completa(int memoria, int puerto, char* IP, int on, int tamanio_total)
+void pedir_seed(int conexion)
 {
-
-	int bytes_ip = strlen(IP)+1;
-	//3 size of int porque so 2 de memoria y puerto, y otro de tamanio de ip
-	void* buffer = malloc(tamanio_total);
-
-	int desplazamiento = 0;
-
-	memcpy(buffer + desplazamiento, &bytes_ip, sizeof(int));
-	desplazamiento+= sizeof(int);
-
-	memcpy(buffer + desplazamiento, IP, bytes_ip);
-	desplazamiento+= bytes_ip;
-
-	memcpy(buffer + desplazamiento, &memoria, sizeof(int));
-	desplazamiento+= sizeof(int);
-
-	memcpy(buffer + desplazamiento, &puerto, sizeof(int));
-	desplazamiento+= sizeof(int);
-
-	memcpy(buffer + desplazamiento, &on, sizeof(int));
-	desplazamiento+= sizeof(int);
-
-	return buffer;
-
+	int cod_operacion=HS;
+	send(conexion, &cod_operacion, sizeof(int), 0);
+	recibir_seed(conexion);
 }
 
+//void enviar_memorias(int socket_cliente, t_config* config)//, int respuesta)
+//{
+//	int cant_elementos = list_size(lista_seeds);
+//
+//	send(socket_cliente,&cant_elementos,sizeof(int),MSG_WAITALL);
+//
+//	int i=0;
+//
+//	while(i<cant_elementos)
+//	{
+//		SEED * seed_i = list_get(lista_seeds,i);
+//
+//		int tamanio_total = 4*sizeof(int) + strlen(seed_i->IP)+1;
+//
+//		void * envio = serealizar_seed_completa(seed_i->NUMBER,seed_i->PUERTO,seed_i->IP, seed_i->ON, tamanio_total);
+//		send(socket_cliente,envio,tamanio_total,MSG_WAITALL);
+//		free(envio);
+//
+//		i++;
+//	}
+//
+////	bool _apagadas(SEED * seed){return seed->ON == 0;}
+//	list_clean_and_destroy_elements(lista_seeds,_eliminar_seed);
+//}
 
-void eliminar_seed(SEED * seed)
-{
-	free(seed->IP);
-	free(seed);
-}
+
+//void* serealizar_seed_completa(int memoria, int puerto, char* IP, int on, int tamanio_total)
+//{
+//
+//	int bytes_ip = strlen(IP)+1;
+//	//3 size of int porque so 2 de memoria y puerto, y otro de tamanio de ip
+//	void* buffer = malloc(tamanio_total);
+//
+//	int desplazamiento = 0;
+//
+//	memcpy(buffer + desplazamiento, &bytes_ip, sizeof(int));
+//	desplazamiento+= sizeof(int);
+//
+//	memcpy(buffer + desplazamiento, IP, bytes_ip);
+//	desplazamiento+= bytes_ip;
+//
+//	memcpy(buffer + desplazamiento, &memoria, sizeof(int));
+//	desplazamiento+= sizeof(int);
+//
+//	memcpy(buffer + desplazamiento, &puerto, sizeof(int));
+//	desplazamiento+= sizeof(int);
+//
+//	memcpy(buffer + desplazamiento, &on, sizeof(int));
+//	desplazamiento+= sizeof(int);
+//
+//	return buffer;
+//
+//}
+//
+//
+//void eliminar_seed(SEED * seed)
+//{
+//	free(seed->IP);
+//	free(seed);
+//}
 
 
 void terminar_kernel(t_log* logger, t_config* config)

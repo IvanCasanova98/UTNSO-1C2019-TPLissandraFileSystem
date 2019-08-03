@@ -44,10 +44,13 @@ void recibir_paquete_create(int socket_cliente)
 
 SEED* deserealizar_seed(int socket_cliente)
 {
+
+
 	int tamanio_ip;
 	recv(socket_cliente, &tamanio_ip, sizeof(int), 0);
 
-	int size=tamanio_ip+3*sizeof(int);
+
+	int size=tamanio_ip+2*sizeof(int);
 	void * buffer = malloc(size);
 
 	recv(socket_cliente, buffer, size, 0);
@@ -66,12 +69,9 @@ SEED* deserealizar_seed(int socket_cliente)
 	memcpy(&(aux->PUERTO),buffer + desplazamiento, sizeof(int));
 	desplazamiento+=sizeof(int);
 
-	memcpy(&(aux->ON),buffer + desplazamiento, sizeof(int));
-	desplazamiento+=sizeof(int);
 
 	return aux;
 }
-
 
 void recibir_seed(int socket_cliente)
 {
@@ -83,7 +83,6 @@ void recibir_seed(int socket_cliente)
 		SEED *memoria_i = deserealizar_seed(socket_cliente);
 		list_add(lista_seeds,memoria_i);
 		i++;
-		//puts("memoria recibida");
 	}
 }
 
