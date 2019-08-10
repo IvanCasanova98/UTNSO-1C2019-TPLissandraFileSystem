@@ -131,6 +131,9 @@ int conectarse_a_memoria(char** vector_request, t_log* logger)
 	case 7:
 		return 0;
 		break;
+	case 8:
+		return 0;
+		break;
 	default:
 		return 0;
 		break;
@@ -176,9 +179,12 @@ void handshake(void * arg)
 	while(1)
 	{
 		int conexion = iniciar_conexion_request(parametro->logger,ip,puerto);
-		pedir_seed(conexion);
-		mostrar_lista_seeds(parametro->logger);
-		log_info(parametro->logger, "Handshake realizado");
+		if (conexion!=-1)
+		{
+			pedir_seed(conexion);
+			mostrar_lista_seeds(parametro->logger);
+	//		log_info(parametro->logger, "Handshake realizado");
+		}
 		close(conexion);
 		sleep(7);
 	}

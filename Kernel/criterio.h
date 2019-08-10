@@ -9,6 +9,7 @@
 #include<commons/collections/list.h>
 
 #include "memorias.h"
+#include "metrica.h"
 
 extern t_list* lista_seeds;
 extern pthread_mutex_t mutex_handshake;

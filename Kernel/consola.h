@@ -14,6 +14,7 @@
 #include "paquete.h"
 #include "planificador.h"
 #include "conexion.h"
+#include "metrica.h"
 
 void consola();
 //---------------------INGRESO DE PAQUETE

@@ -50,10 +50,10 @@ void gossiping(void * arg)
 				enviar_memorias(conexion,parametro->config);
 				recibir_seed(conexion);
 				terminar_conexion(conexion);
-				log_info(parametro->logger,"Gossiping realizado");
+//				log_info(parametro->logger,"Gossiping realizado");
 			}
 		}
-		sleep(retardo_gossiping);
+		sleep(retardo_gossiping/1000);
 	}
 
 }

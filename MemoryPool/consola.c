@@ -12,7 +12,6 @@ void ingresar_paquete(void * arg)
 	char * parametros_paquete = strtok(lineaRequest, " ");
 
 	int cod_ingresado = codigo_ingresado(parametros_paquete);
-
 	while(1)
 	{
 		switch(cod_ingresado)

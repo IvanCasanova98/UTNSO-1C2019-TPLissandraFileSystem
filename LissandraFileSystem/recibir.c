@@ -11,6 +11,9 @@ void* recibir_paquetes(void *arg)
 	//mutex
 	int cod_op = recibir_operacion(cliente_fd);
 
+		if(cod_op == -1){
+			return NULL;
+		}
 		if (cliente_fd==0){
 			printf("Error al conectarse para intentar recibir paquete\ņ");
 //			pthread_exit(NULL);
@@ -213,8 +216,7 @@ int recibir_operacion(int socket_cliente)
 	if(recv(socket_cliente, &cod_op, sizeof(int), MSG_WAITALL) != 0) return cod_op;
 	else
 	{
-		close(socket_cliente);
-		puts(" *** No se recibio correctamente el COD OP ***");
+//		close(socket_cliente);
 		return -1;
 	}
 }

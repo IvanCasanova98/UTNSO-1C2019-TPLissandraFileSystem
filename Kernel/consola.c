@@ -30,7 +30,6 @@ int request(void * arg) //RECIBIR LOGGER
 	int conexion_nueva = conectarse_a_memoria(vector_request, parametro->logger); //ELIGE UNA MEMORIA, SEGUN EL CRITERIO BASADO EN LA TABLA
 	if(conexion_nueva==-1){return 0;}
 
-
 		switch(cod_ingresado){
 			case 0:;
 				if(conexion_nueva==0){break;}
@@ -61,6 +60,9 @@ int request(void * arg) //RECIBIR LOGGER
 			case 3:;
 				if(existe_tabla(vector_request[1]))
 				{
+					struct timeval tiempo_inicial, tiempo_final;
+					gettimeofday(&tiempo_inicial,NULL);
+
 					t_paquete_select* paquete_select = selectf(vector_request);
 
 					if(paquete_select==NULL){return 0;}
@@ -77,8 +79,13 @@ int request(void * arg) //RECIBIR LOGGER
 						enviar_paquete_select(paquete_select, conexion_nueva);
 						recibir_mensaje(conexion_nueva);
 					}
-
 					free(paquete_select);
+
+					gettimeofday(&tiempo_final,NULL);
+					sem_wait(&semaforo_metrica);
+					calcular_tiempo(tiempo_inicial,tiempo_final,0);
+					sem_post(&semaforo_metrica);
+
 				}
 
 				break;
@@ -86,10 +93,18 @@ int request(void * arg) //RECIBIR LOGGER
 			case 4:;
 				if(existe_tabla(vector_request[1])) //HACER DESCRIBE CON CREATE
 				{
+					struct timeval tiempo_inicial, tiempo_final;
+					gettimeofday(&tiempo_inicial,NULL);
+
 					t_paquete_insert* paquete_insert = insert(vector_request);
 					if (send(conexion_nueva, &cod_ingresado, sizeof(int), 0) <= 0) puts("Error en envio de CODIGO DE OPERACION.");
 					else{enviar_paquete_insert(paquete_insert, conexion_nueva);}
 					free(paquete_insert);
+
+					gettimeofday(&tiempo_final,NULL);
+					sem_wait(&semaforo_metrica);
+					calcular_tiempo(tiempo_inicial,tiempo_final,1);
+					sem_post(&semaforo_metrica);
 				}
 				break;
 			case 5:;
@@ -98,6 +113,11 @@ int request(void * arg) //RECIBIR LOGGER
 				break;
 			case 7:
 				agregar_consistencia(atoi(vector_request[2]),vector_request[4]);
+				break;
+			case 8:
+				sem_wait(&semaforo_metrica);
+				logear_metrica_consola(parametro->logger);
+				sem_post(&semaforo_metrica);
 				break;
 			default:
 				break;

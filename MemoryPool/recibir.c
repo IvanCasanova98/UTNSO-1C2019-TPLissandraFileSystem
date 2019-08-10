@@ -102,6 +102,7 @@ void recibir_paquetes(int cliente_fd, int server_fd, t_config* config, t_log* lo
 
 			break;
 		case SELECT:;
+//			puts("select");
 			t_paquete_select *paquete_select = deserializar_paquete_select(cliente_fd);
 
 			loggear_paquete_select(paquete_select, logger);

@@ -33,6 +33,10 @@ SEED * elegir_memoria(char* nombre_tabla, int cons_ingresada)
 
 	seed_i = get_seed_especifica(numero_memoria); //PROBLEMA DE ELECCION DE MEMORIA
 
+	sem_wait(&semaforo_metrica);
+	sumar_request_memoria(seed_i->NUMBER);
+	sem_post(&semaforo_metrica);
+
 	return seed_i;
 }
 
@@ -80,8 +84,6 @@ int get_memoria_fifo(t_list* pool)
 	int tope_lista = list_size(pool) - 1;
 	int numero_memoria = 0;
 
-	printf("\nTOPE LISTA: %d", tope_lista);
-
 	if (referencia_memoria_ec >= tope_lista)
 	{
 		referencia_memoria_ec = 0;
@@ -91,7 +93,6 @@ int get_memoria_fifo(t_list* pool)
 		referencia_memoria_ec ++;
 	}
 
-	printf("\nNUMERO MEMORIA: %d", numero_memoria);
 	numero_memoria = list_get(pool, referencia_memoria_ec);
 
 	return numero_memoria;
